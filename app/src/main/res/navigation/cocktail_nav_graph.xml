@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cocktail_nav_graph"
+    app:startDestination="@id/cocktailMenuFragment">
+
+    <fragment
+        android:id="@+id/cocktailMenuFragment"
+        android:name="com.zemingo.cocktailmenu.ui.CocktailMenuFragment"
+        android:label="CocktailMenuFragment"
+        tools:layout="@layout/fragment_cocktail_menu" />
+</navigation>
