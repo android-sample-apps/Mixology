@@ -4,27 +4,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.zemingo.cocktailmenu.R
-import com.zemingo.cocktailmenu.models.CocktailItemUiModel
+import com.zemingo.cocktailmenu.extensions.into
+import com.zemingo.cocktailmenu.models.DrinkItemUiModel
+import com.zemingo.cocktailmenu.models.DrinkPreviewItemUiModel
+import com.zemingo.cocktailmenu.models.ImageModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_cocktail.view.*
 
-class CocktailMenuAdapter : DiffAdapter<CocktailItemUiModel, CocktailMenuAdapter.CocktailMenuVH>() {
+class CocktailMenuAdapter : DiffAdapter<DrinkPreviewItemUiModel, CocktailMenuAdapter.CocktailMenuVH>() {
+
+    override fun onBindViewHolder(
+        holder: CocktailMenuVH,
+        data: DrinkPreviewItemUiModel,
+        position: Int
+    ) {
+        return holder.bind(data, position)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailMenuVH {
+        return CocktailMenuVH(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.list_item_cocktail, parent, false)
+        )
+    }
 
     inner class CocktailMenuVH(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(uiModel: CocktailItemUiModel, position: Int) {
+        fun bind(uiModel: DrinkPreviewItemUiModel, position: Int) {
             containerView.apply {
                 name_tv.text = uiModel.name
-                ingredients_tv.text = uiModel.ingredients
-                bindGlassImage(position, uiModel)
+//                ingredients_tv.text = uiModel.ingredients
+//                bindGlassImage(position, uiModel)
+                bindThumbnail(uiModel.thumbnail)
             }
         }
 
         private fun bindGlassImage(
             position: Int,
-            uiModel: CocktailItemUiModel
+            uiModel: DrinkItemUiModel
         ) {
             containerView.apply {
                 if (position.rem(2) == 0) {
@@ -38,21 +58,12 @@ class CocktailMenuAdapter : DiffAdapter<CocktailItemUiModel, CocktailMenuAdapter
                 }
             }
         }
-    }
+        private fun bindThumbnail(imageModel: ImageModel?) {
+            containerView.apply {
+                imageModel?.into(thumbnail_iv)
+            }
+        }
 
-    override fun onBindViewHolder(
-        holder: CocktailMenuVH,
-        data: CocktailItemUiModel,
-        position: Int
-    ) {
-        return holder.bind(data, position)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailMenuVH {
-        return CocktailMenuVH(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_cocktail, parent, false)
-        )
     }
 
 }

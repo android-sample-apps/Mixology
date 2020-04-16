@@ -1,7 +1,18 @@
 package com.zemingo.cocktailmenu.models
 
-data class CocktailItemUiModel(
+data class DrinkItemUiModel(
     val name: String,
     val ingredients: String,
-    val glassIcon: Int
+    val glassIcon: Int,
+    val thumbnail: ImageModel?
+)
+
+data class DrinkPreviewItemUiModel(
+    val id: String,
+    val name: String,
+    val thumbnail: ImageModel?
+)
+
+data class DrinksPreviewListItemUiModel(
+    val drinks: List<DrinkPreviewItemUiModel>
 )
