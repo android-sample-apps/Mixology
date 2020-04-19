@@ -44,6 +44,6 @@ data class DrinkPreviewListModel(
 )
 
 @Entity
-data class CategoryEntity(
+data class CategoryModel(
     @PrimaryKey val name: String
 )

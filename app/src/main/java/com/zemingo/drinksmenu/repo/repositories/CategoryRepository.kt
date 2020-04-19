@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.repo.repositories
 
-import com.zemingo.drinksmenu.models.CategoryEntity
+import com.zemingo.drinksmenu.models.CategoryModel
 import com.zemingo.drinksmenu.models.CategoryResponse
 import com.zemingo.drinksmenu.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.repo.CocktailService
@@ -10,11 +10,11 @@ import java.util.function.Function
 
 class CategoryRepository(
     private val service: CocktailService,
-    private val reactiveStore: ReactiveStore<CategoryEntity>,
-    private val mapper: Function<DrinksWrapperResponse<CategoryResponse>, List<CategoryEntity>>
+    private val reactiveStore: ReactiveStore<CategoryModel>,
+    private val mapper: Function<DrinksWrapperResponse<CategoryResponse>, List<CategoryModel>>
 ) {
 
-    fun get(): Flow<List<CategoryEntity>> {
+    fun get(): Flow<List<CategoryModel>> {
         return reactiveStore.getAll()
     }
 

@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.domain
 
-import com.zemingo.drinksmenu.models.CategoryEntity
+import com.zemingo.drinksmenu.models.CategoryModel
 import com.zemingo.drinksmenu.repo.repositories.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class GetCategoriesUseCase(
     private val repo: CategoryRepository
 ) {
-    private val channel = Channel<List<CategoryEntity>>()
+    private val channel = Channel<List<CategoryModel>>()
     val categories = channel.consumeAsFlow()
 
     init {
