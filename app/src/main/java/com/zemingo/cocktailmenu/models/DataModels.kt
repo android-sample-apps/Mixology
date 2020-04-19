@@ -1,5 +1,8 @@
 package com.zemingo.cocktailmenu.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class InstructionModel(
     val instructions: String
 )
@@ -38,4 +41,9 @@ data class DrinkModel(
 
 data class DrinkPreviewListModel(
     val drinks: List<DrinkPreviewModel>
+)
+
+@Entity
+data class CategoryEntity(
+    @PrimaryKey val name: String
 )

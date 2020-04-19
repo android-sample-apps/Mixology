@@ -1,16 +1,13 @@
 package com.zemingo.cocktailmenu.repo.mappers
 
-import com.zemingo.cocktailmenu.models.DrinkPreviewListModel
-import com.zemingo.cocktailmenu.models.DrinkPreviewModel
-import com.zemingo.cocktailmenu.models.DrinksListResponse
-import com.zemingo.cocktailmenu.models.ImageModel
+import com.zemingo.cocktailmenu.models.*
 import java.util.function.Function
 
-class DrinkPreviewMapper : Function<DrinksListResponse, DrinkPreviewListModel> {
+class DrinkPreviewMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkPreviewListModel> {
 
-    override fun apply(t: DrinksListResponse): DrinkPreviewListModel {
+    override fun apply(t: DrinksWrapperResponse<DrinkResponse>): DrinkPreviewListModel {
         return DrinkPreviewListModel(
-            drinks = t.drinks.map {
+            drinks = t.data.map {
                 DrinkPreviewModel(
                     id = it.idDrink,
                     name = it.strDrink,
@@ -19,5 +16,4 @@ class DrinkPreviewMapper : Function<DrinksListResponse, DrinkPreviewListModel> {
             }
         )
     }
-
 }

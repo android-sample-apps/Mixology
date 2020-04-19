@@ -7,6 +7,10 @@ data class DrinkItemUiModel(
     val thumbnail: ImageModel?
 )
 
+data class CategoryUiModel(
+    val name: String
+)
+
 data class DrinkPreviewItemUiModel(
     val id: String,
     val name: String,

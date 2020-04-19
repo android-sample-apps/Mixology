@@ -17,6 +17,9 @@ class KoinStarter {
     private fun myModules(): List<Module> {
         return listOf(
             repoModule,
+            reactiveStoreModule,
+            mappersModule,
+            useCasesModule,
             viewModelModule
         )
     }
