@@ -12,6 +12,6 @@
         tools:layout="@layout/fragment_cocktail_menu" />-->
     <fragment
         android:id="@+id/categoryMenuFragment"
-        android:name="com.zemingo.cocktailmenu.ui.CategoryMenuFragment"
+        android:name="com.zemingo.drinksmenu.ui.CategoryMenuFragment"
         android:label="CategoryMenuFragment" />
 </navigation>
