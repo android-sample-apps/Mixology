@@ -5,10 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.extensions.into
 import com.zemingo.drinksmenu.models.DrinkItemUiModel
 import com.zemingo.drinksmenu.models.DrinkPreviewItemUiModel
-import com.zemingo.drinksmenu.models.ImageModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_cocktail.view.*
 
@@ -57,9 +55,9 @@ class CocktailMenuAdapter : DiffAdapter<DrinkPreviewItemUiModel, CocktailMenuAda
                 }
             }
         }
-        private fun bindThumbnail(imageModel: ImageModel?) {
+        private fun bindThumbnail(imageModel: String?) {
             containerView.apply {
-                imageModel?.into(thumbnail_iv)
+//                imageModel?.into(thumbnail_iv)
             }
         }
 

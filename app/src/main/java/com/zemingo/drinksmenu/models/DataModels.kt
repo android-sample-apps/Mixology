@@ -24,12 +24,6 @@ data class DateModel(
     val date: String
 )
 
-data class DrinkPreviewModel(
-    val id: String,
-    val name: String,
-    val thumbnail: ImageModel?
-)
-
 data class DrinkModel(
     val id: String,
     val name: String,
@@ -46,4 +40,11 @@ data class DrinkPreviewListModel(
 @Entity
 data class CategoryModel(
     @PrimaryKey val name: String
+)
+
+@Entity
+data class DrinkPreviewModel(
+    @PrimaryKey val id: String,
+    val name: String,
+    val thumbnail: String?
 )

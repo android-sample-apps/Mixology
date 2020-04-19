@@ -14,7 +14,7 @@ data class CategoryUiModel(
 data class DrinkPreviewItemUiModel(
     val id: String,
     val name: String,
-    val thumbnail: ImageModel?
+    val thumbnail: String?
 )
 
 data class DrinksPreviewListItemUiModel(
