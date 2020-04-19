@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.models.DrinkItemUiModel
-import com.zemingo.drinksmenu.models.DrinkPreviewItemUiModel
+import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_cocktail.view.*
 
-class CocktailMenuAdapter : DiffAdapter<DrinkPreviewItemUiModel, CocktailMenuAdapter.CocktailMenuVH>() {
+class CocktailMenuAdapter : DiffAdapter<DrinkPreviewUiModel, CocktailMenuAdapter.CocktailMenuVH>() {
 
     override fun onBindViewHolder(
         holder: CocktailMenuVH,
-        data: DrinkPreviewItemUiModel,
+        data: DrinkPreviewUiModel,
         position: Int
     ) {
         return holder.bind(data, position)
@@ -30,7 +30,7 @@ class CocktailMenuAdapter : DiffAdapter<DrinkPreviewItemUiModel, CocktailMenuAda
     inner class CocktailMenuVH(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(uiModel: DrinkPreviewItemUiModel, position: Int) {
+        fun bind(uiModel: DrinkPreviewUiModel, position: Int) {
             containerView.apply {
                 name_tv.text = uiModel.name
 //                ingredients_tv.text = uiModel.ingredients

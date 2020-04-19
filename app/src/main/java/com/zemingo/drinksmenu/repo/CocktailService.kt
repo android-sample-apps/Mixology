@@ -4,6 +4,7 @@ import com.zemingo.drinksmenu.models.CategoryResponse
 import com.zemingo.drinksmenu.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.models.FullDrinkResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 /**
  *
@@ -55,6 +56,9 @@ interface CocktailService {
 
     @GET("list.php?c=list")
     suspend fun categoryList(): DrinksWrapperResponse<CategoryResponse>
+
+    @GET("filter.php")
+    suspend fun filterByCategory(@Query("c") category: String)
 
     /*todo @GET("list.php?g=list")
     suspend fun glassList()*/

@@ -11,12 +11,12 @@ data class CategoryUiModel(
     val name: String
 )
 
-data class DrinkPreviewItemUiModel(
+data class DrinkPreviewUiModel(
     val id: String,
     val name: String,
     val thumbnail: String?
 )
 
 data class DrinksPreviewListItemUiModel(
-    val drinks: List<DrinkPreviewItemUiModel>
+    val drinks: List<DrinkPreviewUiModel>
 )

@@ -46,5 +46,6 @@ data class CategoryModel(
 data class DrinkPreviewModel(
     @PrimaryKey val id: String,
     val name: String,
+    val category: String,
     val thumbnail: String?
 )

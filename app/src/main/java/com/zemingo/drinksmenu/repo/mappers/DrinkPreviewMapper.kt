@@ -11,7 +11,8 @@ class DrinkPreviewMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkP
                 DrinkPreviewModel(
                     id = it.idDrink,
                     name = it.strDrink,
-                    thumbnail = it.strDrinkThumb
+                    thumbnail = it.strDrinkThumb,
+                    category = ""
                 )
             }
         )

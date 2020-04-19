@@ -12,6 +12,12 @@ data class CategoryResponse(
     @SerializedName("strCategory") val category: String
 )
 
+data class DrinkPreviewResponse(
+    @SerializedName("idDrink") val idDrink: String,
+    @SerializedName("strDrink") val strDrink: String,
+    @SerializedName("strDrinkThumb") val strDrinkThumb: String
+)
+
 data class FullDrinkResponse(
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strDrink") val strDrink: String,
@@ -50,16 +56,6 @@ data class FullDrinkResponse(
     @SerializedName("strMeasure15") val strMeasure15: String?,
     @SerializedName("dateModified") val dateModified: String
 )
-
-/*
-data class FullDrinksListResponse(
-    @SerializedName("drinks") val drinks: List<FullDrinkResponse>
-)
-
-data class DrinksListResponse(
-    @SerializedName("drinks") val drinks: List<DrinkResponse>
-)
-*/
 
 data class DrinksWrapperResponse<T>(
     @SerializedName("drinks") val data: List<T>
