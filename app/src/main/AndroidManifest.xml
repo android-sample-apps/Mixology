@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.zemingo.drinksmenu.ui.CocktailActivity"
+            android:name="com.zemingo.drinksmenu.ui.DrinksActivity"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
