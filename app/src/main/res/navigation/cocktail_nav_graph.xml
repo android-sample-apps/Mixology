@@ -5,13 +5,31 @@
     android:id="@+id/cocktail_nav_graph"
     app:startDestination="@id/categoryMenuFragment">
 
-    <!--<fragment
-        android:id="@+id/cocktailMenuFragment"
-        android:name="com.zemingo.cocktailmenu.ui.CocktailMenuFragment"
-        android:label="CocktailMenuFragment"
-        tools:layout="@layout/fragment_cocktail_menu" />-->
     <fragment
         android:id="@+id/categoryMenuFragment"
-        android:name="com.zemingo.drinksmenu.ui.CategoryMenuFragment"
-        android:label="CategoryMenuFragment" />
+        android:name="com.zemingo.drinksmenu.ui.fragments.CategoryMenuFragment"
+        android:label="CategoryMenuFragment"
+        tools:layout="@layout/fragment_category_menu">
+        <action
+            android:id="@+id/action_categoryMenuFragment_to_drinkPreviewFragment"
+            app:destination="@id/drinkPreviewFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="none"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/drinkPreviewFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkPreviewFragment"
+        android:label="DrinkPreviewFragment"
+        tools:layout="@layout/fragment_drink_preview" >
+        <argument
+            android:name="category"
+            app:argType="string"
+            android:defaultValue='none' />
+    </fragment>
+
+
 </navigation>

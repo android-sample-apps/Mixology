@@ -13,7 +13,6 @@ class CategoryRepository(
     private val reactiveStore: ReactiveStore<CategoryModel>,
     private val mapper: Function<DrinksWrapperResponse<CategoryResponse>, List<CategoryModel>>
 ) {
-
     fun get(): Flow<List<CategoryModel>> {
         return reactiveStore.getAll()
     }

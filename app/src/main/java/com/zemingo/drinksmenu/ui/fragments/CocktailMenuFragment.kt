@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.ui
+package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View

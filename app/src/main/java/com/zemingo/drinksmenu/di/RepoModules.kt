@@ -2,8 +2,11 @@ package com.zemingo.drinksmenu.di
 
 import com.zemingo.drinksmenu.repo.CocktailService
 import com.zemingo.drinksmenu.repo.mappers.CategoryMapper
+import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
 import com.zemingo.drinksmenu.repo.reactive_store.CategoryReactiveStore
+import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
 import com.zemingo.drinksmenu.repo.repositories.CategoryRepository
+import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -38,5 +41,12 @@ val repoModule = module {
         )
     }
 
+    factory {
+        DrinkPreviewRepository(
+            service = get<CocktailService>(),
+            reactiveStore = get<DrinkPreviewReactiveStore>(),
+            mapper = get<DrinkPreviewMapper>()
+        )
+    }
 
 }

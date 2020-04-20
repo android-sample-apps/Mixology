@@ -4,6 +4,7 @@ package com.zemingo.drinksmenu.di
 
 import androidx.room.Room
 import com.zemingo.drinksmenu.repo.reactive_store.CategoryReactiveStore
+import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
 import com.zemingo.drinksmenu.room.CategoryDao
 import com.zemingo.drinksmenu.room.DrinkPreviewDao
 import com.zemingo.drinksmenu.room.DrinksDatabase
@@ -26,6 +27,12 @@ val reactiveStoreModule = module {
     factory {
         CategoryReactiveStore(
             categoryDao = get<CategoryDao>()
+        )
+    }
+
+    factory {
+        DrinkPreviewReactiveStore(
+            drinkPreviewDao = get<DrinkPreviewDao>()
         )
     }
 }

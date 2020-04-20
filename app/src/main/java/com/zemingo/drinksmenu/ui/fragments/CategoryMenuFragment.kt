@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.ui
+package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.models.CategoryUiModel
@@ -19,7 +20,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private val categoriesViewModel: CategoriesViewModel by viewModel()
-    private val categoryAdapter = CategoryAdapter()
+    private val categoryAdapter =
+        CategoryAdapter().apply {
+            onClick = { onCategoryClicked(it) }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,15 +40,27 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             .categories
             .observe(viewLifecycleOwner, Observer { categoryAdapter.update(it) })
     }
+
+    private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
+        findNavController()
+            .navigate(
+                CategoryMenuFragmentDirections.actionCategoryMenuFragmentToDrinkPreviewFragment(
+                    categoryUiModel.name
+                )
+            )
+    }
 }
 
 private class CategoryAdapter : DiffAdapter<CategoryUiModel, CategoryAdapter.CategoryViewHolder>() {
+
+    var onClick: ((CategoryUiModel) -> Unit)? = null
 
     inner class CategoryViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(data: CategoryUiModel) {
             containerView.apply {
+                setOnClickListener { onClick?.invoke(data) }
                 category_name_tv.text = data.name
             }
         }

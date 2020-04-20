@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/ListItem"
-        android:id="@+id/category_name_tv"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/thumbnail_iv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        tools:text="Whiskey"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/name_tv"
+        style="@style/ListItem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Whiskey Sour" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

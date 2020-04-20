@@ -13,8 +13,8 @@ interface DrinkPreviewDao {
     @Query("SELECT * FROM DrinkPreviewModel")
     fun getAll(): Flow<List<DrinkPreviewModel>>
 
-    @Query("SELECT * FROM DrinkPreviewModel WHERE category=:category")
-    fun getByCategory(category: String): Flow<List<DrinkPreviewModel>>
+//    @Query("SELECT * FROM DrinkPreviewModel")
+//    fun getByCategory(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(drinkPreviews: List<DrinkPreviewModel>)
