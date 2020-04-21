@@ -1,9 +1,6 @@
 package com.zemingo.drinksmenu.repo
 
-import com.zemingo.drinksmenu.models.CategoryResponse
-import com.zemingo.drinksmenu.models.DrinkPreviewResponse
-import com.zemingo.drinksmenu.models.DrinksWrapperResponse
-import com.zemingo.drinksmenu.models.FullDrinkResponse
+import com.zemingo.drinksmenu.models.*
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -54,6 +51,9 @@ interface CocktailService {
 
 //    @GET("random.php")
 //    suspend fun random(): DrinksWrapperResponse<FullDrinkResponse>
+
+    @GET("list.php?i=list")
+    suspend fun ingredientList(): DrinksWrapperResponse<IngredientResponse>
 
     @GET("list.php?c=list")
     suspend fun categoryList(): DrinksWrapperResponse<CategoryResponse>
