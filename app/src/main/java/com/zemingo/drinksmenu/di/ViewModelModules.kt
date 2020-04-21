@@ -1,8 +1,5 @@
 package com.zemingo.drinksmenu.di
 
-import com.zemingo.drinksmenu.domain.GetDrinkPreviewByCategoryUseCase
-import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
-import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 import com.zemingo.drinksmenu.view_model.CategoriesViewModel
 import com.zemingo.drinksmenu.view_model.DrinkPreviewByCategoryViewModel
 import com.zemingo.drinksmenu.view_model.mappers.CategoryMapperUi

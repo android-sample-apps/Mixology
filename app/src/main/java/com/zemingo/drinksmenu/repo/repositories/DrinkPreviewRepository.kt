@@ -23,9 +23,14 @@ class DrinkPreviewRepository(
     }
 
     suspend fun fetchByCategory(category: String) {
-        val response = service.getByCategory(category)
+        val response = service.getByCategory(category.replace(" ", "_"))
         val entities = mapper.apply(response)
         reactiveStore.storeAll(entities)
+    }
+
+    suspend fun fetchByCategoryImmediate(category: String): List<DrinkPreviewModel> {
+        val response = service.getByCategory(category.replace(" ", "_"))
+        return mapper.apply(response)
     }
 
 }

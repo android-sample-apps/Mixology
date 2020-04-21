@@ -52,8 +52,8 @@ https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list
 
 interface CocktailService {
 
-    @GET("random.php")
-    suspend fun random(): DrinksWrapperResponse<FullDrinkResponse>
+//    @GET("random.php")
+//    suspend fun random(): DrinksWrapperResponse<FullDrinkResponse>
 
     @GET("list.php?c=list")
     suspend fun categoryList(): DrinksWrapperResponse<CategoryResponse>

@@ -33,10 +33,6 @@ data class DrinkModel(
     val dateModified: DateModel
 )
 
-data class DrinkPreviewListModel(
-    val drinks: List<DrinkPreviewModel>
-)
-
 @Entity
 data class CategoryModel(
     @PrimaryKey val name: String

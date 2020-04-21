@@ -5,6 +5,8 @@ import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
@@ -13,19 +15,16 @@ class GetDrinkPreviewByCategoryUseCase(
     private val repo: DrinkPreviewRepository,
     category: String
 ) {
-    private val channel = Channel<List<DrinkPreviewModel>>()
-    val drinkPreviews = channel.consumeAsFlow()
+    private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
+    val drinkPreviews = channel.asFlow()
 
     init {
         GlobalScope.launch(Dispatchers.IO) {
-            fetchByCategory(category)
-            repo
-                .getAll()
-                .collect { channel.send(it) }
+            channel.send(fetchByCategory(category))
         }
     }
 
-    private suspend fun fetchByCategory(category: String) {
-        repo.fetchByCategory(category)
+    private suspend fun fetchByCategory(category: String): List<DrinkPreviewModel> {
+        return repo.fetchByCategoryImmediate(category)
     }
 }

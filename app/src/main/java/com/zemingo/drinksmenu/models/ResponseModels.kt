@@ -2,14 +2,12 @@ package com.zemingo.drinksmenu.models
 
 import com.google.gson.annotations.SerializedName
 
-data class DrinkResponse(
-    @SerializedName("idDrink") val idDrink: String,
-    @SerializedName("strDrink") val strDrink: String,
-    @SerializedName("strDrinkThumb") val strDrinkThumb: String
-)
-
 data class CategoryResponse(
     @SerializedName("strCategory") val category: String
+)
+
+data class IngredientResponse(
+    @SerializedName("strIngredient1") val name: String
 )
 
 data class DrinkPreviewResponse(
