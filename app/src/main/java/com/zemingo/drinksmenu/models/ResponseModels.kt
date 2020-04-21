@@ -16,7 +16,7 @@ data class DrinkPreviewResponse(
     @SerializedName("strDrinkThumb") val strDrinkThumb: String
 )
 
-data class FullDrinkResponse(
+data class DrinkResponse(
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strDrink") val strDrink: String,
     @SerializedName("strGlass") val strGlass: String,

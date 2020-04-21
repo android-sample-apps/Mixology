@@ -29,6 +29,19 @@
             android:name="category"
             app:argType="string"
             android:defaultValue='none' />
+        <action
+            android:id="@+id/action_drinkPreviewFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/drinkFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
+        tools:layout="@layout/fragment_drink"
+        android:label="DrinkFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 
 

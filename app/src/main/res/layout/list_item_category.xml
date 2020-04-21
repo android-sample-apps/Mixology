@@ -7,10 +7,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/category_name_tv"
-        style="@style/ListItem"
+        style="@style/MockText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

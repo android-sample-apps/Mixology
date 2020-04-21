@@ -1,6 +1,7 @@
 package com.zemingo.drinksmenu.di
 
 import com.zemingo.drinksmenu.repo.mappers.CategoryMapper
+import com.zemingo.drinksmenu.repo.mappers.DrinkMapper
 import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
 import com.zemingo.drinksmenu.view_model.mappers.CategoryMapperUi
 import com.zemingo.drinksmenu.view_model.mappers.DrinkPreviewMapperUi
@@ -16,5 +17,6 @@ val mappersModule = module {
 
     factory { CategoryMapper() }
 
+    factory { DrinkMapper() }
 
 }

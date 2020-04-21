@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
@@ -28,6 +29,9 @@ class DrinkPreviewFragment : Fragment(R.layout.fragment_drink_preview) {
         )
     }
     private val adapter = DrinkPreviewAdapter()
+        .apply {
+            onClick = { onItemClicked(it) }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,10 +40,18 @@ class DrinkPreviewFragment : Fragment(R.layout.fragment_drink_preview) {
             .drinkPreviews
             .observe(viewLifecycleOwner, Observer { adapter.update(it) })
     }
+
+    private fun onItemClicked(drinkPreview: DrinkPreviewUiModel) {
+        findNavController().navigate(
+            DrinkPreviewFragmentDirections.actionDrinkPreviewFragmentToDrinkFragment(drinkPreview.id)
+        )
+    }
 }
 
 class DrinkPreviewAdapter :
     DiffAdapter<DrinkPreviewUiModel, DrinkPreviewAdapter.DrinkPreviewViewHolder>() {
+
+    var onClick: ((DrinkPreviewUiModel) -> Unit)? = null
 
     inner class DrinkPreviewViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -48,6 +60,7 @@ class DrinkPreviewAdapter :
             containerView.apply {
                 thumbnail_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 name_tv.text = drinkPreviewUiModel.name
+                setOnClickListener { onClick?.invoke(drinkPreviewUiModel) }
             }
         }
     }
