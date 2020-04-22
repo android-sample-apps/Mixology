@@ -3,7 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cocktail_nav_graph"
-    app:startDestination="@id/categoryMenuFragment">
+    app:startDestination="@id/introFragment">
+
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.IntroFragment"
+        android:label="IntroFragment"
+        tools:layout="@layout/fragment_intro">
+        <action
+            android:id="@+id/action_introFragment_to_categoryMenuFragment"
+            app:destination="@id/categoryMenuFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/categoryMenuFragment"
@@ -12,23 +25,18 @@
         tools:layout="@layout/fragment_category_menu">
         <action
             android:id="@+id/action_categoryMenuFragment_to_drinkPreviewFragment"
-            app:destination="@id/drinkPreviewFragment">
-            <argument
-                android:name="category"
-                android:defaultValue="none"
-                app:argType="string" />
-        </action>
+            app:destination="@id/drinkPreviewFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/drinkPreviewFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkPreviewFragment"
         android:label="DrinkPreviewFragment"
-        tools:layout="@layout/fragment_drink_preview" >
+        tools:layout="@layout/fragment_drink_preview">
         <argument
             android:name="category"
-            app:argType="string"
-            android:defaultValue='none' />
+            android:defaultValue='none'
+            app:argType="string" />
         <action
             android:id="@+id/action_drinkPreviewFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
@@ -37,11 +45,20 @@
     <fragment
         android:id="@+id/drinkFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
-        tools:layout="@layout/fragment_drink"
-        android:label="DrinkFragment" >
+        android:label="DrinkFragment"
+        tools:layout="@layout/fragment_drink">
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment" />
     </fragment>
 
 

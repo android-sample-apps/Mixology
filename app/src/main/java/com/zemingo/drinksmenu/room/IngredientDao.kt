@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface IngredientDao {
 
     @Query("SELECT * FROM IngredientModel")
-    fun getAll(): Flow<IngredientModel>
+    fun getAll(): Flow<List<IngredientModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeAll(ingredients: List<IngredientModel>)

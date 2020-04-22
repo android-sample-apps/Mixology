@@ -53,10 +53,10 @@ interface CocktailService {
 //    suspend fun random(): DrinksWrapperResponse<FullDrinkResponse>
 
     @GET("list.php?i=list")
-    suspend fun ingredientList(): DrinksWrapperResponse<IngredientResponse>
+    suspend fun getIngredientList(): DrinksWrapperResponse<IngredientResponse>
 
     @GET("list.php?c=list")
-    suspend fun categoryList(): DrinksWrapperResponse<CategoryResponse>
+    suspend fun getCategoryList(): DrinksWrapperResponse<CategoryResponse>
 
     @GET("filter.php")
     suspend fun getByCategory(@Query("c") category: String): DrinksWrapperResponse<DrinkPreviewResponse>

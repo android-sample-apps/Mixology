@@ -4,6 +4,7 @@ import com.zemingo.drinksmenu.repo.repositories.DrinkRepository
 import com.zemingo.drinksmenu.view_model.CategoriesViewModel
 import com.zemingo.drinksmenu.view_model.DrinkPreviewByCategoryViewModel
 import com.zemingo.drinksmenu.view_model.DrinkViewModel
+import com.zemingo.drinksmenu.view_model.SearchViewModel
 import com.zemingo.drinksmenu.view_model.mappers.CategoryMapperUi
 import com.zemingo.drinksmenu.view_model.mappers.DrinkPreviewMapperUi
 import org.koin.android.viewmodel.dsl.viewModel
@@ -29,6 +30,13 @@ val viewModelModule = module {
     viewModel {
         DrinkViewModel(
             drinkRepository = get<DrinkRepository>()
+        )
+    }
+
+    viewModel {
+        SearchViewModel(
+            getDrinkPreviewUseCase = get(),
+            mapper = get<DrinkPreviewMapperUi>()
         )
     }
 }

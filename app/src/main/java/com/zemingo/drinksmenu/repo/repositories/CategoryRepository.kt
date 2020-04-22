@@ -18,7 +18,7 @@ class CategoryRepository(
     }
 
     suspend fun fetch() {
-        val response = service.categoryList()
+        val response = service.getCategoryList()
         val entities = mapper.apply(response)
         reactiveStore.storeAll(entities)
     }

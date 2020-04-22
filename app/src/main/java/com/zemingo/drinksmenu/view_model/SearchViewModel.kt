@@ -1,0 +1,27 @@
+package com.zemingo.drinksmenu.view_model
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.zemingo.drinksmenu.domain.GetDrinkPreviewUseCase
+import com.zemingo.drinksmenu.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import timber.log.Timber
+import java.util.function.Function
+
+class SearchViewModel(
+    getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
+    mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
+) : ViewModel() {
+
+    val suggestions: LiveData<List<DrinkPreviewUiModel>> =
+        getDrinkPreviewUseCase
+            .getAll()
+            .onEach { previews ->
+                Timber.d("received suggestions: ${previews.map { it.name }}")
+            }
+            .map { mapper.apply(it) }
+            .asLiveData()
+}

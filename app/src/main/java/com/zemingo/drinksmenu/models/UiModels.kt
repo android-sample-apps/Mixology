@@ -9,3 +9,4 @@ data class DrinkPreviewUiModel(
     val name: String,
     val thumbnail: String?
 )
+
