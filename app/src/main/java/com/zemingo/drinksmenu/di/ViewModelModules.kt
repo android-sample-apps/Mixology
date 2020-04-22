@@ -36,6 +36,8 @@ val viewModelModule = module {
     viewModel {
         SearchViewModel(
             getDrinkPreviewUseCase = get(),
+            getPreviousSearchResultsUseCase = get(),
+            markAsSearchedDrinkPreviewUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
     }

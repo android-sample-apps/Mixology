@@ -5,18 +5,44 @@ import org.koin.dsl.module
 
 val useCasesModule = module {
 
-    factory { GetCategoriesUseCase(get()) }
+    factory {
+        GetCategoriesUseCase(
+            repository = get()
+        )
+    }
 
-    factory { FetchIngredientsUseCase(get()) }
+    factory {
+        FetchIngredientsUseCase(
+            repository = get()
+        )
+    }
 
-    factory { GetIngredientsUseCase(get()) }
+    factory {
+        GetIngredientsUseCase(
+            repository = get()
+        )
+    }
 
     factory { (category: String) ->
         GetDrinkPreviewByCategoryUseCase(
-            repo = get(),
+            repository = get(),
             category = category
         )
     }
 
-    factory { GetDrinkPreviewUseCase(get()) }
+    factory {
+        GetDrinkPreviewUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
+        GetPreviousSearchResultsUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
+        MarkAsSearchedDrinkPreviewUseCase()
+    }
 }

@@ -25,7 +25,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val searchViewModel: SearchViewModel by viewModel()
 
-    private val resultsAdapter = DrinkPreviewAdapter().apply {
+    private val previousSearchesAdapter = DrinkPreviewAdapter().apply {
         onClick = { onDrinkClicked(it) }
     }
 
@@ -38,11 +38,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        search_result_rv.adapter = resultsAdapter
+        search_result_rv.adapter = previousSearchesAdapter
         initAutoComplete()
         searchViewModel.suggestions.observe(viewLifecycleOwner, Observer {
             Timber.d("received ${it.size} suggestions")
             suggestionAdapter.update(it)
+        })
+
+        searchViewModel.previousSearches.observe(viewLifecycleOwner, Observer {
+            Timber.d("received ${it.size} previous searches")
+            previousSearchesAdapter.update(it)
         })
     }
 
@@ -51,8 +56,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             threshold = 1
             setAdapter(suggestionAdapter)
             onItemClickListener =
-                OnItemClickListener { adapterView, view, i, l ->
+                OnItemClickListener { adapterView, _, i, _ ->
                     val drink = adapterView.getItemAtPosition(i) as DrinkPreviewUiModel
+                    searchViewModel.markAsSearched(drink)
                     onDrinkClicked(drink)
                     setText(drink.name)
                 }

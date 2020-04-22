@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class GetCategoriesUseCase(
-    private val repo: CategoryRepository
+    private val repository: CategoryRepository
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val channel = ConflatedBroadcastChannel<List<CategoryModel>>()
@@ -19,7 +19,7 @@ class GetCategoriesUseCase(
 
     init {
         GlobalScope.launch(Dispatchers.IO) {
-            repo
+            repository
                 .get()
                 .collect { categories ->
                     if (categories.isEmpty()) {
@@ -31,6 +31,6 @@ class GetCategoriesUseCase(
     }
 
     private suspend fun fetchCategories() {
-        repo.fetch()
+        repository.fetch()
     }
 }

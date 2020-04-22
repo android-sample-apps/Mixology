@@ -3,7 +3,7 @@ package com.zemingo.drinksmenu.domain
 import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 
 class GetDrinkPreviewUseCase(
-    private val repo: DrinkPreviewRepository
+    private val repository: DrinkPreviewRepository
 ) {
-    fun getAll() = repo.getAll()
+    fun getAll() = repository.getAll()
 }
