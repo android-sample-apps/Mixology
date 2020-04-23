@@ -2,9 +2,9 @@ package com.zemingo.drinksmenu.repo.reactive_store
 
 import kotlinx.coroutines.flow.Flow
 
-interface ReactiveStore<T> {
+interface ReactiveStore<Value> {
 
-    fun getAll(): Flow<List<T>>
+    fun getAll(): Flow<List<Value>>
 
-    fun storeAll(data: List<T>)
+    fun storeAll(data: List<Value>)
 }

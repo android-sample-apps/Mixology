@@ -62,7 +62,8 @@ val repoModule = module {
 
     factory {
         SearchDrinkPreviewRepository(
-            reactiveStore = get<SearchDrinkPreviewReactiveStore>()
+            searchReactiveStore = get<SearchDrinkPreviewReactiveStore>(),
+            previewReactiveStore = get<DrinkPreviewReactiveStore>()
         )
     }
 

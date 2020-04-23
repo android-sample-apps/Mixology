@@ -22,7 +22,7 @@ class GetPreviousSearchResultsUseCase(
     init {
         GlobalScope.launch(Dispatchers.IO) {
             searchRepository
-                .getAll()
+                .getHistory()
                 .collect {
                     channel.send(it)
                 }
