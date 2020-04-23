@@ -2,6 +2,7 @@ package com.zemingo.drinksmenu.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class IngredientModel(
@@ -18,6 +19,12 @@ data class DrinkPreviewModel(
     @PrimaryKey val id: String,
     val name: String,
     val thumbnail: String?
+)
+
+@Entity
+data class PreviousSearchModel(
+    @PrimaryKey val drinkId: String,
+    val lastViewedTime: Date
 )
 
 data class DrinkModel(
