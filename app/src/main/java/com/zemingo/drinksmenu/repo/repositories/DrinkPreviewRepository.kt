@@ -9,7 +9,7 @@ import java.util.function.Function
 
 class DrinkPreviewRepository(
     private val service: CocktailService,
-    private val reactiveStore: DrinkPreviewReactiveStore,
+    private val reactiveStore: ReactiveStore<DrinkPreviewModel>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 
@@ -19,10 +19,6 @@ class DrinkPreviewRepository(
 
     fun storeAll(drinkPreviews: List<DrinkPreviewModel>) {
         reactiveStore.storeAll(drinkPreviews)
-    }
-
-    fun getFromIds(ids: List<String>): Flow<List<DrinkPreviewModel>> {
-        return reactiveStore.getByIds(ids)
     }
 
     suspend fun fetchByCategoryImmediate(category: String): List<DrinkPreviewModel> {

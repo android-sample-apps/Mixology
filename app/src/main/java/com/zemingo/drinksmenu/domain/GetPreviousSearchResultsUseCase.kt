@@ -23,18 +23,9 @@ class GetPreviousSearchResultsUseCase(
         GlobalScope.launch(Dispatchers.IO) {
             searchRepository
                 .getAll()
-                .map { sortHistory(it) }
-                .map { removeSearchMetadata(it) }
                 .collect {
                     channel.send(it)
                 }
         }
     }
-
-    private fun sortHistory(searchHistory: List<SearchResultModel>) =
-        searchHistory.sortedByDescending { it.searchModel.lastViewedTime }
-
-    private fun removeSearchMetadata(searchHistory: List<SearchResultModel>) =
-        searchHistory.map { it.resultModel }
-
 }

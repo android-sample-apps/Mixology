@@ -1,7 +1,7 @@
 package com.zemingo.drinksmenu.repo.reactive_store
 
+import com.zemingo.drinksmenu.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.models.PreviousSearchModel
-import com.zemingo.drinksmenu.models.SearchResultModel
 import com.zemingo.drinksmenu.room.SearchDrinkPreviewDao
 import kotlinx.coroutines.flow.Flow
 
@@ -17,7 +17,7 @@ class SearchDrinkPreviewReactiveStore(
         searchDrinkPreviewDao.insertAll(data)
     }
 
-    fun getAllWithDrinks(): Flow<List<SearchResultModel>> {
-        return searchDrinkPreviewDao.getAllWithDrink()
+    fun getAllWithDrinks(): Flow<List<DrinkPreviewModel>> {
+        return searchDrinkPreviewDao.getHistory()
     }
 }
