@@ -20,4 +20,5 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun drinkPreviewDao(): DrinkPreviewDao
     abstract fun ingredientDao(): IngredientDao
+    abstract fun searchesDrinkPreviewDao(): SearchDrinkPreviewDao
 }

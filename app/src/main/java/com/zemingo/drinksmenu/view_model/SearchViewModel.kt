@@ -31,8 +31,10 @@ class SearchViewModel(
 
     val previousSearches: LiveData<List<DrinkPreviewUiModel>> =
         getPreviousSearchResultsUseCase
-            .previousSearches()
-            .map { mapper.apply(it) }
+            .previousSearches
+            .map {
+                mapper.apply(it)
+            }
             .asLiveData()
 
     fun markAsSearched(drink: DrinkPreviewUiModel) {

@@ -1,6 +1,7 @@
 package com.zemingo.drinksmenu.repo.reactive_store
 
 import com.zemingo.drinksmenu.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.models.PreviousSearchModel
 import com.zemingo.drinksmenu.room.DrinkPreviewDao
 import kotlinx.coroutines.flow.Flow
 
@@ -14,5 +15,9 @@ class DrinkPreviewReactiveStore(
 
     override fun storeAll(data: List<DrinkPreviewModel>) {
         drinkPreviewDao.insertAll(data)
+    }
+
+    fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>> {
+        return drinkPreviewDao.getByIds(ids)
     }
 }

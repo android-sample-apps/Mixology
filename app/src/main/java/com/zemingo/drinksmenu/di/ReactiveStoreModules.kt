@@ -6,10 +6,8 @@ import androidx.room.Room
 import com.zemingo.drinksmenu.repo.reactive_store.CategoryReactiveStore
 import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
 import com.zemingo.drinksmenu.repo.reactive_store.IngredientReactiveStore
-import com.zemingo.drinksmenu.room.CategoryDao
-import com.zemingo.drinksmenu.room.DrinkPreviewDao
-import com.zemingo.drinksmenu.room.DrinksDatabase
-import com.zemingo.drinksmenu.room.IngredientDao
+import com.zemingo.drinksmenu.repo.reactive_store.SearchDrinkPreviewReactiveStore
+import com.zemingo.drinksmenu.room.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -28,6 +26,8 @@ val reactiveStoreModule = module {
 
     factory<IngredientDao> { get<DrinksDatabase>().ingredientDao() }
 
+    factory<SearchDrinkPreviewDao> { get<DrinksDatabase>().searchesDrinkPreviewDao() }
+
     factory {
         CategoryReactiveStore(
             categoryDao = get<CategoryDao>()
@@ -43,6 +43,12 @@ val reactiveStoreModule = module {
     factory {
         DrinkPreviewReactiveStore(
             drinkPreviewDao = get<DrinkPreviewDao>()
+        )
+    }
+
+    factory {
+        SearchDrinkPreviewReactiveStore(
+            searchDrinkPreviewDao = get<SearchDrinkPreviewDao>()
         )
     }
 }

@@ -38,11 +38,13 @@ val useCasesModule = module {
 
     factory {
         GetPreviousSearchResultsUseCase(
-            repository = get()
+            searchRepository = get()
         )
     }
 
     factory {
-        MarkAsSearchedDrinkPreviewUseCase()
+        MarkAsSearchedDrinkPreviewUseCase(
+            repository = get()
+        )
     }
 }

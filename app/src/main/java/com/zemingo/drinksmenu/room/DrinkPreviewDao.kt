@@ -28,10 +28,9 @@ interface DrinkPreviewDao {
     @Query("SELECT * FROM DrinkPreviewModel WHERE id IN (:ids)")
     fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>>
 
-    /*@Query("SELECT * FROM DrinkPreviewModel INNER JOIN PreviousSearchModel ON id = drinkId")
-    fun getPreviousSearches(): Flow<List<DrinkPreviewModel>>
-    */
-    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN PreviousSearchModel ON id = drinkId")
+
+        @Query("SELECT * FROM DrinkPreviewModel INNER JOIN PreviousSearchModel ON id = drinkId ")
+//    @Query("SELECT * FROM PreviousSearchModel")
     fun getPreviousSearches(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

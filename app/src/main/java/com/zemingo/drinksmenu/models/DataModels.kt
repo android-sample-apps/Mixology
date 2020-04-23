@@ -1,5 +1,6 @@
 package com.zemingo.drinksmenu.models
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
@@ -24,7 +25,12 @@ data class DrinkPreviewModel(
 @Entity
 data class PreviousSearchModel(
     @PrimaryKey val drinkId: String,
-    val lastViewedTime: Date
+    val lastViewedTime: Long
+)
+
+data class SearchResultModel(
+    @Embedded val searchModel: PreviousSearchModel,
+    @Embedded val resultModel: DrinkPreviewModel
 )
 
 data class DrinkModel(
@@ -32,7 +38,8 @@ data class DrinkModel(
     val name: String,
     val instructions: String,
     val ingredients: Map<String, String>,
-    val thumbnail: String?) {
+    val thumbnail: String?
+) {
 
     fun toStringUi(): String {
         return "id: $id\n\n$name\n\n$instructions\n\n$ingredients"

@@ -8,10 +8,8 @@ import com.zemingo.drinksmenu.repo.mappers.IngredientMapper
 import com.zemingo.drinksmenu.repo.reactive_store.CategoryReactiveStore
 import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
 import com.zemingo.drinksmenu.repo.reactive_store.IngredientReactiveStore
-import com.zemingo.drinksmenu.repo.repositories.CategoryRepository
-import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
-import com.zemingo.drinksmenu.repo.repositories.DrinkRepository
-import com.zemingo.drinksmenu.repo.repositories.IngredientRepository
+import com.zemingo.drinksmenu.repo.reactive_store.SearchDrinkPreviewReactiveStore
+import com.zemingo.drinksmenu.repo.repositories.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -59,6 +57,12 @@ val repoModule = module {
             service = get<CocktailService>(),
             reactiveStore = get<DrinkPreviewReactiveStore>(),
             mapper = get<DrinkPreviewMapper>()
+        )
+    }
+
+    factory {
+        SearchDrinkPreviewRepository(
+            reactiveStore = get<SearchDrinkPreviewReactiveStore>()
         )
     }
 
