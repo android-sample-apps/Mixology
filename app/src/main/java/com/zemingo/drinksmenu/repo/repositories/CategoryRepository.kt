@@ -10,7 +10,7 @@ import java.util.function.Function
 
 class CategoryRepository(
     private val service: CocktailService,
-    private val reactiveStore: ReactiveStore<CategoryModel>,
+    private val reactiveStore: ReactiveStore<String, CategoryModel, Void>,
     private val mapper: Function<DrinksWrapperResponse<CategoryResponse>, List<CategoryModel>>
 ) {
     fun get(): Flow<List<CategoryModel>> {

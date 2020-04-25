@@ -6,17 +6,17 @@ import kotlinx.coroutines.flow.Flow
 
 class SearchDrinkPreviewReactiveStore(
     private val searchDrinkPreviewDao: SearchDrinkPreviewDao
-) : ReactiveStore<PreviousSearchModel> {
+) : ReactiveStore<String, PreviousSearchModel, Void> {
 
-    override fun getAll(): Flow<List<PreviousSearchModel>> {
-        return searchDrinkPreviewDao.getAll()
+    override fun getAll(key: List<String>?): Flow<List<PreviousSearchModel>> {
+        return key?.let { searchDrinkPreviewDao.getAll(it) } ?: searchDrinkPreviewDao.getAll()
     }
 
     override fun storeAll(data: List<PreviousSearchModel>) {
         searchDrinkPreviewDao.insertAll(data)
     }
 
-    /*fun getAllWithDrinks(): Flow<List<DrinkPreviewModel>> {
-        return searchDrinkPreviewDao.getHistory()
-    }*/
+    override fun getByParam(param: Void): Flow<List<PreviousSearchModel>> {
+        TODO("Not yet implemented")
+    }
 }

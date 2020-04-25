@@ -7,17 +7,24 @@ import kotlinx.coroutines.flow.Flow
 
 class DrinkPreviewReactiveStore(
     private val drinkPreviewDao: DrinkPreviewDao
-) : ReactiveStore<DrinkPreviewModel> {
-
-    override fun getAll(): Flow<List<DrinkPreviewModel>> {
-        return drinkPreviewDao.getAll()
-    }
+) : ReactiveStore<String, DrinkPreviewModel, DrinkPreviewParam> {
 
     override fun storeAll(data: List<DrinkPreviewModel>) {
         drinkPreviewDao.insertAll(data)
     }
 
-    fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>> {
-        return drinkPreviewDao.getByIds(ids)
+    override fun getAll(key: List<String>?): Flow<List<DrinkPreviewModel>> {
+        return key?.let { drinkPreviewDao.getByIds(it) } ?: drinkPreviewDao.getAll()
     }
+
+    override fun getByParam(param: DrinkPreviewParam): Flow<List<DrinkPreviewModel>> {
+        return when (param) {
+            DrinkPreviewParam.SearchHistory -> drinkPreviewDao.getPreviousSearches()
+        }
+    }
+
+}
+
+sealed class DrinkPreviewParam {
+    object SearchHistory : DrinkPreviewParam()
 }

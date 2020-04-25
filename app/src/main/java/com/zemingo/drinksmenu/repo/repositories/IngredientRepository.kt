@@ -10,7 +10,7 @@ import java.util.function.Function
 
 class IngredientRepository(
     private val service: CocktailService,
-    private val reactiveStore: ReactiveStore<IngredientModel>,
+    private val reactiveStore: ReactiveStore<String, IngredientModel, Void>,
     private val mapper: Function<DrinksWrapperResponse<IngredientResponse>, List<IngredientModel>>
 ) {
 

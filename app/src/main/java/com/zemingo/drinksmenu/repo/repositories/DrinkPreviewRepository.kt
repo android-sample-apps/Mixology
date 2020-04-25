@@ -1,15 +1,17 @@
 package com.zemingo.drinksmenu.repo.repositories
 
-import com.zemingo.drinksmenu.models.*
+import com.zemingo.drinksmenu.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.models.DrinkPreviewResponse
+import com.zemingo.drinksmenu.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.repo.CocktailService
-import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
+import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewParam
 import com.zemingo.drinksmenu.repo.reactive_store.ReactiveStore
 import kotlinx.coroutines.flow.Flow
 import java.util.function.Function
 
 class DrinkPreviewRepository(
     private val service: CocktailService,
-    private val reactiveStore: ReactiveStore<DrinkPreviewModel>,
+    private val reactiveStore: ReactiveStore<String, DrinkPreviewModel, DrinkPreviewParam>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 

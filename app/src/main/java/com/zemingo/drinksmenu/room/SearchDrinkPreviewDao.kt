@@ -14,6 +14,9 @@ interface SearchDrinkPreviewDao {
     @Query("SELECT * FROM PreviousSearchModel")
     fun getAll(): Flow<List<PreviousSearchModel>>
 
+    @Query("SELECT * FROM PreviousSearchModel WHERE drinkId IN (:ids)")
+    fun getAll(ids: List<String>): Flow<List<PreviousSearchModel>>
+
     @Query("SELECT DrinkPreviewModel.* FROM PreviousSearchModel INNER JOIN DrinkPreviewModel ON id = drinkId ORDER BY lastViewedTime DESC")
     fun getHistory(): Flow<List<DrinkPreviewModel>>
 
