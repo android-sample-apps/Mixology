@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:letterSpacing="0.125"
         android:lines="1"
         android:textColor="@color/header_text_color"
         android:textSize="36sp"
