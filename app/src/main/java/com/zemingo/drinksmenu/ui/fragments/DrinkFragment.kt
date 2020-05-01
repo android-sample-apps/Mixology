@@ -10,10 +10,10 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.fragment_drink.drink_tv
 import kotlinx.android.synthetic.main.fragment_drink_collapsing.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
 

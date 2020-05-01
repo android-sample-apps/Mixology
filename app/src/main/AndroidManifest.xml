@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zemingo.drinksmenu">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,9 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--todo - change screen orientation to full sensors-->
         <activity
             android:name="com.zemingo.drinksmenu.ui.DrinksActivity"
-            android:screenOrientation="fullSensor">
+            android:screenOrientation="sensorPortrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
