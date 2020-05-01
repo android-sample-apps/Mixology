@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
@@ -60,6 +61,9 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
     }
 
     private fun onDrinkPreviewClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
-
+        findNavController().navigate(
+            LandingPageFragmentDirections
+                .actionLandingPageFragmentToDrinkFragment(drinkPreviewUiModel.id)
+        )
     }
 }
