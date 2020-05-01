@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
-import com.zemingo.drinksmenu.ui.VerticalSpaceItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.view_model.DrinkPreviewByCategoryViewModel
 import kotlinx.android.extensions.LayoutContainer
@@ -44,9 +43,9 @@ class DrinkPreviewFragment : Fragment(R.layout.fragment_drink_preview) {
 
     private fun initRecyclerView() {
         drink_preview_rv.apply {
-            addItemDecoration(
-                VerticalSpaceItemDecoration(30)
-            )
+//            addItemDecoration(
+//                VerticalSpaceItemDecoration(30)
+//            )
             adapter = this@DrinkPreviewFragment.adapter
         }
     }

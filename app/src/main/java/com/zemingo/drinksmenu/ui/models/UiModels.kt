@@ -15,3 +15,8 @@ data class LandingPageUiModel(
     val latestArrivals: List<DrinkPreviewUiModel>,
     val recentSearches: List<DrinkPreviewUiModel>
 )
+
+data class IngredientUiModel(
+    val name: String,
+    val thumbnail: String?
+)

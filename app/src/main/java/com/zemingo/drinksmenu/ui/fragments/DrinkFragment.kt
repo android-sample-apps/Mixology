@@ -9,8 +9,8 @@ import androidx.navigation.fragment.navArgs
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.extensions.fromLink
+import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_drink.drink_tv
 import kotlinx.android.synthetic.main.fragment_drink_collapsing.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -39,12 +39,24 @@ class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
     private fun observeDrink() {
         drinkViewModel
             .drink
-            .observe(viewLifecycleOwner, Observer { showDrinkOnScreen(it) })
+            .observe(viewLifecycleOwner, Observer { observeDrink(it) })
     }
 
-    private fun showDrinkOnScreen(drinkModel: DrinkModel) {
+    private fun observeDrink(drinkModel: DrinkModel) {
         drink_header_image.fromLink(drinkModel.thumbnail)
         drink_toolbar.title = drinkModel.name
-        drink_tv.text = drinkModel.toStringUi() + "\n" + drinkModel.toStringUi()
+//        drink_tv.text = drinkModel.toStringUi() + "\n" + drinkModel.toStringUi()
+
+        updateIngredients(
+            listOf(
+                IngredientUiModel("Gin | 2 shots", "https://www.thecocktaildb.com/images/ingredients/gin.png"),
+                IngredientUiModel("Vodka | 1 shot", "https://www.thecocktaildb.com/images/ingredients/Vodka.png"),
+                IngredientUiModel("Amaretto | 3 shots", "https://www.thecocktaildb.com/images/ingredients/Amaretto.png")
+            )
+        )
+    }
+
+    private fun updateIngredients(ingredients: List<IngredientUiModel>) {
+        drink_directions.updateIngredients(ingredients)
     }
 }
