@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -8,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/drink_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="@dimen/app_bar_image_height"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -24,10 +25,12 @@
                 android:id="@+id/drink_header_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/mock_image"
-                app:layout_collapseMode="parallax" />
+                app:layout_collapseMode="parallax"
+                tools:src="@drawable/mock_image"
+                tools:visibility="gone" />
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/drink_toolbar"
@@ -35,8 +38,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/Widget.MaterialComponents.Toolbar"
-                app:title="Mango orange smoothie" />
+                tools:title="Mango orange smoothie" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

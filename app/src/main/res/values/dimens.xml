@@ -3,4 +3,5 @@
     <dimen name="screen_padding">16dp</dimen>
     <dimen name="tile_size">150dp</dimen>
     <dimen name="screen_radius">15dp</dimen>
+    <dimen name="app_bar_image_height">270dp</dimen>
 </resources>
