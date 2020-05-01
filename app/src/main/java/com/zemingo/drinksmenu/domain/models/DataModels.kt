@@ -1,9 +1,8 @@
-package com.zemingo.drinksmenu.models
+package com.zemingo.drinksmenu.domain.models
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity
 data class IngredientModel(

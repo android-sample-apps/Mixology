@@ -1,7 +1,7 @@
 package com.zemingo.drinksmenu.repo.reactive_store
 
-import com.zemingo.drinksmenu.models.PreviousSearchModel
-import com.zemingo.drinksmenu.room.SearchDrinkPreviewDao
+import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
+import com.zemingo.drinksmenu.repo.room.SearchDrinkPreviewDao
 import kotlinx.coroutines.flow.Flow
 
 class SearchDrinkPreviewReactiveStore(

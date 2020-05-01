@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.models
+package com.zemingo.drinksmenu.repo.models
 
 import com.google.gson.annotations.SerializedName
 

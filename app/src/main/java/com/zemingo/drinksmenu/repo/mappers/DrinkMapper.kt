@@ -1,8 +1,8 @@
 package com.zemingo.drinksmenu.repo.mappers
 
-import com.zemingo.drinksmenu.models.DrinkModel
-import com.zemingo.drinksmenu.models.DrinkResponse
-import com.zemingo.drinksmenu.models.DrinksWrapperResponse
+import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.repo.models.DrinkResponse
+import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
 import java.util.function.Function
 
 class DrinkMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel> {

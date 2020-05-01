@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.repo
 
-import com.zemingo.drinksmenu.models.*
+import com.zemingo.drinksmenu.repo.models.*
 import retrofit2.http.GET
 import retrofit2.http.Query
 

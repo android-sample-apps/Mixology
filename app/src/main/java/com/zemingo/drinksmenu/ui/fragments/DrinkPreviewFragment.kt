@@ -11,12 +11,13 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
-import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.VerticalSpaceItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
-import com.zemingo.drinksmenu.view_model.DrinkPreviewByCategoryViewModel
+import com.zemingo.drinksmenu.ui.view_model.DrinkPreviewByCategoryViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_drink_preview.*
-import kotlinx.android.synthetic.main.list_item_drink_preview.view.*
+import kotlinx.android.synthetic.main.tile_item_drink_preview.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -35,10 +36,19 @@ class DrinkPreviewFragment : Fragment(R.layout.fragment_drink_preview) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        drink_preview_rv.adapter = adapter
+        initRecyclerView()
         drinkPreviewViewModel
             .drinkPreviews
             .observe(viewLifecycleOwner, Observer { adapter.update(it) })
+    }
+
+    private fun initRecyclerView() {
+        drink_preview_rv.apply {
+            addItemDecoration(
+                VerticalSpaceItemDecoration(30)
+            )
+            adapter = this@DrinkPreviewFragment.adapter
+        }
     }
 
     private fun onItemClicked(drinkPreview: DrinkPreviewUiModel) {
@@ -58,8 +68,8 @@ class DrinkPreviewAdapter :
 
         fun bind(drinkPreviewUiModel: DrinkPreviewUiModel) {
             containerView.apply {
-                thumbnail_iv.fromLink(drinkPreviewUiModel.thumbnail)
-                name_tv.text = drinkPreviewUiModel.name
+                drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
+                drink_name_tv.text = drinkPreviewUiModel.name
                 setOnClickListener { onClick?.invoke(drinkPreviewUiModel) }
             }
         }
@@ -76,7 +86,7 @@ class DrinkPreviewAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkPreviewViewHolder {
         return DrinkPreviewViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_drink_preview, parent, false)
+                .inflate(R.layout.tile_item_drink_preview, parent, false)
         )
     }
 }

@@ -1,7 +1,7 @@
-package com.zemingo.drinksmenu.room
+package com.zemingo.drinksmenu.repo.room
 
 import androidx.room.*
-import com.zemingo.drinksmenu.models.CategoryModel
+import com.zemingo.drinksmenu.domain.models.CategoryModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

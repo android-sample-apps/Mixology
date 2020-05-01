@@ -1,7 +1,7 @@
 package com.zemingo.drinksmenu.repo.reactive_store
 
-import com.zemingo.drinksmenu.models.CategoryModel
-import com.zemingo.drinksmenu.room.CategoryDao
+import com.zemingo.drinksmenu.domain.models.CategoryModel
+import com.zemingo.drinksmenu.repo.room.CategoryDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 

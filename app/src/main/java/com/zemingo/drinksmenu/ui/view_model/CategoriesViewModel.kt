@@ -1,11 +1,11 @@
-package com.zemingo.drinksmenu.view_model
+package com.zemingo.drinksmenu.ui.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.GetCategoriesUseCase
-import com.zemingo.drinksmenu.models.CategoryModel
-import com.zemingo.drinksmenu.models.CategoryUiModel
+import com.zemingo.drinksmenu.domain.models.CategoryModel
+import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import kotlinx.coroutines.flow.map
 import java.util.function.Function
 

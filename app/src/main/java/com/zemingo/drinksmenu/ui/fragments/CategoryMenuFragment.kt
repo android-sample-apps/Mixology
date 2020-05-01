@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.models.CategoryUiModel
+import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
-import com.zemingo.drinksmenu.view_model.CategoriesViewModel
+import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_category_menu.*
 import kotlinx.android.synthetic.main.list_item_category.view.*

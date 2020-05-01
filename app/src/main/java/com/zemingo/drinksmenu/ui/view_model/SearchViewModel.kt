@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.view_model
+package com.zemingo.drinksmenu.ui.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.GetDrinkPreviewUseCase
 import com.zemingo.drinksmenu.domain.GetPreviousSearchResultsUseCase
 import com.zemingo.drinksmenu.domain.MarkAsSearchedDrinkPreviewUseCase
-import com.zemingo.drinksmenu.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import timber.log.Timber

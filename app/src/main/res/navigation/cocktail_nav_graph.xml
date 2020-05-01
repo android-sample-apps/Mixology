@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cocktail_nav_graph"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/landingPageFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -60,6 +60,11 @@
             android:id="@+id/action_searchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/landingPageFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.LandingPageFragment"
+        android:label="LandingPageFragment"
+        tools:layout="@layout/fragment_landing_page" />
 
 
 </navigation>

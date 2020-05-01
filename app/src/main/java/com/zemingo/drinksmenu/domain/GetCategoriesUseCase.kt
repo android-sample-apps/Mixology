@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.domain
 
-import com.zemingo.drinksmenu.models.CategoryModel
+import com.zemingo.drinksmenu.domain.models.CategoryModel
 import com.zemingo.drinksmenu.repo.repositories.CategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

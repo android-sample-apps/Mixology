@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_padding">
+
+        <com.zemingo.drinksmenu.ui.views.HeaderView
+            android:id="@+id/latest_arrivals_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:headerText="@string/lp_latest_drinks_header"
+            app:layout_constraintBottom_toTopOf="@id/latest_arrivals_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:secondaryText="@string/lp_latest_drinks_secondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/latest_arrivals_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/most_popular_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/latest_arrivals_header"
+            tools:listitem="@layout/tile_item_drink_preview" />
+
+        <com.zemingo.drinksmenu.ui.views.HeaderView
+            android:id="@+id/most_popular_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:headerText="@string/lp_most_popular_drinks_header"
+            app:layout_constraintBottom_toTopOf="@id/most_popular_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/latest_arrivals_rv"
+            app:secondaryText="@string/lp_most_popular_drinks_secondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/most_popular_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/most_popular_header"
+            tools:listitem="@layout/tile_item_drink_preview" />
+
+        <com.zemingo.drinksmenu.ui.views.HeaderView
+            android:id="@+id/recent_searches_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:headerText="@string/lp_recent_searches_drinks_header"
+            app:layout_constraintBottom_toTopOf="@id/recent_searches_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/most_popular_rv"
+            app:secondaryText="@string/lp_recent_searches_drinks_secondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recent_searches_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recent_searches_header"
+            tools:listitem="@layout/tile_item_drink_preview" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

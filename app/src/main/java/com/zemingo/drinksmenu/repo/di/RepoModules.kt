@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.di
+package com.zemingo.drinksmenu.repo.di
 
 import com.zemingo.drinksmenu.repo.CocktailService
 import com.zemingo.drinksmenu.repo.mappers.CategoryMapper

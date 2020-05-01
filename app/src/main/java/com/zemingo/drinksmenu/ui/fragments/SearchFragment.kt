@@ -13,8 +13,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
-import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
-import com.zemingo.drinksmenu.view_model.SearchViewModel
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.view_model.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.list_item_suggestion.view.*
 import org.koin.android.viewmodel.ext.android.viewModel

@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.di
+package com.zemingo.drinksmenu.domain.di
 
 import com.zemingo.drinksmenu.domain.*
 import org.koin.dsl.module
@@ -44,6 +44,18 @@ val useCasesModule = module {
 
     factory {
         MarkAsSearchedDrinkPreviewUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
+        GetMostPopularUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
+        GetLatestArrivalsUseCase(
             repository = get()
         )
     }

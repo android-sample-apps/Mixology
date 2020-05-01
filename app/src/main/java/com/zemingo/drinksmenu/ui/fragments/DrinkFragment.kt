@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.models.DrinkModel
-import com.zemingo.drinksmenu.view_model.DrinkViewModel
+import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

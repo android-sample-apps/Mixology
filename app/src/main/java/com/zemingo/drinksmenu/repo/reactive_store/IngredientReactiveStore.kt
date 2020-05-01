@@ -1,7 +1,7 @@
 package com.zemingo.drinksmenu.repo.reactive_store
 
-import com.zemingo.drinksmenu.models.IngredientModel
-import com.zemingo.drinksmenu.room.IngredientDao
+import com.zemingo.drinksmenu.domain.models.IngredientModel
+import com.zemingo.drinksmenu.repo.room.IngredientDao
 import kotlinx.coroutines.flow.Flow
 
 class IngredientReactiveStore(

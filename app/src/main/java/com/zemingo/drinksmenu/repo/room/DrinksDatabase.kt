@@ -1,11 +1,11 @@
-package com.zemingo.drinksmenu.room
+package com.zemingo.drinksmenu.repo.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.zemingo.drinksmenu.models.CategoryModel
-import com.zemingo.drinksmenu.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.models.IngredientModel
-import com.zemingo.drinksmenu.models.PreviousSearchModel
+import com.zemingo.drinksmenu.domain.models.CategoryModel
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.domain.models.IngredientModel
+import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
 
 @Database(
     entities = [

@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.domain
 
-import com.zemingo.drinksmenu.models.PreviousSearchModel
+import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
 import com.zemingo.drinksmenu.repo.repositories.SearchDrinkPreviewRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

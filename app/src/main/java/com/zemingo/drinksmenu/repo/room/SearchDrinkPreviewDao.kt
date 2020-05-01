@@ -1,11 +1,11 @@
-package com.zemingo.drinksmenu.room
+package com.zemingo.drinksmenu.repo.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.zemingo.drinksmenu.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.models.PreviousSearchModel
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

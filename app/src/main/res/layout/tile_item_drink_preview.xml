@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/image_container"
+        android:layout_width="@dimen/tile_size"
+        android:layout_height="@dimen/tile_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/drink_image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mock_image" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/drink_name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textSize="20sp"
+        android:layout_marginTop="4dp"
+        android:lines="2"
+        app:fontFamily="@font/fty_delirium_ncv"
+        android:textColor="@color/tile_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_container"
+        tools:text="Mango orange smoothie dddddssddsds" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

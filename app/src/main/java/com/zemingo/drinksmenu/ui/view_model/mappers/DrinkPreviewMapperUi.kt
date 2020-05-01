@@ -1,7 +1,7 @@
-package com.zemingo.drinksmenu.view_model.mappers
+package com.zemingo.drinksmenu.ui.view_model.mappers
 
-import com.zemingo.drinksmenu.models.DrinkPreviewUiModel
-import com.zemingo.drinksmenu.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import java.util.function.Function
 
 class DrinkPreviewMapperUi : Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>> {
