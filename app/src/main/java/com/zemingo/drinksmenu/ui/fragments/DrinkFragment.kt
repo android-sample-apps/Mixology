@@ -2,17 +2,22 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import coil.api.load
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
+import kotlinx.android.synthetic.main.fragment_drink.drink_tv
+import kotlinx.android.synthetic.main.fragment_drink_collapsing.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class DrinkFragment : Fragment(R.layout.fragment_drink) {
+class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
 
     private val args: DrinkFragmentArgs by navArgs()
     private val drinkViewModel: DrinkViewModel by viewModel()
@@ -23,12 +28,21 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initToolbar()
+        observeDrink()
+    }
+
+    private fun initToolbar() {
+    }
+
+    private fun observeDrink() {
         drinkViewModel
             .drink
             .observe(viewLifecycleOwner, Observer { showDrinkOnScreen(it) })
     }
 
     private fun showDrinkOnScreen(drinkModel: DrinkModel) {
-        drink_tv.text = drinkModel.toStringUi()
+//        drink_header_image.fromLink(drinkModel.thumbnail)
+        drink_tv.text = drinkModel.toStringUi() + "\n" + drinkModel.toStringUi()
     }
 }
