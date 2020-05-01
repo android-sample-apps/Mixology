@@ -9,7 +9,7 @@
         android:id="@+id/image_container"
         android:layout_width="@dimen/tile_size"
         android:layout_height="@dimen/tile_size"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="@dimen/screen_radius"
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

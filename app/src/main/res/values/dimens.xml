@@ -2,4 +2,5 @@
 <resources>
     <dimen name="screen_padding">16dp</dimen>
     <dimen name="tile_size">150dp</dimen>
+    <dimen name="screen_radius">15dp</dimen>
 </resources>
