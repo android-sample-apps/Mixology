@@ -46,7 +46,7 @@
         android:id="@+id/drinkFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
         android:label="DrinkFragment"
-        tools:layout="@layout/fragment_drink">
+        tools:layout="@layout/fragment_drink_collapsing">
         <argument
             android:name="id"
             app:argType="string" />
