@@ -57,6 +57,6 @@ class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
     }
 
     private fun updateIngredients(ingredients: List<IngredientUiModel>) {
-        drink_directions.updateIngredients(ingredients)
+//        drink_directions.updateIngredients(ingredients)
     }
 }

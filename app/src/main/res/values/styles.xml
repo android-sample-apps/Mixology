@@ -30,6 +30,7 @@
         <item name="fontFamily">@font/fty_delirium_ncv</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">26sp</item>
+        <item name="android:letterSpacing">0.1</item>
     </style>
 
     <style name="MockText">
