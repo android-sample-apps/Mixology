@@ -2,6 +2,9 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.ui.adapters.IngredientAdapter
@@ -20,11 +23,13 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
     private fun initIngredientsRecyclerView() {
         ingredients_rv.run {
             adapter = ingredientsAdapter
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
+                setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
+            }.let { addItemDecoration(it) }
         }
     }
 
     override fun onDrinkReceived(drinkModel: DrinkModel) {
-
         drinkModel.ingredients.map {
             IngredientUiModel(
                 name = it.key,

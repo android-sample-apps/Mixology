@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingTop="@dimen/screen_padding"
+    android:paddingBottom="@dimen/screen_padding"
     android:layout_height="wrap_content">
 
     <!--<androidx.appcompat.widget.AppCompatImageView
@@ -23,7 +25,7 @@
         android:layout_height="wrap_content"
         android:letterSpacing="0.2"
         android:textColor="@color/header_text_color"
-        android:textSize="26sp"
+        android:textSize="18sp"
         app:fontFamily="@font/jesa_script_regular"
         app:layout_constraintBottom_toTopOf="@id/ingredient_quantity_tv"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +39,7 @@
         android:layout_height="wrap_content"
         android:letterSpacing="0.1"
         android:textColor="@color/secondary_text_color"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:fontFamily="@font/jesa_script_regular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/ingredient_name_tv"
