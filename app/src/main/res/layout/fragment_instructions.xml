@@ -7,8 +7,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
-        android:scrollbars="none"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,12 +17,10 @@
             android:id="@+id/instructions_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/fty_delirium_ncv"
-            android:letterSpacing="0.05"
             android:lineSpacingMultiplier="1.3"
+            app:fontFamily="@font/barca"
             android:text="@string/long_mock_text"
-            android:textSize="22sp"
-            app:fontFamily="@font/fty_delirium_ncv" />
+            android:textSize="24sp" />
 
     </androidx.core.widget.NestedScrollView>
 
