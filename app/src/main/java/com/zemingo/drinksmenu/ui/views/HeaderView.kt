@@ -22,12 +22,6 @@ class HeaderView @JvmOverloads constructor(
             header_tv.text = value
         }
 
-    var secondaryText: CharSequence? = null
-        set(value) {
-            field = value
-            secondary_tv.text = value
-        }
-
     private fun initAttributes(attrs: AttributeSet?) {
         context.theme.obtainStyledAttributes(
             attrs,
@@ -35,7 +29,6 @@ class HeaderView @JvmOverloads constructor(
         ).apply {
             try {
                 headerText = getStringFromResourceId(R.styleable.HeaderView_headerText)
-                secondaryText = getStringFromResourceId(R.styleable.HeaderView_secondaryText)
             } finally {
                 recycle()
             }

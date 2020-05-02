@@ -19,8 +19,7 @@
             app:layout_constraintBottom_toTopOf="@id/latest_arrivals_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:secondaryText="@string/lp_latest_drinks_secondary" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/latest_arrivals_rv"
@@ -43,8 +42,7 @@
             app:layout_constraintBottom_toTopOf="@id/most_popular_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/latest_arrivals_rv"
-            app:secondaryText="@string/lp_most_popular_drinks_secondary" />
+            app:layout_constraintTop_toBottomOf="@id/latest_arrivals_rv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/most_popular_rv"
@@ -66,8 +64,7 @@
             app:layout_constraintBottom_toTopOf="@id/recent_searches_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/most_popular_rv"
-            app:secondaryText="@string/lp_recent_searches_drinks_secondary" />
+            app:layout_constraintTop_toBottomOf="@id/most_popular_rv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recent_searches_rv"

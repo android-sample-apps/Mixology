@@ -33,7 +33,7 @@
         android:ellipsize="end"
         android:lines="2"
         android:textColor="@color/tile_text_color"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:fontFamily="@font/fty_delirium_ncv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

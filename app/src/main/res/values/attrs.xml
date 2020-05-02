@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="HeaderView">
         <attr name="headerText" format="reference" />
-        <attr name="secondaryText" format="reference" />
     </declare-styleable>
 
 </resources>
