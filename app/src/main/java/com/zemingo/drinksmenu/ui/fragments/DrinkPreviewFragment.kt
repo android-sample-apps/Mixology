@@ -70,7 +70,7 @@ class DrinkPreviewAdapter :
             containerView.apply {
                 drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 drink_name_tv.text = drinkPreviewUiModel.name
-                setOnClickListener { onClick?.invoke(drinkPreviewUiModel) }
+                image_container.setOnClickListener { onClick?.invoke(drinkPreviewUiModel) }
             }
         }
     }
