@@ -18,5 +18,6 @@ data class LandingPageUiModel(
 
 data class IngredientUiModel(
     val name: String,
+    val quantity: String,
     val thumbnail: String?
 )

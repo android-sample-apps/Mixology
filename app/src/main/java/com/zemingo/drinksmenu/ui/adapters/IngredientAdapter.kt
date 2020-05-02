@@ -18,8 +18,8 @@ class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.Ingre
 
         fun bind(ingredient: IngredientUiModel) {
             containerView.run {
-                ingredient_iv.fromLink(ingredient.thumbnail)
                 ingredient_name_tv.text = ingredient.name
+                ingredient_quantity_tv.text = ingredient.quantity
             }
         }
     }

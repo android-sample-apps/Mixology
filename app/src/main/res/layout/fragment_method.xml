@@ -14,13 +14,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/instructions_tv"
+            android:id="@+id/method_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.3"
             app:fontFamily="@font/barca"
             android:text="@string/long_mock_text"
-            android:textSize="24sp" />
+            android:textSize="@dimen/drink_content_text_size" />
 
     </androidx.core.widget.NestedScrollView>
 

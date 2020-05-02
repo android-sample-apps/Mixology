@@ -13,13 +13,13 @@ import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink_collapsing.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
+class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink_collapsing) {
 
     private val args: DrinkFragmentArgs by navArgs()
-    private val drinkViewModel: DrinkViewModel by viewModel()
     private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
 
     init {
@@ -29,7 +29,6 @@ class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initInfoPagerAdapter()
-        observeDrink()
     }
 
     private fun initInfoPagerAdapter() {
@@ -41,25 +40,8 @@ class DrinkFragment : Fragment(R.layout.fragment_drink_collapsing) {
         info_vp.currentItem = 0
     }
 
-    private fun observeDrink() {
-        drinkViewModel
-            .drink
-            .observe(viewLifecycleOwner, Observer { observeDrink(it) })
-    }
-
-    private fun observeDrink(drinkModel: DrinkModel) {
+    override fun onDrinkReceived(drinkModel: DrinkModel) {
         drink_header_image.fromLink(drinkModel.thumbnail)
         drink_toolbar.title = drinkModel.name
-        /*updateIngredients(
-            listOf(
-                IngredientUiModel("Gin | 2 shots", "https://www.thecocktaildb.com/images/ingredients/gin.png"),
-                IngredientUiModel("Vodka | 1 shot", "https://www.thecocktaildb.com/images/ingredients/Vodka.png"),
-                IngredientUiModel("Amaretto | 3 shots", "https://www.thecocktaildb.com/images/ingredients/Amaretto.png")
-            )
-        )*/
     }
-
-//    private fun updateIngredients(ingredients: List<IngredientUiModel>) {
-//        drink_directions.updateIngredients(ingredients)
-//    }
 }
