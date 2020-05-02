@@ -3,13 +3,13 @@ package com.zemingo.drinksmenu.repo.repositories
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
-import com.zemingo.drinksmenu.repo.CocktailService
+import com.zemingo.drinksmenu.repo.DrinkService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.util.function.Function
 
 class DrinkRepository(
-    private val service: CocktailService,
+    private val service: DrinkService,
     private val mapper: Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel>
 ) {
     private suspend fun getById(id: String): DrinkModel {

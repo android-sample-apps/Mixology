@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
@@ -76,8 +77,7 @@ private class CategoryAdapter : DiffAdapter<CategoryUiModel, CategoryAdapter.Cat
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         return CategoryViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.list_item_category, parent, false)
+            parent.viewHolderInflate(R.layout.list_item_category)
         )
     }
 }

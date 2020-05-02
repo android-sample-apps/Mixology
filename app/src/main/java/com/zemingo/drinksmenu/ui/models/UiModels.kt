@@ -1,5 +1,8 @@
 package com.zemingo.drinksmenu.ui.models
 
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+
 data class CategoryUiModel(
     val name: String
 )
@@ -7,6 +10,18 @@ data class CategoryUiModel(
 data class DrinkPreviewUiModel(
     val id: String,
     val name: String,
+    val thumbnail: String?
+)
+
+data class DrinkUiModel(
+    val id: String,
+    val name: String,
+    val instructions: List<SpannableString>,
+    val ingredients: List<IngredientUiModel>,
+    val category: String,
+    val alcoholic: String,
+    val glass: String,
+    val video: String?,
     val thumbnail: String?
 )
 
@@ -19,5 +34,5 @@ data class LandingPageUiModel(
 data class IngredientUiModel(
     val name: String,
     val quantity: String,
-    val thumbnail: String?
+    val thumbnail: String? = null
 )

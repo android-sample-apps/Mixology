@@ -3,13 +3,13 @@ package com.zemingo.drinksmenu.repo.repositories
 import com.zemingo.drinksmenu.domain.models.CategoryModel
 import com.zemingo.drinksmenu.repo.models.CategoryResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
-import com.zemingo.drinksmenu.repo.CocktailService
+import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.reactive_store.ReactiveStore
 import kotlinx.coroutines.flow.Flow
 import java.util.function.Function
 
 class CategoryRepository(
-    private val service: CocktailService,
+    private val service: DrinkService,
     private val reactiveStore: ReactiveStore<String, CategoryModel, Void>,
     private val mapper: Function<DrinksWrapperResponse<CategoryResponse>, List<CategoryModel>>
 ) {

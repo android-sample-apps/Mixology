@@ -1,26 +1,22 @@
 package com.zemingo.drinksmenu.ui.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.zemingo.drinksmenu.domain.GetDrinkUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkModel
-import com.zemingo.drinksmenu.repo.repositories.DrinkRepository
-import kotlinx.coroutines.flow.collect
+import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.util.function.Function
 
 class DrinkViewModel(
-    private val drinkRepository: DrinkRepository
+    getDrinkUseCase: GetDrinkUseCase,
+    mapper: Function<DrinkModel, DrinkUiModel>
 ) : ViewModel() {
 
-    private val _drink = MutableLiveData<DrinkModel>()
-    val drink: LiveData<DrinkModel> = _drink
+    val drink: LiveData<DrinkUiModel> =
+        getDrinkUseCase
+            .drink
+            .map { mapper.apply(it) }
+            .asLiveData()
 
-    fun getById(id: String) {
-        viewModelScope.launch {
-            drinkRepository
-                .get(id)
-                .collect { _drink.postValue(it) }
-        }
-    }
 }

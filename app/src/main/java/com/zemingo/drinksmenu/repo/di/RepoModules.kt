@@ -1,6 +1,6 @@
 package com.zemingo.drinksmenu.repo.di
 
-import com.zemingo.drinksmenu.repo.CocktailService
+import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.mappers.CategoryMapper
 import com.zemingo.drinksmenu.repo.mappers.DrinkMapper
 import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
@@ -27,18 +27,18 @@ val repoModule = module {
             .build()
     }
 
-    single<CocktailService> {
+    single<DrinkService> {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://www.thecocktaildb.com/api/json/v1/1/")
-            .build().create(CocktailService::class.java)
+            .build().create(DrinkService::class.java)
     }
 
 
     factory {
         CategoryRepository(
-            service = get<CocktailService>(),
+            service = get<DrinkService>(),
             reactiveStore = get<CategoryReactiveStore>(),
             mapper = get<CategoryMapper>()
         )
@@ -46,7 +46,7 @@ val repoModule = module {
 
     factory {
         IngredientRepository(
-            service = get<CocktailService>(),
+            service = get<DrinkService>(),
             reactiveStore = get<IngredientReactiveStore>(),
             mapper = get<IngredientMapper>()
         )
@@ -54,7 +54,7 @@ val repoModule = module {
 
     factory {
         DrinkPreviewRepository(
-            service = get<CocktailService>(),
+            service = get<DrinkService>(),
             reactiveStore = get<DrinkPreviewReactiveStore>(),
             mapper = get<DrinkPreviewMapper>()
         )
@@ -69,7 +69,7 @@ val repoModule = module {
 
     factory {
         DrinkRepository(
-            service = get<CocktailService>(),
+            service = get<DrinkService>(),
             mapper = get<DrinkMapper>()
         )
     }

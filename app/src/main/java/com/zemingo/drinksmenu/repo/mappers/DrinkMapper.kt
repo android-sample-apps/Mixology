@@ -13,7 +13,11 @@ class DrinkMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel> {
                 name = strDrink,
                 ingredients = ingredientMap(this),
                 instructions = strInstructions,
-                thumbnail = strDrinkThumb
+                thumbnail = strDrinkThumb,
+                alcoholic = strAlcoholic,
+                category = strCategory,
+                glass = strGlass,
+                video = strVideo
             )
         }
     }

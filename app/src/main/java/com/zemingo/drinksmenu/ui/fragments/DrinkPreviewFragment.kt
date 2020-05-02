@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
+import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.view_model.DrinkPreviewByCategoryViewModel
@@ -84,8 +85,7 @@ class DrinkPreviewAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkPreviewViewHolder {
         return DrinkPreviewViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.tile_item_drink_preview, parent, false)
+            parent.viewHolderInflate(R.layout.tile_item_drink_preview)
         )
     }
 }

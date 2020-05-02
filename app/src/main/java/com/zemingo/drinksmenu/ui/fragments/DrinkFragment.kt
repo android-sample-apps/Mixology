@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.extensions.clearTranslucentStatusBar
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.translucentStatusBar
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
+import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.utils.AppBarStateChangeListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.core.parameter.parametersOf
 
 
 class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
@@ -24,12 +24,8 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
 
-    init {
-        lifecycleScope.launchWhenStarted { getViewModel().getById(args.id) }
-    }
-
     override fun getViewModel(): DrinkViewModel {
-        return getViewModel<DrinkViewModel>()
+        return getViewModel { parametersOf(args.id) }
     }
 
     override fun onCreateView(
@@ -84,8 +80,8 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         info_vp.currentItem = 0
     }
 
-    override fun onDrinkReceived(drinkModel: DrinkModel) {
-        drink_header_image.fromLink(drinkModel.thumbnail)
-        drink_toolbar.title = drinkModel.name
+    override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+        drink_header_image.fromLink(drinkUiModel.thumbnail)
+        drink_toolbar.title = drinkUiModel.name
     }
 }
