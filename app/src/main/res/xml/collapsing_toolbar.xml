@@ -17,8 +17,9 @@
         <Constraint
             android:id="@+id/drink_title"
             android:layout_width="0dp"
+            android:layout_marginBottom="20dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/info_container"
+            app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
             app:layout_constraintEnd_toEndOf="@id/info_container"
             app:layout_constraintStart_toStartOf="@id/info_container" />
 
@@ -40,12 +41,11 @@
             android:id="@id/info_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="visible"
             android:layout_marginStart="@dimen/screen_padding"
             android:layout_marginEnd="@dimen/screen_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/drink_header_image" />
+            app:layout_constraintTop_toBottomOf="@id/drink_title" />
 
         <Constraint
             android:id="@id/tabs"
@@ -82,11 +82,11 @@
         </Constraint>
 
         <Constraint android:id="@id/info_container"
-            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/screen_padding"
             android:layout_marginEnd="@dimen/screen_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/drink_header_image"/>
 
         <Constraint

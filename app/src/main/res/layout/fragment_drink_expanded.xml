@@ -27,7 +27,7 @@
         android:layout_marginEnd="@dimen/screen_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/drink_header_image" />
+        app:layout_constraintTop_toBottomOf="@id/drink_title" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/drink_title"
@@ -40,7 +40,8 @@
         android:textColor="@color/white"
         android:textSize="52sp"
         app:fontFamily="@font/fty_delirium_neon_ncv"
-        app:layout_constraintBottom_toTopOf="@id/info_container"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
         app:layout_constraintEnd_toEndOf="@id/info_container"
         app:layout_constraintStart_toStartOf="@id/info_container"
         tools:text="Mango Orange smoothie" />
