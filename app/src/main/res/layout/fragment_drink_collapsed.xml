@@ -21,6 +21,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.36" />
 
+    <!-- Transitioned -->
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/drink_header_image"
         android:layout_width="0dp"
@@ -44,20 +45,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/card_guideline" />
 
+    <!-- Transitioned -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/drink_title"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@color/white"
-        android:textSize="52sp"
+        android:textSize="42sp"
         app:fontFamily="@font/fty_delirium_neon_ncv"
-        app:layout_constraintBottom_toTopOf="@id/info_container"
-        app:layout_constraintEnd_toEndOf="@id/info_container"
-        app:layout_constraintStart_toStartOf="@id/info_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="Mango Orange smoothie" />
 
     <com.google.android.material.tabs.TabLayout

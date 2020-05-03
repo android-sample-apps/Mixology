@@ -5,29 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    app:layoutDescription="@xml/collapsing_toolbar"
     app:showPaths="false">
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/image_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/card_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/drink_header_image"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:adjustViewBounds="true"
+        android:layout_height="@dimen/app_bar_image_height"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@id/image_guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -42,7 +27,7 @@
         android:layout_marginEnd="@dimen/screen_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card_guideline" />
+        app:layout_constraintTop_toBottomOf="@id/drink_header_image" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/drink_title"
