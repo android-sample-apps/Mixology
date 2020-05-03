@@ -48,36 +48,16 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
-                style="@style/Widget.MaterialComponents.TabLayout.Colored"
+                style="@style/BlackAndWhiteTab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:tabIndicatorColor="@color/black"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/black"
-                app:tabTextAppearance="@style/TabTextAppearance"
-                app:tabTextColor="@color/tile_text_color" />
+                app:tabMode="fixed" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/screen_padding"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        app:backgroundTint="@color/white"
-        app:borderWidth="0dp"
-        app:fabSize="normal"
-        app:layout_anchor="@id/drink_app_bar"
-        app:layout_anchorGravity="bottom|right|end"
-        app:srcCompat="@drawable/ic_glass_beer"
-        app:tint="@color/black" />-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/info_vp"

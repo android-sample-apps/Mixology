@@ -14,12 +14,12 @@ import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.utils.AppBarStateChangeListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_drink.*
+import kotlinx.android.synthetic.main.fragment_drink_expanded.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 
-class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
+class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink_expanded) {
 
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
@@ -57,10 +57,10 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     }
 
     private fun initAppBar() {
-        drink_app_bar.addOnOffsetChangedListener(
+        /*drink_app_bar.addOnOffsetChangedListener(
             AppBarStateChangeListener { _, state ->
                 onAppBarStateChanged(state)
-            })
+            })*/
     }
 
     private fun onAppBarStateChanged(state: AppBarStateChangeListener.State) {
@@ -81,7 +81,18 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+        updateDrinkImage(drinkUiModel)
+        updateInfoCard(drinkUiModel)
+//        drink_toolbar.title = drinkUiModel.name
+    }
+
+    private fun updateDrinkImage(drinkUiModel: DrinkUiModel) {
         drink_header_image.fromLink(drinkUiModel.thumbnail)
-        drink_toolbar.title = drinkUiModel.name
+    }
+
+    private fun updateInfoCard(drinkUiModel: DrinkUiModel) {
+        alcoholic_tv.text = drinkUiModel.alcoholic
+        category_tv.text = drinkUiModel.category
+        glass_tv.text = drinkUiModel.glass
     }
 }
