@@ -18,6 +18,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initHomePagerAdapter() {
         val homeAdapter = HomePagerAdapter(this@HomeFragment)
         home_vp.run {
+            isUserInputEnabled = false
             adapter = homeAdapter
             TabLayoutMediator(home_tabs, this) { tab, position ->
                 tab.text = getString(homeAdapter.title(position))
