@@ -82,9 +82,13 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink_expanded) {
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+        updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
-//        drink_toolbar.title = drinkUiModel.name
+    }
+
+    private fun updateDrinkTitle(drinkUiModel: DrinkUiModel) {
+        drink_title.text = drinkUiModel.name
     }
 
     private fun updateDrinkImage(drinkUiModel: DrinkUiModel) {

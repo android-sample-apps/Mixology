@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    app:showPaths="true">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/image_guideline"
@@ -32,16 +33,32 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/mock_image" />
 
-    <include layout="@layout/layout_drink_label"
+    <include
         android:id="@+id/info_container"
+        layout="@layout/layout_drink_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/screen_padding"
         android:layout_marginEnd="@dimen/screen_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card_guideline"
-        />
+        app:layout_constraintTop_toTopOf="@id/card_guideline" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/drink_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:textColor="@color/white"
+        android:textSize="52sp"
+        app:fontFamily="@font/fty_delirium_neon_ncv"
+        app:layout_constraintBottom_toTopOf="@id/info_container"
+        app:layout_constraintEnd_toEndOf="@id/info_container"
+        app:layout_constraintStart_toStartOf="@id/info_container"
+        tools:text="Mango Orange smoothie" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
