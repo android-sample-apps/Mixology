@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/mock_image" />
-
+76u
     <include
         android:id="@+id/info_container"
         layout="@layout/layout_drink_label"
