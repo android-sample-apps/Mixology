@@ -34,12 +34,12 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink_expanded) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        translucentStatusBar()
+//        translucentStatusBar()
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onDestroyView() {
-        clearTranslucentStatusBar()
+//        clearTranslucentStatusBar()
         super.onDestroyView()
     }
 
