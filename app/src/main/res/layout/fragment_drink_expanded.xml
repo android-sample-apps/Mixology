@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     app:layoutDescription="@xml/collapsing_toolbar"
     app:showPaths="false">
 
@@ -13,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/app_bar_image_height"
         android:scaleType="centerCrop"
+        android:fitsSystemWindows="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,6 +34,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:shadowColor="@color/black"
+        android:fitsSystemWindows="true"
+        android:letterSpacing="0.1"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
