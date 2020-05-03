@@ -1,12 +1,9 @@
 package com.zemingo.drinksmenu.ui.adapters
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.transform.CircleCropTransformation
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import kotlinx.android.extensions.LayoutContainer
