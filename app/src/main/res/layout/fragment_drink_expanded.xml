@@ -35,7 +35,6 @@
         android:layout_height="wrap_content"
         android:shadowColor="@color/black"
         android:fitsSystemWindows="true"
-        android:letterSpacing="0.1"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"

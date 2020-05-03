@@ -10,6 +10,22 @@
             app:dragDirection="dragUp"
             app:touchAnchorId="@id/info_vp"
             app:touchAnchorSide="top" />
+        <KeyFrameSet>
+            <KeyAttribute
+                app:framePosition="60"
+                app:motionTarget="@id/drink_header_image">
+                <CustomAttribute
+                    app:attributeName="imageAlpha"
+                    app:customIntegerValue="255" />
+            </KeyAttribute>
+            <KeyAttribute
+                app:framePosition="90"
+                app:motionTarget="@id/drink_header_image">
+                <CustomAttribute
+                    app:attributeName="imageAlpha"
+                    app:customIntegerValue="0" />
+            </KeyAttribute>
+        </KeyFrameSet>
 
     </Transition>
 
