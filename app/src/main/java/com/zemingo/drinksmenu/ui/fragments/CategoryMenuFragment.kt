@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
+import com.zemingo.drinksmenu.ui.SpacerItemDecoration
+import com.zemingo.drinksmenu.ui.adapters.CategoryAdapter
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
+import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
@@ -31,7 +35,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             onClick = { onCategoryClicked(it) }
         }
 
-    private val drinkPreviewAdapter = DrinkPreviewAdapter()
+    private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
         .apply {
             onClick = { onDrinkClicked(it) }
         }
@@ -39,6 +43,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCategoriesMenu()
+        initDrinkPreviews()
         observeCategories()
         observeDrinkPreviews()
     }
@@ -50,8 +55,19 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             }.let { addItemDecoration(it) }
         }
+    }
 
-        categories_preview_rv.adapter = drinkPreviewAdapter
+    private fun initDrinkPreviews() {
+        categories_preview_rv.run {
+            adapter = drinkPreviewAdapter
+            addItemDecoration(
+                SpacerItemDecoration(
+                    right = 4.dpToPx().toInt(),
+                    left = 4.dpToPx().toInt(),
+                    bottom = 4.dpToPx().toInt()
+                )
+            )
+        }
     }
 
     private fun observeCategories() {
@@ -102,35 +118,5 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             transitionToEnd()
         }
     }
-
-    private class CategoryAdapter :
-        DiffAdapter<CategoryUiModel, CategoryAdapter.CategoryViewHolder>() {
-
-        var onClick: ((CategoryUiModel) -> Unit)? = null
-
-        inner class CategoryViewHolder(override val containerView: View) :
-            RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-            fun bind(data: CategoryUiModel) {
-                containerView.apply {
-                    setOnClickListener { onClick?.invoke(data) }
-                    category_name_tv.text = data.name
-                }
-            }
-        }
-
-        override fun onBindViewHolder(
-            holder: CategoryViewHolder,
-            data: CategoryUiModel,
-            position: Int
-        ) {
-            holder.bind(data)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-            return CategoryViewHolder(
-                parent.viewHolderInflate(R.layout.list_item_category)
-            )
-        }
-    }
 }
+
