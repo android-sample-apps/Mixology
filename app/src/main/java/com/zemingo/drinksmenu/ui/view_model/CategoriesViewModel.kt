@@ -23,6 +23,9 @@ class CategoriesViewModel(
         categoriesUseCase
             .categories
             .map { categoriesMapper.apply(it) }
+            /*.map { it.toMutableList().apply {
+                addAll(it.map { it.copy(name = "${it.name}_more") })
+            } }*/
             .asLiveData()
 
     val drinkPreviews: LiveData<List<DrinkPreviewUiModel>> =

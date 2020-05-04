@@ -3,10 +3,10 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,9 +29,9 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
         }
 
     private val drinkPreviewAdapter = DrinkPreviewAdapter()
-        /*.apply {
-            onClick = { onItemClicked(it) }
-        }*/
+    /*.apply {
+        onClick = { onItemClicked(it) }
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +49,6 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
         }
 
         categories_preview_rv.adapter = drinkPreviewAdapter
-
     }
 
     private fun observeCategories() {
@@ -65,42 +64,61 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
-        /*findNavController()
-            .navigate(
-                HomeFragmentDirections.actionHomeFragmentToDrinkPreviewFragment(
-                    categoryUiModel.name
-                )
-            )*/
-        categoriesViewModel.updateCategory(categoryUiModel.name)
-    }
-}
+        selected_title.text = categoryUiModel.name
+        category_menu_ml.run {
+            setTransitionListener(object : MotionLayout.TransitionListener {
+                override fun onTransitionTrigger(
+                    p0: MotionLayout?,
+                    p1: Int,
+                    p2: Boolean,
+                    p3: Float
+                ) {
+                }
 
-private class CategoryAdapter : DiffAdapter<CategoryUiModel, CategoryAdapter.CategoryViewHolder>() {
+                override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+                    drinkPreviewAdapter.clear()
+                }
 
-    var onClick: ((CategoryUiModel) -> Unit)? = null
+                override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                }
 
-    inner class CategoryViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-        fun bind(data: CategoryUiModel) {
-            containerView.apply {
-                setOnClickListener { onClick?.invoke(data) }
-                category_name_tv.text = data.name
-            }
+                override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                    setTransitionListener(null)
+                    categoriesViewModel.updateCategory(categoryUiModel.name)
+                }
+            })
+            transitionToEnd()
         }
     }
 
-    override fun onBindViewHolder(
-        holder: CategoryViewHolder,
-        data: CategoryUiModel,
-        position: Int
-    ) {
-        holder.bind(data)
-    }
+    private class CategoryAdapter :
+        DiffAdapter<CategoryUiModel, CategoryAdapter.CategoryViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder(
-            parent.viewHolderInflate(R.layout.list_item_category)
-        )
+        var onClick: ((CategoryUiModel) -> Unit)? = null
+
+        inner class CategoryViewHolder(override val containerView: View) :
+            RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+            fun bind(data: CategoryUiModel) {
+                containerView.apply {
+                    setOnClickListener { onClick?.invoke(data) }
+                    category_name_tv.text = data.name
+                }
+            }
+        }
+
+        override fun onBindViewHolder(
+            holder: CategoryViewHolder,
+            data: CategoryUiModel,
+            position: Int
+        ) {
+            holder.bind(data)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+            return CategoryViewHolder(
+                parent.viewHolderInflate(R.layout.list_item_category)
+            )
+        }
     }
 }
