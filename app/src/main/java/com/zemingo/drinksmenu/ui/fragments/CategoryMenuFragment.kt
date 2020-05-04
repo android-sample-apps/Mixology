@@ -1,17 +1,19 @@
 package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
-import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
+import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_category_menu.*
@@ -33,7 +35,12 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     }
 
     private fun initCategoriesMenu() {
-        category_menu_rv.adapter = categoryAdapter
+        category_menu_rv.run {
+            adapter = categoryAdapter
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
+                setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
+            }.let { addItemDecoration(it) }
+        }
     }
 
     private fun observeCategories() {

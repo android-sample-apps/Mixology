@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?selectableItemBackground"
+    android:id="@+id/category_name_tv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/category_name_tv"
-        style="@style/MockText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Whiskey" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_height="wrap_content"
+    android:letterSpacing="0.2"
+    android:paddingTop="@dimen/screen_padding"
+    android:paddingBottom="@dimen/screen_padding"
+    android:textColor="@color/header_text_color"
+    android:textSize="18sp"
+    app:fontFamily="@font/jesa_script_regular"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:text="Vodka" />
