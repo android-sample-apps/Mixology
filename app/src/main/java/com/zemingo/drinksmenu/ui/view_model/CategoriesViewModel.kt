@@ -18,5 +18,12 @@ class CategoriesViewModel(
         categoriesUseCase
             .categories
             .map { mapper.apply(it) }
+            /*.map {
+                it.toMutableList().apply {
+                    addAll(
+                        it.map { it.copy(name = it.name + "0")  }
+                    )
+                }
+            }*/
             .asLiveData()
 }
