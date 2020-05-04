@@ -19,6 +19,11 @@ abstract class DiffAdapter<DATA, VH : RecyclerView.ViewHolder> : RecyclerView.Ad
         diffResult.dispatchUpdatesTo(this)
     }
 
+    fun clear() {
+        _data.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return _data.size
     }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/category_menu_ml"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/screen_padding">
+    android:padding="@dimen/screen_padding"
+    app:layoutDescription="@xml/category_menu_scene">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_menu_rv"
@@ -17,6 +19,24 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/list_item_category" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/selected_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:letterSpacing="0.3"
+        android:lines="1"
+        android:padding="@dimen/screen_padding"
+        android:textColor="@color/header_text_color"
+        android:textSize="18sp"
+        app:fontFamily="@font/jesa_script_regular"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/category_menu_rv"
+        tools:text="Homemade Liqueur" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_preview_rv"
         android:layout_width="0dp"
@@ -26,8 +46,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_menu_rv"
+        app:layout_constraintTop_toBottomOf="parent"
         app:spanCount="2"
+        tools:layout_constraintTop_toBottomOf="@id/selected_title"
         tools:listitem="@layout/tile_item_drink_preview" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
