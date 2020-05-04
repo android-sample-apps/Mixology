@@ -21,6 +21,7 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_category_menu.*
 import kotlinx.android.synthetic.main.list_item_category.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
@@ -85,12 +86,15 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
                 }
 
                 override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+                    Timber.d("onTransitionStarted: p1[$p1] p2[$p2]")
                 }
 
                 override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+//                    Timber.d("onTransitionChange: p1[$p1], p2[$p2], p3[$p3]")
                 }
 
                 override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                    Timber.d("onTransitionCompleted: p1[$p1]")
                     setTransitionListener(null)
                     categoriesViewModel.updateCategory(categoryUiModel.name)
                 }
