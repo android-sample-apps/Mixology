@@ -7,6 +7,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.models.CategoryUiModel
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_category_menu.*
@@ -29,9 +31,9 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
         }
 
     private val drinkPreviewAdapter = DrinkPreviewAdapter()
-    /*.apply {
-        onClick = { onItemClicked(it) }
-    }*/
+        .apply {
+            onClick = { onDrinkClicked(it) }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +65,13 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             .observe(viewLifecycleOwner, Observer { drinkPreviewAdapter.update(it) })
     }
 
+    private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        findNavController().navigate(
+            HomeFragmentDirections
+                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+        )
+    }
+
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
         selected_title.text = categoryUiModel.name
         category_menu_ml.run {
@@ -76,7 +85,6 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
                 }
 
                 override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-                    drinkPreviewAdapter.clear()
                 }
 
                 override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
