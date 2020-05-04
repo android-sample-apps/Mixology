@@ -23,10 +23,9 @@ val useCasesModule = module {
         )
     }
 
-    factory { (category: String) ->
+    factory {
         GetDrinkPreviewByCategoryUseCase(
-            repository = get(),
-            category = category
+            repository = get()
         )
     }
 

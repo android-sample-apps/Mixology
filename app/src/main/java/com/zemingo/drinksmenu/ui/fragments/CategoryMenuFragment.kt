@@ -28,10 +28,16 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             onClick = { onCategoryClicked(it) }
         }
 
+    private val drinkPreviewAdapter = DrinkPreviewAdapter()
+        /*.apply {
+            onClick = { onItemClicked(it) }
+        }*/
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCategoriesMenu()
         observeCategories()
+        observeDrinkPreviews()
     }
 
     private fun initCategoriesMenu() {
@@ -41,6 +47,9 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             }.let { addItemDecoration(it) }
         }
+
+        categories_preview_rv.adapter = drinkPreviewAdapter
+
     }
 
     private fun observeCategories() {
@@ -49,13 +58,20 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             .observe(viewLifecycleOwner, Observer { categoryAdapter.update(it) })
     }
 
+    private fun observeDrinkPreviews() {
+        categoriesViewModel
+            .drinkPreviews
+            .observe(viewLifecycleOwner, Observer { drinkPreviewAdapter.update(it) })
+    }
+
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
-        findNavController()
+        /*findNavController()
             .navigate(
                 HomeFragmentDirections.actionHomeFragmentToDrinkPreviewFragment(
                     categoryUiModel.name
                 )
-            )
+            )*/
+        categoriesViewModel.updateCategory(categoryUiModel.name)
     }
 }
 

@@ -1,6 +1,5 @@
 package com.zemingo.drinksmenu.ui.di
 
-import com.zemingo.drinksmenu.repo.repositories.DrinkRepository
 import com.zemingo.drinksmenu.ui.view_model.*
 import com.zemingo.drinksmenu.ui.view_model.mappers.CategoryMapperUi
 import com.zemingo.drinksmenu.ui.view_model.mappers.DrinkMapperUi
@@ -14,13 +13,15 @@ val viewModelModule = module {
     viewModel {
         CategoriesViewModel(
             categoriesUseCase = get(),
-            mapper = get<CategoryMapperUi>()
+            getDrinkPreviewByCategoryUseCase = get(),
+            categoriesMapper = get<CategoryMapperUi>(),
+            previewMapper = get<DrinkPreviewMapperUi>()
         )
     }
 
-    viewModel { (category: String) ->
+    viewModel {
         DrinkPreviewByCategoryViewModel(
-            getDrinkPreviewByCategoryUseCase = get { parametersOf(category) },
+            getDrinkPreviewByCategoryUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
     }

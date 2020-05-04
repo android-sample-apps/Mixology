@@ -7,17 +7,25 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class GetDrinkPreviewByCategoryUseCase(
-    private val repository: DrinkPreviewRepository,
-    category: String
+    private val repository: DrinkPreviewRepository
 ) {
     private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
     val drinkPreviews = channel.asFlow()
 
-    init {
+    fun get(category: String) {
         GlobalScope.launch(Dispatchers.IO) {
-            channel.send(fetchByCategory(category))
+
+            val drinksInCategory = try {
+                fetchByCategory(category)
+
+            } catch (e: Exception) {
+                Timber.e(e, "Failed getting drinks")
+                null
+            }
+            drinksInCategory?.let { channel.send(it) }
         }
     }
 
