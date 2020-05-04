@@ -45,7 +45,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
         findNavController()
             .navigate(
-                CategoryMenuFragmentDirections.actionCategoryMenuFragmentToDrinkPreviewFragment(
+                HomeFragmentDirections.actionHomeFragmentToDrinkPreviewFragment(
                     categoryUiModel.name
                 )
             )
