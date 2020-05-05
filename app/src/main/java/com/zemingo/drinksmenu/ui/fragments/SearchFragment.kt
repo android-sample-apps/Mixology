@@ -21,6 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 
+/*
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val searchViewModel: SearchViewModel by viewModel()
@@ -136,7 +137,9 @@ class SuggestionAdapter(
             }
         }
 
-        /* Suppressing the cast warning because it has to be of type List<DrinkPreviewUiModel> */
+        */
+/* Suppressing the cast warning because it has to be of type List<DrinkPreviewUiModel> *//*
+
         @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             displayData.clear()
@@ -157,4 +160,4 @@ class SuggestionAdapter(
         }
 
     }
-}
+}*/

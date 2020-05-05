@@ -5,7 +5,7 @@
     android:id="@+id/cocktail_nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <fragment
+   <!-- <fragment
         android:id="@+id/introFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.IntroFragment"
         android:label="IntroFragment"
@@ -16,19 +16,19 @@
         <action
             android:id="@+id/action_introFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
-    </fragment>
+    </fragment>-->
 
-    <fragment
+    <!--<fragment
         android:id="@+id/categoryMenuFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.CategoryMenuFragment"
         android:label="CategoryMenuFragment"
         tools:layout="@layout/fragment_category_menu">
-        <action
+        &lt;!&ndash;<action
             android:id="@+id/action_categoryMenuFragment_to_drinkPreviewFragment"
-            app:destination="@id/drinkPreviewFragment" />
-    </fragment>
+            app:destination="@id/drinkPreviewFragment" />&ndash;&gt;
+    </fragment>-->
 
-    <fragment
+    <!--<fragment
         android:id="@+id/drinkPreviewFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkPreviewFragment"
         android:label="DrinkPreviewFragment"
@@ -40,7 +40,7 @@
         <action
             android:id="@+id/action_drinkPreviewFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
-    </fragment>
+    </fragment>-->
 
     <fragment
         android:id="@+id/drinkFragment"
@@ -51,7 +51,7 @@
             android:name="id"
             app:argType="string" />
     </fragment>
-    <fragment
+    <!--<fragment
         android:id="@+id/searchFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.SearchFragment"
         android:label="SearchFragment"
@@ -59,8 +59,8 @@
         <action
             android:id="@+id/action_searchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
-    </fragment>
-    <fragment
+    </fragment>-->
+    <!--<fragment
         android:id="@+id/landingPageFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.LandingPageFragment"
         android:label="LandingPageFragment"
@@ -68,7 +68,7 @@
         <action
             android:id="@+id/action_landingPageFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
-    </fragment>
+    </fragment>-->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.HomeFragment"
@@ -77,9 +77,9 @@
         <action
             android:id="@+id/action_homeFragment_to_drinkFragment"
             app:destination="@id/drinkFragment" />
-        <action
+        <!--<action
             android:id="@+id/action_homeFragment_to_drinkPreviewFragment"
-            app:destination="@id/drinkPreviewFragment" />
+            app:destination="@id/drinkPreviewFragment" />-->
     </fragment>
 
 

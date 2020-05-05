@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.ui.SpacerItemDecoration
+import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.models.LandingPageUiModel
 import com.zemingo.drinksmenu.ui.view_model.LandingPageViewModel

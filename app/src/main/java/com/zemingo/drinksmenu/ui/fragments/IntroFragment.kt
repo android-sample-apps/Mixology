@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import kotlinx.android.synthetic.main.fragment_intro.*
 
+/*
 class IntroFragment : Fragment(R.layout.fragment_intro) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -21,4 +22,4 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
             )
         }
     }
-}
+}*/

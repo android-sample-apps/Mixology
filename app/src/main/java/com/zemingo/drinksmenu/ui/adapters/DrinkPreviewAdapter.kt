@@ -8,40 +8,36 @@ import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.tile_item_drink_preview_grid.view.*
-import timber.log.Timber
+import kotlinx.android.synthetic.main.tile_item_drink_preview.view.*
 
-class DrinkPreviewGridAdapter :
-    DiffAdapter<DrinkPreviewUiModel, DrinkPreviewGridAdapter.GridDrinkPreviewViewHolder>() {
+class DrinkPreviewAdapter :
+    DiffAdapter<DrinkPreviewUiModel, DrinkPreviewAdapter.DrinkPreviewViewHolder>() {
 
     var onClick: ((DrinkPreviewUiModel) -> Unit)? = null
 
-    inner class GridDrinkPreviewViewHolder(override val containerView: View) :
+    inner class DrinkPreviewViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(drinkPreviewUiModel: DrinkPreviewUiModel) {
-            Timber.d("onBind: $drinkPreviewUiModel")
-            containerView.run {
+            containerView.apply {
                 drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 drink_name_tv.text = drinkPreviewUiModel.name
-                image_container.setOnClickListener {
-                    Timber.d("clicked from $drinkPreviewUiModel with $this ")
-                    onClick?.invoke(drinkPreviewUiModel) }
+                image_container.setOnClickListener { onClick?.invoke(drinkPreviewUiModel) }
             }
         }
     }
 
     override fun onBindViewHolder(
-        holder: GridDrinkPreviewViewHolder,
+        holder: DrinkPreviewViewHolder,
         data: DrinkPreviewUiModel,
         position: Int
     ) {
         holder.bind(data)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridDrinkPreviewViewHolder {
-        return GridDrinkPreviewViewHolder(
-            parent.viewHolderInflate(R.layout.tile_item_drink_preview_grid)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkPreviewViewHolder {
+        return DrinkPreviewViewHolder(
+            parent.viewHolderInflate(R.layout.tile_item_drink_preview)
         )
     }
 }
