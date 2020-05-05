@@ -76,7 +76,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_drinkFragment"
-            app:destination="@id/drinkFragment" />
+            app:destination="@id/drinkFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
         <!--<action
             android:id="@+id/action_homeFragment_to_drinkPreviewFragment"
             app:destination="@id/drinkPreviewFragment" />-->

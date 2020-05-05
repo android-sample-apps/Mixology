@@ -59,6 +59,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     }
 
     private fun initCategoriesMenu() {
+        onBackPressedCallback.isEnabled = false
         category_menu_rv.run {
             adapter = categoryAdapter
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
@@ -116,9 +117,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
                     startId: Int,
                     endId: Int
                 ) {
-                    if (endId == R.id.results) {
-                        onBackPressedCallback.isEnabled = true
-                    }
+                    onBackPressedCallback.isEnabled = endId == R.id.results
                 }
 
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
