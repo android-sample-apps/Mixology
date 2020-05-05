@@ -5,19 +5,8 @@
     android:layout_width="match_parent"
     android:paddingTop="@dimen/screen_padding"
     android:paddingBottom="@dimen/screen_padding"
+    android:background="?selectableItemBackground"
     android:layout_height="wrap_content">
-
-    <!--<androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ingredient_iv"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:elevation="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/mock_image" />-->
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/ingredient_name_tv"

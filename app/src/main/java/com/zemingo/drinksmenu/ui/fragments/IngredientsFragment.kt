@@ -6,16 +6,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.ui.adapters.IngredientAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
-import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import kotlinx.android.synthetic.main.fragment_ingredients.*
 
 class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
 
     private val ingredientsAdapter = IngredientAdapter().apply {
-        onClick = {
+        onLongClick = {
             IngredientBottomSheetDialogFragment().show(childFragmentManager)
         }
     }
