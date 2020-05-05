@@ -24,7 +24,9 @@ class CategoriesViewModel(
             .categories
             .map { categoriesMapper.apply(it) }
             /*.map { it.toMutableList().apply {
-                addAll(it.map { it.copy(name = "${it.name}_more") })
+                for (i in 0 .. 10) {
+                    add(CategoryUiModel("$i"))
+                }
             } }*/
             .asLiveData()
 

@@ -35,8 +35,9 @@
         app:fontFamily="@font/jesa_script_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/category_menu_rv"
+        app:layout_constraintTop_toBottomOf="parent"
         tools:text="Homemade Liqueur" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categories_preview_rv"

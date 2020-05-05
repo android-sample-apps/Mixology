@@ -2,6 +2,7 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import com.zemingo.drinksmenu.ui.adapters.CategoryAdapter
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_category_menu.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -33,6 +35,20 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
         .apply {
             onClick = { onDrinkClicked(it) }
         }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            category_menu_ml.transitionToStart()
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            onBackPressedCallback
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -82,36 +98,34 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         Timber.d("onDrinkClicked: $drinkPreviewUiModel")
-        findNavController().navigate(
-            HomeFragmentDirections
-                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
-        )
+            findNavController().navigate(
+                HomeFragmentDirections
+                    .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+            )
     }
+
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
         selected_title.text = categoryUiModel.name
         category_menu_ml.run {
-            setTransitionListener(object : MotionLayout.TransitionListener {
-                override fun onTransitionTrigger(
-                    p0: MotionLayout?,
-                    p1: Int,
-                    p2: Boolean,
-                    p3: Float
+
+            setTransitionListener(object : MyTransitionListener() {
+
+                override fun onTransitionStarted(
+                    motionLayout: MotionLayout,
+                    startId: Int,
+                    endId: Int
                 ) {
+                    if (endId == R.id.results) {
+                        onBackPressedCallback.isEnabled = true
+                    }
                 }
 
-                override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-                    Timber.d("onTransitionStarted: p1[$p1] p2[$p2]")
-                }
-
-                override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-//                    Timber.d("onTransitionChange: p1[$p1], p2[$p2], p3[$p3]")
-                }
-
-                override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                    Timber.d("onTransitionCompleted: p1[$p1]")
-                    setTransitionListener(null)
-                    categoriesViewModel.updateCategory(categoryUiModel.name)
+                override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+                    Timber.d("onTransitionCompleted: currentId[$currentId]")
+                    if (currentId == R.id.results) {
+                        categoriesViewModel.updateCategory(categoryUiModel.name)
+                    }
                 }
             })
             transitionToEnd()
