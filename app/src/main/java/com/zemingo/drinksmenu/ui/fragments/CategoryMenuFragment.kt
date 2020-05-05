@@ -81,15 +81,11 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     }
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        try {
-            findNavController().navigate(
-                HomeFragmentDirections
-                    .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
-            )
-            Timber.d("onDrinkClicked: $drinkPreviewUiModel")
-        } catch (e: Exception) {
-            Timber.e(e, "onDrinkClicked failed $drinkPreviewUiModel")
-        }
+        Timber.d("onDrinkClicked: $drinkPreviewUiModel")
+        findNavController().navigate(
+            HomeFragmentDirections
+                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+        )
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {

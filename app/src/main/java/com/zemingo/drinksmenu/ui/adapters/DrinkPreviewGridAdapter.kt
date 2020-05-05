@@ -20,13 +20,13 @@ class DrinkPreviewGridAdapter :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
         fun bind(drinkPreviewUiModel: DrinkPreviewUiModel) {
-            Timber.d("onBind: $drinkPreviewUiModel")
             containerView.run {
                 drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 drink_name_tv.text = drinkPreviewUiModel.name
                 image_container.setOnClickListener {
                     Timber.d("clicked from $drinkPreviewUiModel with $this ")
-                    onClick?.invoke(drinkPreviewUiModel) }
+                    onClick?.invoke(drinkPreviewUiModel)
+                }
             }
         }
     }
