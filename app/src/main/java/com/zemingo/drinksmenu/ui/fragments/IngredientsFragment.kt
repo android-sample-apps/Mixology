@@ -14,7 +14,11 @@ import kotlinx.android.synthetic.main.fragment_ingredients.*
 
 class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
 
-    private val ingredientsAdapter = IngredientAdapter()
+    private val ingredientsAdapter = IngredientAdapter().apply {
+        onClick = {
+            IngredientBottomSheetDialogFragment().show(childFragmentManager)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
