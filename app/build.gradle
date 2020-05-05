@@ -76,4 +76,6 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'io.coil-kt:coil:0.10.1'
 
+    debugImplementation 'com.balsikandar.android:crashreporter:1.1.0'
+
 }
