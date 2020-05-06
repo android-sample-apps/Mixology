@@ -10,8 +10,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/selected_title"
-            app:touchRegionId="@id/selected_title"
+            app:touchAnchorId="@id/categories_preview_rv"
             app:touchAnchorSide="top" />
 
     </Transition>

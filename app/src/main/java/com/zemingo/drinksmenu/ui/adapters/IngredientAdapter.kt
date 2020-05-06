@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.list_item_ingredient.view.*
 
 class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.IngredientViewHolder>() {
 
-    var onLongClick: (() -> Unit)? = null
+    var onLongClick: ((IngredientUiModel) -> Unit)? = null
 
     inner class IngredientViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -21,7 +21,7 @@ class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.Ingre
                 ingredient_name_tv.text = ingredient.name
                 ingredient_quantity_tv.text = ingredient.quantity
                 setOnLongClickListener {
-                    onLongClick?.invoke()
+                    onLongClick?.invoke(ingredient)
                     true
                 }
             }

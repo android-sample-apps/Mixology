@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
+import kotlinx.android.synthetic.main.bottom_sheet_ingredient.*
 
-class IngredientBottomSheetDialogFragment : BottomSheetDialogFragment() {
+class IngredientBottomSheetDialogFragment(
+    private val ingredient: String
+) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "IngredientBottomSheetDialogFragment"
@@ -20,6 +23,11 @@ class IngredientBottomSheetDialogFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.bottom_sheet_ingredient, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ingredient_name_tv.text = ingredient
     }
 
     fun show(fragmentManager: FragmentManager) {

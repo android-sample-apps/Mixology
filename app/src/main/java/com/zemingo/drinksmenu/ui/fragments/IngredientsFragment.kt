@@ -14,7 +14,7 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
 
     private val ingredientsAdapter = IngredientAdapter().apply {
         onLongClick = {
-            IngredientBottomSheetDialogFragment().show(childFragmentManager)
+            IngredientBottomSheetDialogFragment(it.name).show(childFragmentManager)
         }
     }
 

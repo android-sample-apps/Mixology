@@ -23,11 +23,11 @@ class CategoriesViewModel(
         categoriesUseCase
             .categories
             .map { categoriesMapper.apply(it) }
-            /*.map { it.toMutableList().apply {
+            .map { it.toMutableList().apply {
                 for (i in 0 .. 10) {
                     add(CategoryUiModel("$i"))
                 }
-            } }*/
+            } }
             .asLiveData()
 
     val drinkPreviews: LiveData<List<DrinkPreviewUiModel>> =
