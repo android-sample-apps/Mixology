@@ -1,5 +1,6 @@
 package com.zemingo.drinksmenu.ui.models
 
+import android.content.Intent
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 
@@ -22,7 +23,8 @@ data class DrinkUiModel(
     val alcoholic: String,
     val glass: String,
     val video: String?,
-    val thumbnail: String?
+    val thumbnail: String?,
+    val shareText: String
 )
 
 data class LandingPageUiModel(

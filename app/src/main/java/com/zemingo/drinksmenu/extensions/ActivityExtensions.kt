@@ -2,6 +2,8 @@ package com.zemingo.drinksmenu.extensions
 
 import android.app.Activity
 import android.view.WindowManager
+import androidx.core.app.ShareCompat
+import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 
 
 fun Activity.translucentStatusBar() {
@@ -15,4 +17,16 @@ fun Activity.clearTranslucentStatusBar() {
     window.clearFlags(
         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
     )
+}
+
+fun Activity.shareDrink(drinkUiModel: DrinkUiModel) {
+    ShareCompat.IntentBuilder
+        .from(this)
+        .setText(drinkUiModel.shareText)
+        .setSubject(drinkUiModel.name)
+        // most general text sharing MIME type
+        .setType("text/plain")
+
+        .setChooserTitle(drinkUiModel.name)
+        .startChooser()
 }

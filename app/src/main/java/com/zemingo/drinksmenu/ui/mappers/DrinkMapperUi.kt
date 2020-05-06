@@ -1,12 +1,16 @@
 package com.zemingo.drinksmenu.ui.mappers
 
+import android.content.Context
 import android.text.SpannableString
+import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import java.util.function.Function
 
-class DrinkMapperUi : Function<DrinkModel, DrinkUiModel> {
+class DrinkMapperUi(
+    private val appCtx: Context
+) : Function<DrinkModel, DrinkUiModel> {
 
     override fun apply(t: DrinkModel): DrinkUiModel {
         return DrinkUiModel(
@@ -18,7 +22,8 @@ class DrinkMapperUi : Function<DrinkModel, DrinkUiModel> {
             alcoholic = t.alcoholic,
             glass = t.glass,
             thumbnail = t.thumbnail,
-            video = t.video
+            video = t.video,
+            shareText = mapShareText(t)
         )
     }
 
@@ -43,4 +48,26 @@ class DrinkMapperUi : Function<DrinkModel, DrinkUiModel> {
                     quantity = it.value
                 )
             }
+
+    private fun mapShareText(t: DrinkModel): String {
+        return StringBuilder().apply {
+            t.ingredients.run {
+                if (isNotEmpty()) {
+                    append(appCtx.getString(R.string.ingredients))
+                    append("\n")
+                    forEach { ingredient, quantity ->
+                        append("■ ")
+                        append(ingredient)
+                        append(" - ")
+                        append(quantity)
+                        append("\n")
+                    }
+                    append("\n")
+                }
+            }
+            append(appCtx.getString(R.string.method))
+            append(" - \n")
+            append(t.instructions)
+        }.toString()
+    }
 }

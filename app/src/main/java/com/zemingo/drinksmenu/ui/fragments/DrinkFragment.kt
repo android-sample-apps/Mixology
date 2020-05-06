@@ -2,20 +2,18 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
+import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
-import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
-import timber.log.Timber
 
 
 class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
@@ -45,6 +43,9 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
+        drink_title.setOnClickListener {
+            requireActivity().shareDrink(drinkUiModel)
+        }
     }
 
     private fun updateDrinkTitle(drinkUiModel: DrinkUiModel) {

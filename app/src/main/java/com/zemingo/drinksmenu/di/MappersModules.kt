@@ -5,6 +5,7 @@ import com.zemingo.drinksmenu.ui.mappers.CategoryMapperUi
 import com.zemingo.drinksmenu.ui.mappers.DrinkMapperUi
 import com.zemingo.drinksmenu.ui.mappers.DrinkPreviewMapperUi
 import com.zemingo.drinksmenu.ui.mappers.IngredientDetailsMapperUi
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val mappersModule = module {
@@ -21,7 +22,7 @@ val mappersModule = module {
 
     factory { DrinkMapper() }
 
-    factory { DrinkMapperUi() }
+    factory { DrinkMapperUi(androidContext()) }
 
     factory { IngredientDetailsMapper() }
 
