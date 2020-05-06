@@ -10,6 +10,13 @@ data class IngredientResponse(
     @SerializedName("strIngredient1") val name: String
 )
 
+data class IngredientDetailsResponse(
+    @SerializedName("idIngredient") val id: String,
+    @SerializedName("strIngredient") val name: String,
+    @SerializedName("strDescription") val description: String,
+    @SerializedName("strAlcohol") val isAlcoholic: String?
+)
+
 data class DrinkPreviewResponse(
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strDrink") val strDrink: String,
@@ -60,4 +67,8 @@ data class DrinkResponse(
 
 data class DrinksWrapperResponse<T>(
     @SerializedName("drinks") val data: List<T>
+)
+
+data class IngredientsWrapperResponse<T>(
+    @SerializedName("ingredients") val data: List<T>
 )

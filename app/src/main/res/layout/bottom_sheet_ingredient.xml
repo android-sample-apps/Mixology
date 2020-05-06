@@ -19,34 +19,63 @@
             android:layout_height="wrap_content"
             android:letterSpacing="0.2"
             android:textColor="@color/header_text_color"
-            android:text="Vodka"
             android:textSize="36sp"
             app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Vodka" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/description_container"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:scrollbars="vertical"
-            android:fadeScrollbars="true"
             android:layout_marginTop="@dimen/screen_padding"
+            android:fadeScrollbars="true"
+            android:scrollbars="vertical"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ingredient_name_tv">
+            app:layout_constraintTop_toBottomOf="@id/ingredient_name_tv"
+            tools:visibility="visible">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ingredient_description_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/secondary_text_color"
                 android:text="@string/long_mock_text"
+                android:textColor="@color/secondary_text_color"
                 app:fontFamily="@font/jesa_script_regular" />
 
         </androidx.core.widget.NestedScrollView>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_online_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/fty_delirium_ncv"
+            android:letterSpacing="0.15"
+            android:text="search online"
+            android:textColor="@color/header_text_color"
+            android:textSize="22sp"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/description_container"
+            app:rippleColor="@color/secondary_text_color" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/no_description_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="No description found"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="18sp"
+            app:fontFamily="@font/jesa_script_regular"
+            app:layout_constraintBottom_toBottomOf="@id/search_online_btn"
+            app:layout_constraintEnd_toStartOf="@id/search_online_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/search_online_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

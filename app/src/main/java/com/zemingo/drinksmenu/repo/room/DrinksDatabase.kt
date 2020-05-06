@@ -2,17 +2,15 @@ package com.zemingo.drinksmenu.repo.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.zemingo.drinksmenu.domain.models.CategoryModel
-import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.domain.models.IngredientModel
-import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
+import com.zemingo.drinksmenu.domain.models.*
 
 @Database(
     entities = [
         CategoryModel::class,
         DrinkPreviewModel::class,
         IngredientModel::class,
-        PreviousSearchModel::class
+        PreviousSearchModel::class,
+        IngredientDetailsModel::class
     ],
     version = 1
 )
@@ -21,4 +19,5 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun drinkPreviewDao(): DrinkPreviewDao
     abstract fun ingredientDao(): IngredientDao
     abstract fun searchesDrinkPreviewDao(): SearchDrinkPreviewDao
+    abstract fun ingredientDetailsDao(): IngredientDetailsDao
 }

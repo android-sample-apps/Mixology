@@ -1,14 +1,8 @@
 package com.zemingo.drinksmenu.repo.di
 
 import com.zemingo.drinksmenu.repo.DrinkService
-import com.zemingo.drinksmenu.repo.mappers.CategoryMapper
-import com.zemingo.drinksmenu.repo.mappers.DrinkMapper
-import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
-import com.zemingo.drinksmenu.repo.mappers.IngredientMapper
-import com.zemingo.drinksmenu.repo.reactive_store.CategoryReactiveStore
-import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
-import com.zemingo.drinksmenu.repo.reactive_store.IngredientReactiveStore
-import com.zemingo.drinksmenu.repo.reactive_store.SearchDrinkPreviewReactiveStore
+import com.zemingo.drinksmenu.repo.mappers.*
+import com.zemingo.drinksmenu.repo.reactive_store.*
 import com.zemingo.drinksmenu.repo.repositories.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -71,6 +65,14 @@ val repoModule = module {
         DrinkRepository(
             service = get<DrinkService>(),
             mapper = get<DrinkMapper>()
+        )
+    }
+
+    factory {
+        IngredientDetailsRepository(
+            service = get<DrinkService>(),
+            reactiveStore = get<IngredientDetailsReactiveStore>(),
+            mapper = get<IngredientDetailsMapper>()
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.ui.view_model.mappers
+package com.zemingo.drinksmenu.ui.mappers
 
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel

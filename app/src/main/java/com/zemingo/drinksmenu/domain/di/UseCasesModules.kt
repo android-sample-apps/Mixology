@@ -65,4 +65,11 @@ val useCasesModule = module {
             id = id
         )
     }
+
+    factory { (ingredientName: String) ->
+        GetIngredientDetailsUseCase(
+            repository = get(),
+            ingredientName = ingredientName
+        )
+    }
 }

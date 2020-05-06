@@ -10,6 +10,25 @@ data class IngredientModel(
 )
 
 @Entity
+data class IngredientDetailsModel(
+    @PrimaryKey val id: String,
+    val name: String,
+    val description: String?,
+    val isAlcoholic: Boolean,
+    val image: String
+) {
+    private fun shortDescription(): String? {
+        return description?.take(10)?.let {
+            "$it..."
+        }
+    }
+
+    fun debugPrint(): String {
+        return "IngredientDetailsModel(id=$id, name=$name, description=${shortDescription()}, isAlcoholic=$isAlcoholic, image=$image"
+    }
+}
+
+@Entity
 data class CategoryModel(
     @PrimaryKey val name: String
 )

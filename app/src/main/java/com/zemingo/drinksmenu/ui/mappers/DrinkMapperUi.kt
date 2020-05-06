@@ -1,7 +1,6 @@
-package com.zemingo.drinksmenu.ui.view_model.mappers
+package com.zemingo.drinksmenu.ui.mappers
 
 import android.text.SpannableString
-import android.text.style.RelativeSizeSpan
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel

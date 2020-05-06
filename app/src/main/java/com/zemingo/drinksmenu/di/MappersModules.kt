@@ -1,12 +1,10 @@
 package com.zemingo.drinksmenu.di
 
-import com.zemingo.drinksmenu.repo.mappers.CategoryMapper
-import com.zemingo.drinksmenu.repo.mappers.DrinkMapper
-import com.zemingo.drinksmenu.repo.mappers.DrinkPreviewMapper
-import com.zemingo.drinksmenu.repo.mappers.IngredientMapper
-import com.zemingo.drinksmenu.ui.view_model.mappers.CategoryMapperUi
-import com.zemingo.drinksmenu.ui.view_model.mappers.DrinkMapperUi
-import com.zemingo.drinksmenu.ui.view_model.mappers.DrinkPreviewMapperUi
+import com.zemingo.drinksmenu.repo.mappers.*
+import com.zemingo.drinksmenu.ui.mappers.CategoryMapperUi
+import com.zemingo.drinksmenu.ui.mappers.DrinkMapperUi
+import com.zemingo.drinksmenu.ui.mappers.DrinkPreviewMapperUi
+import com.zemingo.drinksmenu.ui.mappers.IngredientDetailsMapperUi
 import org.koin.dsl.module
 
 val mappersModule = module {
@@ -24,5 +22,9 @@ val mappersModule = module {
     factory { DrinkMapper() }
 
     factory { DrinkMapperUi() }
+
+    factory { IngredientDetailsMapper() }
+
+    factory { IngredientDetailsMapperUi() }
 
 }

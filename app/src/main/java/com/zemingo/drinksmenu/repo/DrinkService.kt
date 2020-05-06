@@ -64,6 +64,9 @@ interface DrinkService {
     @GET("lookup.php?")
     suspend fun getDrinkById(@Query("i") id: String): DrinksWrapperResponse<DrinkResponse>
 
+    @GET("search.php?")
+    suspend fun getIngredientByName(@Query("i") name: String): IngredientsWrapperResponse<IngredientDetailsResponse>
+
     /*todo @GET("list.php?g=list")
     suspend fun glassList()*/
 

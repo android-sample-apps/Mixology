@@ -36,3 +36,9 @@ data class IngredientUiModel(
     val quantity: String,
     val thumbnail: String? = null
 )
+
+data class IngredientDetailsUiModel(
+    val name: String,
+    val description: String?,
+    val image: String
+)
