@@ -112,16 +112,9 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
             setTransitionListener(object : MyTransitionListener() {
 
-                override fun onTransitionStarted(
-                    motionLayout: MotionLayout,
-                    startId: Int,
-                    endId: Int
-                ) {
-                    onBackPressedCallback.isEnabled = endId == R.id.results
-                }
-
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     Timber.d("onTransitionCompleted: currentId[$currentId]")
+                    onBackPressedCallback.isEnabled = currentId == R.id.results
                     if (currentId == R.id.results) {
                         categoriesViewModel.updateCategory(categoryUiModel.name)
                     }
