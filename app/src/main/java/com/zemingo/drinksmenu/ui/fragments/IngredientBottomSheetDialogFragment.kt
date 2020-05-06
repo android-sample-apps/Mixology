@@ -31,6 +31,8 @@ class IngredientBottomSheetDialogFragment(
         )
     }
 
+    private var webSearchQuery = ingredient
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +59,7 @@ class IngredientBottomSheetDialogFragment(
 
     private fun initSearchOnlineButton() {
         search_online_btn.setOnClickListener {
-            startActivity(webSearchIntent(ingredient))
+            startActivity(webSearchIntent(webSearchQuery))
         }
     }
 
@@ -70,12 +72,20 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun updateDrink(details: IngredientDetailsUiModel) {
-        ingredient_description_tv.text = details.description
+        updateDescription(details)
+        updateWebSearchQuery(details)
+    }
 
+    private fun updateDescription(details: IngredientDetailsUiModel) {
+        ingredient_description_tv.text = details.description
         val hasDescription = details.description?.isNotEmpty() == true
         description_container.visibility = hasDescription.toVisibility()
         no_description_tv.visibility = (!hasDescription).toVisibility()
+    }
 
+    private fun updateWebSearchQuery(details: IngredientDetailsUiModel) {
+        val postfix = if (details.isAlcoholic) ", alcohol" else ""
+        webSearchQuery = "$ingredient$postfix"
     }
 }
 

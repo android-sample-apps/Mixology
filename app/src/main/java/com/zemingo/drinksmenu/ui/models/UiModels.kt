@@ -40,5 +40,6 @@ data class IngredientUiModel(
 data class IngredientDetailsUiModel(
     val name: String,
     val description: String?,
-    val image: String
+    val image: String,
+    val isAlcoholic: Boolean
 )

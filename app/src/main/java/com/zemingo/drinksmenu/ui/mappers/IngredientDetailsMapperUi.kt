@@ -10,7 +10,8 @@ class IngredientDetailsMapperUi : Function<IngredientDetailsModel, IngredientDet
         return IngredientDetailsUiModel(
             name = t.name,
             description = t.description,
-            image = t.image
+            image = t.image,
+            isAlcoholic = t.isAlcoholic
         )
     }
 }
