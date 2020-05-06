@@ -29,7 +29,8 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/description_container"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintHeight_max="200dp"
             android:layout_marginTop="@dimen/screen_padding"
             android:fadeScrollbars="true"
             android:scrollbars="vertical"
@@ -58,7 +59,7 @@
             android:letterSpacing="0.15"
             android:text="search online"
             android:textColor="@color/header_text_color"
-            android:textSize="22sp"
+            android:textSize="26sp"
             app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_container"
