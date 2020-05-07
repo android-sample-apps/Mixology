@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
+import com.zemingo.drinksmenu.extensions.hideKeyboard
 import com.zemingo.drinksmenu.ui.SpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
@@ -43,8 +44,13 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initSearchQuery() {
-        search_query_et.setOnEditorActionListener { v, actionId, event ->
+        search_container_til.setEndIconOnClickListener {
+            clearQuery()
+        }
+
+        search_query_et.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                v.hideKeyboard()
                 runSearchQuery()
                 true
             } else {
@@ -66,6 +72,12 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         }
     }
 
+    private fun clearQuery() {
+        advancedSearchViewModel.clearOnGoingSearches()
+        search_query_et.text = null
+        drinkPreviewAdapter.clear()
+    }
+
     private fun runSearchQuery() {
         advancedSearchViewModel.searchByName(query)
     }
@@ -74,8 +86,19 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         advancedSearchViewModel
             .resultsLiveData
             .observe(viewLifecycleOwner, Observer {
-                Timber.d("results: $it")
-                drinkPreviewAdapter.update(it)
+                onResultsReceived(it)
             })
+    }
+
+    private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {
+        Timber.d("results: $drinks")
+        drinkPreviewAdapter.update(drinks)
+        search_container_til.run {
+            helperText = if (drinks.isEmpty()) {
+                "No results"
+            } else {
+                null
+            }
+        }
     }
 }

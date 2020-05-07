@@ -32,6 +32,10 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="SearchTextAppearance">
+        <item name="fontFamily">@font/jesa_script_regular</item>
+        <item name="android:textColor">@color/header_text_color</item>
+    </style>
 
     <style name="TabTextAppearance">
         <item name="fontFamily">@font/fty_delirium_ncv</item>

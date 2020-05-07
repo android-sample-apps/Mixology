@@ -23,12 +23,15 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_container"
+            android:id="@+id/search_container_til"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:hintTextColor="@color/secondary_text_color"
+            app:helperTextTextAppearance="@style/SearchTextAppearance"
             app:boxStrokeColor="@color/header_text_color"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/header_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,7 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_container"
+            app:layout_constraintTop_toBottomOf="@id/search_container_til"
             app:spanCount="2"
             tools:listitem="@layout/tile_item_drink_preview" />
 

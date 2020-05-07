@@ -26,4 +26,13 @@ class AdvancedSearchViewModel(
     fun searchByName(name: String) {
         searchCocktailUseCase.searchByName(name)
     }
+
+    fun clearOnGoingSearches() {
+        searchCocktailUseCase.clearOngoingSearch()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        clearOnGoingSearches()
+    }
 }
