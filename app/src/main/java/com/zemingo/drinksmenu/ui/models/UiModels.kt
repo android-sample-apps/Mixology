@@ -1,8 +1,6 @@
 package com.zemingo.drinksmenu.ui.models
 
-import android.content.Intent
 import android.text.SpannableString
-import android.text.SpannableStringBuilder
 
 data class CategoryUiModel(
     val name: String

@@ -5,21 +5,42 @@ import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
 import java.util.function.Function
 
-class DrinkMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel> {
-    override fun apply(t: DrinksWrapperResponse<DrinkResponse>): DrinkModel {
-        with(t.data.first()) {
-            return DrinkModel(
-                id = idDrink,
-                name = strDrink,
-                ingredients = ingredientMap(this),
-                instructions = strInstructions,
-                thumbnail = strDrinkThumb,
-                alcoholic = strAlcoholic,
-                category = strCategory,
-                glass = strGlass,
-                video = strVideo
-            )
+class SearchDrinkMapper(
+    private val singleDrinkMapper: Function<DrinkResponse, DrinkModel>
+) : Function<DrinksWrapperResponse<DrinkResponse>, List<DrinkModel>> {
+
+    override fun apply(t: DrinksWrapperResponse<DrinkResponse>): List<DrinkModel> {
+        return t.data.map {
+            singleDrinkMapper.apply(it)
         }
+    }
+}
+
+class DrinkMapper(
+    private val singleDrinkMapper: Function<DrinkResponse, DrinkModel>
+) : Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel> {
+
+    override fun apply(t: DrinksWrapperResponse<DrinkResponse>): DrinkModel {
+        return singleDrinkMapper.apply(
+            t.data.first()
+        )
+    }
+
+}
+
+class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
+    override fun apply(t: DrinkResponse): DrinkModel {
+        return DrinkModel(
+            id = t.idDrink,
+            name = t.strDrink,
+            ingredients = ingredientMap(t),
+            instructions = t.strInstructions,
+            thumbnail = t.strDrinkThumb,
+            alcoholic = t.strAlcoholic,
+            category = t.strCategory,
+            glass = t.strGlass,
+            video = t.strVideo
+        )
     }
 
     private fun ingredientMap(drinkResponse: DrinkResponse): Map<String, String> {
@@ -48,4 +69,5 @@ class DrinkMapper : Function<DrinksWrapperResponse<DrinkResponse>, DrinkModel> {
             put(ingredient, measurement)
         }
     }
+
 }

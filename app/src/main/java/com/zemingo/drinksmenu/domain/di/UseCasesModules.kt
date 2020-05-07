@@ -72,4 +72,10 @@ val useCasesModule = module {
             ingredientName = ingredientName
         )
     }
+
+    factory {
+        SearchCocktailUseCase(
+            repository = get()
+        )
+    }
 }

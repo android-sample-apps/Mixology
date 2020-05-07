@@ -34,7 +34,12 @@
         android:id="@+id/advancedSearchFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.AdvancedSearchFragment"
         tools:layout="@layout/fragment_advanced_search"
-        android:label="AdvancedSearchFragment" />
+        android:label="AdvancedSearchFragment" >
+        <action
+            android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
+    </fragment>
 
 
 </navigation>

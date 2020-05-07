@@ -8,6 +8,14 @@ import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import java.util.function.Function
 
+class DrinkMapperListUi(
+    private val singleMapper: Function<DrinkModel, DrinkUiModel>
+): Function<List<DrinkModel>, List<DrinkUiModel>> {
+    override fun apply(t: List<DrinkModel>): List<DrinkUiModel> {
+        return t.map { singleMapper.apply(it) }
+    }
+}
+
 class DrinkMapperUi(
     private val appCtx: Context
 ) : Function<DrinkModel, DrinkUiModel> {

@@ -75,4 +75,11 @@ val repoModule = module {
             mapper = get<IngredientDetailsMapper>()
         )
     }
+
+    factory {
+        AdvancedSearchRepository(
+            service = get<DrinkService>(),
+            mapper = get<SearchDrinkMapper>()
+        )
+    }
 }
