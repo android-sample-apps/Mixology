@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import kotlinx.android.extensions.LayoutContainer
@@ -19,6 +20,11 @@ class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.Ingre
         fun bind(ingredient: IngredientUiModel) {
             containerView.run {
                 ingredient_name_tv.text = ingredient.name
+
+                ingredient_quantity_tv.run {
+                    text = ingredient.quantity
+                    visibility = (ingredient.quantity != null).toVisibility()
+                }
                 ingredient_quantity_tv.text = ingredient.quantity
                 setOnLongClickListener {
                     onLongClick?.invoke(ingredient)

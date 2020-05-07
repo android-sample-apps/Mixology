@@ -10,7 +10,7 @@ import java.util.function.Function
 
 class DrinkMapperListUi(
     private val singleMapper: Function<DrinkModel, DrinkUiModel>
-): Function<List<DrinkModel>, List<DrinkUiModel>> {
+) : Function<List<DrinkModel>, List<DrinkUiModel>> {
     override fun apply(t: List<DrinkModel>): List<DrinkUiModel> {
         return t.map { singleMapper.apply(it) }
     }
@@ -66,8 +66,10 @@ class DrinkMapperUi(
                     forEach { ingredient, quantity ->
                         append("■ ")
                         append(ingredient)
-                        append(" - ")
-                        append(quantity)
+                        if (quantity?.isNotBlank() == true) {
+                            append(" - ")
+                            append(quantity)
+                        }
                         append("\n")
                     }
                     append("\n")
