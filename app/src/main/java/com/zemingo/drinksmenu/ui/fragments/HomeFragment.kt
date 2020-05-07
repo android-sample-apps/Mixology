@@ -3,6 +3,7 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.ui.adapters.HomePagerAdapter
@@ -16,6 +17,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initHomePagerAdapter()
+        search_action.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToAdvancedSearchFragment()
+            )
+        }
     }
 
     private fun initHomePagerAdapter() {
