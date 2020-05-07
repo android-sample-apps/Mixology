@@ -39,7 +39,7 @@ data class DrinkPreviewModel(
     val name: String,
     val thumbnail: String?
 ) {
-    constructor(drinkModel: DrinkPreviewModel) : this(
+    constructor(drinkModel: DrinkModel) : this(
         drinkModel.id,
         drinkModel.name,
         drinkModel.thumbnail

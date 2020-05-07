@@ -12,7 +12,7 @@ abstract class SearchUseCase<T> {
 
     private var searchJob: Job? = null
 
-    abstract suspend fun fetchQuery(query: String): List<T>
+    protected abstract suspend fun fetchQuery(query: String): List<T>
 
     fun search(query: String) {
         Timber.d("Searching by [$query]")

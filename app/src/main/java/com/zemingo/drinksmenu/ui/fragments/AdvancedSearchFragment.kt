@@ -80,6 +80,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     }
 
     private fun runSearchQuery() {
+        hideNoResults()
         advancedSearchViewModel.searchByName(query)
     }
 
@@ -94,12 +95,16 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {
         Timber.d("results: $drinks")
         drinkPreviewAdapter.update(drinks)
-        search_container_til.run {
-            helperText = if (drinks.isEmpty()) {
-                "No results"
-            } else {
-                null
-            }
+        if (drinks.isEmpty()) {
+            showNoResults()
         }
+    }
+
+    private fun showNoResults() {
+        search_container_til.helperText = getString(R.string.no_results)
+    }
+
+    private fun hideNoResults() {
+        search_container_til.helperText = null
     }
 }

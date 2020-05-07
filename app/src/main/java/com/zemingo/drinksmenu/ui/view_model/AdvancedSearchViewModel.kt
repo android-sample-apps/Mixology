@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.zemingo.drinksmenu.domain.SearchUseCase
+import com.zemingo.drinksmenu.domain.AdvancedSearchUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.flow.map
 import java.util.function.Function
 
 class AdvancedSearchViewModel(
-    private val searchUseCase: SearchUseCase<DrinkPreviewModel>,
+    private val searchUseCase: AdvancedSearchUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
@@ -25,7 +25,7 @@ class AdvancedSearchViewModel(
     }
 
     fun clearOnGoingSearches() {
-        searchUseCase.clearOngoingSearch()
+        searchUseCase.clearOnGoingSearch()
     }
 
     override fun onCleared() {
