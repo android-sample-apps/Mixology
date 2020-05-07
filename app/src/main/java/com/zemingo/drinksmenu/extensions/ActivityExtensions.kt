@@ -2,7 +2,9 @@ package com.zemingo.drinksmenu.extensions
 
 import android.app.Activity
 import android.view.WindowManager
+import androidx.annotation.ColorRes
 import androidx.core.app.ShareCompat
+import androidx.core.content.ContextCompat
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 
 
@@ -18,6 +20,13 @@ fun Activity.clearTranslucentStatusBar() {
         WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
     )
 }
+
+fun Activity.setStatusBarColor(@ColorRes color: Int) {
+//    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    window.statusBarColor = ContextCompat.getColor(this, color)
+}
+
 
 fun Activity.shareDrink(drinkUiModel: DrinkUiModel) {
     ShareCompat.IntentBuilder

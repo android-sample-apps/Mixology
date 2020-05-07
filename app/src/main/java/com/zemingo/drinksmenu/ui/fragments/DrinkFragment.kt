@@ -27,7 +27,26 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        requireActivity().translucentStatusBar()
         initInfoPagerAdapter()
+        initMotionLayoutListener()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+//        requireActivity().clearTranslucentStatusBar()
+    }
+
+    private fun initMotionLayoutListener() {
+        /*drink_ml.setTransitionListener(object : MyTransitionListener() {
+            override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+                if (currentId == R.id.expanded) {
+                    requireActivity().translucentStatusBar()
+                } else {
+                    requireActivity().setStatusBarColor(R.color.white)
+                }
+            }
+        })*/
     }
 
     private fun initInfoPagerAdapter() {
