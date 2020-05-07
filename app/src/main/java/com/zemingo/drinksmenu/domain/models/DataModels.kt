@@ -38,7 +38,13 @@ data class DrinkPreviewModel(
     @PrimaryKey val id: String,
     val name: String,
     val thumbnail: String?
-)
+) {
+    constructor(drinkModel: DrinkPreviewModel) : this(
+        drinkModel.id,
+        drinkModel.name,
+        drinkModel.thumbnail
+    )
+}
 
 @Entity
 data class PreviousSearchModel(

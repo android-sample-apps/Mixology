@@ -4,31 +4,28 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.zemingo.drinksmenu.domain.SearchCocktailUseCase
-import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.domain.SearchUseCase
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
-import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import kotlinx.coroutines.flow.map
 import java.util.function.Function
 
 class AdvancedSearchViewModel(
-    private val searchCocktailUseCase: SearchCocktailUseCase,
-    mapper: Function<List<DrinkModel>, List<DrinkUiModel>>,
-    previewMapper: Function<List<DrinkUiModel>, List<DrinkPreviewUiModel>>
+    private val searchUseCase: SearchUseCase<DrinkPreviewModel>,
+    mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
-    val resultsLiveData: LiveData<List<DrinkPreviewUiModel>> = searchCocktailUseCase
-        .searchChannel
+    val resultsLiveData: LiveData<List<DrinkPreviewUiModel>> = searchUseCase
+        .searchResults
         .map { mapper.apply(it) }
-        .map { previewMapper.apply(it) }
         .asLiveData(viewModelScope.coroutineContext)
 
     fun searchByName(name: String) {
-        searchCocktailUseCase.searchByName(name)
+        searchUseCase.search(name)
     }
 
     fun clearOnGoingSearches() {
-        searchCocktailUseCase.clearOngoingSearch()
+        searchUseCase.clearOngoingSearch()
     }
 
     override fun onCleared() {

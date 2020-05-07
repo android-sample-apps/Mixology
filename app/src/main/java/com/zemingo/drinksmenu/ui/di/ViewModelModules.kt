@@ -1,5 +1,6 @@
 package com.zemingo.drinksmenu.ui.di
 
+import com.zemingo.drinksmenu.domain.SearchCocktailByIngredientUseCase
 import com.zemingo.drinksmenu.ui.mappers.*
 import com.zemingo.drinksmenu.ui.view_model.*
 import org.koin.android.viewmodel.dsl.viewModel
@@ -58,9 +59,8 @@ val viewModelModule = module {
 
     viewModel {
         AdvancedSearchViewModel(
-            searchCocktailUseCase = get(),
-            mapper = get<DrinkMapperListUi>(),
-            previewMapper = get<DrinkToPreviewUiMapper>()
+            searchUseCase = get<SearchCocktailByIngredientUseCase>(),
+            mapper = get<DrinkPreviewMapperUi>()
         )
     }
 }

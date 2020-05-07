@@ -19,8 +19,6 @@ val mappersModule = module {
 
     factory { DrinkMapper(get<SingleDrinkMapper>()) }
 
-    factory { DrinkToPreviewUiMapper() }
-
     factory { SearchDrinkMapper(get<SingleDrinkMapper>()) }
 
     factory { SingleDrinkMapper() }
