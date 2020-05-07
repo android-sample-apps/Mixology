@@ -27,4 +27,5 @@
     <string name="notes">Notes</string>
     <string name="home_title">The cocktail book</string>
     <string name="search">Search</string>
+    <string name="advanced_search_hint">Search for a cocktails</string>
 </resources>
