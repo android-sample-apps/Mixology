@@ -37,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:theme="@style/MyEditTextTheme"
                 android:id="@+id/search_query_et"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
