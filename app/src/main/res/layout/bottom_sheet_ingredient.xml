@@ -20,6 +20,7 @@
             android:letterSpacing="0.2"
             android:textColor="@color/header_text_color"
             android:textSize="36sp"
+            android:gravity="center"
             app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
