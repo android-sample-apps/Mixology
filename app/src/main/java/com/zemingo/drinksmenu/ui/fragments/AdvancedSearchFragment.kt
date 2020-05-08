@@ -49,6 +49,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     private fun initSearchQuery() {
         search_container_til.setEndIconOnClickListener {
+            hideNoResults()
             clearQuery()
         }
 
