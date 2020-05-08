@@ -6,11 +6,12 @@ import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.models.DrinkPreviewResponse
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
+import com.zemingo.drinksmenu.repo.models.NullableDrinksWrapperResponse
 import java.util.function.Function
 
 class AdvancedSearchRepository(
     private val service: DrinkService,
-    private val drinkMapper: Function<DrinksWrapperResponse<DrinkResponse>, List<DrinkModel>>,
+    private val drinkMapper: Function<NullableDrinksWrapperResponse<DrinkResponse>, List<DrinkModel>>,
     private val previewMapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 

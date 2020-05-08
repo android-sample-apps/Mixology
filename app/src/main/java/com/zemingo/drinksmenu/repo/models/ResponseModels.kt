@@ -70,6 +70,10 @@ data class DrinksWrapperResponse<T>(
     @SerializedName("drinks") val data: List<T>
 )
 
+data class NullableDrinksWrapperResponse<T>(
+    @SerializedName("drinks") val data: List<T>?
+)
+
 data class IngredientsWrapperResponse<T>(
     @SerializedName("ingredients") val data: List<T>
 )

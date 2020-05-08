@@ -71,6 +71,6 @@ interface DrinkService {
     suspend fun getIngredientByName(@Query("i") name: String): IngredientsWrapperResponse<IngredientDetailsResponse>
 
     @GET("search.php")
-    suspend fun searchByName(@Query("s") name: String): DrinksWrapperResponse<DrinkResponse>
+    suspend fun searchByName(@Query("s") name: String): NullableDrinksWrapperResponse<DrinkResponse>
 
 }
