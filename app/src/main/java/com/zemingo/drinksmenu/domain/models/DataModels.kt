@@ -15,7 +15,8 @@ data class IngredientDetailsModel(
     val name: String,
     val description: String?,
     val isAlcoholic: Boolean,
-    val image: String
+    val image: String,
+    val alcoholVolume: Int?
 ) {
     private fun shortDescription(): String? {
         return description?.take(10)?.let {
@@ -24,7 +25,7 @@ data class IngredientDetailsModel(
     }
 
     fun debugPrint(): String {
-        return "IngredientDetailsModel(id=$id, name=$name, description=${shortDescription()}, isAlcoholic=$isAlcoholic, image=$image"
+        return "IngredientDetailsModel(id=$id, name=$name, description=${shortDescription()}, isAlcoholic=$isAlcoholic, ABV= ${alcoholVolume},image=$image"
     }
 }
 

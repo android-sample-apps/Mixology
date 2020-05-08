@@ -17,6 +17,7 @@ class IngredientDetailsMapper :
                 name = it.name,
                 description = it.description,
                 image = encodeImageUrl(it.name),
+                alcoholVolume = it.alcoholVolume?.toIntOrNull(),
                 isAlcoholic = it.isAlcoholic?.toLowerCase(Locale.ROOT)?.equals("yes") == true
             )
         }

@@ -14,7 +14,8 @@ data class IngredientDetailsResponse(
     @SerializedName("idIngredient") val id: String,
     @SerializedName("strIngredient") val name: String,
     @SerializedName("strDescription") val description: String,
-    @SerializedName("strAlcohol") val isAlcoholic: String?
+    @SerializedName("strAlcohol") val isAlcoholic: String?,
+    @SerializedName("strABV") val alcoholVolume: String?
 )
 
 data class DrinkPreviewResponse(

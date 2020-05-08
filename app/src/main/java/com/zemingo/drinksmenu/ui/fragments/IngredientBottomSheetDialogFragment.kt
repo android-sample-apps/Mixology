@@ -8,8 +8,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.extensions.webSearchIntent
 import com.zemingo.drinksmenu.extensions.toVisibility
+import com.zemingo.drinksmenu.extensions.webSearchIntent
 import com.zemingo.drinksmenu.ui.models.IngredientDetailsUiModel
 import com.zemingo.drinksmenu.ui.view_model.IngredientDetailsViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_ingredient.*
@@ -25,7 +25,7 @@ class IngredientBottomSheetDialogFragment(
         const val TAG = "IngredientBottomSheetDialogFragment"
     }
 
-    private val detailsViewModel: IngredientDetailsViewModel by viewModel() {
+    private val detailsViewModel: IngredientDetailsViewModel by viewModel {
         parametersOf(
             ingredient
         )
@@ -73,7 +73,15 @@ class IngredientBottomSheetDialogFragment(
 
     private fun updateDrink(details: IngredientDetailsUiModel) {
         updateDescription(details)
+        updateAlcoholVolume(details)
         updateWebSearchQuery(details)
+    }
+
+    private fun updateAlcoholVolume(details: IngredientDetailsUiModel) {
+        alcohol_volume_tv.run {
+            text = getString(R.string.alcohol_volume_abv, details.alcoholVolume)
+            visibility = (details.alcoholVolume != null).toVisibility()
+        }
     }
 
     private fun updateDescription(details: IngredientDetailsUiModel) {

@@ -11,7 +11,9 @@ class IngredientDetailsMapperUi : Function<IngredientDetailsModel, IngredientDet
             name = t.name,
             description = t.description,
             image = t.image,
-            isAlcoholic = t.isAlcoholic
+            isAlcoholic = t.isAlcoholic,
+            alcoholVolume = t.alcoholVolume?.toString()
         )
     }
+
 }
