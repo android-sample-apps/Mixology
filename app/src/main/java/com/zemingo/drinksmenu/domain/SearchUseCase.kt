@@ -5,26 +5,26 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import timber.log.Timber
 
-abstract class SearchUseCase<T> {
+abstract class SearchUseCase<Q, T> {
 
     private val channel = ConflatedBroadcastChannel<List<T>>()
     val searchResults = channel.asFlow()
 
     private var searchJob: Job? = null
 
-    protected abstract suspend fun fetchQuery(query: String): List<T>
+    protected abstract suspend fun fetchQuery(filter: Q): List<T>
 
-    fun search(query: String) {
-        Timber.d("Searching by [$query]")
+    fun filter(filter: Q) {
+        Timber.d("filtering by [$filter]")
         clearOngoingSearch()
         searchJob = GlobalScope.launch(Dispatchers.IO) {
             val result: List<T> = try {
-                fetchQuery(query)
+                fetchQuery(filter)
             } catch (e: CancellationException) {
-                Timber.i(e, "Searching by [$query] cancelled")
+                Timber.i(e, "filtering by [$filter] cancelled")
                 emptyList()
             } catch (e: Exception) {
-                Timber.e(e, "Failed searching by [$query], sending an empty list")
+                Timber.e(e, "Failed searching by [$filter], sending an empty list")
                 emptyList()
             }
 

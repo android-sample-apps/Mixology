@@ -35,7 +35,7 @@ class DrinkPreviewRepository(
     }
 
     suspend fun fetchByCategoryImmediate(category: String): List<DrinkPreviewModel> {
-        val response = service.getByCategory(category.replace(" ", "_"))
+        val response = service.filterByCategory(category.replace(" ", "_"))
         return mapper.apply(response).apply { storeAll(this) }
     }
 

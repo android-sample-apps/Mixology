@@ -5,9 +5,9 @@ import com.zemingo.drinksmenu.repo.repositories.AdvancedSearchRepository
 
 class SearchCocktailByNameUseCase(
     private val repository: AdvancedSearchRepository
-) : SearchUseCase<DrinkModel>() {
+) : SearchUseCase<String, DrinkModel>() {
 
-    override suspend fun fetchQuery(query: String): List<DrinkModel> {
-        return repository.fetchByName(query)
+    override suspend fun fetchQuery(filter: String): List<DrinkModel> {
+        return repository.fetchByName(filter)
     }
 }

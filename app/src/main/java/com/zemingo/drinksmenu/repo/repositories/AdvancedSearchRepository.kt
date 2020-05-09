@@ -1,7 +1,9 @@
 package com.zemingo.drinksmenu.repo.repositories
 
+import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.domain.models.FilterType
 import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.models.DrinkPreviewResponse
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
@@ -20,8 +22,13 @@ class AdvancedSearchRepository(
         return drinkMapper.apply(response)
     }
 
-    suspend fun fetchByIngredient(ingredient: String): List<DrinkPreviewModel> {
-        val response = service.searchByIngredient(ingredient)
+    suspend fun filterBy(filter: DrinkFilter): List<DrinkPreviewModel> {
+        val response: DrinksWrapperResponse<DrinkPreviewResponse> = when(filter.type) {
+            FilterType.ALCOHOL -> service.filterByAlcoholic(filter.query)
+            FilterType.CATEGORY ->  service.filterByCategory(filter.query)
+            FilterType.GLASS ->  service.filterByGlass(filter.query)
+            FilterType.INGREDIENTS ->  service.filterByIngredient(filter.query)
+        }
         return previewMapper.apply(response)
     }
 }

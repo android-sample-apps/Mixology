@@ -1,18 +1,23 @@
 package com.zemingo.drinksmenu.domain
 
+import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
-import kotlinx.coroutines.*
+import com.zemingo.drinksmenu.domain.models.FilterType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AdvancedSearchUseCase(
-    private val searchCocktailByIngredientUseCase: SearchUseCase<DrinkPreviewModel>,
-    private val searchCocktailByNameUseCase: SearchUseCase<DrinkModel>
+    private val searchCocktailByIngredientUseCase: FilterDrinkUseCase,
+    private val searchCocktailByNameUseCase: SearchUseCase<String, DrinkModel>
 ) {
     private var searchJob: Job? = null
     private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
@@ -49,8 +54,8 @@ class AdvancedSearchUseCase(
         Timber.d("searching for query[$query]")
         clearOnGoingSearch()
         observerSearchResults()
-        searchCocktailByIngredientUseCase.search(query)
-        searchCocktailByNameUseCase.search(query)
+        searchCocktailByIngredientUseCase.filter(DrinkFilter(query, FilterType.INGREDIENTS))
+        searchCocktailByNameUseCase.filter(query)
     }
 
     fun clearOnGoingSearch() {

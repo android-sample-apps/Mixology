@@ -80,14 +80,14 @@ val useCasesModule = module {
     }
 
     factory {
-        SearchCocktailByIngredientUseCase(
-            repository = get()
+        FilterDrinkUseCase(
+            advancedSearchRepository = get()
         )
     }
 
     factory {
         AdvancedSearchUseCase(
-            searchCocktailByIngredientUseCase = get<SearchCocktailByIngredientUseCase>(),
+            searchCocktailByIngredientUseCase = get(),
             searchCocktailByNameUseCase = get<SearchCocktailByNameUseCase>()
         )
     }
