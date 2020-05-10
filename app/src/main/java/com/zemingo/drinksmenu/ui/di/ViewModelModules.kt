@@ -62,6 +62,7 @@ val viewModelModule = module {
     viewModel {
         AdvancedSearchViewModel(
             searchUseCase = get(),
+            filter = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
     }

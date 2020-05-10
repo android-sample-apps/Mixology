@@ -14,6 +14,12 @@ abstract class SearchUseCase<Q, T> {
 
     protected abstract suspend fun fetchQuery(filter: Q): List<T>
 
+    /*init {
+        GlobalScope.launch(Dispatchers.IO) {
+//            channel.send(emptyList())
+        }
+    }*/
+
     fun filter(filter: Q) {
         Timber.d("filtering by [$filter]")
         clearOngoingSearch()

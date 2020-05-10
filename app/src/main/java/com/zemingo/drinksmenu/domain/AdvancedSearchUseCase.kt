@@ -1,9 +1,7 @@
 package com.zemingo.drinksmenu.domain
 
-import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.domain.models.FilterType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -11,7 +9,6 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -30,13 +27,13 @@ class AdvancedSearchUseCase(
         searchJob = GlobalScope.launch(Dispatchers.IO) {
             searchByName
                 .map { mapToPreviews(it) }
-                .zip(searchByIngredient) { fromNames: List<DrinkPreviewModel>, containingIngredients: List<DrinkPreviewModel> ->
-                    Timber.d("Collected fromNames[${fromNames.size}], containing ingredients[${containingIngredients.size}]")
+                /*.combine(searchByIngredient) { fromNames: List<DrinkPreviewModel>, containingIngredients: List<DrinkPreviewModel>? ->
+                    Timber.d("Collected fromNames[${fromNames.size}], containing ingredients[${containingIngredients?.size}]")
                     mutableListOf<DrinkPreviewModel>().apply {
                         addAll(fromNames)
-                        addAll(containingIngredients)
+                        addAll(containingIngredients ?: emptyList())
                     }
-                }
+                }*/
                 .map { results: List<DrinkPreviewModel> -> results.distinctBy { it.id } }
                 .map { results: List<DrinkPreviewModel> -> results.sortedBy { it.name } }
                 .collect {
@@ -54,7 +51,7 @@ class AdvancedSearchUseCase(
         Timber.d("searching for query[$query]")
         clearOnGoingSearch()
         observerSearchResults()
-        searchCocktailByIngredientUseCase.filter(DrinkFilter(query, FilterType.INGREDIENTS))
+//        searchCocktailByIngredientUseCase.filter(DrinkFilter(query, FilterType.INGREDIENTS))
         searchCocktailByNameUseCase.filter(query)
     }
 
@@ -64,7 +61,7 @@ class AdvancedSearchUseCase(
     }
 
     private fun stopNestedSearch() {
-        searchCocktailByIngredientUseCase.clearOngoingSearch()
+//        searchCocktailByIngredientUseCase.clearOngoingSearch()
         searchCocktailByNameUseCase.clearOngoingSearch()
     }
 

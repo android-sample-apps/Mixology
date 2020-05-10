@@ -91,4 +91,13 @@ val useCasesModule = module {
             searchCocktailByNameUseCase = get<SearchCocktailByNameUseCase>()
         )
     }
+
+    factory {
+        MultipleFilterDrinkUseCase(
+            alcoholicFilter = get(),
+            categoryFilter = get(),
+            ingredientFilter = get(),
+            glassFilter = get()
+        )
+    }
 }

@@ -28,7 +28,7 @@ data class DrinkResponse(
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strDrink") val strDrink: String,
     @SerializedName("strGlass") val strGlass: String,
-    @SerializedName("strAlcoholic") val strAlcoholic: String,
+    @SerializedName("strAlcoholic") val strAlcoholic: String?,
     @SerializedName("strVideo") val strVideo: String?,
     @SerializedName("strInstructions") val strInstructions: String,
     @SerializedName("strCategory") val strCategory: String,

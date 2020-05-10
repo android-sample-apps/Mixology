@@ -1,18 +1,15 @@
 package com.zemingo.drinksmenu.ui.fragments
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.hideKeyboard
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
-import com.zemingo.drinksmenu.ui.SpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel

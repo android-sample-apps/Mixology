@@ -64,7 +64,7 @@ data class DrinkModel(
     val instructions: String,
     val ingredients: Map<String, String?>,
     val category: String,
-    val alcoholic: String,
+    val alcoholic: String?,
     val glass: String,
     val video: String?,
     val thumbnail: String?

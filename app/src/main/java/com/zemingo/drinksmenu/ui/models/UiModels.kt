@@ -18,7 +18,7 @@ data class DrinkUiModel(
     val instructions: List<SpannableString>,
     val ingredients: List<IngredientUiModel>,
     val category: String,
-    val alcoholic: String,
+    val alcoholic: String?,
     val glass: String,
     val video: String?,
     val thumbnail: String?,
