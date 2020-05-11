@@ -39,9 +39,16 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initFilterFab()
         initSearchQuery()
         initResultsRecyclerView()
         observeResults()
+    }
+
+    private fun initFilterFab() {
+        filter_search_fab.setOnClickListener {
+            FilterBottomDialogFragment().show(childFragmentManager, "FilterDialog")
+        }
     }
 
     private fun initSearchQuery() {

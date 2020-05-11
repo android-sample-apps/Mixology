@@ -8,15 +8,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/header_tv"
+        style="@style/MyHeaderText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:letterSpacing="0.125"
-        android:lines="1"
-        android:textColor="@color/header_text_color"
-        android:textSize="42sp"
-        app:fontFamily="@font/fty_delirium_neon_ncv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
