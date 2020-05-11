@@ -21,13 +21,7 @@ class AdvancedSearchViewModel(
 
     val resultsLiveData = filter
         .filterResults
-        .filterNotNull()
         .map { mapper.apply(it) }
-        .distinctUntilChanged()
-        .debounce(250L)
-        .onEach {
-            Timber.d("previews from filters only: ${it.size}")
-        }
         .asLiveData()
 
     fun searchByName(name: String) {

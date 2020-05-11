@@ -66,7 +66,7 @@ val viewModelModule = module {
 
     viewModel {
         AdvancedFiltersViewModel(
-            searchFiltersUseCase = get(),
+            getSearchFiltersUseCase = get(),
             mapper = get<SearchFiltersMapperUi>()
         )
     }

@@ -7,10 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -23,7 +20,7 @@ class MultipleFilterDrinkUseCase(
 ) {
 
     private var job: Job? = null
-    private val _channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>?>()
+    private val _channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
     val filterResults = _channel.asFlow()
 
     init {
@@ -51,6 +48,9 @@ class MultipleFilterDrinkUseCase(
                     }
                     combineFilters(previous, glass)
                 }
+                .filterNotNull()
+                .distinctUntilChanged()
+                .debounce(250L)
                 .collect {
                     Timber.i("Received ${it?.size} items")
                     _channel.send(it)

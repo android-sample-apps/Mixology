@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SearchFiltersUseCase(
+class GetSearchFiltersUseCase(
     getAlcoholicFiltersUseCase: GetAlcoholicFiltersUseCase,
     getGlassesUseCase: GetGlassesUseCase,
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -34,7 +34,7 @@ class SearchFiltersUseCase(
                     Timber.d("received: [${ctgr.size}] categories")
                     model.copy(categories = ctgr)
                 }
-                .combine(getIngredientsUseCase.getAll()) { model: SearchFiltersModel, ingredients: List<IngredientModel> ->
+                .combine(getIngredientsUseCase.ingredients) { model: SearchFiltersModel, ingredients: List<IngredientModel> ->
                     Timber.d("received: [${ingredients.size}] ingredients")
                     model.copy(ingredients = ingredients)
                 }

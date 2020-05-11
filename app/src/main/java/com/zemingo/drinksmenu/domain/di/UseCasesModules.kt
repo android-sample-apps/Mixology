@@ -114,7 +114,7 @@ val useCasesModule = module {
     }
 
     factory {
-        SearchFiltersUseCase(
+        GetSearchFiltersUseCase(
             getAlcoholicFiltersUseCase = get(),
             getCategoriesUseCase = get(),
             getGlassesUseCase = get(),

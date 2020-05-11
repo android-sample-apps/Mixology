@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -108,6 +109,7 @@ class SelectableAdapter(
 ) : DiffAdapter<String, SelectableAdapter.SelectableViewHolder>() {
 
     var onClicked: ((DrinkFilter) -> Unit)? = null
+    var selectedPosition: Int? = null
 
     inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -115,9 +117,26 @@ class SelectableAdapter(
         fun bind(filter: String, position: Int) {
             containerView.run {
                 filter_btn.text = filter
-                filter_btn.setOnClickListener { onClicked?.invoke(DrinkFilter(filter, type)) }
+                if (position == selectedPosition) {
+                    filter_btn.setTextColor(ContextCompat.getColor(context, R.color.header_text_color))
+                }
+                else {
+                    filter_btn.setTextColor(ContextCompat.getColor(context, R.color.secondary_text_color))
+                }
+                filter_btn.setOnClickListener {
+                    updateSelected(position)
+                    onClicked?.invoke(DrinkFilter(filter, type))
+                }
             }
         }
+    }
+
+    private fun updateSelected(position: Int) {
+        notifyItemChanged(position)
+        selectedPosition?.let {
+            notifyItemChanged(it)
+        }
+        selectedPosition = position
     }
 
     override fun onBindViewHolder(holder: SelectableViewHolder, data: String, position: Int) {
