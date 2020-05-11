@@ -113,4 +113,13 @@ val useCasesModule = module {
         )
     }
 
+    factory {
+        SearchFiltersUseCase(
+            getAlcoholicFiltersUseCase = get(),
+            getCategoriesUseCase = get(),
+            getGlassesUseCase = get(),
+            getIngredientsUseCase = get()
+        )
+    }
+
 }

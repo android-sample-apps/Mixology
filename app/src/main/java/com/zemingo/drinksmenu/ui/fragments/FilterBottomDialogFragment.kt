@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -12,13 +13,16 @@ import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
+import com.zemingo.drinksmenu.ui.view_model.AdvancedFiltersViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_search_filters.*
-import kotlinx.android.synthetic.main.layout_search_filters_test.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
+    private val advancedFiltersViewModel: AdvancedFiltersViewModel by viewModel()
     private val selectableAdapter = SelectableAdapter()
 
     override fun onCreateView(
@@ -32,12 +36,18 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAlcoholicRecyclerView()
+        observerFilters()
         filter_accept_btn.setOnClickListener {
             dismiss()
         }
-        selected_btn.setOnClickListener {
-            selected_filter_ml.transitionToEnd()
-        }
+    }
+
+    private fun observerFilters() {
+        advancedFiltersViewModel.searchFilters.observe(
+            viewLifecycleOwner, Observer {
+                Timber.d("Received filters: $it")
+            }
+        )
     }
 
     private fun initAlcoholicRecyclerView() {

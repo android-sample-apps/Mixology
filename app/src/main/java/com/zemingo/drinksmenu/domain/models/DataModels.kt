@@ -84,3 +84,10 @@ data class DrinkModel(
         return "id: $id\n\n$name\n\n$instructions\n\n$ingredients"
     }
 }
+
+data class SearchFiltersModel(
+    val categories: List<CategoryModel> = emptyList(),
+    val alcoholic: List<AlcoholicFilterModel> = emptyList(),
+    val ingredients: List<IngredientModel> = emptyList(),
+    val glasses: List<GlassModel> = emptyList()
+)

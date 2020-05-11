@@ -1,8 +1,6 @@
-package com.zemingo.drinksmenu.repo.mappers
+package com.zemingo.drinksmenu.ui.mappers
 
 import com.zemingo.drinksmenu.domain.models.GlassModel
-import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
-import com.zemingo.drinksmenu.repo.models.GlassResponse
 import com.zemingo.drinksmenu.ui.models.GlassUiModel
 import java.util.function.Function
 

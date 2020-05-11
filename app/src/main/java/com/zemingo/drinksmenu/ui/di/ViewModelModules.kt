@@ -1,9 +1,6 @@
 package com.zemingo.drinksmenu.ui.di
 
-import com.zemingo.drinksmenu.ui.mappers.CategoryMapperUi
-import com.zemingo.drinksmenu.ui.mappers.DrinkMapperUi
-import com.zemingo.drinksmenu.ui.mappers.DrinkPreviewMapperUi
-import com.zemingo.drinksmenu.ui.mappers.IngredientDetailsMapperUi
+import com.zemingo.drinksmenu.ui.mappers.*
 import com.zemingo.drinksmenu.ui.view_model.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
@@ -64,6 +61,13 @@ val viewModelModule = module {
             searchUseCase = get(),
             filter = get(),
             mapper = get<DrinkPreviewMapperUi>()
+        )
+    }
+
+    viewModel {
+        AdvancedFiltersViewModel(
+            searchFiltersUseCase = get(),
+            mapper = get<SearchFiltersMapperUi>()
         )
     }
 }
