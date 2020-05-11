@@ -5,28 +5,103 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    tools:background="@color/orange"
     android:padding="@dimen/screen_padding">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/header_tv"
+        android:id="@+id/alcoholic_header_tv"
         style="@style/MyHeaderText"
+        app:layout_constraintVertical_chainStyle="spread"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Alcoholic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/filter_alcoholic_rv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_alcoholic_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alcoholic_header_tv"
+        app:layout_constraintBottom_toTopOf="@id/glasses_header_tv"
+        tools:listitem="@layout/list_item_selectable_filter" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/glasses_header_tv"
+        style="@style/MyHeaderText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Glasses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_alcoholic_rv"
+        app:layout_constraintBottom_toBottomOf="@id/filter_glasses_rv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_glasses_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/glasses_header_tv"
+        app:layout_constraintBottom_toTopOf="@id/category_header_tv"
+        tools:listitem="@layout/list_item_selectable_filter" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/category_header_tv"
+        style="@style/MyHeaderText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_glasses_rv"
+        app:layout_constraintBottom_toTopOf="@id/filter_category_rv"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/filter_category_rv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="250dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_tv"
+        app:layout_constraintTop_toBottomOf="@id/category_header_tv"
+        app:layout_constraintBottom_toTopOf="@id/ingredient_header_tv"
+        tools:listitem="@layout/list_item_selectable_filter" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/ingredient_header_tv"
+        style="@style/MyHeaderText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ingredients"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_category_rv"
+        app:layout_constraintBottom_toTopOf="@id/filter_ingredients_rv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filter_ingredients_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_header_tv"
         app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
         tools:listitem="@layout/list_item_selectable_filter" />
 
@@ -43,6 +118,7 @@
         app:backgroundTint="@color/black"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_ingredients_rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

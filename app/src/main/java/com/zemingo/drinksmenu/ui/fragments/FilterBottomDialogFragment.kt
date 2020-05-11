@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
@@ -28,7 +27,25 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private val advancedFiltersViewModel: AdvancedFiltersViewModel by viewModel()
     private val advancedSearchViewModel: AdvancedSearchViewModel by sharedViewModel()
-    private val selectableAdapter = SelectableAdapter().apply {
+    private val alcoholicAdapter = SelectableAdapter(FilterType.ALCOHOL).apply {
+        onClicked = {
+            advancedSearchViewModel.updateFilter(it)
+        }
+    }
+
+    private val ingredientsAdapter = SelectableAdapter(FilterType.INGREDIENTS).apply {
+        onClicked = {
+            advancedSearchViewModel.updateFilter(it)
+        }
+    }
+
+    private val categoryAdapter = SelectableAdapter(FilterType.CATEGORY).apply {
+        onClicked = {
+            advancedSearchViewModel.updateFilter(it)
+        }
+    }
+
+    private val glassAdapter = SelectableAdapter(FilterType.GLASS).apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
         }
@@ -44,7 +61,7 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAlcoholicRecyclerView()
+        initFiltersRecyclerView()
         observerFilters()
         filter_accept_btn.setOnClickListener {
             dismiss()
@@ -55,13 +72,23 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         advancedFiltersViewModel.searchFilters.observe(
             viewLifecycleOwner, Observer {
                 Timber.d("Received filters: $it")
-                selectableAdapter.update(it.alcoholic.map { it.name })
+                alcoholicAdapter.update(it.alcoholic.map { it.name })
+                ingredientsAdapter.update(it.ingredients.map { it.name })
+                categoryAdapter.update(it.categories.map { it.name })
+                glassAdapter.update(it.glasses.map { it.name })
             }
         )
     }
 
-    private fun initAlcoholicRecyclerView() {
-        filter_category_rv.run {
+    private fun initFiltersRecyclerView() {
+        initRecyclerView(filter_alcoholic_rv, alcoholicAdapter)
+        initRecyclerView(filter_ingredients_rv, ingredientsAdapter)
+        initRecyclerView(filter_category_rv, categoryAdapter)
+        initRecyclerView(filter_glasses_rv, glassAdapter)
+    }
+
+    private fun initRecyclerView(recyclerView: RecyclerView, selectableAdapter: SelectableAdapter) {
+        recyclerView.run {
             val padding = 8.dpToPx().toInt()
             addItemDecoration(
                 GridSpacerItemDecoration(
@@ -76,7 +103,9 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     }
 }
 
-class SelectableAdapter : DiffAdapter<String, SelectableAdapter.SelectableViewHolder>() {
+class SelectableAdapter(
+    private val type: FilterType
+) : DiffAdapter<String, SelectableAdapter.SelectableViewHolder>() {
 
     var onClicked: ((DrinkFilter) -> Unit)? = null
 
@@ -86,7 +115,7 @@ class SelectableAdapter : DiffAdapter<String, SelectableAdapter.SelectableViewHo
         fun bind(filter: String, position: Int) {
             containerView.run {
                 filter_btn.text = filter
-                filter_btn.setOnClickListener { onClicked?.invoke(DrinkFilter(filter, FilterType.ALCOHOL)) }
+                filter_btn.setOnClickListener { onClicked?.invoke(DrinkFilter(filter, type)) }
             }
         }
     }

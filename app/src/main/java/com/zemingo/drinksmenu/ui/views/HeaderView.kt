@@ -19,7 +19,7 @@ class HeaderView @JvmOverloads constructor(
     var headerText: CharSequence? = null
         set(value) {
             field = value
-            header_tv.text = value
+            alcoholic_header_tv.text = value
         }
 
     private fun initAttributes(attrs: AttributeSet?) {
