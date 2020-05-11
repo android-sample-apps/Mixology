@@ -14,12 +14,13 @@ import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.synthetic.main.fragment_advanced_search.*
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
-    private val advancedSearchViewModel: AdvancedSearchViewModel by viewModel()
+    private val advancedSearchViewModel: AdvancedSearchViewModel by sharedViewModel()
 
     private val query: String get() = search_query_et.text?.toString() ?: ""
 

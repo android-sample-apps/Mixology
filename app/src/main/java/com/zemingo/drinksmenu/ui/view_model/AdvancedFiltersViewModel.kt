@@ -17,8 +17,4 @@ class AdvancedFiltersViewModel(
         .results
         .map { mapper.apply(it) }
         .asLiveData()
-
-
-
-
 }

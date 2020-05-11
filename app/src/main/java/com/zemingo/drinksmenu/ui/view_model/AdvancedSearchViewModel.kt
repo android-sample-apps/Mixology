@@ -1,16 +1,15 @@
 package com.zemingo.drinksmenu.ui.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.zemingo.drinksmenu.domain.AdvancedSearchUseCase
 import com.zemingo.drinksmenu.domain.MultipleFilterDrinkUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.function.Function
 
@@ -20,21 +19,16 @@ class AdvancedSearchViewModel(
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
-    val resultsLiveData: LiveData<List<DrinkPreviewUiModel>> = searchUseCase
-        .searchResults
-        .combine(filter.filterResults) { results: List<DrinkPreviewModel>,
-                                         filter: List<DrinkPreviewModel>? ->
-
-            Timber.d("results: ${results.map { it.id }}")
-            Timber.d("filter: ${filter?.map { it.id }}")
-            val intersection = filter?.intersect(results) ?: results
-            intersection.apply {
-                Timber.i("received filter results[${filter?.size}], name results[${results.size}], intersection results[$size]")
-            }
-        }
-        .map { it.toList() }
+    val resultsLiveData = filter
+        .filterResults
+        .filterNotNull()
         .map { mapper.apply(it) }
-        .asLiveData(viewModelScope.coroutineContext)
+        .distinctUntilChanged()
+        .debounce(250L)
+        .onEach {
+            Timber.d("previews from filters only: ${it.size}")
+        }
+        .asLiveData()
 
     fun searchByName(name: String) {
         searchUseCase.search(name)
@@ -46,11 +40,13 @@ class AdvancedSearchViewModel(
     }
 
     fun updateFilter(drinkFilter: DrinkFilter) {
+        Timber.i("updating filter: $drinkFilter")
         filter.updateFilter(drinkFilter)
     }
 
     override fun onCleared() {
         super.onCleared()
+        Timber.d("onCleared")
         clearOnGoingSearches()
     }
 }

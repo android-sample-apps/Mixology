@@ -27,26 +27,28 @@ class MultipleFilterDrinkUseCase(
     val filterResults = _channel.asFlow()
 
     init {
-        observeFilter()
-    }
-
-    private fun observeFilter() {
-        /*job = */GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) {
             _channel.send(emptyList())
             alcoholicFilter.searchResults
                 .combine(categoryFilter.searchResults) { alcoholic: List<DrinkPreviewModel>?,
                                                          category: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${alcoholic?.size} alcoholic")
+                    alcoholic?.let {
+                        Timber.d("received ${it.size} alcoholic")
+                    }
                     combineFilters(alcoholic, category)
                 }
                 .combine(ingredientFilter.searchResults) { previous: List<DrinkPreviewModel>?,
                                                            ingredients: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${ingredients?.size} ingredients")
+                    ingredients?.let {
+                        Timber.d("received ${it.size} ingredients")
+                    }
                     combineFilters(previous, ingredients)
                 }
                 .combine(glassFilter.searchResults) { previous: List<DrinkPreviewModel>?,
-                                                           glass: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${glass?.size} glass")
+                                                      glass: List<DrinkPreviewModel>? ->
+                    glass?.let {
+                        Timber.d("received ${it.size} glass")
+                    }
                     combineFilters(previous, glass)
                 }
                 .collect {
@@ -54,6 +56,10 @@ class MultipleFilterDrinkUseCase(
                     _channel.send(it)
                 }
         }
+    }
+
+    private fun observeFilter() {
+        /*job = */
     }
 
     private fun combineFilters(
@@ -72,7 +78,7 @@ class MultipleFilterDrinkUseCase(
 
     fun updateFilter(drinkFilter: DrinkFilter) {
         Timber.d("updating filter $drinkFilter")
-        observeFilter()
+//        observeFilter()
         drinkFilter.run {
             when (type) {
                 FilterType.ALCOHOL -> alcoholicFilter.filter(this)
