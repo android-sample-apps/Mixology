@@ -35,4 +35,12 @@ val mappersModule = module {
 
     factory { IngredientDetailsMapperUi() }
 
+    factory { GlassMapper() }
+
+    factory { GlassMapperUi() }
+
+    factory { AlcoholicFilterMapper() }
+
+    factory { AlcoholicFilterMapperUi() }
+
 }

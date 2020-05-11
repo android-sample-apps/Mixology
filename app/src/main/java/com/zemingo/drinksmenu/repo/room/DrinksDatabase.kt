@@ -10,7 +10,9 @@ import com.zemingo.drinksmenu.domain.models.*
         DrinkPreviewModel::class,
         IngredientModel::class,
         PreviousSearchModel::class,
-        IngredientDetailsModel::class
+        IngredientDetailsModel::class,
+        GlassModel::class,
+        AlcoholicFilterModel::class
     ],
     version = 1
 )
@@ -18,6 +20,10 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun drinkPreviewDao(): DrinkPreviewDao
     abstract fun ingredientDao(): IngredientDao
+    abstract fun glassDao(): GlassDao
+    abstract fun alcoholicFiltersDao(): AlcoholicFilterDao
     abstract fun searchesDrinkPreviewDao(): SearchDrinkPreviewDao
     abstract fun ingredientDetailsDao(): IngredientDetailsDao
+
 }
+

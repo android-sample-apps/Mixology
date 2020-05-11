@@ -100,4 +100,17 @@ val useCasesModule = module {
             glassFilter = get()
         )
     }
+
+    factory {
+        GetGlassesUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
+        GetAlcoholicFiltersUseCase(
+            repository = get()
+        )
+    }
+
 }

@@ -44,3 +44,11 @@ data class IngredientDetailsUiModel(
     val isAlcoholic: Boolean,
     val alcoholVolume: String?
 )
+
+data class GlassUiModel(
+    val name: String
+)
+
+data class AlcoholFilterUiModel(
+    val name: String
+)

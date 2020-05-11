@@ -83,4 +83,20 @@ val repoModule = module {
             previewMapper = get<DrinkPreviewMapper>()
         )
     }
+
+    factory {
+        GlassRepository(
+            service = get<DrinkService>(),
+            reactiveStore = get<GlassReactiveStore>(),
+            mapper = get<GlassMapper>()
+        )
+    }
+
+    factory {
+        AlcoholicFilterRepository(
+            service = get<DrinkService>(),
+            reactiveStore = get<AlcoholicFiltersReactiveStore>(),
+            mapper = get<AlcoholicFilterMapper>()
+        )
+    }
 }

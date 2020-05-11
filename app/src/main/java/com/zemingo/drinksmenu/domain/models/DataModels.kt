@@ -10,6 +10,16 @@ data class IngredientModel(
 )
 
 @Entity
+data class GlassModel(
+    @PrimaryKey val name: String
+)
+
+@Entity
+data class AlcoholicFilterModel(
+    @PrimaryKey val name: String
+)
+
+@Entity
 data class IngredientDetailsModel(
     @PrimaryKey val id: String,
     val name: String,

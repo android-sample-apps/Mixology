@@ -58,6 +58,12 @@ interface DrinkService {
     @GET("list.php?c=list")
     suspend fun getCategoryList(): DrinksWrapperResponse<CategoryResponse>
 
+    @GET("list.php?a=list")
+    suspend fun getAlcoholicFilterList(): DrinksWrapperResponse<AlcoholicFilterResponse>
+
+    @GET("list.php?g=list")
+    suspend fun getGlassList(): DrinksWrapperResponse<GlassResponse>
+
     @GET("filter.php")
     suspend fun filterByCategory(@Query("c") category: String): DrinksWrapperResponse<DrinkPreviewResponse>
 

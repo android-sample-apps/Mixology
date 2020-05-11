@@ -18,6 +18,14 @@ data class IngredientDetailsResponse(
     @SerializedName("strABV") val alcoholVolume: String?
 )
 
+data class AlcoholicFilterResponse(
+    @SerializedName("strAlcoholic") val strAlcoholic: String?
+)
+
+data class GlassResponse(
+    @SerializedName("strGlass") val strGlass: String?
+)
+
 data class DrinkPreviewResponse(
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strDrink") val strDrink: String,
