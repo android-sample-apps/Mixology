@@ -99,7 +99,7 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private fun initRecyclerView(recyclerView: RecyclerView, selectableAdapter: SelectableAdapter) {
         recyclerView.run {
-            val padding = 8.dpToPx().toInt()
+            val padding = 4.dpToPx().toInt()
             addItemDecoration(
                 GridSpacerItemDecoration(
                     top = padding,
