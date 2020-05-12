@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="@color/orange">
+    android:background="@color/white">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/filter_accept_btn"
@@ -27,6 +27,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filter_container" />
 
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/MyHeaderText"
+        android:id="@+id/filters_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/screen_padding"
+        android:text="Filters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/filter_container"
         android:layout_width="0dp"
@@ -36,12 +47,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="450dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/filters_header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical"
