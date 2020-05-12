@@ -106,6 +106,8 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         drinkPreviewAdapter.update(drinks)
         if (drinks.isEmpty()) {
             showNoResults()
+        } else {
+            hideNoResults()
         }
     }
 
