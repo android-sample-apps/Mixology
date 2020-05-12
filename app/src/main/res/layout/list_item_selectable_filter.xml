@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/card_container"
     app:strokeColor="@color/secondary_text_color"
+    app:rippleColor="@android:color/transparent"
     app:strokeWidth="1dp"
     tools:alpha="0.9"
     app:cardCornerRadius="@dimen/screen_radius"
