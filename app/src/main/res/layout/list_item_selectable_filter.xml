@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/screen_radius"
-    android:background="?selectableItemBackground"
-    app:cardElevation="0dp"
-    android:padding="@dimen/screen_padding"
+    android:id="@+id/card_container"
     app:strokeColor="@color/secondary_text_color"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:strokeWidth="1dp"
+    tools:alpha="0.9"
+    app:cardCornerRadius="@dimen/screen_radius"
+    app:cardElevation="1dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/filter_btn"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:lines="1"
-        android:fontFamily="@font/jesa_script_regular"
-        tools:text="filter name"
-        android:textColor="@color/secondary_text_color" />
+        android:padding="@dimen/screen_padding">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jesa_script_regular"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="filter name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </com.google.android.material.card.MaterialCardView>

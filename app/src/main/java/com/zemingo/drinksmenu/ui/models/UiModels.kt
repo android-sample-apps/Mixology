@@ -1,8 +1,10 @@
 package com.zemingo.drinksmenu.ui.models
 
 import android.text.SpannableString
+import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.FilterType
+import com.zemingo.drinksmenu.extensions.dpToPx
 
 data class CategoryUiModel(
     val name: String
@@ -63,7 +65,11 @@ data class DrinkFilterUiModel(
     val name: String,
     val drinkFilter: DrinkFilter,
     var selected: Boolean = false
-)
+) {
+    val color: Int get() = if (selected) R.color.header_text_color else R.color.secondary_text_color
+    val alpha: Float get() = if (selected) 1f else 0.3f
+    val elevation: Float get() = if (selected) 12.dpToPx() else 0.dpToPx()
+}
 
 data class SearchFiltersUiModel(
     val filters: Map<FilterType, List<DrinkFilterUiModel>>

@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.FilterType
+import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
@@ -124,30 +124,24 @@ class SelectableAdapter :
         //todo - fix shitty code
         fun bind(filter: DrinkFilterUiModel) {
             containerView.run {
-                filter_btn.text = filter.name
-                if (filter.selected) {
-                    Timber.d("updating ${filter.name} to selected")
-                    filter_btn.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.header_text_color
-                        )
-                    )
-                    filter_btn.setBackgroundColor(ContextCompat.getColor(context, R.color.orange))
-                } else {
-                    filter_btn.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.secondary_text_color
-                        )
-                    )
-                    filter_btn.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
+                setOnClickListener { invokeFilterClicked(filter) }
+
+                val selectedColor = context.compatColor(filter.color)
+                card_container.run {
+                    strokeColor = selectedColor
+                    elevation = filter.elevation
+                    alpha = filter.alpha
                 }
-                filter_btn.setOnClickListener {
-                    onClicked?.invoke(filter.drinkFilter.copy(active = !filter.selected))
+                filter_tv.run {
+                    setTextColor(selectedColor)
+                    text = filter.name
                 }
             }
         }
+    }
+
+    private fun invokeFilterClicked(filter: DrinkFilterUiModel) {
+        onClicked?.invoke(filter.drinkFilter.copy(active = !filter.selected))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
