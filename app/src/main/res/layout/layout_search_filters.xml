@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="@dimen/screen_padding"
-        tools:background="@color/orange">
+        android:padding="@dimen/screen_padding">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/alcoholic_header_tv"
@@ -107,7 +106,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredient_header_tv"
-            app:spanCount="7"
+            android:nestedScrollingEnabled="false"
+            app:spanCount="5"
             tools:listitem="@layout/list_item_selectable_filter" />
 
 
@@ -129,4 +129,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

@@ -27,17 +27,17 @@ class GetSearchFiltersUseCase(
                 .combine(getGlassesUseCase.glasses) { alc: List<AlcoholicFilterModel>, gls: List<GlassModel> ->
                     Timber.d("received: [${alc.size}] alcoholic, [${gls.size}] glasses")
                     SearchFiltersModel(
-                        alcoholic = alc,
-                        glasses = gls
+                        alcoholic = alc.sortedBy { it.name },
+                        glasses = gls.sortedBy { it.name }
                     )
                 }
                 .combine(getCategoriesUseCase.categories) { model: SearchFiltersModel, ctgr: List<CategoryModel> ->
                     Timber.d("received: [${ctgr.size}] categories")
-                    model.copy(categories = ctgr)
+                    model.copy(categories = ctgr.sortedBy { it.name })
                 }
                 .combine(getIngredientsUseCase.ingredients) { model: SearchFiltersModel, ingredients: List<IngredientModel> ->
                     Timber.d("received: [${ingredients.size}] ingredients")
-                    model.copy(ingredients = ingredients)
+                    model.copy(ingredients = ingredients.sortedBy { it.name })
                 }
                 .distinctUntilChanged()
                 .collect {
