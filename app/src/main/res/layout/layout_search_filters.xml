@@ -6,38 +6,6 @@
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/filter_accept_btn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:letterSpacing="0.125"
-        android:padding="0dp"
-        app:rippleColor="@color/secondary_text_color"
-        android:text="apply"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:backgroundTint="@color/black"
-        app:cornerRadius="0dp"
-        app:fontFamily="@font/fty_delirium_ncv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filter_container" />
-
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/MyHeaderText"
-        android:id="@+id/filters_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="@dimen/screen_padding"
-        android:text="Filters"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/filter_container"
         android:layout_width="0dp"
@@ -79,8 +47,8 @@
                 android:id="@+id/glasses_div"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/filter_divider_margin"
-                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:layout_marginBottom="@dimen/screen_padding"
                 android:background="@drawable/divider" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -107,8 +75,8 @@
                 android:id="@+id/category_div"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/filter_divider_margin"
-                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:layout_marginBottom="@dimen/screen_padding"
                 android:background="@drawable/divider" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -133,8 +101,8 @@
                 android:id="@+id/ingredients_div"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/filter_divider_margin"
-                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:layout_marginBottom="@dimen/screen_padding"
                 android:background="@drawable/divider" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -150,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/screen_padding"
-                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:layout_marginBottom="@dimen/screen_padding"
                 android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
@@ -160,5 +128,55 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/filters_header"
+        style="@style/MyHeaderText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/screen_padding"
+        android:text="Filters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:background="@drawable/white_fading_edge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filters_header" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:background="@drawable/white_fading_edge"
+        android:rotation="180"
+        app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter_accept_btn"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0.125"
+        android:padding="0dp"
+        android:text="apply"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:backgroundTint="@color/black"
+        app:cornerRadius="0dp"
+        app:fontFamily="@font/fty_delirium_ncv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_container"
+        app:rippleColor="@color/secondary_text_color" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
