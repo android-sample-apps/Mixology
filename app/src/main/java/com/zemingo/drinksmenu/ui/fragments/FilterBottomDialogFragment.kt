@@ -21,14 +21,18 @@ import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private val advancedFiltersViewModel: AdvancedFiltersViewModel by viewModel()
-    private val advancedSearchViewModel: AdvancedSearchViewModel by sharedViewModel()
+
+    private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
+        @Suppress("RemoveExplicitTypeArguments")
+        requireParentFragment().getViewModel<AdvancedSearchViewModel>()
+    }
     private val alcoholicAdapter = SelectableAdapter().apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
