@@ -16,18 +16,14 @@ import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkFilterUiModel
-import com.zemingo.drinksmenu.ui.view_model.AdvancedFiltersViewModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
 import org.koin.android.viewmodel.ext.android.getViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class FilterBottomDialogFragment : BottomSheetDialogFragment() {
-
-    private val advancedFiltersViewModel: AdvancedFiltersViewModel by viewModel()
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
         @Suppress("RemoveExplicitTypeArguments")
@@ -75,7 +71,7 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun observerFilters() {
-        advancedFiltersViewModel.searchFilters.observe(
+        advancedSearchViewModel.searchFilters.observe(
             viewLifecycleOwner, Observer {
                 Timber.d("Received filters:")
                 updateSelectableAdapter(alcoholicAdapter, it.filters[FilterType.ALCOHOL])

@@ -59,16 +59,10 @@ val viewModelModule = module {
     viewModel {
         AdvancedSearchViewModel(
             searchUseCase = get(),
+            getSearchFiltersUseCase = get(),
+            searchMapper = get<SearchFiltersMapperUi>(),
             filter = get(),
             mapper = get<DrinkPreviewMapperUi>()
-        )
-    }
-
-    viewModel {
-        AdvancedFiltersViewModel(
-            getSearchFiltersUseCase = get(),
-            getMultipleFilterDrinkUseCase = get(),
-            mapper = get<SearchFiltersMapperUi>()
         )
     }
 }
