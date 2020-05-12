@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -38,6 +39,7 @@ class GetSearchFiltersUseCase(
                     Timber.d("received: [${ingredients.size}] ingredients")
                     model.copy(ingredients = ingredients)
                 }
+                .distinctUntilChanged()
                 .collect {
                     _channel.send(it)
                 }

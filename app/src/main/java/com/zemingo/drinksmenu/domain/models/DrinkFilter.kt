@@ -6,5 +6,6 @@ enum class FilterType {
 
 data class DrinkFilter(
     val query: String,
-    val type: FilterType
+    val type: FilterType,
+    val active: Boolean = false
 )

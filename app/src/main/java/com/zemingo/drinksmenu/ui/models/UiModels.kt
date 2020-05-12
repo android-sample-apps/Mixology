@@ -1,10 +1,8 @@
 package com.zemingo.drinksmenu.ui.models
 
 import android.text.SpannableString
-import com.zemingo.drinksmenu.domain.models.AlcoholicFilterModel
-import com.zemingo.drinksmenu.domain.models.CategoryModel
-import com.zemingo.drinksmenu.domain.models.GlassModel
-import com.zemingo.drinksmenu.domain.models.IngredientModel
+import com.zemingo.drinksmenu.domain.models.DrinkFilter
+import com.zemingo.drinksmenu.domain.models.FilterType
 
 data class CategoryUiModel(
     val name: String
@@ -61,9 +59,12 @@ data class AlcoholFilterUiModel(
     val name: String
 )
 
+data class DrinkFilterUiModel(
+    val name: String,
+    val drinkFilter: DrinkFilter,
+    var selected: Boolean = false
+)
+
 data class SearchFiltersUiModel(
-    val categories: List<CategoryUiModel> = emptyList(),
-    val alcoholic: List<AlcoholFilterUiModel> = emptyList(),
-    val ingredients: List<IngredientFilterUiModel> = emptyList(),
-    val glasses: List<GlassUiModel> = emptyList()
+    val filters: Map<FilterType, List<DrinkFilterUiModel>>
 )

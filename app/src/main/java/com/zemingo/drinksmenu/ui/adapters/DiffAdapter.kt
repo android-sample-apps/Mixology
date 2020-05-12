@@ -19,6 +19,14 @@ abstract class DiffAdapter<DATA, VH : RecyclerView.ViewHolder> : RecyclerView.Ad
         diffResult.dispatchUpdatesTo(this)
     }
 
+    fun set(data: List<DATA>) {
+        _data.run {
+            clear()
+            addAll(data)
+            notifyDataSetChanged()
+        }
+    }
+
     fun clear() {
         _data.clear()
         notifyDataSetChanged()

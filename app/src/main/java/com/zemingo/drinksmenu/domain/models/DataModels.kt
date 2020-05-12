@@ -4,6 +4,8 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+interface SearchableFilter
+
 @Entity
 data class IngredientModel(
     @PrimaryKey val name: String

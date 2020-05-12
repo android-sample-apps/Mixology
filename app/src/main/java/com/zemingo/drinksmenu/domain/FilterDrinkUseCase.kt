@@ -10,9 +10,7 @@ import timber.log.Timber
 
 class FilterDrinkUseCase(
     private val advancedSearchRepository: AdvancedSearchRepository
-) /*: SearchUseCase<DrinkFilter, DrinkPreviewModel>() */ {
-
-
+) {
     private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>?>()
     val searchResults = channel.asFlow()
 
@@ -20,26 +18,37 @@ class FilterDrinkUseCase(
 
     init {
         searchJob = GlobalScope.launch(Dispatchers.IO) {
-            channel.send(null)
+            sendNotActive()
         }
     }
 
     fun filter(filter: DrinkFilter) {
         Timber.d("filtering by [$filter]")
-//        clearOngoingSearch()
         searchJob = GlobalScope.launch(Dispatchers.IO) {
-            val result: List<DrinkPreviewModel> = try {
-                fetchQuery(filter)
-            } catch (e: CancellationException) {
-                Timber.i(e, "filtering by [$filter] cancelled")
-                emptyList()
-            } catch (e: Exception) {
-                Timber.e(e, "Failed searching by [$filter], sending an empty list")
-                emptyList()
+            if (!filter.active) {
+                sendNotActive()
+            } else {
+                sendFilterQuery(filter)
             }
-
-            channel.send(result)
         }
+    }
+
+    private suspend fun sendFilterQuery(filter: DrinkFilter) {
+        val result: List<DrinkPreviewModel> = try {
+            fetchQuery(filter)
+        } catch (e: CancellationException) {
+            Timber.i(e, "filtering by [$filter] cancelled")
+            emptyList()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed searching by [$filter], sending an empty list")
+            emptyList()
+        }
+
+        channel.send(result)
+    }
+
+    private suspend fun sendNotActive() {
+        channel.send(null)
     }
 
     fun clearOngoingSearch() {

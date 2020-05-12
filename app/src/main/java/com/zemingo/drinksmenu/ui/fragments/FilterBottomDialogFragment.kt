@@ -15,6 +15,7 @@ import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
+import com.zemingo.drinksmenu.ui.models.DrinkFilterUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedFiltersViewModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.extensions.LayoutContainer
@@ -28,25 +29,25 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private val advancedFiltersViewModel: AdvancedFiltersViewModel by viewModel()
     private val advancedSearchViewModel: AdvancedSearchViewModel by sharedViewModel()
-    private val alcoholicAdapter = SelectableAdapter(FilterType.ALCOHOL).apply {
+    private val alcoholicAdapter = SelectableAdapter().apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
         }
     }
 
-    private val ingredientsAdapter = SelectableAdapter(FilterType.INGREDIENTS).apply {
+    private val ingredientsAdapter = SelectableAdapter().apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
         }
     }
 
-    private val categoryAdapter = SelectableAdapter(FilterType.CATEGORY).apply {
+    private val categoryAdapter = SelectableAdapter().apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
         }
     }
 
-    private val glassAdapter = SelectableAdapter(FilterType.GLASS).apply {
+    private val glassAdapter = SelectableAdapter().apply {
         onClicked = {
             advancedSearchViewModel.updateFilter(it)
         }
@@ -72,13 +73,20 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     private fun observerFilters() {
         advancedFiltersViewModel.searchFilters.observe(
             viewLifecycleOwner, Observer {
-                Timber.d("Received filters: $it")
-                alcoholicAdapter.update(it.alcoholic.map { it.name })
-                ingredientsAdapter.update(it.ingredients.map { it.name })
-                categoryAdapter.update(it.categories.map { it.name })
-                glassAdapter.update(it.glasses.map { it.name })
+                Timber.d("Received filters:")
+                updateSelectableAdapter(alcoholicAdapter, it.filters[FilterType.ALCOHOL])
+                updateSelectableAdapter(categoryAdapter, it.filters[FilterType.CATEGORY])
+                updateSelectableAdapter(glassAdapter, it.filters[FilterType.GLASS])
+                updateSelectableAdapter(ingredientsAdapter, it.filters[FilterType.INGREDIENTS])
             }
         )
+    }
+
+    private fun updateSelectableAdapter(
+        selectableAdapter: SelectableAdapter,
+        filters: List<DrinkFilterUiModel>?
+    ) {
+        selectableAdapter.set(filters ?: emptyList())
     }
 
     private fun initFiltersRecyclerView() {
@@ -104,48 +112,55 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     }
 }
 
-class SelectableAdapter(
-    private val type: FilterType
-) : DiffAdapter<String, SelectableAdapter.SelectableViewHolder>() {
+
+class SelectableAdapter :
+    DiffAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>() {
 
     var onClicked: ((DrinkFilter) -> Unit)? = null
-    var selectedPosition: Int? = null
 
     inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(filter: String, position: Int) {
+        //todo - fix shitty code
+        fun bind(filter: DrinkFilterUiModel) {
             containerView.run {
-                filter_btn.text = filter
-                if (position == selectedPosition) {
-                    filter_btn.setTextColor(ContextCompat.getColor(context, R.color.header_text_color))
-                }
-                else {
-                    filter_btn.setTextColor(ContextCompat.getColor(context, R.color.secondary_text_color))
+                filter_btn.text = filter.name
+                if (filter.selected) {
+                    Timber.d("updating ${filter.name} to selected")
+                    filter_btn.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.header_text_color
+                        )
+                    )
+                    filter_btn.setBackgroundColor(ContextCompat.getColor(context, R.color.orange))
+                } else {
+                    filter_btn.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.secondary_text_color
+                        )
+                    )
+                    filter_btn.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                 }
                 filter_btn.setOnClickListener {
-                    updateSelected(position)
-                    onClicked?.invoke(DrinkFilter(filter, type))
+                    onClicked?.invoke(filter.drinkFilter.copy(active = !filter.selected))
                 }
             }
         }
-    }
-
-    private fun updateSelected(position: Int) {
-        notifyItemChanged(position)
-        selectedPosition?.let {
-            notifyItemChanged(it)
-        }
-        selectedPosition = position
-    }
-
-    override fun onBindViewHolder(holder: SelectableViewHolder, data: String, position: Int) {
-        holder.bind(data, position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
         return SelectableViewHolder(
             parent.viewHolderInflate(R.layout.list_item_selectable_filter)
         )
+    }
+
+    override fun onBindViewHolder(
+        holder: SelectableViewHolder,
+        data: DrinkFilterUiModel,
+        position: Int
+    ) {
+        holder.bind(data)
     }
 }

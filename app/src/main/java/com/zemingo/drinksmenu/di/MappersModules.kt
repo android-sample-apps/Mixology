@@ -46,12 +46,7 @@ val mappersModule = module {
     factory { IngredientFilterMapperUi() }
 
     factory {
-        SearchFiltersMapperUi(
-            alcoholicFilterMapperUi = get(),
-            ingredientFilterMapperUi = get(),
-            glassMapperUi = get(),
-            categoryMapperUi = get()
-        )
+        SearchFiltersMapperUi()
     }
 
 }

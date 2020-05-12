@@ -92,7 +92,7 @@ val useCasesModule = module {
         )
     }
 
-    factory {
+    single {
         MultipleFilterDrinkUseCase(
             alcoholicFilter = get(),
             categoryFilter = get(),
