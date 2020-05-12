@@ -33,9 +33,7 @@ class AdvancedFiltersViewModel(
             }
             SearchFiltersUiModel(
                 filtersMap
-            ).apply {
-                Timber.d("After combine: $this")
-            }
+            )
         }
         .asLiveData()
 }

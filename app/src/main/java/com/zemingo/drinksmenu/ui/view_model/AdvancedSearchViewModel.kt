@@ -1,15 +1,13 @@
 package com.zemingo.drinksmenu.ui.view_model
 
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.AdvancedSearchUseCase
 import com.zemingo.drinksmenu.domain.MultipleFilterDrinkUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.function.Function
 
