@@ -1,132 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:padding="@dimen/screen_padding">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/alcoholic_header_tv"
             style="@style/MyHeaderText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alcoholic"
-            app:layout_constraintBottom_toTopOf="@id/filter_alcoholic_rv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:fontFamily="@font/fty_delirium_ncv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_alcoholic_rv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_padding"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/glasses_header_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/alcoholic_header_tv"
             app:spanCount="2"
             tools:listitem="@layout/list_item_selectable_filter" />
+
+        <View
+            android:id="@+id/glasses_div"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/filter_divider_margin"
+            android:layout_marginBottom="@dimen/filter_divider_margin"
+            android:background="@drawable/divider" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/glasses_header_tv"
             style="@style/MyHeaderText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Glasses"
-            app:layout_constraintBottom_toBottomOf="@id/filter_glasses_rv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filter_alcoholic_rv" />
+            app:fontFamily="@font/fty_delirium_ncv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_glasses_rv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:layout_marginTop="@dimen/screen_padding"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/category_header_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/glasses_header_tv"
             app:spanCount="2"
             tools:listitem="@layout/list_item_selectable_filter" />
+
+        <View
+            android:id="@+id/category_div"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/filter_divider_margin"
+            android:layout_marginBottom="@dimen/filter_divider_margin"
+            android:background="@drawable/divider" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/category_header_tv"
             style="@style/MyHeaderText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
-            app:layout_constraintBottom_toTopOf="@id/filter_category_rv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filter_glasses_rv" />
+            app:fontFamily="@font/fty_delirium_ncv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_category_rv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_padding"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/ingredient_header_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/category_header_tv"
             app:spanCount="2"
             tools:listitem="@layout/list_item_selectable_filter" />
+
+        <View
+            android:id="@+id/ingredients_div"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/filter_divider_margin"
+            android:layout_marginBottom="@dimen/filter_divider_margin"
+            android:background="@drawable/divider" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/ingredient_header_tv"
             style="@style/MyHeaderText"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ingredients"
-            app:layout_constraintBottom_toTopOf="@id/filter_ingredients_rv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filter_category_rv" />
+            app:fontFamily="@font/fty_delirium_ncv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/filter_ingredients_rv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_padding"
+            android:layout_marginBottom="@dimen/filter_divider_margin"
+            android:nestedScrollingEnabled="false"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ingredient_header_tv"
-            android:nestedScrollingEnabled="false"
             app:spanCount="5"
             tools:listitem="@layout/list_item_selectable_filter" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filter_accept_btn"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/fty_delirium_ncv"
             android:letterSpacing="0.125"
             android:padding="0dp"
             android:text="apply"
             android:textColor="@color/white"
             android:textSize="22sp"
             app:backgroundTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filter_ingredients_rv" />
+            app:fontFamily="@font/fty_delirium_ncv" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
