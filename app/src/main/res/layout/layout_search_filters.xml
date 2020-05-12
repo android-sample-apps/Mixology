@@ -1,133 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    tools:background="@color/orange">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter_accept_btn"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:letterSpacing="0.125"
+        android:padding="0dp"
+        app:rippleColor="@color/secondary_text_color"
+        android:text="apply"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:backgroundTint="@color/black"
+        app:cornerRadius="0dp"
+        app:fontFamily="@font/fty_delirium_ncv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filter_container" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/filter_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:padding="@dimen/screen_padding">
+        app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="450dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/alcoholic_header_tv"
-            style="@style/MyHeaderText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Alcoholic"
-            app:fontFamily="@font/fty_delirium_ncv" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filter_alcoholic_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_padding"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/list_item_selectable_filter" />
-
-        <View
-            android:id="@+id/glasses_div"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/filter_divider_margin"
-            android:layout_marginBottom="@dimen/filter_divider_margin"
-            android:background="@drawable/divider" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/glasses_header_tv"
-            style="@style/MyHeaderText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Glasses"
-            app:fontFamily="@font/fty_delirium_ncv" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filter_glasses_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:background="@color/white"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layout_marginTop="@dimen/screen_padding"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/list_item_selectable_filter" />
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding">
 
-        <View
-            android:id="@+id/category_div"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/filter_divider_margin"
-            android:layout_marginBottom="@dimen/filter_divider_margin"
-            android:background="@drawable/divider" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/alcoholic_header_tv"
+                style="@style/FilterHeaderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alcoholic"
+                app:fontFamily="@font/fty_delirium_ncv" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/category_header_tv"
-            style="@style/MyHeaderText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            app:fontFamily="@font/fty_delirium_ncv" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filter_alcoholic_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/list_item_selectable_filter" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filter_category_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_padding"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/list_item_selectable_filter" />
+            <View
+                android:id="@+id/glasses_div"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/filter_divider_margin"
+                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:background="@drawable/divider" />
 
-        <View
-            android:id="@+id/ingredients_div"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/filter_divider_margin"
-            android:layout_marginBottom="@dimen/filter_divider_margin"
-            android:background="@drawable/divider" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/glasses_header_tv"
+                style="@style/FilterHeaderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Glasses"
+                app:fontFamily="@font/fty_delirium_ncv" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/ingredient_header_tv"
-            style="@style/MyHeaderText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ingredients"
-            app:fontFamily="@font/fty_delirium_ncv" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filter_glasses_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/list_item_selectable_filter" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/filter_ingredients_rv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/screen_padding"
-            android:layout_marginBottom="@dimen/filter_divider_margin"
-            android:nestedScrollingEnabled="false"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            app:spanCount="5"
-            tools:listitem="@layout/list_item_selectable_filter" />
+            <View
+                android:id="@+id/category_div"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/filter_divider_margin"
+                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:background="@drawable/divider" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/category_header_tv"
+                style="@style/FilterHeaderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                app:fontFamily="@font/fty_delirium_ncv" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/filter_accept_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:letterSpacing="0.125"
-            android:padding="0dp"
-            android:text="apply"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            app:backgroundTint="@color/black"
-            app:fontFamily="@font/fty_delirium_ncv" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filter_category_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/list_item_selectable_filter" />
 
-    </LinearLayout>
+            <View
+                android:id="@+id/ingredients_div"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/filter_divider_margin"
+                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:background="@drawable/divider" />
 
-</androidx.core.widget.NestedScrollView>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/ingredient_header_tv"
+                style="@style/FilterHeaderText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ingredients"
+                app:fontFamily="@font/fty_delirium_ncv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/filter_ingredients_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_padding"
+                android:layout_marginBottom="@dimen/filter_divider_margin"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="5"
+                tools:listitem="@layout/list_item_selectable_filter" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
