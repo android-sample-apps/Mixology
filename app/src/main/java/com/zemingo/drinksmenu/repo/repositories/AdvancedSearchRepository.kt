@@ -9,10 +9,12 @@ import com.zemingo.drinksmenu.repo.models.DrinkPreviewResponse
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.repo.models.NullableDrinksWrapperResponse
+import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewReactiveStore
 import java.util.function.Function
 
 class AdvancedSearchRepository(
     private val service: DrinkService,
+    private val reactiveStore: DrinkPreviewReactiveStore,
     private val drinkMapper: Function<NullableDrinksWrapperResponse<DrinkResponse>, List<DrinkModel>>,
     private val previewMapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
@@ -24,6 +26,12 @@ class AdvancedSearchRepository(
 
     private suspend fun filterByName(name: String): List<DrinkPreviewModel> {
         return fetchByName(name).map { DrinkPreviewModel(it) }
+    }
+
+    suspend fun filter(filter: DrinkFilter): List<DrinkPreviewModel> {
+        return filterBy(filter).apply {
+            reactiveStore.storeAll(this)
+        }
     }
 
     suspend fun filterBy(filter: DrinkFilter): List<DrinkPreviewModel> {

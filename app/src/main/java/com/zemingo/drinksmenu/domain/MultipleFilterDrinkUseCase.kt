@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MultipleFilterDrinkUseCase(
+    private val getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
     private val alcoholicFilter: FilterDrinkUseCase,
     private val categoryFilter: FilterDrinkUseCase,
     private val ingredientFilter: FilterDrinkUseCase,
@@ -28,9 +29,11 @@ class MultipleFilterDrinkUseCase(
 
     private val selectedFiltersCache = mutableMapOf<FilterType, String>()
 
+
+
     init {
+
         resultsJob = GlobalScope.launch(Dispatchers.IO) {
-            _filerResultChannel.send(emptyList())
             _selectedFiltersChannel.send(emptyMap())
             alcoholicFilter.searchResults
                 .combine(categoryFilter.searchResults) { alcoholic: List<DrinkPreviewModel>?,
@@ -50,7 +53,17 @@ class MultipleFilterDrinkUseCase(
                 }
                 .combine(nameFilter.searchResults) { previous: List<DrinkPreviewModel>?, byName: List<DrinkPreviewModel>? ->
                     Timber.d("received ${byName?.size ?: "inactive"} results by name")
-                    combineFilters(previous, byName) ?: emptyList()
+                    combineFilters(previous, byName)
+                }
+                .combine(getDrinkPreviewUseCase.getAll()) { filters: List<DrinkPreviewModel>?, storedDrinks: List<DrinkPreviewModel> ->
+                    if (filters != null) {
+                        Timber.d("received ${filters.size} filters")
+                        filters
+                    }
+                    else {
+                        Timber.d("received inactive filters, ${storedDrinks.size} from storage")
+                        storedDrinks
+                    }
                 }
                 .filterNotNull()
                 .distinctUntilChanged()
