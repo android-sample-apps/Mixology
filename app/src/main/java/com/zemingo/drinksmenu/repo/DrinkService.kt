@@ -85,4 +85,8 @@ interface DrinkService {
     @GET("search.php")
     suspend fun searchByName(@Query("s") name: String): NullableDrinksWrapperResponse<DrinkResponse>
 
+    @GET("search.php")
+    suspend fun searchByFirstLetter(@Query("f") firstLetter: String): NullableDrinksWrapperResponse<DrinkResponse>
+
+
 }

@@ -111,4 +111,10 @@ val useCasesModule = module {
         )
     }
 
+    factory {
+        FetchAllPreviewsUseCase(
+            previewRepository = get()
+        )
+    }
+
 }

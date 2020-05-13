@@ -1,6 +1,7 @@
 package com.zemingo.drinksmenu.repo.mappers
 
 import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.repo.models.NullableDrinksWrapperResponse
@@ -14,6 +15,18 @@ class SearchDrinkMapper(
         return t.data?.map {
             singleDrinkMapper.apply(it)
         } ?: emptyList()
+    }
+}
+
+class SearchDrinkPreviewMapper(
+    private val singleDrinkMapper: Function<DrinkResponse, DrinkModel>
+) : Function<NullableDrinksWrapperResponse<DrinkResponse>, List<DrinkPreviewModel>> {
+
+    override fun apply(t: NullableDrinksWrapperResponse<DrinkResponse>): List<DrinkPreviewModel> {
+        return t.data
+            ?.map {
+                singleDrinkMapper.apply(it)
+            }?.map { DrinkPreviewModel(it) } ?: emptyList()
     }
 }
 

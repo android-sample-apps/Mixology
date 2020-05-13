@@ -50,7 +50,8 @@ val repoModule = module {
         DrinkPreviewRepository(
             service = get<DrinkService>(),
             reactiveStore = get<DrinkPreviewReactiveStore>(),
-            mapper = get<DrinkPreviewMapper>()
+            mapper = get<DrinkPreviewMapper>(),
+            searchMapper = get<SearchDrinkPreviewMapper>()
         )
     }
 
