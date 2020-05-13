@@ -166,6 +166,7 @@
         android:insetBottom="0dp"
         android:letterSpacing="0.125"
         android:padding="0dp"
+        android:visibility="gone"
         android:text="apply"
         android:textColor="@color/white"
         android:textSize="22sp"

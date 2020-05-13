@@ -87,7 +87,6 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         filters: List<DrinkFilterUiModel>?
     ) {
         selectableAdapter.set(filters ?: emptyList())
-//        selectableAdapter.update(filters ?: emptyList())
     }
 
     private fun initFiltersRecyclerView() {
