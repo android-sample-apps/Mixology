@@ -3,7 +3,6 @@ package com.zemingo.drinksmenu.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.zemingo.drinksmenu.domain.AdvancedSearchUseCase
 import com.zemingo.drinksmenu.domain.GetSearchFiltersUseCase
 import com.zemingo.drinksmenu.domain.MultipleFilterDrinkUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
@@ -18,7 +17,6 @@ import timber.log.Timber
 import java.util.function.Function
 
 class AdvancedSearchViewModel(
-    private val searchUseCase: AdvancedSearchUseCase,
     getSearchFiltersUseCase: GetSearchFiltersUseCase,
     private val filter: MultipleFilterDrinkUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>,
@@ -48,11 +46,15 @@ class AdvancedSearchViewModel(
         .asLiveData()
 
     fun searchByName(name: String) {
-        searchUseCase.search(name)
+        filter.updateFilter(DrinkFilter(query = name, type = FilterType.NAME))
     }
 
-    fun clearOnGoingSearches() {
-        searchUseCase.clearOnGoingSearch()
+    fun clearByName() {
+        filter.updateFilter(DrinkFilter(query = "", type = FilterType.NAME, active = false))
+    }
+
+    private fun clearOnGoingSearches() {
+        clearByName()
         filter.cancel()
     }
 

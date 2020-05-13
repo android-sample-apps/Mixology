@@ -59,5 +59,4 @@ class FilterDrinkUseCase(
     private suspend fun fetchQuery(filter: DrinkFilter): List<DrinkPreviewModel> {
         return advancedSearchRepository.filterBy(filter)
     }
-
 }

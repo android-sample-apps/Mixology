@@ -15,10 +15,9 @@ class MultipleFilterDrinkUseCase(
     private val alcoholicFilter: FilterDrinkUseCase,
     private val categoryFilter: FilterDrinkUseCase,
     private val ingredientFilter: FilterDrinkUseCase,
-    private val glassFilter: FilterDrinkUseCase
-
+    private val glassFilter: FilterDrinkUseCase,
+    private val nameFilter: FilterDrinkUseCase
 ) {
-
     private var resultsJob: Job? = null
     private var filterJob: Job? = null
     private val _filerResultChannel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
@@ -36,24 +35,22 @@ class MultipleFilterDrinkUseCase(
             alcoholicFilter.searchResults
                 .combine(categoryFilter.searchResults) { alcoholic: List<DrinkPreviewModel>?,
                                                          category: List<DrinkPreviewModel>? ->
-                    alcoholic?.let {
-                        Timber.d("received ${it.size} alcoholic")
-                    }
+                    Timber.d("received ${alcoholic?.size ?: "inactive"} alcoholic")
                     combineFilters(alcoholic, category)
                 }
                 .combine(ingredientFilter.searchResults) { previous: List<DrinkPreviewModel>?,
                                                            ingredients: List<DrinkPreviewModel>? ->
-                    ingredients?.let {
-                        Timber.d("received ${it.size} ingredients")
-                    }
+                    Timber.d("received ${ingredients?.size ?: "inactive"} ingredients")
                     combineFilters(previous, ingredients)
                 }
                 .combine(glassFilter.searchResults) { previous: List<DrinkPreviewModel>?,
                                                       glass: List<DrinkPreviewModel>? ->
-                    glass?.let {
-                        Timber.d("received ${it.size} glass")
-                    }
-                    combineFilters(previous, glass) ?: emptyList()
+                    Timber.d("received ${glass?.size ?: "inactive"} glass")
+                    combineFilters(previous, glass)
+                }
+                .combine(nameFilter.searchResults) { previous: List<DrinkPreviewModel>?, byName: List<DrinkPreviewModel>? ->
+                    Timber.d("received ${byName?.size ?: "inactive"} results by name")
+                    combineFilters(previous, byName) ?: emptyList()
                 }
                 .filterNotNull()
                 .distinctUntilChanged()
@@ -87,6 +84,7 @@ class MultipleFilterDrinkUseCase(
                 FilterType.CATEGORY -> categoryFilter.filter(this)
                 FilterType.GLASS -> glassFilter.filter(this)
                 FilterType.INGREDIENTS -> ingredientFilter.filter(this)
+                FilterType.NAME -> nameFilter.filter(this)
             }
         }
 
@@ -118,6 +116,7 @@ class MultipleFilterDrinkUseCase(
         categoryFilter.clearOngoingSearch()
         ingredientFilter.clearOngoingSearch()
         glassFilter.clearOngoingSearch()
+        nameFilter.clearOngoingSearch()
         resultsJob?.cancel()
     }
 }

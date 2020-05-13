@@ -82,7 +82,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     }
 
     private fun clearQuery() {
-        advancedSearchViewModel.clearOnGoingSearches()
+        advancedSearchViewModel.clearByName()
         search_query_et.text = null
         drinkPreviewAdapter.clear()
     }

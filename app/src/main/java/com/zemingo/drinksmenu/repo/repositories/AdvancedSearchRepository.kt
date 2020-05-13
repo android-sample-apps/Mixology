@@ -17,9 +17,13 @@ class AdvancedSearchRepository(
     private val previewMapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 
-    suspend fun fetchByName(name: String): List<DrinkModel> {
+    private suspend fun fetchByName(name: String): List<DrinkModel> {
         val response = service.searchByName(name)
         return drinkMapper.apply(response)
+    }
+
+    private suspend fun filterByName(name: String): List<DrinkPreviewModel> {
+        return fetchByName(name).map { DrinkPreviewModel(it) }
     }
 
     suspend fun filterBy(filter: DrinkFilter): List<DrinkPreviewModel> {
@@ -28,6 +32,7 @@ class AdvancedSearchRepository(
             FilterType.CATEGORY ->  service.filterByCategory(filter.query)
             FilterType.GLASS ->  service.filterByGlass(filter.query)
             FilterType.INGREDIENTS ->  service.filterByIngredient(filter.query)
+            FilterType.NAME -> return filterByName(filter.query)
         }
         return previewMapper.apply(response)
     }
