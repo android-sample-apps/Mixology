@@ -6,6 +6,8 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.getStringFromResourceId
+import com.zemingo.drinksmenu.extensions.toVisibility
+import kotlinx.android.synthetic.main.active_filter_badge.view.*
 import kotlinx.android.synthetic.main.view_filter_header.view.*
 
 class FilterHeaderView @JvmOverloads constructor(
@@ -14,8 +16,9 @@ class FilterHeaderView @JvmOverloads constructor(
 
     var filters: String? = null
         set(value) {
-            showFilters(filters)
             field = value
+            showFilters(filters)
+            invalidate()
         }
 
     var headerText: CharSequence? = null
@@ -35,8 +38,6 @@ class FilterHeaderView @JvmOverloads constructor(
             R.styleable.FilterHeaderView, 0, 0
         ).apply {
             try {
-//                headerText = getStringFromResourceId
-//                (R.styleable.FilterHeaderView_fhv_headerText)
                 headerText = getStringFromResourceId(R.styleable.FilterHeaderView_fhv_headerText)
             } finally {
                 recycle()
@@ -45,6 +46,7 @@ class FilterHeaderView @JvmOverloads constructor(
     }
 
     private fun showFilters(filters: String?) {
-
+        badge.visibility = (filters != null).toVisibility()
+        filter_tv.text = filters
     }
 }

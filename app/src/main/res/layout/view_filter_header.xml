@@ -2,18 +2,30 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/header_tv"
         style="@style/FilterHeaderText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Category"
         app:fontFamily="@font/fty_delirium_ncv"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Category" />
+
+    <include
+        android:id="@+id/badge"
+        layout="@layout/active_filter_badge"
+        android:layout_marginStart="@dimen/screen_padding"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toEndOf="@id/header_tv"
         app:layout_constraintTop_toTopOf="parent" />
 
 </merge>

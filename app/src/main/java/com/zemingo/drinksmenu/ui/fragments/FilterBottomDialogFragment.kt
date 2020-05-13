@@ -18,6 +18,7 @@ import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkFilterUiModel
 import com.zemingo.drinksmenu.ui.models.SearchFiltersUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
+import com.zemingo.drinksmenu.ui.views.FilterHeaderView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
@@ -89,7 +90,17 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
+        Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
+        updateFilterHeaders(alcoholic_header_tv, searchFiltersUiModel.activeFilters[FilterType.ALCOHOL])
+        updateFilterHeaders(category_header_tv, searchFiltersUiModel.activeFilters[FilterType.CATEGORY])
+        updateFilterHeaders(glasses_header_tv, searchFiltersUiModel.activeFilters[FilterType.GLASS])
+        updateFilterHeaders(ingredient_header_tv, searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS])
+    }
 
+    private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, activeFilters: Int?) {
+        filterHeaderView.run {
+            filters = activeFilters?.toString()
+        }
     }
 
     private fun updateSelectableAdapter(
