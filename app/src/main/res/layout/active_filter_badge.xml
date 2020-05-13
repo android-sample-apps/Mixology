@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/screen_radius"
     app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/black"
     app:strokeColor="@color/black"
     app:strokeWidth="1dp">
 
@@ -24,9 +25,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
-            android:textColor="@color/header_text_color"
-            android:textSize="14sp"
-            app:fontFamily="@font/jesa_script_regular"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
