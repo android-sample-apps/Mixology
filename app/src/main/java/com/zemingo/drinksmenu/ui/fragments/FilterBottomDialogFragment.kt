@@ -32,28 +32,25 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         requireParentFragment().getViewModel<AdvancedSearchViewModel>()
     }
     private val alcoholicAdapter = SelectableAdapter().apply {
-        onClicked = {
-            advancedSearchViewModel.updateFilter(it)
-        }
+        onClicked = { onFilterClicked(it) }
     }
 
     private val ingredientsAdapter = SelectableAdapter().apply {
-        onClicked = {
-            advancedSearchViewModel.updateFilter(it)
-        }
+        onClicked = { onFilterClicked(it) }
     }
 
     private val categoryAdapter = SelectableAdapter().apply {
-        onClicked = {
-            advancedSearchViewModel.updateFilter(it)
-        }
+        onClicked = { onFilterClicked(it) }
     }
 
     private val glassAdapter = SelectableAdapter().apply {
-        onClicked = {
-            advancedSearchViewModel.updateFilter(it)
-        }
+        onClicked = { onFilterClicked(it) }
     }
+
+    private fun onFilterClicked(it: DrinkFilter) {
+        advancedSearchViewModel.updateFilter(it)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,15 +83,31 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
         updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
         updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
-        updateSelectableAdapter(ingredientsAdapter, searchFiltersUiModel.filters[FilterType.INGREDIENTS])
+        updateSelectableAdapter(
+            ingredientsAdapter,
+            searchFiltersUiModel.filters[FilterType.INGREDIENTS]
+        )
     }
 
     private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
         Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
-        updateFilterHeaders(alcoholic_header_tv, searchFiltersUiModel.activeFilters[FilterType.ALCOHOL])
-        updateFilterHeaders(category_header_tv, searchFiltersUiModel.activeFilters[FilterType.CATEGORY])
-        updateFilterHeaders(glasses_header_tv, searchFiltersUiModel.activeFilters[FilterType.GLASS])
-        updateFilterHeaders(ingredient_header_tv, searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS])
+        updateFilterHeaders(
+            alcoholic_header_tv,
+            searchFiltersUiModel.activeFilters[FilterType.ALCOHOL]
+        )
+        updateFilterHeaders(
+            category_header_tv,
+            searchFiltersUiModel.activeFilters[FilterType.CATEGORY]
+        )
+        updateFilterHeaders(
+            glasses_header_tv,
+            searchFiltersUiModel.activeFilters[FilterType.GLASS]
+        )
+
+        updateFilterHeaders(
+            ingredient_header_tv,
+            searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
+        )
     }
 
     private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, activeFilters: Int?) {
