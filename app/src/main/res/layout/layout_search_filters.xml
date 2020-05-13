@@ -142,7 +142,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="12dp"
+        android:layout_height="@dimen/fading_edge_height"
         android:background="@drawable/white_fading_edge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +150,7 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="12dp"
+        android:layout_height="@dimen/fading_edge_height"
         android:background="@drawable/white_fading_edge"
         android:rotation="180"
         app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
