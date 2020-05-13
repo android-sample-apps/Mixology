@@ -28,7 +28,7 @@ class HeaderView @JvmOverloads constructor(
             R.styleable.HeaderView, 0, 0
         ).apply {
             try {
-                headerText = getStringFromResourceId(R.styleable.HeaderView_headerText)
+                headerText = getStringFromResourceId(R.styleable.HeaderView_hv_headerText)
             } finally {
                 recycle()
             }

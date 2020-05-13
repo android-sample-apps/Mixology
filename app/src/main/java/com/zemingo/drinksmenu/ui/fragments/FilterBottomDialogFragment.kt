@@ -16,6 +16,7 @@ import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkFilterUiModel
+import com.zemingo.drinksmenu.ui.models.SearchFiltersUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.layout_search_filters.*
@@ -73,13 +74,22 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     private fun observerFilters() {
         advancedSearchViewModel.searchFilters.observe(
             viewLifecycleOwner, Observer {
-                Timber.d("Received filters:")
-                updateSelectableAdapter(alcoholicAdapter, it.filters[FilterType.ALCOHOL])
-                updateSelectableAdapter(categoryAdapter, it.filters[FilterType.CATEGORY])
-                updateSelectableAdapter(glassAdapter, it.filters[FilterType.GLASS])
-                updateSelectableAdapter(ingredientsAdapter, it.filters[FilterType.INGREDIENTS])
+                Timber.d("Received filters: ${it.activeFilters}")
+                updateResults(it)
+                updateActiveFilters(it)
             }
         )
+    }
+
+    private fun updateResults(searchFiltersUiModel: SearchFiltersUiModel) {
+        updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
+        updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
+        updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
+        updateSelectableAdapter(ingredientsAdapter, searchFiltersUiModel.filters[FilterType.INGREDIENTS])
+    }
+
+    private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
+
     }
 
     private fun updateSelectableAdapter(

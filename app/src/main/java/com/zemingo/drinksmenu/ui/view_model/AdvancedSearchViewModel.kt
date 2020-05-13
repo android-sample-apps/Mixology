@@ -29,16 +29,35 @@ class AdvancedSearchViewModel(
         .map { searchMapper.apply(it) }
         .combine(filter.selectedFilters) { searchUiModel: SearchFiltersUiModel, selectedFilters: Map<FilterType, String> ->
             val filtersMap = searchUiModel.filters.toMutableMap()
+            val activeFilters = mutableMapOf<FilterType, Int>()
             selectedFilters.forEach { (filter, key) ->
                 filtersMap[filter]?.forEach {
                     it.selected = it.name == key
+                    if (it.selected) {
+                        Timber.d("selected filter: $filter, ${it.name}")
+                        increaseActiveFilters(activeFilters, filter)
+                    }
                 }
             }
             SearchFiltersUiModel(
-                filtersMap
+                filters = filtersMap,
+                activeFilters = activeFilters?.apply {
+                    Timber.d("active filters $this")
+                }
             )
         }
         .asLiveData()
+
+    private fun increaseActiveFilters(
+        activeFilters: MutableMap<FilterType, Int>,
+        filter: FilterType
+    ) {
+        activeFilters[filter]?.let { prevActives ->
+            activeFilters[filter] = prevActives + 1
+        } ?: run {
+            activeFilters[filter] = 1
+        }
+    }
 
     val resultsLiveData = filter
         .filterResults
