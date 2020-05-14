@@ -12,7 +12,7 @@ import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.webSearchIntent
 import com.zemingo.drinksmenu.ui.models.IngredientDetailsUiModel
 import com.zemingo.drinksmenu.ui.view_model.IngredientDetailsViewModel
-import kotlinx.android.synthetic.main.bottom_sheet_ingredient.*
+import kotlinx.android.synthetic.main.bottom_dialog_ingredient.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -38,7 +38,7 @@ class IngredientBottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_ingredient, container, false)
+        return inflater.inflate(R.layout.bottom_dialog_ingredient, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -20,7 +20,7 @@ import com.zemingo.drinksmenu.ui.models.SearchFiltersUiModel
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import com.zemingo.drinksmenu.ui.views.FilterHeaderView
 import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.layout_search_filters.*
+import kotlinx.android.synthetic.main.bottom_dialog_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
@@ -57,7 +57,7 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_search_filters, container, false)
+        return inflater.inflate(R.layout.bottom_dialog_search_filters, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
