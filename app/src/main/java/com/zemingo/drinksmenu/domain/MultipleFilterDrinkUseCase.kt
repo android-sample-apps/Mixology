@@ -38,25 +38,10 @@ class MultipleFilterDrinkUseCase(
     private fun observeFilterResults(): Job {
         return GlobalScope.launch(Dispatchers.IO) {
             alcoholicFilter.results
-                .combine(categoryFilter.results) { alcoholic: List<DrinkPreviewModel>?,
-                                                   category: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${alcoholic?.size ?: "inactive"} alcoholic")
-                    combineFilters(alcoholic, category)
-                }
-                .combine(ingredientFilter.results) { previous: List<DrinkPreviewModel>?,
-                                                     ingredients: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${ingredients?.size ?: "inactive"} ingredients")
-                    combineFilters(previous, ingredients)
-                }
-                .combine(glassFilter.results) { previous: List<DrinkPreviewModel>?,
-                                                glass: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${glass?.size ?: "inactive"} glass")
-                    combineFilters(previous, glass)
-                }
-                .combine(nameFilter.results) { previous: List<DrinkPreviewModel>?, byName: List<DrinkPreviewModel>? ->
-                    Timber.d("received ${byName?.size ?: "inactive"} results by name")
-                    combineFilters(previous, byName)
-                }
+                .combineFilters(categoryFilter.results, "alcoholic")
+                .combineFilters(ingredientFilter.results, "ingredients")
+                .combineFilters(glassFilter.results, "glasses")
+                .combineFilters(nameFilter.results, "by names")
                 .combine(getDrinkPreviewUseCase.getAll()) { filters: List<DrinkPreviewModel>?, storedDrinks: List<DrinkPreviewModel> ->
                     if (filters != null) {
                         Timber.d("received ${filters.size} filters")
@@ -80,19 +65,10 @@ class MultipleFilterDrinkUseCase(
         _filerSelectedResultChannel.send(emptyMap())
         alcoholicFilter
             .selectedFilters
-            .combine(categoryFilter.selectedFilters) { alcoholicFilters, categoryFilters ->
-                Timber.d("selectedFilters: $alcoholicFilters")
-                combineSelectedFilters(alcoholicFilters, categoryFilters)
-            }
-            .combine(ingredientFilter.selectedFilters) { previousFilters, ingredientsFilters ->
-                combineSelectedFilters(previousFilters, ingredientsFilters)
-            }
-            .combine(glassFilter.selectedFilters) { previousFilters, glassFilter ->
-                combineSelectedFilters(previousFilters, glassFilter)
-            }
-            .combine(nameFilter.selectedFilters) { previousFilters, nameFilter ->
-                combineSelectedFilters(previousFilters, nameFilter)
-            }
+            .combineSelectedFilters(categoryFilter.selectedFilters)
+            .combineSelectedFilters(ingredientFilter.selectedFilters)
+            .combineSelectedFilters(glassFilter.selectedFilters)
+            .combineSelectedFilters(nameFilter.selectedFilters)
             .debounce(debounceTime)
             .distinctUntilChanged()
             .collect {
@@ -101,8 +77,23 @@ class MultipleFilterDrinkUseCase(
             }
     }
 
+    private fun Flow<List<DrinkPreviewModel>?>.combineFilters(
+        new: Flow<List<DrinkPreviewModel>?>,
+        tag: String
+    ): Flow<List<DrinkPreviewModel>?> {
+        return combine(new) { previous: List<DrinkPreviewModel>?, current: List<DrinkPreviewModel>? ->
+            Timber.d("received ${previous?.size ?: "inactive"} $tag")
+            combineFilters(previous, current)
+        }
+    }
 
-    private fun combineSelectedFilters(
+    private fun Flow<Map<FilterType, Set<String>>>.combineSelectedFilters(new: Flow<Map<FilterType, Set<String>>>): Flow<Map<FilterType, Set<String>>> {
+        return combine(new) { previousFilters, newFilter ->
+            mergeSelectedFilters(previousFilters, newFilter)
+        }
+    }
+
+    private fun mergeSelectedFilters(
         previous: Map<FilterType, Set<String>>,
         current: Map<FilterType, Set<String>>
     ): Map<FilterType, Set<String>> {
