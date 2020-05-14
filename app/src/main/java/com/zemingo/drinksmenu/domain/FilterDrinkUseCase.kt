@@ -2,6 +2,7 @@ package com.zemingo.drinksmenu.domain
 
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
+import com.zemingo.drinksmenu.domain.models.FilterType
 import com.zemingo.drinksmenu.repo.repositories.AdvancedSearchRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
@@ -12,6 +13,7 @@ import java.util.*
 
 interface Filterable {
     val results: Flow<List<DrinkPreviewModel>?>
+    val selectedFilters: Flow<Map<FilterType, Set<String>>>
     fun filter(drinkFilter: DrinkFilter)
     fun clear()
 }
@@ -20,7 +22,10 @@ class FilterDrinkUseCase(
     private val advancedSearchRepository: AdvancedSearchRepository
 ) : Filterable {
     private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>?>()
+    private val selectedFilterChannel = ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
     override val results = channel.asFlow()
+
+    override val selectedFilters: Flow<Map<FilterType, Set<String>>> = selectedFilterChannel.asFlow()
 
     private var searchJob: Job? = null
 
@@ -52,11 +57,19 @@ class FilterDrinkUseCase(
             emptyList()
         }
 
+        selectedFilterChannel.send(filter.toSelectedFilter())
         channel.send(result)
     }
 
     private suspend fun sendNotActive() {
+        selectedFilterChannel.send(emptyMap())
         channel.send(null)
+    }
+
+    private fun DrinkFilter.toSelectedFilter(): Map<FilterType, Set<String>> {
+        return mutableMapOf<FilterType, Set<String>>().apply {
+            put(type, setOf(query))
+        }
     }
 
     override fun clear() {
@@ -75,8 +88,14 @@ abstract class AggregateFilterDrinkUseCase(
     private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>?>()
     override val results = channel.asFlow()
 
+    private val selectedFilterChannel = ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
+    override val selectedFilters: Flow<Map<FilterType, Set<String>>> = selectedFilterChannel.asFlow()
+
     private val cache =
         Collections.synchronizedMap(mutableMapOf<DrinkFilter, List<DrinkPreviewModel>?>())
+
+    private val selectedFiltersCache =
+        Collections.synchronizedMap(mutableMapOf<FilterType, MutableSet<String>>())
 
     private var searchJob: Job? = null
 
@@ -121,10 +140,14 @@ abstract class AggregateFilterDrinkUseCase(
     }
 
     private fun addToCache(filter: DrinkFilter, result: List<DrinkPreviewModel>?) {
+        selectedFiltersCache[filter.type]?.add(filter.query) ?: run {
+            selectedFiltersCache[filter.type] = mutableSetOf(filter.query)
+        }
         cache[filter] = result
     }
 
     private fun removeFromCache(filter: DrinkFilter) {
+        selectedFiltersCache[filter.type]?.remove(filter.query)
         cache.remove(filter)
     }
 
@@ -140,12 +163,14 @@ abstract class AggregateFilterDrinkUseCase(
             ?.distinctBy { it.id }
 
         Timber.d("sendFromCache: results[$elements], cache[$cache]")
+        selectedFilterChannel.send(selectedFiltersCache)
         channel.send(elements)
     }
 
     protected abstract suspend fun Sequence<List<DrinkPreviewModel>>.combineFilters(): List<DrinkPreviewModel>?
 
     private suspend fun sendNotActive() {
+        selectedFilterChannel.send(selectedFiltersCache)
         channel.send(null)
     }
 

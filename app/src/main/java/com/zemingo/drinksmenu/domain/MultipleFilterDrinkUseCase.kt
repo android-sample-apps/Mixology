@@ -19,28 +19,37 @@ class MultipleFilterDrinkUseCase(
     private val glassFilter: Filterable,
     private val nameFilter: Filterable
 ) {
+    private val debounceTime = 250L
+
     private var resultsJob: Job? = null
+    private var selectedFiltersJob: Job? = null
     private val _filerResultChannel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
+    private val _filerSelectedResultChannel =
+        ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
     val filterResults = _filerResultChannel.asFlow()
 
-    private val selectedFiltersUseCase = SelectedFilterDrinkUseCase()
-    val selectedFilters = selectedFiltersUseCase.selectedFilters
+    val selectedFilters = _filerSelectedResultChannel.asFlow()
 
     init {
-        resultsJob = GlobalScope.launch(Dispatchers.IO) {
+        resultsJob = observeFilterResults()
+        selectedFiltersJob = observeFilterSelectedResults()
+    }
+
+    private fun observeFilterResults(): Job {
+        return GlobalScope.launch(Dispatchers.IO) {
             alcoholicFilter.results
                 .combine(categoryFilter.results) { alcoholic: List<DrinkPreviewModel>?,
-                                                         category: List<DrinkPreviewModel>? ->
+                                                   category: List<DrinkPreviewModel>? ->
                     Timber.d("received ${alcoholic?.size ?: "inactive"} alcoholic")
                     combineFilters(alcoholic, category)
                 }
                 .combine(ingredientFilter.results) { previous: List<DrinkPreviewModel>?,
-                                                           ingredients: List<DrinkPreviewModel>? ->
+                                                     ingredients: List<DrinkPreviewModel>? ->
                     Timber.d("received ${ingredients?.size ?: "inactive"} ingredients")
                     combineFilters(previous, ingredients)
                 }
                 .combine(glassFilter.results) { previous: List<DrinkPreviewModel>?,
-                                                      glass: List<DrinkPreviewModel>? ->
+                                                glass: List<DrinkPreviewModel>? ->
                     Timber.d("received ${glass?.size ?: "inactive"} glass")
                     combineFilters(previous, glass)
                 }
@@ -52,20 +61,61 @@ class MultipleFilterDrinkUseCase(
                     if (filters != null) {
                         Timber.d("received ${filters.size} filters")
                         filters
-                    }
-                    else {
+                    } else {
                         Timber.d("received inactive filters, ${storedDrinks.size} from storage")
                         storedDrinks
                     }
                 }
                 .filterNotNull()
                 .distinctUntilChanged()
-                .debounce(250L)
+                .debounce(debounceTime)
                 .collect {
                     Timber.i("Received ${it.size} items")
                     _filerResultChannel.send(it)
                 }
         }
+    }
+
+    private fun observeFilterSelectedResults() = GlobalScope.launch(Dispatchers.IO) {
+        _filerSelectedResultChannel.send(emptyMap())
+        alcoholicFilter
+            .selectedFilters
+            .combine(categoryFilter.selectedFilters) { alcoholicFilters, categoryFilters ->
+                Timber.d("selectedFilters: $alcoholicFilters")
+                combineSelectedFilters(alcoholicFilters, categoryFilters)
+            }
+            .combine(ingredientFilter.selectedFilters) { previousFilters, ingredientsFilters ->
+                combineSelectedFilters(previousFilters, ingredientsFilters)
+            }
+            .combine(glassFilter.selectedFilters) { previousFilters, glassFilter ->
+                combineSelectedFilters(previousFilters, glassFilter)
+            }
+            .combine(nameFilter.selectedFilters) { previousFilters, nameFilter ->
+                combineSelectedFilters(previousFilters, nameFilter)
+            }
+            .debounce(debounceTime)
+            .distinctUntilChanged()
+            .collect {
+                Timber.d("selectedFilters: $it")
+                _filerSelectedResultChannel.send(it)
+            }
+    }
+
+
+    private fun combineSelectedFilters(
+        previous: Map<FilterType, Set<String>>,
+        current: Map<FilterType, Set<String>>
+    ): Map<FilterType, Set<String>> {
+        return (previous.asSequence() + current.asSequence())
+            .distinct()
+            .groupBy({ it.key }, { it.value })
+            .mapValues { (_, values) ->
+                val keySet = mutableSetOf<String>()
+                values.forEach {
+                    keySet.addAll(it)
+                }
+                keySet
+            }
     }
 
     private fun combineFilters(
@@ -93,8 +143,6 @@ class MultipleFilterDrinkUseCase(
                 FilterType.NAME -> nameFilter.filter(this)
             }
         }
-
-        selectedFiltersUseCase.updateFilter(drinkFilter)
     }
 
     fun cancel() {
@@ -104,7 +152,7 @@ class MultipleFilterDrinkUseCase(
         ingredientFilter.clear()
         glassFilter.clear()
         nameFilter.clear()
-        selectedFiltersUseCase.cancel()
+        selectedFiltersJob?.cancel()
         resultsJob?.cancel()
     }
 }
