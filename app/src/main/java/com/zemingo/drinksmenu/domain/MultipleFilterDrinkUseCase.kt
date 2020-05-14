@@ -20,21 +20,14 @@ class MultipleFilterDrinkUseCase(
     private val nameFilter: FilterDrinkUseCase
 ) {
     private var resultsJob: Job? = null
-    private var filterJob: Job? = null
     private val _filerResultChannel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
     val filterResults = _filerResultChannel.asFlow()
 
-    private val _selectedFiltersChannel = ConflatedBroadcastChannel<Map<FilterType, String>>()
-    val selectedFilters = _selectedFiltersChannel.asFlow()
-
-    private val selectedFiltersCache = mutableMapOf<FilterType, String>()
-
-
+    private val selectedFiltersUseCase = SelectedFilterDrinkUseCase()
+    val selectedFilters = selectedFiltersUseCase.selectedFilters
 
     init {
-
         resultsJob = GlobalScope.launch(Dispatchers.IO) {
-            _selectedFiltersChannel.send(emptyMap())
             alcoholicFilter.searchResults
                 .combine(categoryFilter.searchResults) { alcoholic: List<DrinkPreviewModel>?,
                                                          category: List<DrinkPreviewModel>? ->
@@ -101,26 +94,7 @@ class MultipleFilterDrinkUseCase(
             }
         }
 
-        setSelectedFilter(drinkFilter)
-    }
-
-    //todo - replace with something better
-    private fun setSelectedFilter(drinkFilter: DrinkFilter) {
-        filterJob = GlobalScope.launch(Dispatchers.IO) {
-            drinkFilter.run {
-                selectedFiltersCache[type]?.let { key ->
-                    if (key != drinkFilter.query) {
-                        selectedFiltersCache[type] = drinkFilter.query
-                    } else {
-                        selectedFiltersCache[type] = ""
-                    }
-                } ?: run {
-                    selectedFiltersCache[type] = drinkFilter.query
-                }
-
-                _selectedFiltersChannel.send(selectedFiltersCache)
-            }
-        }
+        selectedFiltersUseCase.updateFilter(drinkFilter)
     }
 
     fun cancel() {
@@ -130,6 +104,7 @@ class MultipleFilterDrinkUseCase(
         ingredientFilter.clearOngoingSearch()
         glassFilter.clearOngoingSearch()
         nameFilter.clearOngoingSearch()
+        selectedFiltersUseCase.cancel()
         resultsJob?.cancel()
     }
 }

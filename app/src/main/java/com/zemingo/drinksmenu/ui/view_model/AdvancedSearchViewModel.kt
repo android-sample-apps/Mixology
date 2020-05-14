@@ -27,35 +27,32 @@ class AdvancedSearchViewModel(
     val searchFilters: LiveData<SearchFiltersUiModel> = getSearchFiltersUseCase
         .results
         .map { searchMapper.apply(it) }
-        .combine(filter.selectedFilters) { searchUiModel: SearchFiltersUiModel, selectedFilters: Map<FilterType, String> ->
+        .combine(filter.selectedFilters) { searchUiModel: SearchFiltersUiModel,
+                                           selectedFilters: Map<FilterType, Set<String>> ->
             val filtersMap = searchUiModel.filters.toMutableMap()
-            val activeFilters = mutableMapOf<FilterType, Int>()
-            selectedFilters.forEach { (filter, key) ->
-                filtersMap[filter]?.forEach {
-                    it.selected = it.name == key
-                    if (it.selected) {
-                        Timber.d("selected filter: $filter, ${it.name}")
-                        increaseActiveFilters(activeFilters, filter)
+            selectedFilters.forEach { (filter, filterSet) ->
+                filtersMap[filter]?.forEach { filter ->
+                    filter.selected = filterSet.contains(filter.name)//it.name == key
+                    if (filter.selected) {
+                        Timber.d("selected filter: $filter, ${filter.name}")
                     }
                 }
             }
             SearchFiltersUiModel(
                 filters = filtersMap,
-                activeFilters = activeFilters?.apply {
-                    Timber.d("active filters $this")
-                }
+                activeFilters = mapToSelectedFilters(selectedFilters)
             )
         }
         .asLiveData()
 
-    private fun increaseActiveFilters(
-        activeFilters: MutableMap<FilterType, Int>,
-        filter: FilterType
-    ) {
-        activeFilters[filter]?.let { prevActives ->
-            activeFilters[filter] = prevActives + 1
-        } ?: run {
-            activeFilters[filter] = 1
+    private fun mapToSelectedFilters(selectedFilters: Map<FilterType, Set<String>>): Map<FilterType, Int?> {
+        return selectedFilters.mapValues {
+            val activeSize = it.value.size
+            if (activeSize > 0) {
+                activeSize
+            } else {
+                null
+            }
         }
     }
 

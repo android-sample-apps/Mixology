@@ -73,5 +73,5 @@ data class DrinkFilterUiModel(
 
 data class SearchFiltersUiModel(
     val filters: Map<FilterType, List<DrinkFilterUiModel>>,
-    val activeFilters: Map<FilterType, Int>
+    val activeFilters: Map<FilterType, Int?>
 )
