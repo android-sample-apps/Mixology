@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+    app:layoutDescription="@xml/filer_badge_scene"
+    tools:parentTag="androidx.constraintlayout.motion.widget.MotionLayout">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/header_tv"
@@ -20,12 +21,11 @@
     <include
         android:id="@+id/badge"
         layout="@layout/active_filter_badge"
-        android:layout_marginStart="@dimen/screen_padding"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:visibility="gone"
-        tools:visibility="visible"
+        android:layout_marginStart="@dimen/screen_padding"
         app:layout_constraintStart_toEndOf="@id/header_tv"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 </merge>

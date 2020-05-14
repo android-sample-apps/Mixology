@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_container"
+    tools:layout_width="25dp"
+    tools:layout_height="25dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/screen_radius"
-    app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/black"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/white"
     app:strokeColor="@color/black"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="4dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="4dp"
-        android:paddingBottom="4dp">
+        android:padding="4dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/filter_tv"
@@ -25,14 +24,16 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:lines="1"
-            android:textColor="@color/white"
+            android:includeFontPadding="false"
+            app:fontFamily="@font/jesa_script_regular"
+            android:textColor="@color/header_text_color"
+            android:paddingTop="2dp"
             android:textSize="16sp"
-            app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
+            tools:text="99+" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

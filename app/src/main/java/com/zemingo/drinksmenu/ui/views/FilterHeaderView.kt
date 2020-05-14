@@ -3,16 +3,15 @@ package com.zemingo.drinksmenu.ui.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.motion.widget.MotionLayout
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.getStringFromResourceId
-import com.zemingo.drinksmenu.extensions.toVisibility
 import kotlinx.android.synthetic.main.active_filter_badge.view.*
 import kotlinx.android.synthetic.main.view_filter_header.view.*
 
 class FilterHeaderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+) : MotionLayout(context, attrs, defStyleAttr) {
 
     var filters: String? = null
         set(value) {
@@ -46,7 +45,20 @@ class FilterHeaderView @JvmOverloads constructor(
     }
 
     private fun showFilters(filters: String?) {
-        badge.visibility = (filters != null).toVisibility()
+        if (filters != null) {
+            visibleBadge()
+        }
+        else {
+            invisibleBadge()
+        }
         filter_tv.text = filters
+    }
+
+    private fun invisibleBadge() {
+        transitionToStart()
+    }
+
+    private fun visibleBadge() {
+        transitionToEnd()
     }
 }

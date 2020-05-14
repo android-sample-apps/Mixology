@@ -28,6 +28,7 @@
             <com.zemingo.drinksmenu.ui.views.FilterHeaderView
                 android:id="@+id/alcoholic_header_tv"
                 style="@style/FilterHeaderText"
+                app:layoutDescription="@xml/filer_badge_scene"
                 app:fhv_headerText="@string/filter_alcoholic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,6 +56,7 @@
                 android:id="@+id/glasses_header_tv"
                 style="@style/FilterHeaderText"
                 app:fhv_headerText="@string/filter_glasses"
+                app:layoutDescription="@xml/filer_badge_scene"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:fontFamily="@font/fty_delirium_ncv" />
@@ -83,6 +85,7 @@
                 android:id="@+id/category_header_tv"
                 style="@style/FilterHeaderText"
                 app:fhv_headerText="@string/filter_categories"
+                app:layoutDescription="@xml/filer_badge_scene"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:fontFamily="@font/fty_delirium_ncv" />
@@ -109,6 +112,7 @@
                 android:id="@+id/ingredient_header_tv"
                 style="@style/FilterHeaderText"
                 app:fhv_headerText="@string/filter_ingredients"
+                app:layoutDescription="@xml/filer_badge_scene"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:fontFamily="@font/fty_delirium_ncv" />
