@@ -13,11 +13,11 @@ import timber.log.Timber
 
 class MultipleFilterDrinkUseCase(
     private val getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
-    private val alcoholicFilter: FilterDrinkUseCase,
-    private val categoryFilter: FilterDrinkUseCase,
-    private val ingredientFilter: FilterDrinkUseCase,
-    private val glassFilter: FilterDrinkUseCase,
-    private val nameFilter: FilterDrinkUseCase
+    private val alcoholicFilter: Filterable,
+    private val categoryFilter: Filterable,
+    private val ingredientFilter: Filterable,
+    private val glassFilter: Filterable,
+    private val nameFilter: Filterable
 ) {
     private var resultsJob: Job? = null
     private val _filerResultChannel = ConflatedBroadcastChannel<List<DrinkPreviewModel>>()
@@ -28,23 +28,23 @@ class MultipleFilterDrinkUseCase(
 
     init {
         resultsJob = GlobalScope.launch(Dispatchers.IO) {
-            alcoholicFilter.searchResults
-                .combine(categoryFilter.searchResults) { alcoholic: List<DrinkPreviewModel>?,
+            alcoholicFilter.results
+                .combine(categoryFilter.results) { alcoholic: List<DrinkPreviewModel>?,
                                                          category: List<DrinkPreviewModel>? ->
                     Timber.d("received ${alcoholic?.size ?: "inactive"} alcoholic")
                     combineFilters(alcoholic, category)
                 }
-                .combine(ingredientFilter.searchResults) { previous: List<DrinkPreviewModel>?,
+                .combine(ingredientFilter.results) { previous: List<DrinkPreviewModel>?,
                                                            ingredients: List<DrinkPreviewModel>? ->
                     Timber.d("received ${ingredients?.size ?: "inactive"} ingredients")
                     combineFilters(previous, ingredients)
                 }
-                .combine(glassFilter.searchResults) { previous: List<DrinkPreviewModel>?,
+                .combine(glassFilter.results) { previous: List<DrinkPreviewModel>?,
                                                       glass: List<DrinkPreviewModel>? ->
                     Timber.d("received ${glass?.size ?: "inactive"} glass")
                     combineFilters(previous, glass)
                 }
-                .combine(nameFilter.searchResults) { previous: List<DrinkPreviewModel>?, byName: List<DrinkPreviewModel>? ->
+                .combine(nameFilter.results) { previous: List<DrinkPreviewModel>?, byName: List<DrinkPreviewModel>? ->
                     Timber.d("received ${byName?.size ?: "inactive"} results by name")
                     combineFilters(previous, byName)
                 }
@@ -99,11 +99,11 @@ class MultipleFilterDrinkUseCase(
 
     fun cancel() {
         Timber.d("cancelled")
-        alcoholicFilter.clearOngoingSearch()
-        categoryFilter.clearOngoingSearch()
-        ingredientFilter.clearOngoingSearch()
-        glassFilter.clearOngoingSearch()
-        nameFilter.clearOngoingSearch()
+        alcoholicFilter.clear()
+        categoryFilter.clear()
+        ingredientFilter.clear()
+        glassFilter.clear()
+        nameFilter.clear()
         selectedFiltersUseCase.cancel()
         resultsJob?.cancel()
     }
