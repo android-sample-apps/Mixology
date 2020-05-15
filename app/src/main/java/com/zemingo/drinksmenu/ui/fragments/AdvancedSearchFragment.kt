@@ -43,6 +43,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         initSearchQuery()
         initResultsRecyclerView()
         observeResults()
+        observeSelectedFilters()
     }
 
     private fun initFilterFab() {
@@ -97,6 +98,19 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
             .resultsLiveData
             .observe(viewLifecycleOwner, Observer {
                 onResultsReceived(it)
+            })
+    }
+
+    private fun observeSelectedFilters() {
+        advancedSearchViewModel
+            .searchFiltersLiveData
+            .observe(viewLifecycleOwner, Observer {
+
+                filter_search_fab.run {
+//                    filter_search_fab.text = getString(R.string.filter_selected, it.activeFiltersBadge)
+                    filter_search_fab.text =  it.activeFiltersBadge
+                }
+
             })
     }
 

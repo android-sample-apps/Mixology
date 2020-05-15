@@ -74,4 +74,23 @@ data class DrinkFilterUiModel(
 data class SearchFiltersUiModel(
     val filters: Map<FilterType, List<DrinkFilterUiModel>>,
     val activeFilters: Map<FilterType, Int?>
-)
+) {
+    val activeFiltersBadge = activeFiltersBadge()
+
+    private fun activeFiltersBadge(): String? {
+        val activeFilters = countActiveFilters()
+        return if (activeFilters > 0) {
+            activeFilters.toString()
+        } else {
+            null
+        }
+    }
+
+    private fun countActiveFilters(): Int {
+        var size = 0
+        activeFilters
+            .mapNotNull { it.value }
+            .forEach { size += it }
+        return size
+    }
+}

@@ -24,7 +24,7 @@ class AdvancedSearchViewModel(
 ) : ViewModel() {
 
     //todo - combine to 1 use case
-    val searchFilters: LiveData<SearchFiltersUiModel> = getSearchFiltersUseCase
+    val searchFiltersLiveData: LiveData<SearchFiltersUiModel> = getSearchFiltersUseCase
         .results
         .map { searchMapper.apply(it) }
         .combine(filter.selectedFilters) { searchUiModel: SearchFiltersUiModel,

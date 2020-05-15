@@ -67,17 +67,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/filter_search_fab"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
         android:backgroundTint="@color/white"
         app:backgroundTint="@color/black"
         app:borderWidth="1dp"
+        android:fontFamily="@font/jesa_script_regular"
+        tools:text="0 selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_filter_list" />
+        app:icon="@drawable/ic_filter_list" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

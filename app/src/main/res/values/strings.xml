@@ -30,6 +30,7 @@
     <string name="advanced_search_hint">Search for a cocktails</string>
     <string name="no_results">Sorry, no results</string>
     <string name="alcohol_volume_abv">%1$s\%% ABV.</string>
+    <string name="filter_selected">%1$s Selected</string>
     <string name="filter_alcoholic">Alcoholic</string>
     <string name="filter_glasses">Glasses</string>
     <string name="filter_categories">Categories</string>

@@ -70,7 +70,7 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun observerFilters() {
-        advancedSearchViewModel.searchFilters.observe(
+        advancedSearchViewModel.searchFiltersLiveData.observe(
             viewLifecycleOwner, Observer {
                 Timber.d("Received filters: ${it.activeFilters}")
                 updateResults(it)
