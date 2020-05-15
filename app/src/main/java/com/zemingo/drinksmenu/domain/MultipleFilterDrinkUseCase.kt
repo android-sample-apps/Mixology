@@ -68,7 +68,6 @@ class MultipleFilterDrinkUseCase(
             .combineSelectedFilters(categoryFilter.selectedFilters)
             .combineSelectedFilters(ingredientFilter.selectedFilters)
             .combineSelectedFilters(glassFilter.selectedFilters)
-            .combineSelectedFilters(nameFilter.selectedFilters)
             .debounce(debounceTime)
             .distinctUntilChanged()
             .collect {
