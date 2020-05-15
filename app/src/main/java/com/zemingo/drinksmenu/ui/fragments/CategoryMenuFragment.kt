@@ -7,6 +7,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,24 +18,23 @@ import com.zemingo.drinksmenu.ui.adapters.CategoryAdapter
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.CategoryUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.CategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_category_menu.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private val categoriesViewModel: CategoriesViewModel by viewModel()
-    private val categoryAdapter =
-        CategoryAdapter().apply {
+    private val categoryAdapter = CategoryAdapter()/*.apply {
             onClick = { onCategoryClicked(it) }
-        }
+        }*/
 
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
-        .apply {
-            onClick = { onDrinkClicked(it) }
-        }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
@@ -48,6 +48,23 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
             viewLifecycleOwner,
             onBackPressedCallback
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            categoryAdapter
+                .inputActions
+                .filterIsInstance<InputActions.Click<CategoryUiModel>>()
+                .collect { onCategoryClicked(it.data) }
+
+            drinkPreviewAdapter
+                .inputActions
+                .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
+                .collect {
+                    onDrinkClicked(it.data)
+                }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

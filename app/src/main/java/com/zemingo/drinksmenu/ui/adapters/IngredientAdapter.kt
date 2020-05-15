@@ -7,12 +7,11 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_ingredient.view.*
 
 class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.IngredientViewHolder>() {
-
-    var onLongClick: ((IngredientUiModel) -> Unit)? = null
 
     inner class IngredientViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -27,7 +26,7 @@ class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.Ingre
                 }
                 ingredient_quantity_tv.text = ingredient.quantity
                 setOnLongClickListener {
-                    onLongClick?.invoke(ingredient)
+                    sendInputAction(InputActions.LongClick(ingredient))
                     true
                 }
             }

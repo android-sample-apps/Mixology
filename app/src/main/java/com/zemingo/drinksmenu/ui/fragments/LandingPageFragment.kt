@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
@@ -12,8 +13,11 @@ import com.zemingo.drinksmenu.ui.SpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.models.LandingPageUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import com.zemingo.drinksmenu.ui.view_model.LandingPageViewModel
 import kotlinx.android.synthetic.main.fragment_landing_page.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
@@ -22,6 +26,22 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
     private val latestArrivalsAdapter = DrinkPreviewAdapter()
     private val mostPopularAdapter = DrinkPreviewAdapter()
     private val recentSearchesAdapter = DrinkPreviewAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeInputActions(latestArrivalsAdapter)
+        observeInputActions(mostPopularAdapter)
+        observeInputActions(recentSearchesAdapter)
+    }
+
+    private fun observeInputActions(adapter: DrinkPreviewAdapter) {
+        lifecycleScope.launchWhenStarted {
+            adapter
+                .inputActions
+                .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
+                .collect { onDrinkPreviewClicked(it.data) }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,7 +62,7 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
         itemDecoration: RecyclerView.ItemDecoration
     ) {
         recyclerView.run {
-            this.adapter = adapter.apply { onClick = { onDrinkPreviewClicked(it) } }
+            this.adapter = adapter
             addItemDecoration(itemDecoration)
         }
     }

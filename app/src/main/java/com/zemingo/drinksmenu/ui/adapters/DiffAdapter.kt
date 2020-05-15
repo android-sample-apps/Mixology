@@ -2,12 +2,27 @@ package com.zemingo.drinksmenu.ui.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.zemingo.drinksmenu.ui.utils.InputActions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.launch
 
 abstract class DiffAdapter<DATA, VH : RecyclerView.ViewHolder> : RecyclerView.Adapter<VH>() {
 
     abstract fun onBindViewHolder(holder: VH, data: DATA, position: Int)
 
     private val _data = mutableListOf<DATA>()
+
+    private val inputActionsChannel = ConflatedBroadcastChannel<InputActions<DATA>>()
+    val inputActions: Flow<InputActions<DATA>> = inputActionsChannel.asFlow()
+
+    protected fun sendInputAction(inputActions: InputActions<DATA>) {
+        GlobalScope.launch {
+            inputActionsChannel.send(inputActions)
+        }
+    }
 
     fun update(data: List<DATA>) {
         val diffCallback = DiffUtilCallback(_data, data)

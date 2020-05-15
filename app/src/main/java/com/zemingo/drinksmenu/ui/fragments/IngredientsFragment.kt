@@ -3,18 +3,32 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.ui.adapters.IngredientAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import com.zemingo.drinksmenu.ui.models.IngredientUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import kotlinx.android.synthetic.main.fragment_ingredients.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 
 class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
 
-    private val ingredientsAdapter = IngredientAdapter().apply {
-        onLongClick = {
-            IngredientBottomSheetDialogFragment(it.name).show(childFragmentManager)
+    private val ingredientsAdapter = IngredientAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            ingredientsAdapter
+                .inputActions.filterIsInstance<InputActions.LongClick<IngredientUiModel>>()
+                .map { it.data }
+                .collect {
+                    IngredientBottomSheetDialogFragment(it.name).show(childFragmentManager)
+                }
         }
     }
 

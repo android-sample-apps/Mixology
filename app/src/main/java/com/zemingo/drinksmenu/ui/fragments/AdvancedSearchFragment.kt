@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
@@ -12,8 +13,10 @@ import com.zemingo.drinksmenu.extensions.hideKeyboard
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import kotlinx.android.synthetic.main.fragment_advanced_search.*
+import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -24,9 +27,10 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     private val query: String get() = search_query_et.text?.toString() ?: ""
 
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
-        .apply {
-            onClick = { onDrinkClicked(it) }
-        }
+
+    private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
+        Timber.d("onLongClicked: $drinkPreview")
+    }
 
     private fun onDrinkClicked(drinkPreview: DrinkPreviewUiModel) {
         requireView().hideKeyboard()
@@ -35,6 +39,18 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                 drinkPreview.id
             )
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            drinkPreviewAdapter.inputActions.collect {
+                when (it) {
+                    is InputActions.Click -> onDrinkClicked(it.data)
+                    is InputActions.LongClick -> onDrinkLongClicked(it.data)
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

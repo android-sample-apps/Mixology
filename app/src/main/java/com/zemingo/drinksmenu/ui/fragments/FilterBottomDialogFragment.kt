@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
@@ -17,11 +18,15 @@ import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DiffAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkFilterUiModel
 import com.zemingo.drinksmenu.ui.models.SearchFiltersUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import com.zemingo.drinksmenu.ui.views.FilterHeaderView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.bottom_dialog_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
 import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
@@ -31,26 +36,32 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
         @Suppress("RemoveExplicitTypeArguments")
         requireParentFragment().getViewModel<AdvancedSearchViewModel>()
     }
-    private val alcoholicAdapter = SelectableAdapter().apply {
-        onClicked = { onFilterClicked(it) }
+    private val alcoholicAdapter = SelectableAdapter()
+    private val ingredientsAdapter = SelectableAdapter()
+    private val categoryAdapter = SelectableAdapter()
+    private val glassAdapter = SelectableAdapter()
+
+    private fun onFilterClicked(drinkFilter: DrinkFilter) {
+        advancedSearchViewModel.updateFilter(drinkFilter)
     }
 
-    private val ingredientsAdapter = SelectableAdapter().apply {
-        onClicked = { onFilterClicked(it) }
+    private fun observeInputActions(adapter: SelectableAdapter) {
+        lifecycleScope.launchWhenStarted {
+            adapter.inputActions.filterIsInstance<InputActions.Click<DrinkFilterUiModel>>()
+                .map { it.data.drinkFilter }
+                .collect {
+                    onFilterClicked(it)
+                }
+        }
     }
 
-    private val categoryAdapter = SelectableAdapter().apply {
-        onClicked = { onFilterClicked(it) }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        observeInputActions(alcoholicAdapter)
+        observeInputActions(ingredientsAdapter)
+        observeInputActions(categoryAdapter)
+        observeInputActions(glassAdapter)
     }
-
-    private val glassAdapter = SelectableAdapter().apply {
-        onClicked = { onFilterClicked(it) }
-    }
-
-    private fun onFilterClicked(it: DrinkFilter) {
-        advancedSearchViewModel.updateFilter(it)
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -150,8 +161,6 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 class SelectableAdapter :
     DiffAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>() {
 
-    var onClicked: ((DrinkFilter) -> Unit)? = null
-
     inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
@@ -175,7 +184,8 @@ class SelectableAdapter :
     }
 
     private fun invokeFilterClicked(filter: DrinkFilterUiModel) {
-        onClicked?.invoke(filter.drinkFilter.copy(active = !filter.selected))
+        val drinkFilter = filter.drinkFilter.copy(active = !filter.selected)
+        sendInputAction(InputActions.Click(filter.copy(drinkFilter = drinkFilter)))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
