@@ -47,7 +47,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initFilterFab() {
-        filter_search_fab.setOnClickListener {
+        filter_mfab.setOnClickListener {
             FilterBottomDialogFragment().show(childFragmentManager, "FilterDialog")
         }
     }
@@ -105,11 +105,15 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         advancedSearchViewModel
             .searchFiltersLiveData
             .observe(viewLifecycleOwner, Observer {
+                filter_mfab.run {
+                    text = getString(R.string.filter_selected, it.activeFiltersBadge)
+                    textVisibility = it.activeFiltersBadge != null
+                }
 
-                filter_search_fab.run {
+                /*filter_search_fab.run {
 //                    filter_search_fab.text = getString(R.string.filter_selected, it.activeFiltersBadge)
                     filter_search_fab.text =  it.activeFiltersBadge
-                }
+                }*/
 
             })
     }
