@@ -12,7 +12,8 @@ import com.zemingo.drinksmenu.domain.models.*
         PreviousSearchModel::class,
         IngredientDetailsModel::class,
         GlassModel::class,
-        AlcoholicFilterModel::class
+        AlcoholicFilterModel::class,
+        WatchlistItemModel::class
     ],
     version = 1
 )
@@ -24,6 +25,7 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun alcoholicFiltersDao(): AlcoholicFilterDao
     abstract fun searchesDrinkPreviewDao(): SearchDrinkPreviewDao
     abstract fun ingredientDetailsDao(): IngredientDetailsDao
+    abstract fun watchlistDao(): WatchlistDao
 
 }
 

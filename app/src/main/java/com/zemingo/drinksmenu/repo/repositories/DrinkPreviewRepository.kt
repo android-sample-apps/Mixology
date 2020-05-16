@@ -24,6 +24,10 @@ class DrinkPreviewRepository(
         return reactiveStore.getAll()
     }
 
+    fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>> {
+        return reactiveStore.getAll(ids)
+    }
+
     fun storeAll(drinkPreviews: List<DrinkPreviewModel>) {
         reactiveStore.storeAll(drinkPreviews)
     }

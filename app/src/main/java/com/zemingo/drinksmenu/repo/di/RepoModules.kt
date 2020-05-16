@@ -101,4 +101,10 @@ val repoModule = module {
             mapper = get<AlcoholicFilterMapper>()
         )
     }
+    
+    factory { 
+        WatchlistRepository(
+            watchlistReactiveStore = get()
+        )
+    }
 }

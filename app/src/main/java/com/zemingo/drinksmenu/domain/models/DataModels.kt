@@ -4,8 +4,6 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-interface SearchableFilter
-
 @Entity
 data class IngredientModel(
     @PrimaryKey val name: String
@@ -19,6 +17,11 @@ data class GlassModel(
 @Entity
 data class AlcoholicFilterModel(
     @PrimaryKey val name: String
+)
+
+@Entity
+data class WatchlistItemModel(
+    @PrimaryKey val id: String
 )
 
 @Entity

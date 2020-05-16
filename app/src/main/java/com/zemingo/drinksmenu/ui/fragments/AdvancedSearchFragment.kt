@@ -30,6 +30,10 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
         Timber.d("onLongClicked: $drinkPreview")
+        DrinkPreviewOptionsBottomFragment(drinkId = drinkPreview.id).show(
+            childFragmentManager,
+            "Options"
+        )
     }
 
     private fun onDrinkClicked(drinkPreview: DrinkPreviewUiModel) {

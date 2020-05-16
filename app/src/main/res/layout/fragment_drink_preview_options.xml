@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    app:cardCornerRadius="@dimen/screen_radius"
+    tools:cardBackgroundColor="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/add_to_watchlist_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:letterSpacing="0.25"
+            android:padding="@dimen/screen_radius"
+            android:text="Add to watchlist"
+            android:textColor="@color/header_text_color"
+            android:textSize="26sp"
+            app:fontFamily="@font/fty_delirium_ncv"
+            app:layout_constraintEnd_toStartOf="@id/cherry_iv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cherry_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="@id/add_to_watchlist_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/add_to_watchlist_tv"
+            app:layout_constraintTop_toTopOf="@id/add_to_watchlist_tv"
+            app:srcCompat="@drawable/ic_cherries" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
