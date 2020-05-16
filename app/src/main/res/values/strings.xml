@@ -22,6 +22,7 @@
 
     <string name="ingredients">Ingredients</string>
     <string name="for_you">For you</string>
+    <string name="favorites">Favorites</string>
     <string name="categories">Categories</string>
     <string name="method">How to</string>
     <string name="notes">Notes</string>

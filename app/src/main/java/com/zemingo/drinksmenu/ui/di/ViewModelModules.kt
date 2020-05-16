@@ -70,4 +70,11 @@ val viewModelModule = module {
             addToWatchlistUseCase = get()
         )
     }
+
+    viewModel {
+        WatchlistViewModel(
+            getWatchlistUseCase = get(),
+            mapper = get<DrinkPreviewMapperUi>()
+        )
+    }
 }

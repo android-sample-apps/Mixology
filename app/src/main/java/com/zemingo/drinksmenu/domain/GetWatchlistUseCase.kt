@@ -17,5 +17,6 @@ class GetWatchlistUseCase(
             .getWatchlist()
             .map { watchlist -> watchlist.map { it.id } }
             .flatMapMerge { drinkPreviewRepository.getByIds(it) }
+            .map { drinks -> drinks.sortedBy { it.name } }
 
 }
