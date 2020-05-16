@@ -64,10 +64,12 @@ val viewModelModule = module {
             searchMapper = get<SearchFiltersMapperUi>()
         )
     }
-    
-    viewModel { 
+
+    viewModel { (id: String) ->
         DrinkPreviewOptionsViewModel(
-            addToWatchlistUseCase = get()
+            addToWatchlistUseCase = get(),
+            getWatchlistUseCase = get(),
+            id = id
         )
     }
 

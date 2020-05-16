@@ -18,6 +18,9 @@ interface WatchlistDao {
     @Query("SELECT * FROM WatchlistItemModel")
     fun getAll(): Flow<List<WatchlistItemModel>>
 
+    @Query("SELECT * FROM WatchlistItemModel WHERE id = :id")
+    fun getById(id: String): Flow<List<WatchlistItemModel>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun store(watchlistItemModel: WatchlistItemModel)
 

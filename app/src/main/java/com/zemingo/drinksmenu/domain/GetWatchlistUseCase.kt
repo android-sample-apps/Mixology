@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.map
 
 class GetWatchlistUseCase(
-    watchlistRepository: WatchlistRepository,
-    drinkPreviewRepository: DrinkPreviewRepository
+    private val watchlistRepository: WatchlistRepository,
+    private val drinkPreviewRepository: DrinkPreviewRepository
 ) {
 
     val watchList: Flow<List<DrinkPreviewModel>> =
@@ -19,4 +19,11 @@ class GetWatchlistUseCase(
             .flatMapMerge { drinkPreviewRepository.getByIds(it) }
             .map { drinks -> drinks.sortedBy { it.name } }
 
+    fun getById(id: String): Flow<DrinkPreviewModel?> {
+        return watchlistRepository
+            .getById(id)
+            .map { watchlist -> watchlist.map { it.id } }
+            .flatMapMerge { drinkPreviewRepository.getByIds(it) }
+            .map { it.firstOrNull() }
+    }
 }
