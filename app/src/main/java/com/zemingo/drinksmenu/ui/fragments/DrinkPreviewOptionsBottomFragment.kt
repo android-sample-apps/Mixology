@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkPreviewOptionsViewModel
 import kotlinx.android.synthetic.main.fragment_drink_preview_options.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class DrinkPreviewOptionsBottomFragment(
-    private val drinkId: String
+    private val drinkPreviewUiModel: DrinkPreviewUiModel
 ) : BottomSheetDialogFragment() {
 
     private val optionsViewModel: DrinkPreviewOptionsViewModel by viewModel()
@@ -27,12 +28,13 @@ class DrinkPreviewOptionsBottomFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        drink_name.text = drinkPreviewUiModel.name
         add_to_watchlist_tv.setOnClickListener {
             addToWatchlist()
         }
     }
-    fun addToWatchlist() {
-        Timber.d("addToWatchlist: drinkId[$drinkId]")
-        optionsViewModel.addToWatchlist(drinkId)
+    private fun addToWatchlist() {
+        Timber.d("addToWatchlist: drinkId[${drinkPreviewUiModel.name}]")
+        optionsViewModel.addToWatchlist(drinkPreviewUiModel.id)
     }
 }
