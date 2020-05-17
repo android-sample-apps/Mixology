@@ -37,13 +37,14 @@ val useCasesModule = module {
     }
 
     factory {
-        GetPreviousSearchResultsUseCase(
-            searchRepository = get()
+        GetRecentlyViewedUseCase(
+            combineWithFavoriteUseCase = get(),
+            recentlyViewedRepository = get()
         )
     }
 
     factory {
-        MarkAsSearchedDrinkPreviewUseCase(
+        AddToRecentlyViewedUseCase(
             repository = get()
         )
     }
@@ -62,10 +63,9 @@ val useCasesModule = module {
         )
     }
 
-    factory { (id: String) ->
+    factory {
         GetDrinkUseCase(
-            repository = get(),
-            id = id
+            repository = get()
         )
     }
 

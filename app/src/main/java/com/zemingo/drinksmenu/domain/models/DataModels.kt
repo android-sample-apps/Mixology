@@ -64,7 +64,7 @@ data class DrinkPreviewModel(
 }
 
 @Entity
-data class PreviousSearchModel(
+data class RecentlyViewedModel(
     @PrimaryKey val drinkId: String,
     val lastViewedTime: Long
 )

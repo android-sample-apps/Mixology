@@ -1,22 +1,22 @@
 package com.zemingo.drinksmenu.domain
 
-import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
-import com.zemingo.drinksmenu.repo.repositories.SearchDrinkPreviewRepository
+import com.zemingo.drinksmenu.domain.models.RecentlyViewedModel
+import com.zemingo.drinksmenu.repo.repositories.RecentlyViewedRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 
-class MarkAsSearchedDrinkPreviewUseCase(
-    private val repository: SearchDrinkPreviewRepository
+class AddToRecentlyViewedUseCase(
+    private val repository: RecentlyViewedRepository
 ) {
-    fun markAsSearched(id: String) {
-        Timber.d("drinkPreview[$id], marked as searched")
+    fun add(id: String) {
+        Timber.d("drinkPreview[$id], added as previously viewed")
         GlobalScope.launch(Dispatchers.IO) {
             repository.storeAll(
                 listOf(
-                    PreviousSearchModel(
+                    RecentlyViewedModel(
                         drinkId = id,
                         lastViewedTime = Date().time
                     )

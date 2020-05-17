@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.GetDrinkPreviewUseCase
-import com.zemingo.drinksmenu.domain.GetPreviousSearchResultsUseCase
-import com.zemingo.drinksmenu.domain.MarkAsSearchedDrinkPreviewUseCase
+import com.zemingo.drinksmenu.domain.GetRecentlyViewedUseCase
+import com.zemingo.drinksmenu.domain.AddToRecentlyViewedUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.flow.map
@@ -15,8 +15,8 @@ import java.util.function.Function
 
 class SearchViewModel(
     getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
-    getPreviousSearchResultsUseCase: GetPreviousSearchResultsUseCase,
-    private val markAsSearchedDrinkPreviewUseCase: MarkAsSearchedDrinkPreviewUseCase,
+    getRecentlyViewedUseCase: GetRecentlyViewedUseCase,
+    private val addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
@@ -30,14 +30,14 @@ class SearchViewModel(
             .asLiveData()
 
     val previousSearches: LiveData<List<DrinkPreviewUiModel>> =
-        getPreviousSearchResultsUseCase
-            .previousSearches
+        getRecentlyViewedUseCase
+            .recentlyViewed
             .map {
                 mapper.apply(it)
             }
             .asLiveData()
 
     fun markAsSearched(drink: DrinkPreviewUiModel) {
-        markAsSearchedDrinkPreviewUseCase.markAsSearched(drink.id)
+        addToRecentlyViewedUseCase.add(drink.id)
     }
 }

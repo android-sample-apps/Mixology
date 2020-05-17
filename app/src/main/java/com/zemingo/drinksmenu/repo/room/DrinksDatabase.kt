@@ -9,7 +9,7 @@ import com.zemingo.drinksmenu.domain.models.*
         CategoryModel::class,
         DrinkPreviewModel::class,
         IngredientModel::class,
-        PreviousSearchModel::class,
+        RecentlyViewedModel::class,
         IngredientDetailsModel::class,
         GlassModel::class,
         AlcoholicFilterModel::class,
@@ -23,7 +23,7 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun ingredientDao(): IngredientDao
     abstract fun glassDao(): GlassDao
     abstract fun alcoholicFiltersDao(): AlcoholicFilterDao
-    abstract fun searchesDrinkPreviewDao(): SearchDrinkPreviewDao
+    abstract fun recentlyViewedDao(): RecentlyViewedDao
     abstract fun ingredientDetailsDao(): IngredientDetailsDao
     abstract fun watchlistDao(): WatchlistDao
 

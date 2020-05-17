@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.GetLatestArrivalsUseCase
 import com.zemingo.drinksmenu.domain.GetMostPopularUseCase
-import com.zemingo.drinksmenu.domain.GetPreviousSearchResultsUseCase
+import com.zemingo.drinksmenu.domain.GetRecentlyViewedUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.models.LandingPageUiModel
@@ -17,7 +17,7 @@ import java.util.function.Function
 class LandingPageViewModel(
     private val mostPopularUseCase: GetMostPopularUseCase,
     private val latestArrivalsUseCase: GetLatestArrivalsUseCase,
-    private val recentSearchesUseCase: GetPreviousSearchResultsUseCase,
+    private val recentSearchesUseCase: GetRecentlyViewedUseCase,
     private val mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
@@ -50,7 +50,7 @@ class LandingPageViewModel(
 
     private fun recentSearches(): Flow<List<DrinkPreviewUiModel>> {
         return recentSearchesUseCase
-            .previousSearches
+            .recentlyViewed
             .map { mapper.apply(it) }
     }
 

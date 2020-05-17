@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
-import com.zemingo.drinksmenu.domain.models.PreviousSearchModel
+import com.zemingo.drinksmenu.domain.models.RecentlyViewedModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,8 +21,8 @@ interface DrinkPreviewDao {
     fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(searchModel: PreviousSearchModel)
+    fun insert(searchModel: RecentlyViewedModel)
 
-    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN PreviousSearchModel ON id = drinkId ORDER BY lastViewedTime DESC")
+    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN RecentlyViewedModel ON id = drinkId ORDER BY lastViewedTime DESC")
     fun getPreviousSearches(): Flow<List<DrinkPreviewModel>>
 }

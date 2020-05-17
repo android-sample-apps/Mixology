@@ -27,16 +27,18 @@ val viewModelModule = module {
 
     viewModel { (id: String) ->
         DrinkViewModel(
+            addToRecentlyViewedUseCase = get(),
             getDrinkUseCase = get { parametersOf(id) },
-            mapper = get<DrinkMapperUi>()
+            mapper = get<DrinkMapperUi>(),
+            drinkId = id
         )
     }
 
     viewModel {
         SearchViewModel(
             getDrinkPreviewUseCase = get(),
-            getPreviousSearchResultsUseCase = get(),
-            markAsSearchedDrinkPreviewUseCase = get(),
+            getRecentlyViewedUseCase = get(),
+            addToRecentlyViewedUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
     }
