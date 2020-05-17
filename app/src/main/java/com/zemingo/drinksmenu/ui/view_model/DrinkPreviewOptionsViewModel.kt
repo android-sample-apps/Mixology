@@ -30,7 +30,6 @@ class DrinkPreviewOptionsViewModel(
             .filter { it.isNotEmpty() }
             .map { mapper.apply(it) }
             .map { it.first() }
-
             .asLiveData()
 
     fun addToWatchlist(id: String) {

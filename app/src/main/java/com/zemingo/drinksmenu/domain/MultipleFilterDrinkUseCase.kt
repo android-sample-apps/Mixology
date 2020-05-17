@@ -3,6 +3,7 @@ package com.zemingo.drinksmenu.domain
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.domain.models.FilterType
+import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MultipleFilterDrinkUseCase(
+    private val drinkPreviewRepository: DrinkPreviewRepository,
     private val combineWithFavoriteUseCase: CombineWithFavoriteUseCase,
     private val getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
     private val alcoholicFilter: Filterable,
@@ -43,6 +45,7 @@ class MultipleFilterDrinkUseCase(
                 .combineFilters(ingredientFilter.results, "ingredients")
                 .combineFilters(glassFilter.results, "glasses")
                 .combineFilters(nameFilter.results, "by names")
+                .onEach { storeIfNotNull(it) }
                 .combine(getDrinkPreviewUseCase.getAll()) { filters: List<DrinkPreviewModel>?, storedDrinks: List<DrinkPreviewModel> ->
                     if (filters != null) {
                         Timber.d("received ${filters.size} filters")
@@ -63,6 +66,13 @@ class MultipleFilterDrinkUseCase(
                     Timber.i("Received ${it.size} items")
                     _filerResultChannel.send(it)
                 }
+        }
+    }
+
+    private fun storeIfNotNull(previews: List<DrinkPreviewModel>?) {
+        if (previews == null) return
+        GlobalScope.launch(Dispatchers.IO) {
+            drinkPreviewRepository.storeAll(previews)
         }
     }
 
