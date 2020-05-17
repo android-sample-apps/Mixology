@@ -19,6 +19,10 @@ class DrinkPreviewOptionsBottomFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
 ) : BottomSheetDialogFragment() {
 
+    companion object {
+        const val TAG = "DrinkPreviewOptionsBottomFragment"
+    }
+
     private val optionsViewModel: DrinkPreviewOptionsViewModel by viewModel {
         parametersOf(
             drinkPreviewUiModel.id
