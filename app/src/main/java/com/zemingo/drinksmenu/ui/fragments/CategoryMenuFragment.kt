@@ -52,18 +52,39 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            categoryAdapter
-                .inputActions
-                .filterIsInstance<InputActions.Click<CategoryUiModel>>()
-                .collect { onCategoryClicked(it.data) }
+        observerCategoryClicks()
+        observeDrinkClicks()
+        observeDrinkLongClicks()
+    }
 
+    private fun observeDrinkClicks() {
+        lifecycleScope.launchWhenStarted {
             drinkPreviewAdapter
                 .inputActions
                 .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
                 .collect {
                     onDrinkClicked(it.data)
                 }
+        }
+    }
+
+    private fun observeDrinkLongClicks() {
+        lifecycleScope.launchWhenStarted {
+            drinkPreviewAdapter
+                .inputActions
+                .filterIsInstance<InputActions.LongClick<DrinkPreviewUiModel>>()
+                .collect {
+                    onDrinkLongClicked(it.data)
+                }
+        }
+    }
+
+    private fun observerCategoryClicks() {
+        lifecycleScope.launchWhenStarted {
+            categoryAdapter
+                .inputActions
+                .filterIsInstance<InputActions.Click<CategoryUiModel>>()
+                .collect { onCategoryClicked(it.data) }
         }
     }
 
@@ -116,19 +137,25 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         Timber.d("onDrinkClicked: $drinkPreviewUiModel")
-            findNavController().navigate(
-                HomeFragmentDirections
-                    .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
-            )
+        findNavController().navigate(
+            HomeFragmentDirections
+                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+        )
     }
 
+    private fun onDrinkLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        Timber.d("onDrinkLongClicked: $drinkPreviewUiModel")
+        DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
+            .show(
+                childFragmentManager,
+                DrinkPreviewOptionsBottomFragment.TAG
+            )
+    }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
         selected_title.text = categoryUiModel.name
         category_menu_ml.run {
-
             setTransitionListener(object : MyTransitionListener() {
-
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     Timber.d("onTransitionCompleted: currentId[$currentId]")
                     onBackPressedCallback.isEnabled = currentId == R.id.results
