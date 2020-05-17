@@ -19,4 +19,8 @@ class GlassReactiveStore(
     override fun storeAll(data: List<GlassModel>) {
         glassDao.storeAll(data)
     }
+
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
 }

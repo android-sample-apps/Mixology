@@ -21,6 +21,10 @@ class WatchlistReactiveStore(
     override fun storeAll(data: List<WatchlistItemModel>) {
         watchlistDao.storeAll(data)
     }
+
+    override fun remove(key: String) {
+        watchlistDao.remove(key)
+    }
 }
 
 sealed class WatchlistParam {

@@ -19,4 +19,8 @@ class IngredientReactiveStore(
     override fun getByParam(param: Void): Flow<List<IngredientModel>> {
         TODO("Not yet implemented")
     }
+
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
 }

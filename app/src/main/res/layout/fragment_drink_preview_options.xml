@@ -26,13 +26,13 @@
             tools:text="whiskey sour" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/add_to_watchlist_tv"
+            android:id="@+id/toggle_watchlist_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
             android:letterSpacing="0.25"
             android:padding="@dimen/screen_radius"
-            android:text="Remove from favorites"
+            tools:text="Remove from favorites"
             android:textColor="@color/header_text_color"
             android:textSize="16sp"
             app:fontFamily="@font/jesa_script_regular"
@@ -46,10 +46,10 @@
             android:adjustViewBounds="true"
             app:tint="@color/orange"
             android:padding="@dimen/screen_padding"
-            app:layout_constraintBottom_toBottomOf="@id/add_to_watchlist_tv"
+            app:layout_constraintBottom_toBottomOf="@id/toggle_watchlist_tv"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/add_to_watchlist_tv"
-            app:layout_constraintTop_toTopOf="@id/add_to_watchlist_tv"
+            app:layout_constraintEnd_toStartOf="@id/toggle_watchlist_tv"
+            app:layout_constraintTop_toTopOf="@id/toggle_watchlist_tv"
             app:srcCompat="@drawable/ic_cherries" />
 
 

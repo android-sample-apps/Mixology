@@ -21,6 +21,10 @@ class IngredientDetailsReactiveStore(
     override fun storeAll(data: List<IngredientDetailsModel>) {
         ingredientDetailsDao.storeAll(data)
     }
+
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
 }
 
 sealed class IngredientDetailsParam {

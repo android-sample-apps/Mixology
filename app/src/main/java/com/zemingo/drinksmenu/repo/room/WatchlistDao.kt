@@ -1,9 +1,6 @@
 package com.zemingo.drinksmenu.repo.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import kotlinx.coroutines.flow.Flow
@@ -26,4 +23,7 @@ interface WatchlistDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeAll(watchList: List<WatchlistItemModel>)
+
+    @Query("DELETE FROM WatchlistItemModel WHERE id = :id")
+    fun remove(id: String)
 }

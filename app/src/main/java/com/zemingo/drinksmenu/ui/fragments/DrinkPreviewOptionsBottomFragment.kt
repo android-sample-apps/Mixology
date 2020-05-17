@@ -37,7 +37,7 @@ class DrinkPreviewOptionsBottomFragment(
         super.onViewCreated(view, savedInstanceState)
         drink_name.text = drinkPreviewUiModel.name
         observeFavoriteState()
-        add_to_watchlist_tv.setOnClickListener {
+        toggle_watchlist_tv.setOnClickListener {
             addToWatchlist()
         }
     }
@@ -53,13 +53,19 @@ class DrinkPreviewOptionsBottomFragment(
 
     private fun onFavoriteEnabled(isFavorite: Boolean) {
         if (isFavorite) {
-            add_to_watchlist_tv.text = getString(R.string.remove_from_favorite)
+            toggle_watchlist_tv.run {
+                setOnClickListener { removeFromWatchlist() }
+                text = getString(R.string.remove_from_favorite)
+            }
             cherry_iv.setColorFilter(
                 requireContext().compatColor(android.R.color.holo_red_light),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         } else {
-            add_to_watchlist_tv.text = getString(R.string.add_to_favorites)
+            toggle_watchlist_tv.run {
+                setOnClickListener { addToWatchlist() }
+                text = getString(R.string.add_to_favorites)
+            }
             cherry_iv.setColorFilter(
                 requireContext().compatColor(R.color.header_text_color),
                 android.graphics.PorterDuff.Mode.SRC_IN
@@ -70,5 +76,10 @@ class DrinkPreviewOptionsBottomFragment(
     private fun addToWatchlist() {
         Timber.d("addToWatchlist: drinkId[${drinkPreviewUiModel.name}]")
         optionsViewModel.addToWatchlist(drinkPreviewUiModel.id)
+    }
+
+    private fun removeFromWatchlist() {
+        Timber.d("removeFromWatchlist: drinkId[${drinkPreviewUiModel.name}]")
+        optionsViewModel.removeFromWatchlist(drinkPreviewUiModel.id)
     }
 }

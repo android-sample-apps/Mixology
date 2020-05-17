@@ -23,4 +23,8 @@ class WatchlistRepository(
     fun store(watchlistItemModel: WatchlistItemModel) {
         watchlistReactiveStore.storeAll(listOf(watchlistItemModel))
     }
+
+    fun remove(id: String) {
+        watchlistReactiveStore.remove(id)
+    }
 }

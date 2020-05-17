@@ -21,4 +21,8 @@ class CategoryReactiveStore(
         return flowOf(emptyList())
     }
 
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
+
 }

@@ -19,4 +19,8 @@ class SearchDrinkPreviewReactiveStore(
     override fun getByParam(param: Void): Flow<List<PreviousSearchModel>> {
         TODO("Not yet implemented")
     }
+
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
 }

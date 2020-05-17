@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.AddToWatchlistUseCase
 import com.zemingo.drinksmenu.domain.GetDrinkPreviewUseCase
+import com.zemingo.drinksmenu.domain.RemoveFromWatchlistUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
@@ -16,6 +17,7 @@ import java.util.function.Function
 
 class DrinkPreviewOptionsViewModel(
     private val addToWatchlistUseCase: AddToWatchlistUseCase,
+    private val removeFromWatchlistUseCase: RemoveFromWatchlistUseCase,
     getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>,
     id: String
@@ -33,6 +35,12 @@ class DrinkPreviewOptionsViewModel(
             addToWatchlistUseCase.addToWatchlist(
                 WatchlistItemModel(id)
             )
+        }
+    }
+
+    fun removeFromWatchlist(id: String) {
+        GlobalScope.launch {
+            removeFromWatchlistUseCase.remove(id)
         }
     }
 }

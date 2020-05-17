@@ -9,4 +9,6 @@ interface ReactiveStore<Key, Value, Param> {
     fun getByParam(param: Param): Flow<List<Value>>
 
     fun storeAll(data: List<Value>)
+
+    fun remove(key: Key)
 }

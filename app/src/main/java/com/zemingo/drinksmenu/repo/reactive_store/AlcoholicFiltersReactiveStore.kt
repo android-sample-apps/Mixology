@@ -20,4 +20,8 @@ class AlcoholicFiltersReactiveStore(
     override fun storeAll(data: List<AlcoholicFilterModel>) {
         alcoholicFilterDao.storeAll(data)
     }
+
+    override fun remove(key: String) {
+        TODO("Not yet implemented")
+    }
 }

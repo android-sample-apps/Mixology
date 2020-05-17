@@ -69,6 +69,7 @@ val viewModelModule = module {
         DrinkPreviewOptionsViewModel(
             addToWatchlistUseCase = get(),
             getDrinkPreviewUseCase = get(),
+            removeFromWatchlistUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>(),
             id = id
         )

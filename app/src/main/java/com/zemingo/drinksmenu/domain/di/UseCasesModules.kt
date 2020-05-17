@@ -143,4 +143,10 @@ val useCasesModule = module {
         )
     }
 
+    factory {
+        RemoveFromWatchlistUseCase(
+            repository = get()
+        )
+    }
+
 }
