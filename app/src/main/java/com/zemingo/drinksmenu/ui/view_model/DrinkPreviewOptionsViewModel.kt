@@ -11,6 +11,7 @@ import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.function.Function
@@ -26,8 +27,10 @@ class DrinkPreviewOptionsViewModel(
     val drinkLiveData: LiveData<DrinkPreviewUiModel> =
         getDrinkPreviewUseCase
             .getById(id)
+            .filter { it.isNotEmpty() }
             .map { mapper.apply(it) }
             .map { it.first() }
+
             .asLiveData()
 
     fun addToWatchlist(id: String) {
