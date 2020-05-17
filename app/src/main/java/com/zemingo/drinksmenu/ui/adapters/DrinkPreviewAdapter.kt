@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
+import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.utils.InputActions
@@ -21,6 +22,7 @@ class DrinkPreviewAdapter :
             containerView.apply {
                 drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 drink_name_tv.text = drinkPreviewUiModel.name
+                cherry_badge_container.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
                 image_container.setOnClickListener {
                     sendInputAction(InputActions.Click(drinkPreviewUiModel))
                 }

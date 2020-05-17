@@ -5,10 +5,11 @@ import com.zemingo.drinksmenu.repo.repositories.DrinkPreviewRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetLatestArrivalsUseCase(
+    combineWithFavoriteUseCase: CombineWithFavoriteUseCase,
     repository: DrinkPreviewRepository
 ) {
 
     val latestArrivals: Flow<List<DrinkPreviewModel>> =
-        repository
-            .latestArrivals()
+        combineWithFavoriteUseCase.combine(repository
+            .latestArrivals())
 }

@@ -11,19 +11,37 @@
         android:layout_height="@dimen/tile_size"
         app:cardCornerRadius="@dimen/screen_radius"
         app:cardElevation="4dp"
-        app:strokeColor="@color/secondary_text_color"
-        app:strokeWidth="0.5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/secondary_text_color"
+        app:strokeWidth="0.5dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/drink_image_iv"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/mock_image" />
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/drink_image_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/mock_image" />
+
+            <include
+                android:id="@+id/cherry_badge_container"
+                layout="@layout/drink_favorite_badge"
+                android:layout_width="@dimen/badgeSize"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_height="@dimen/badgeSize"
+                android:layout_margin="@dimen/screen_padding_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </com.google.android.material.card.MaterialCardView>
 
