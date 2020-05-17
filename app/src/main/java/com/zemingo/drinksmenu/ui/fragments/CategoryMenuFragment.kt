@@ -30,10 +30,7 @@ import timber.log.Timber
 class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private val categoriesViewModel: CategoriesViewModel by viewModel()
-    private val categoryAdapter = CategoryAdapter()/*.apply {
-            onClick = { onCategoryClicked(it) }
-        }*/
-
+    private val categoryAdapter = CategoryAdapter()
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {

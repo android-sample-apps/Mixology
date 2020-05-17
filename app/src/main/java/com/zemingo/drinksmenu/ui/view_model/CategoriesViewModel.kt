@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.zemingo.drinksmenu.domain.CombineWithFavoriteUseCase
 import com.zemingo.drinksmenu.domain.GetCategoriesUseCase
 import com.zemingo.drinksmenu.domain.GetDrinkPreviewByCategoryUseCase
 import com.zemingo.drinksmenu.domain.models.CategoryModel
@@ -17,13 +18,14 @@ import kotlinx.coroutines.launch
 import java.util.function.Function
 
 class CategoriesViewModel(
+    combineWithFavoriteUseCase: CombineWithFavoriteUseCase,
     categoriesUseCase: GetCategoriesUseCase,
     private val getDrinkPreviewByCategoryUseCase: GetDrinkPreviewByCategoryUseCase,
     categoriesMapper: Function<List<CategoryModel>, List<CategoryUiModel>>,
     previewMapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
-    var categoryJob: Job? = null
+    private var categoryJob: Job? = null
 
     val categories: LiveData<List<CategoryUiModel>> =
         categoriesUseCase
@@ -37,11 +39,10 @@ class CategoriesViewModel(
             .asLiveData()
 
     val drinkPreviews: LiveData<List<DrinkPreviewUiModel>> =
-        getDrinkPreviewByCategoryUseCase
-            .drinkPreviews
-            .map {
-                previewMapper.apply(it)
-            }.asLiveData()
+        combineWithFavoriteUseCase.combine(getDrinkPreviewByCategoryUseCase
+            .drinkPreviews)
+            .map { previewMapper.apply(it) }
+            .asLiveData()
 
 
     fun updateCategory(category: String) {

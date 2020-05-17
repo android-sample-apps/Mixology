@@ -10,6 +10,7 @@ val viewModelModule = module {
 
     viewModel {
         CategoriesViewModel(
+            combineWithFavoriteUseCase = get(),
             categoriesUseCase = get(),
             getDrinkPreviewByCategoryUseCase = get(),
             categoriesMapper = get<CategoryMapperUi>(),
