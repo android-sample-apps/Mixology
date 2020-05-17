@@ -11,7 +11,8 @@ class DrinkPreviewMapperUi : Function<List<DrinkPreviewModel>, List<DrinkPreview
             DrinkPreviewUiModel(
                 id = it.id,
                 name = it.name,
-                thumbnail = it.thumbnail
+                thumbnail = it.thumbnail,
+                isFavorite = it.isFavorite
             )
         }
     }

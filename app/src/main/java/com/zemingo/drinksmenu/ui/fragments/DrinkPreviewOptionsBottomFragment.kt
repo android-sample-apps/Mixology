@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
@@ -45,9 +44,10 @@ class DrinkPreviewOptionsBottomFragment(
 
     private fun observeFavoriteState() {
         optionsViewModel
-            .inWatchlistLiveData
+            .drinkLiveData
             .observe(viewLifecycleOwner, Observer {
-                onFavoriteEnabled(it)
+                Timber.d("onDrinkChanged: $it")
+                onFavoriteEnabled(it.isFavorite)
             })
     }
 

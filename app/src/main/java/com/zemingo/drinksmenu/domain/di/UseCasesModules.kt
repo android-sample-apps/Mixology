@@ -31,7 +31,8 @@ val useCasesModule = module {
 
     factory {
         GetDrinkPreviewUseCase(
-            repository = get()
+            repository = get(),
+            watchlistRepository = get()
         )
     }
 

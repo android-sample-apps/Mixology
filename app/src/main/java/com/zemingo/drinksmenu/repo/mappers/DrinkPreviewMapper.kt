@@ -13,7 +13,8 @@ class DrinkPreviewMapper :
             DrinkPreviewModel(
                 id = it.idDrink,
                 name = it.strDrink,
-                thumbnail = it.strDrinkThumb
+                thumbnail = it.strDrinkThumb,
+                isFavorite = false
             )
         }
     }

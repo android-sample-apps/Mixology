@@ -68,7 +68,8 @@ val viewModelModule = module {
     viewModel { (id: String) ->
         DrinkPreviewOptionsViewModel(
             addToWatchlistUseCase = get(),
-            getWatchlistUseCase = get(),
+            getDrinkPreviewUseCase = get(),
+            mapper = get<DrinkPreviewMapperUi>(),
             id = id
         )
     }

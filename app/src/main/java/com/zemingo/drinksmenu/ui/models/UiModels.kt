@@ -13,7 +13,8 @@ data class CategoryUiModel(
 data class DrinkPreviewUiModel(
     val id: String,
     val name: String,
-    val thumbnail: String?
+    val thumbnail: String?,
+    val isFavorite: Boolean
 )
 
 data class DrinkUiModel(

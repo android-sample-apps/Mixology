@@ -1,6 +1,5 @@
 package com.zemingo.drinksmenu.domain.models
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -53,12 +52,14 @@ data class CategoryModel(
 data class DrinkPreviewModel(
     @PrimaryKey val id: String,
     val name: String,
-    val thumbnail: String?
+    val thumbnail: String?,
+    val isFavorite: Boolean
 ) {
     constructor(drinkModel: DrinkModel) : this(
         drinkModel.id,
         drinkModel.name,
-        drinkModel.thumbnail
+        drinkModel.thumbnail,
+        drinkModel.isFavorite
     )
 }
 
@@ -66,11 +67,6 @@ data class DrinkPreviewModel(
 data class PreviousSearchModel(
     @PrimaryKey val drinkId: String,
     val lastViewedTime: Long
-)
-
-data class SearchResultModel(
-    @Embedded val searchModel: PreviousSearchModel,
-    @Embedded val resultModel: DrinkPreviewModel
 )
 
 data class DrinkModel(
@@ -82,13 +78,9 @@ data class DrinkModel(
     val alcoholic: String?,
     val glass: String,
     val video: String?,
-    val thumbnail: String?
-) {
-
-    fun toStringUi(): String {
-        return "id: $id\n\n$name\n\n$instructions\n\n$ingredients"
-    }
-}
+    val thumbnail: String?,
+    val isFavorite: Boolean
+)
 
 data class SearchFiltersModel(
     val categories: List<CategoryModel> = emptyList(),
