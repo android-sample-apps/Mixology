@@ -23,8 +23,14 @@ class DrinkPreviewAdapter :
                 drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
                 drink_name_tv.text = drinkPreviewUiModel.name
                 cherry_badge_container.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
-                image_container.setOnClickListener {
-                    sendInputAction(InputActions.Click(drinkPreviewUiModel))
+                image_container.run {
+                    setOnClickListener {
+                        sendInputAction(InputActions.Click(drinkPreviewUiModel))
+                    }
+                    setOnLongClickListener {
+                        sendInputAction(InputActions.LongClick(drinkPreviewUiModel))
+                        true
+                    }
                 }
             }
         }

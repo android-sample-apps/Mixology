@@ -41,6 +41,12 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
                 .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
                 .collect { onDrinkPreviewClicked(it.data) }
         }
+        lifecycleScope.launchWhenStarted {
+            adapter
+                .inputActions
+                .filterIsInstance<InputActions.LongClick<DrinkPreviewUiModel>>()
+                .collect { onDrinkPreviewLongClicked(it.data) }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,13 +88,15 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
     }
 
     private fun onDrinkPreviewClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        /*findNavController().navigate(
-            LandingPageFragmentDirections
-                .actionLandingPageFragmentToDrinkFragment(drinkPreviewUiModel.id)
-        )*/
-
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+        )
+    }
+
+    private fun onDrinkPreviewLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel).show(
+            childFragmentManager,
+            DrinkPreviewOptionsBottomFragment.TAG
         )
     }
 }

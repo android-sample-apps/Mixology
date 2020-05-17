@@ -36,7 +36,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 android:layout_height="@dimen/badgeSize"
-                android:layout_margin="@dimen/screen_padding_small"
+                android:layout_margin="@dimen/screen_padding_x_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
