@@ -32,7 +32,7 @@ val useCasesModule = module {
     factory {
         GetDrinkPreviewUseCase(
             repository = get(),
-            watchlistRepository = get()
+            combineWithFavoriteUseCase = get()
         )
     }
 
@@ -94,6 +94,7 @@ val useCasesModule = module {
 
     factory {
         MultipleFilterDrinkUseCase(
+            combineWithFavoriteUseCase = get(),
             getDrinkPreviewUseCase = get(),
             alcoholicFilter = get<UnionFilterDrinkUseCase>(),
             categoryFilter = get<UnionFilterDrinkUseCase>(),
@@ -146,6 +147,12 @@ val useCasesModule = module {
     factory {
         RemoveFromWatchlistUseCase(
             repository = get()
+        )
+    }
+
+    factory {
+        CombineWithFavoriteUseCase(
+            watchlistRepository = get()
         )
     }
 

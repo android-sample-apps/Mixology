@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MultipleFilterDrinkUseCase(
+    private val combineWithFavoriteUseCase: CombineWithFavoriteUseCase,
     private val getDrinkPreviewUseCase: GetDrinkPreviewUseCase,
     private val alcoholicFilter: Filterable,
     private val categoryFilter: Filterable,
@@ -37,7 +38,7 @@ class MultipleFilterDrinkUseCase(
 
     private fun observeFilterResults(): Job {
         return GlobalScope.launch(Dispatchers.IO) {
-            alcoholicFilter.results
+            val filterResults = alcoholicFilter.results
                 .combineFilters(categoryFilter.results, "alcoholic")
                 .combineFilters(ingredientFilter.results, "ingredients")
                 .combineFilters(glassFilter.results, "glasses")
@@ -54,6 +55,10 @@ class MultipleFilterDrinkUseCase(
                 .filterNotNull()
                 .distinctUntilChanged()
                 .debounce(debounceTime)
+
+
+            combineWithFavoriteUseCase
+                .combine(filterResults)
                 .collect {
                     Timber.i("Received ${it.size} items")
                     _filerResultChannel.send(it)
