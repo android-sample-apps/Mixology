@@ -62,7 +62,7 @@ class DrinkPreviewOptionsBottomFragment(
                 text = getString(R.string.remove_from_favorite)
             }
             cherry_iv.setColorFilter(
-                requireContext().compatColor(android.R.color.holo_red_light),
+                requireContext().compatColor(R.color.cherry_red),
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         } else {
