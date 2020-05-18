@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cocktail_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/drinkFragment"
@@ -39,6 +39,15 @@
             android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
             app:enterAnim="@anim/fragment_close_enter" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.SplashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
 
