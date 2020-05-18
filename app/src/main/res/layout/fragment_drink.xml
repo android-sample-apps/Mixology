@@ -36,30 +36,31 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:shadowColor="@color/black"
         android:fitsSystemWindows="true"
+        android:shadowColor="@color/black"
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="2"
         android:textColor="@color/white"
-        app:fontFamily="@font/fty_delirium_neon_ncv"
         android:textSize="52sp"
+        app:fontFamily="@font/fty_delirium_neon_ncv"
         app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
         app:layout_constraintEnd_toEndOf="@id/info_container"
         app:layout_constraintStart_toStartOf="@id/info_container"
         tools:text="Mango Orange smoothie" />
-    
-    <!--<com.google.android.material.button.MaterialButton
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/share_drink_btn"
-        app:srcCompat="@drawable/ic_share_black"
-        android:backgroundTint="@color/white"
-        app:borderWidth="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_margin="@dimen/screen_padding"
+        android:adjustViewBounds="true"
+        app:layoutDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/drink_title"
         app:layout_constraintBottom_toBottomOf="@id/drink_title"
-        app:layout_constraintStart_toEndOf="@id/drink_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />-->
+        app:srcCompat="@drawable/ic_share_two_tone" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

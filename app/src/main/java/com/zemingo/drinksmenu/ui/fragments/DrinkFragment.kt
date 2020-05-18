@@ -52,7 +52,7 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
-        drink_title.setOnClickListener {
+        share_drink_btn.setOnClickListener {
             requireActivity().shareDrink(drinkUiModel)
         }
     }
