@@ -2,6 +2,7 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
@@ -14,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 
 
 class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
@@ -28,6 +30,7 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initInfoPagerAdapter()
+        observeIsFavorite()
     }
 
     private fun initInfoPagerAdapter() {
@@ -37,6 +40,12 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
             info_vp.setCurrentItem(position, true)
         }.attach()
         info_vp.currentItem = 0
+    }
+
+    private fun observeIsFavorite() {
+        getViewModel()
+            .isFavoriteLiveData
+            .observe(viewLifecycleOwner, Observer { updateIsFavorite(it) })
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
@@ -60,5 +69,9 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         alcoholic_tv.text = drinkUiModel.alcoholic
         category_tv.text = drinkUiModel.category
         glass_tv.text = drinkUiModel.glass
+    }
+
+    private fun updateIsFavorite(isFavorite: Boolean) {
+        Timber.d("drink is in favorites[$isFavorite]")
     }
 }

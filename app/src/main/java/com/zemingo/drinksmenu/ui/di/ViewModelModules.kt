@@ -28,6 +28,7 @@ val viewModelModule = module {
     viewModel { (id: String) ->
         DrinkViewModel(
             addToRecentlyViewedUseCase = get(),
+            getWatchlistUseCase = get(),
             getDrinkUseCase = get { parametersOf(id) },
             mapper = get<DrinkMapperUi>(),
             drinkId = id
