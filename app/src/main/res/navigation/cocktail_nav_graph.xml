@@ -19,7 +19,7 @@
         android:id="@+id/homeFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
@@ -33,8 +33,8 @@
     <fragment
         android:id="@+id/advancedSearchFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.AdvancedSearchFragment"
-        tools:layout="@layout/fragment_advanced_search"
-        android:label="AdvancedSearchFragment" >
+        android:label="AdvancedSearchFragment"
+        tools:layout="@layout/fragment_advanced_search">
         <action
             android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
@@ -43,11 +43,14 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.SplashFragment"
-        tools:layout="@layout/fragment_splash"
-        android:label="SplashFragment" >
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true" />
     </fragment>
 
 
