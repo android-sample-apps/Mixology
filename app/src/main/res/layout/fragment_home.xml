@@ -18,17 +18,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/search_action"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="12dp"
+        android:padding="@dimen/screen_padding_small"
         android:background="?selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="@id/home_title_tv"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="@id/home_title_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_search_black" />
+        app:lottie_rawRes="@raw/search_icon"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/home_tabs"
