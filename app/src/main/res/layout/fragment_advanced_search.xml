@@ -9,6 +9,7 @@
         android:id="@+id/search_toolbar"
         style="@style/MyToolbar"
         android:layout_width="0dp"
+        android:visibility="gone"
         android:layout_height="?attr/actionBarSize"
         android:text="@string/search" />
 
