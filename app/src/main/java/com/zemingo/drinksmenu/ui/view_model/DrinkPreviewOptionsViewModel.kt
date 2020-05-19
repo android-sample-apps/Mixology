@@ -42,7 +42,7 @@ class DrinkPreviewOptionsViewModel(
 
     fun removeFromWatchlist(id: String) {
         GlobalScope.launch {
-            removeFromWatchlistUseCase.remove(id)
+            removeFromWatchlistUseCase.remove(WatchlistItemModel(id))
         }
     }
 }

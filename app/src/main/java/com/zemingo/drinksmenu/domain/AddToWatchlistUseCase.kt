@@ -8,7 +8,7 @@ class AddToWatchlistUseCase(
     private val repository: WatchlistRepository
 ) {
 
-    suspend fun addToWatchlist(watchlistItemModel: WatchlistItemModel) {
+    fun addToWatchlist(watchlistItemModel: WatchlistItemModel) {
         Timber.d("addToWatchlist: called with $watchlistItemModel")
         repository.store(watchlistItemModel)
     }

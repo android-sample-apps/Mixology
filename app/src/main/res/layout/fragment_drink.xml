@@ -58,6 +58,16 @@
         app:layout_constraintTop_toTopOf="@id/drink_title"
         app:layout_constraintBottom_toBottomOf="@id/drink_title" />
 
+    <include
+        layout="@layout/view_favorite_card"
+        android:layout_width="@dimen/share_card_size"
+        android:layout_height="@dimen/share_card_size"
+        android:layout_marginEnd="@dimen/screen_padding_x_small"
+        app:layout_constraintEnd_toStartOf="@id/share_card_container"
+        app:layout_constraintTop_toTopOf="@id/drink_title"
+        app:layout_constraintBottom_toBottomOf="@id/drink_title"
+        />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         style="@style/BlackAndWhiteTab"

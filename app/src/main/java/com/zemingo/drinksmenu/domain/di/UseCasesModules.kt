@@ -159,4 +159,12 @@ val useCasesModule = module {
         )
     }
 
+    factory {
+        ToggleWatchlistUseCase(
+            getWatchlistUseCase = get(),
+            addToWatchlistUseCase = get(),
+            removeFromWatchlistUseCase = get()
+        )
+    }
+
 }

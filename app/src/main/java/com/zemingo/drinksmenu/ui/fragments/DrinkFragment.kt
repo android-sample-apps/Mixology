@@ -16,6 +16,7 @@ import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
+import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
@@ -34,22 +35,37 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()
+        initFavoriteToggle()
         initInfoPagerAdapter()
         observeIsFavorite()
+    }
+
+    private fun initFavoriteToggle() {
+        favorite_card_container.setOnClickListener {
+            getViewModel().toggleFavorite()
+        }
     }
 
     private fun initMotionLayoutListener() {
         drink_ml.setTransitionListener(object : MyTransitionListener() {
 
-            private val elevation = share_card_container.cardElevation
-            private val strokeWidth = share_card_container.strokeWidth
+            private val shareElevation = share_card_container.cardElevation
+            private val shareStrokeWidth = share_card_container.strokeWidth
+            private val favoriteElevation = share_card_container.cardElevation
+            private val favoriteStrokeWidth = share_card_container.strokeWidth
 
             private fun updateCard(progress: Float) {
                 //1.0 -> collapsed
                 //0.0 -> expanded
                 val cardProgress = 1f - progress
-                share_card_container.cardElevation = elevation * cardProgress
-                share_card_container.strokeWidth = (strokeWidth * cardProgress).toInt()
+                share_card_container.run {
+                    cardElevation = shareElevation * cardProgress
+                    strokeWidth = (shareStrokeWidth * cardProgress).toInt()
+                }
+                favorite_card_container.run {
+                    cardElevation = favoriteElevation * cardProgress
+                    strokeWidth = (favoriteStrokeWidth * cardProgress).toInt()
+                }
             }
 
             override fun onTransitionChange(
@@ -83,6 +99,10 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
+        updateShare(drinkUiModel)
+    }
+
+    private fun updateShare(drinkUiModel: DrinkUiModel) {
         share_card_container.setOnClickListener {
             requireActivity().shareDrink(drinkUiModel)
         }
@@ -104,5 +124,6 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
 
     private fun updateIsFavorite(isFavorite: Boolean) {
         Timber.d("drink is in favorites[$isFavorite]")
+
     }
 }

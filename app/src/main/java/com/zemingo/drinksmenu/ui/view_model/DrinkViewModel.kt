@@ -3,20 +3,23 @@ package com.zemingo.drinksmenu.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.zemingo.drinksmenu.domain.AddToRecentlyViewedUseCase
-import com.zemingo.drinksmenu.domain.GetDrinkUseCase
-import com.zemingo.drinksmenu.domain.GetWatchlistUseCase
+import com.zemingo.drinksmenu.domain.*
 import com.zemingo.drinksmenu.domain.models.DrinkModel
+import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.function.Function
 
 class DrinkViewModel(
     getDrinkUseCase: GetDrinkUseCase,
     addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
     getWatchlistUseCase: GetWatchlistUseCase,
+    private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
     mapper: Function<DrinkModel, DrinkUiModel>,
-    drinkId: String
+    private val drinkId: String
 ) : ViewModel() {
 
     init {
@@ -35,4 +38,9 @@ class DrinkViewModel(
             .map { mapper.apply(it) }
             .asLiveData()
 
+    fun toggleFavorite() {
+        GlobalScope.launch(Dispatchers.IO) {
+            toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
+        }
+    }
 }
