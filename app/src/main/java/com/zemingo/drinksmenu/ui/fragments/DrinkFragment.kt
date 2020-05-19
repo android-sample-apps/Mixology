@@ -1,13 +1,16 @@
 package com.zemingo.drinksmenu.ui.fragments
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
@@ -124,6 +127,14 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
 
     private fun updateIsFavorite(isFavorite: Boolean) {
         Timber.d("drink is in favorites[$isFavorite]")
+        val color = if (isFavorite) R.color.cherry_red else R.color.black
+        setFavoriteColorFilter(color)
+    }
 
+    private fun setFavoriteColorFilter(@ColorRes color: Int) {
+        cherry_iv.setColorFilter(
+            requireContext().compatColor(color),
+            PorterDuff.Mode.SRC_IN
+        )
     }
 }
