@@ -53,10 +53,7 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
-        share_drink_btn.setOnClickListener {
-            requireActivity().shareDrink(drinkUiModel)
-        }
-        share_container_cv.setOnClickListener {
+        share_view.setOnClickListener {
             requireActivity().shareDrink(drinkUiModel)
         }
     }

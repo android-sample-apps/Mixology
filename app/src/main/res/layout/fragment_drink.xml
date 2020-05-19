@@ -49,25 +49,11 @@
         app:layout_constraintStart_toStartOf="@id/info_container"
         tools:text="Mango Orange smoothie" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/share_drink_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackgroundBorderless"
-        android:layout_margin="@dimen/screen_padding"
-        android:adjustViewBounds="true"
-        app:layoutDescription="@null"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/drink_title"
-        app:layout_constraintBottom_toBottomOf="@id/drink_title"
-        app:srcCompat="@drawable/ic_share_two_tone" />
-
     <include
         layout="@layout/view_share_card"
         android:id="@+id/share_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/share_card_size"
+        android:layout_height="@dimen/share_card_size"
         android:layout_margin="@dimen/screen_padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/drink_title"
