@@ -51,7 +51,6 @@
 
     <include
         layout="@layout/view_share_card"
-        android:id="@+id/share_view"
         android:layout_width="@dimen/share_card_size"
         android:layout_height="@dimen/share_card_size"
         android:layout_margin="@dimen/screen_padding"

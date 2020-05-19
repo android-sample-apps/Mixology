@@ -2,14 +2,17 @@ package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
@@ -30,8 +33,35 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMotionLayoutListener()
         initInfoPagerAdapter()
         observeIsFavorite()
+    }
+
+    private fun initMotionLayoutListener() {
+        drink_ml.setTransitionListener(object : MyTransitionListener() {
+
+            private val elevation = share_card_container.cardElevation
+            private val strokeWidth = share_card_container.strokeWidth
+
+            private fun updateCard(progress: Float) {
+                //1.0 -> collapsed
+                //0.0 -> expanded
+                val cardProgress = 1f - progress
+                share_card_container.cardElevation = elevation * cardProgress
+                share_card_container.strokeWidth = (strokeWidth * cardProgress).toInt()
+            }
+
+            override fun onTransitionChange(
+                motionLayout: MotionLayout,
+                startId: Int,
+                endId: Int,
+                progress: Float
+            ) {
+                Timber.d("onTransitionChange: startId[$startId], endId[$endId], progress[$progress]")
+                updateCard(progress)
+            }
+        })
     }
 
     private fun initInfoPagerAdapter() {
@@ -53,7 +83,7 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
-        share_view.setOnClickListener {
+        share_card_container.setOnClickListener {
             requireActivity().shareDrink(drinkUiModel)
         }
     }

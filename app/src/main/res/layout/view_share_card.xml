@@ -4,6 +4,7 @@
     android:layout_width="@dimen/share_card_size"
     android:layout_height="@dimen/share_card_size"
     app:cardCornerRadius="@dimen/share_card_size"
+    android:id="@+id/share_card_container"
     app:cardElevation="4dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
