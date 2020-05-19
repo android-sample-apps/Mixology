@@ -13,6 +13,7 @@ import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
+import kotlinx.android.synthetic.main.view_share_card.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -53,6 +54,9 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
         share_drink_btn.setOnClickListener {
+            requireActivity().shareDrink(drinkUiModel)
+        }
+        share_container_cv.setOnClickListener {
             requireActivity().shareDrink(drinkUiModel)
         }
     }

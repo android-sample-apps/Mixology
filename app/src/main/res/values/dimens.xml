@@ -9,4 +9,5 @@
     <dimen name="drink_content_text_size">24sp</dimen>
     <dimen name="fading_edge_height">12dp</dimen>
     <dimen name="badgeSize">35dp</dimen>
+    <dimen name="share_card_size">50dp</dimen>
 </resources>
