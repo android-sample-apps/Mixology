@@ -6,8 +6,8 @@ import com.zemingo.drinksmenu.repo.models.DrinkPreviewResponse
 import com.zemingo.drinksmenu.repo.models.DrinkResponse
 import com.zemingo.drinksmenu.repo.models.DrinksWrapperResponse
 import com.zemingo.drinksmenu.repo.models.NullableDrinksWrapperResponse
-import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewParam
-import com.zemingo.drinksmenu.repo.reactive_store.ReactiveStore
+import com.zemingo.drinksmenu.repo.reactiveStore.DrinkPreviewParam
+import com.zemingo.drinksmenu.repo.reactiveStore.ReactiveStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber

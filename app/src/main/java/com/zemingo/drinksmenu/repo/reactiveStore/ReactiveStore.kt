@@ -1,4 +1,4 @@
-package com.zemingo.drinksmenu.repo.reactive_store
+package com.zemingo.drinksmenu.repo.reactiveStore
 
 import kotlinx.coroutines.flow.Flow
 

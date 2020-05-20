@@ -1,8 +1,8 @@
 package com.zemingo.drinksmenu.repo.repositories
 
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
-import com.zemingo.drinksmenu.repo.reactive_store.WatchlistParam
-import com.zemingo.drinksmenu.repo.reactive_store.WatchlistReactiveStore
+import com.zemingo.drinksmenu.repo.reactiveStore.WatchlistParam
+import com.zemingo.drinksmenu.repo.reactiveStore.WatchlistReactiveStore
 import kotlinx.coroutines.flow.Flow
 
 class WatchlistRepository(

@@ -3,7 +3,7 @@
 package com.zemingo.drinksmenu.repo.di
 
 import androidx.room.Room
-import com.zemingo.drinksmenu.repo.reactive_store.*
+import com.zemingo.drinksmenu.repo.reactiveStore.*
 import com.zemingo.drinksmenu.repo.room.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -32,6 +32,8 @@ val reactiveStoreModule = module {
     factory<GlassDao> { get<DrinksDatabase>().glassDao() }
 
     factory<WatchlistDao> { get<DrinksDatabase>().watchlistDao() }
+
+    factory<DrinkDao> { get<DrinksDatabase>().drinkDao() }
 
     factory {
         CategoryReactiveStore(
@@ -78,6 +80,12 @@ val reactiveStoreModule = module {
     factory {
         WatchlistReactiveStore(
             watchlistDao = get()
+        )
+    }
+
+    factory {
+        DrinkReactiveStore(
+            drinksDao = get()
         )
     }
 }

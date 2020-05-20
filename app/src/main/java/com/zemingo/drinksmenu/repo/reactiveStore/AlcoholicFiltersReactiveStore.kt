@@ -1,7 +1,6 @@
-package com.zemingo.drinksmenu.repo.reactive_store
+package com.zemingo.drinksmenu.repo.reactiveStore
 
 import com.zemingo.drinksmenu.domain.models.AlcoholicFilterModel
-import com.zemingo.drinksmenu.domain.models.GlassModel
 import com.zemingo.drinksmenu.repo.room.AlcoholicFilterDao
 import kotlinx.coroutines.flow.Flow
 

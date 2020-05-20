@@ -4,8 +4,8 @@ import com.zemingo.drinksmenu.domain.models.IngredientDetailsModel
 import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.models.IngredientDetailsResponse
 import com.zemingo.drinksmenu.repo.models.IngredientsWrapperResponse
-import com.zemingo.drinksmenu.repo.reactive_store.IngredientDetailsParam
-import com.zemingo.drinksmenu.repo.reactive_store.ReactiveStore
+import com.zemingo.drinksmenu.repo.reactiveStore.IngredientDetailsParam
+import com.zemingo.drinksmenu.repo.reactiveStore.ReactiveStore
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import java.util.*

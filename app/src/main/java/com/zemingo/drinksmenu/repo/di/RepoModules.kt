@@ -2,7 +2,7 @@ package com.zemingo.drinksmenu.repo.di
 
 import com.zemingo.drinksmenu.repo.DrinkService
 import com.zemingo.drinksmenu.repo.mappers.*
-import com.zemingo.drinksmenu.repo.reactive_store.*
+import com.zemingo.drinksmenu.repo.reactiveStore.*
 import com.zemingo.drinksmenu.repo.repositories.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -64,6 +64,7 @@ val repoModule = module {
 
     factory {
         DrinkRepository(
+            drinksReactiveStore = get<DrinkReactiveStore>(),
             service = get<DrinkService>(),
             mapper = get<DrinkMapper>()
         )
@@ -82,7 +83,9 @@ val repoModule = module {
             service = get<DrinkService>(),
             drinkMapper = get<SearchDrinkMapper>(),
             previewMapper = get<DrinkPreviewMapper>(),
-            reactiveStore = get()
+            previewReactiveStore = get(),
+            drinkReactiveStore = get()
+
         )
     }
 

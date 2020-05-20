@@ -69,6 +69,7 @@ data class RecentlyViewedModel(
     val lastViewedTime: Long
 )
 
+@Entity
 data class DrinkModel(
     @PrimaryKey val id: String,
     val name: String,

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import java.util.function.Function
 
 class DrinkViewModel(
-    getDrinkUseCase: GetDrinkUseCase,
+    private val getDrinkUseCase: GetDrinkUseCase,
     addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
     getWatchlistUseCase: GetWatchlistUseCase,
     private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
@@ -34,7 +34,7 @@ class DrinkViewModel(
 
     val drink: LiveData<DrinkUiModel> =
         getDrinkUseCase
-            .getDrink(drinkId)
+            .drinkChannel
             .map { mapper.apply(it) }
             .asLiveData()
 
@@ -42,5 +42,10 @@ class DrinkViewModel(
         GlobalScope.launch(Dispatchers.IO) {
             toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        getDrinkUseCase.cancel()
     }
 }

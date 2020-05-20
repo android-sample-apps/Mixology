@@ -2,8 +2,8 @@ package com.zemingo.drinksmenu.repo.repositories
 
 import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.domain.models.RecentlyViewedModel
-import com.zemingo.drinksmenu.repo.reactive_store.DrinkPreviewParam
-import com.zemingo.drinksmenu.repo.reactive_store.ReactiveStore
+import com.zemingo.drinksmenu.repo.reactiveStore.DrinkPreviewParam
+import com.zemingo.drinksmenu.repo.reactiveStore.ReactiveStore
 import kotlinx.coroutines.flow.Flow
 
 class RecentlyViewedRepository(
