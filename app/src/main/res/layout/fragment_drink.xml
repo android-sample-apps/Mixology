@@ -43,9 +43,10 @@
         android:shadowRadius="2"
         android:textColor="@color/white"
         android:textSize="52sp"
+        android:ellipsize="end"
         app:fontFamily="@font/fty_delirium_neon_ncv"
         app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
-        app:layout_constraintEnd_toEndOf="@id/info_container"
+        app:layout_constraintEnd_toStartOf="@id/favorite_card_container"
         app:layout_constraintStart_toStartOf="@id/info_container"
         tools:text="Mango Orange smoothie" />
 
@@ -53,9 +54,9 @@
         layout="@layout/view_share_card"
         android:layout_width="@dimen/share_card_size"
         android:layout_height="@dimen/share_card_size"
-        android:layout_margin="@dimen/screen_padding"
+        android:layout_marginEnd="@dimen/screen_padding"
+        android:layout_marginBottom="@dimen/screen_padding_small"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/drink_title"
         app:layout_constraintBottom_toBottomOf="@id/drink_title" />
 
     <include
@@ -63,8 +64,8 @@
         android:layout_width="@dimen/share_card_size"
         android:layout_height="@dimen/share_card_size"
         android:layout_marginEnd="@dimen/screen_padding_x_small"
+        android:layout_marginBottom="@dimen/screen_padding_small"
         app:layout_constraintEnd_toStartOf="@id/share_card_container"
-        app:layout_constraintTop_toTopOf="@id/drink_title"
         app:layout_constraintBottom_toBottomOf="@id/drink_title"
         />
 
