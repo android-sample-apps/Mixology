@@ -10,6 +10,7 @@ import timber.log.Timber
 
 class GetDrinkUseCase(
     private val repository: DrinkRepository,
+    private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
     private val drinkId: String
 ) {
 
@@ -25,7 +26,7 @@ class GetDrinkUseCase(
                 .collect { drink ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
-                        fetchById()
+                        fetchAndStore()
                     } else {
                         Timber.d("found drink[$drinkId]")
                         channel.send(drink)
@@ -34,11 +35,10 @@ class GetDrinkUseCase(
         }
     }
 
-    private suspend fun fetchById() {
+    private suspend fun fetchAndStore() {
         Timber.d("fetchById: called with id[$drinkId]")
         try {
-            val drinkModel = repository.fetch(drinkId)
-            repository.store(drinkModel)
+            fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
         } catch (e: Exception) {
             Timber.e(e, "Unable to fetch by id[$drinkId]")
 
