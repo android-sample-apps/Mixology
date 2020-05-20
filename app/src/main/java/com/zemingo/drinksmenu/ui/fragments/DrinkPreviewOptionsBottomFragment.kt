@@ -1,9 +1,13 @@
 package com.zemingo.drinksmenu.ui.fragments
 
+import android.animation.AnimatorSet
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
@@ -15,6 +19,7 @@ import kotlinx.android.synthetic.main.view_favorite_card.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
+
 
 class DrinkPreviewOptionsBottomFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
@@ -29,6 +34,10 @@ class DrinkPreviewOptionsBottomFragment(
             drinkPreviewUiModel.id
         )
     }
+
+    private val favoriteColor: Int by lazy { requireContext().compatColor(R.color.cherry_red) }
+    private val notFavoriteColor: Int by lazy { requireContext().compatColor(R.color.black) }
+    private val favoriteElevation: Float by lazy { favorite_card_container.cardElevation }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,20 +71,67 @@ class DrinkPreviewOptionsBottomFragment(
                 setOnClickListener { removeFromWatchlist() }
                 text = getString(R.string.remove_from_favorite)
             }
-            cherry_iv.setColorFilter(
-                requireContext().compatColor(R.color.cherry_red),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
+            animateToFavorite()
+
         } else {
             toggle_watchlist_btn.run {
                 setOnClickListener { addToWatchlist() }
                 text = getString(R.string.add_to_favorites)
             }
-            cherry_iv.setColorFilter(
-                requireContext().compatColor(R.color.header_text_color),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
+            animateToNotFavorite()
         }
+    }
+
+    private fun animateToNotFavorite() {
+        animateFavorite(
+            fromColor = favoriteColor,
+            toColor = notFavoriteColor,
+            fromElevation = favoriteElevation,
+            toElevation = 0f
+        )
+    }
+
+    private fun animateToFavorite() {
+        animateFavorite(
+            fromColor = notFavoriteColor,
+            toColor = favoriteColor,
+            fromElevation = 0f,
+            toElevation = favoriteElevation
+        )
+    }
+
+    private fun animateFavorite(
+        @ColorInt fromColor: Int,
+        @ColorInt toColor: Int,
+        fromElevation: Float,
+        toElevation: Float
+    ) {
+        val colorAnimation =
+            ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor).apply {
+                addUpdateListener { animator ->
+                    cherry_iv.setColorFilter(
+                        animator.animatedValue as Int,
+                        android.graphics.PorterDuff.Mode.SRC_IN
+                    )
+
+                    val progress = animator.animatedFraction
+                    Timber.d("animatedFraction: $progress")
+                    favorite_card_container.cardElevation = favoriteElevation * progress
+                }
+            }
+
+        val elevationAnimator = ValueAnimator.ofFloat(fromElevation, toElevation).apply {
+            addUpdateListener { animator ->
+                favorite_card_container.cardElevation = animator.animatedValue as Float
+            }
+        }
+
+        AnimatorSet().apply {
+            duration = 250L
+            play(colorAnimation)
+                .with(elevationAnimator)
+        }.start()
+
     }
 
     private fun addToWatchlist() {
