@@ -11,6 +11,7 @@ import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkPreviewOptionsViewModel
 import kotlinx.android.synthetic.main.fragment_drink_preview_options.*
+import kotlinx.android.synthetic.main.view_favorite_card.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -41,7 +42,7 @@ class DrinkPreviewOptionsBottomFragment(
         super.onViewCreated(view, savedInstanceState)
         drink_name.text = drinkPreviewUiModel.name
         observeFavoriteState()
-        toggle_watchlist_tv.setOnClickListener {
+        toggle_watchlist_btn.setOnClickListener {
             addToWatchlist()
         }
     }
@@ -57,7 +58,7 @@ class DrinkPreviewOptionsBottomFragment(
 
     private fun onFavoriteEnabled(isFavorite: Boolean) {
         if (isFavorite) {
-            toggle_watchlist_tv.run {
+            toggle_watchlist_btn.run {
                 setOnClickListener { removeFromWatchlist() }
                 text = getString(R.string.remove_from_favorite)
             }
@@ -66,7 +67,7 @@ class DrinkPreviewOptionsBottomFragment(
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         } else {
-            toggle_watchlist_tv.run {
+            toggle_watchlist_btn.run {
                 setOnClickListener { addToWatchlist() }
                 text = getString(R.string.add_to_favorites)
             }

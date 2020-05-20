@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:padding="@dimen/screen_padding">
 
         <com.google.android.material.textview.MaterialTextView
@@ -25,32 +26,25 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="whiskey sour" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/toggle_watchlist_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:letterSpacing="0.25"
-            android:padding="@dimen/screen_radius"
-            tools:text="Remove from favorites"
-            android:textColor="@color/header_text_color"
-            android:textSize="16sp"
-            app:fontFamily="@font/jesa_script_regular"
-            app:layout_constraintStart_toEndOf="@id/cherry_iv"
+        <include
+            layout="@layout/view_favorite_card"
+            android:layout_width="@dimen/share_card_size"
+            android:layout_height="@dimen/share_card_size"
+            android:layout_marginTop="@dimen/screen_padding"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/drink_name" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/cherry_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            app:tint="@color/orange"
-            android:padding="@dimen/screen_padding"
-            app:layout_constraintBottom_toBottomOf="@id/toggle_watchlist_tv"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/toggle_watchlist_tv"
-            app:layout_constraintTop_toTopOf="@id/toggle_watchlist_tv"
-            app:srcCompat="@drawable/ic_cherries" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/toggle_watchlist_btn"
+            style="@style/BottomSheetTextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            app:layout_constraintBottom_toBottomOf="@id/favorite_card_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/favorite_card_container"
+            app:layout_constraintTop_toTopOf="@id/favorite_card_container"
+            tools:text="Remove from favorites" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

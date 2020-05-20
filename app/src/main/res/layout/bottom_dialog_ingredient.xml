@@ -17,10 +17,10 @@
             android:id="@+id/ingredient_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:letterSpacing="0.2"
             android:textColor="@color/header_text_color"
             android:textSize="36sp"
-            android:gravity="center"
             app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,27 +31,27 @@
             android:id="@+id/alcohol_volume_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:letterSpacing="0.2"
             android:textColor="@color/header_text_color"
             android:textSize="24sp"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:gravity="center"
             app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredient_name_tv"
-            tools:text="40% Abv." />
+            tools:text="40% Abv."
+            tools:visibility="visible" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/description_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintHeight_max="200dp"
             android:layout_marginTop="@dimen/screen_padding"
             android:fadeScrollbars="true"
             android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alcohol_volume_tv"
             tools:visibility="visible">
@@ -60,26 +60,20 @@
                 android:id="@+id/ingredient_description_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="@string/long_mock_text"
                 android:textColor="@color/secondary_text_color"
-                app:fontFamily="@font/jesa_script_regular" />
+                app:fontFamily="@font/jesa_script_regular"
+                tools:text="@string/long_mock_text" />
 
         </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/search_online_btn"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+            style="@style/BottomSheetTextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/fty_delirium_ncv"
-            android:letterSpacing="0.15"
             android:text="@string/search_online"
-            android:textColor="@color/header_text_color"
-            android:textSize="26sp"
-            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_container"
-            app:rippleColor="@color/secondary_text_color" />
+            app:layout_constraintTop_toBottomOf="@id/description_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -10,4 +10,5 @@
     <dimen name="fading_edge_height">12dp</dimen>
     <dimen name="badgeSize">35dp</dimen>
     <dimen name="share_card_size">50dp</dimen>
+    <dimen name="share_card_size_small">50dp</dimen>
 </resources>
