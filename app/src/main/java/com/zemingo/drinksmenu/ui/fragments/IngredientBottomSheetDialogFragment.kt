@@ -85,10 +85,8 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun updateDescription(details: IngredientDetailsUiModel) {
-        ingredient_description_tv.text = details.description
-        val hasDescription = details.description?.isNotEmpty() == true
-        description_container.visibility = hasDescription.toVisibility()
-        no_description_tv.visibility = (!hasDescription).toVisibility()
+        val text = details.description ?: getString(R.string.no_description_found)
+        ingredient_description_tv.text = text
     }
 
     private fun updateWebSearchQuery(details: IngredientDetailsUiModel) {

@@ -37,4 +37,6 @@
     <string name="filter_glasses">Glasses</string>
     <string name="filter_categories">Categories</string>
     <string name="filter_ingredients">Ingredients</string>
+    <string name="no_description_found">No description found</string>
+    <string name="search_online">search online</string>
 </resources>

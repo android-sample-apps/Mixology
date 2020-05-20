@@ -51,7 +51,6 @@
             android:layout_marginTop="@dimen/screen_padding"
             android:fadeScrollbars="true"
             android:scrollbars="vertical"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alcohol_volume_tv"
@@ -61,7 +60,7 @@
                 android:id="@+id/ingredient_description_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/long_mock_text"
+                tools:text="@string/long_mock_text"
                 android:textColor="@color/secondary_text_color"
                 app:fontFamily="@font/jesa_script_regular" />
 
@@ -74,26 +73,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/fty_delirium_ncv"
             android:letterSpacing="0.15"
-            android:text="search online"
+            android:text="@string/search_online"
             android:textColor="@color/header_text_color"
             android:textSize="26sp"
             app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_container"
             app:rippleColor="@color/secondary_text_color" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/no_description_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="No description found"
-            android:textColor="@color/secondary_text_color"
-            android:textSize="18sp"
-            app:fontFamily="@font/jesa_script_regular"
-            app:layout_constraintBottom_toBottomOf="@id/search_online_btn"
-            app:layout_constraintEnd_toStartOf="@id/search_online_btn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/search_online_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
