@@ -18,6 +18,6 @@
         android:layout_height="match_parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/share" />
+        app:lottie_rawRes="@raw/share_arrow" />
 
 </com.google.android.material.card.MaterialCardView>
