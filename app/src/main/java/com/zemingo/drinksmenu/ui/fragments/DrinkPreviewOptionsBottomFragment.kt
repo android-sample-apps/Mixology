@@ -3,6 +3,7 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,11 +50,15 @@ class DrinkPreviewOptionsBottomFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        drink_name.text = drinkPreviewUiModel.name
+        initDrinkName()
         observeFavoriteState()
         toggle_watchlist_btn.setOnClickListener {
             addToWatchlist()
         }
+    }
+
+    private fun initDrinkName() {
+        drink_name.text = drinkPreviewUiModel.name
     }
 
     private fun observeFavoriteState() {
@@ -109,18 +114,13 @@ class DrinkPreviewOptionsBottomFragment(
         val colorAnimation =
             ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor).apply {
                 addUpdateListener { animator ->
-                    cherry_iv.setColorFilter(
-                        animator.animatedValue as Int,
-                        android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-
-                    favorite_card_container.cardElevation = favoriteElevation * animator.animatedFraction
+                    setCherryTint(animator.animatedValue as Int)
                 }
             }
 
         val elevationAnimator = ValueAnimator.ofFloat(fromElevation, toElevation).apply {
             addUpdateListener { animator ->
-                favorite_card_container.cardElevation = animator.animatedValue as Float
+                setFavoriteElevation(animator.animatedValue as Float)
             }
         }
 
@@ -130,6 +130,17 @@ class DrinkPreviewOptionsBottomFragment(
                 .with(elevationAnimator)
         }.start()
 
+    }
+
+    private fun setCherryTint(tint: Int) {
+        cherry_iv.setColorFilter(
+            tint,
+            PorterDuff.Mode.SRC_IN
+        )
+    }
+
+    private fun setFavoriteElevation(elevation: Float) {
+        favorite_card_container.cardElevation = elevation
     }
 
     private fun addToWatchlist() {
