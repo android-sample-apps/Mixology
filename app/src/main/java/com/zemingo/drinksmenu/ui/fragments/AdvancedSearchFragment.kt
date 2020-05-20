@@ -139,7 +139,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
     }
 
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {
-        Timber.d("results: $drinks")
+        Timber.d("results: received ${drinks.size} drinks")
         drinkPreviewAdapter.update(drinks)
         if (drinks.isEmpty()) {
             showNoResults()

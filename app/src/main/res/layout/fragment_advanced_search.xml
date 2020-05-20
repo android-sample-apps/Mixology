@@ -1,72 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/screen_padding">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/search_toolbar"
-        style="@style/MyToolbar"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_container_til"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="?attr/actionBarSize"
-        android:text="@string/search" />
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/header_text_color"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/header_text_color"
+        app:helperTextTextAppearance="@style/SearchTextAppearance"
+        app:hintTextColor="@color/secondary_text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_query_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/jesa_script_regular"
+            android:gravity="center_vertical"
+            android:hint="@string/advanced_search_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="textNoSuggestions"
+            android:textColor="@color/header_text_color"
+            android:textSize="18sp"
+            android:theme="@style/MyEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_results_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="@dimen/screen_padding"
+        android:layout_marginTop="@dimen/screen_padding"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_toolbar">
+        app:layout_constraintTop_toBottomOf="@id/search_container_til"
+        app:spanCount="2"
+        tools:listitem="@layout/tile_item_drink_preview"
+        tools:visibility="gone" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/search_container_til"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:boxStrokeColor="@color/header_text_color"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/header_text_color"
-            app:helperTextTextAppearance="@style/SearchTextAppearance"
-            app:hintTextColor="@color/secondary_text_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/search_query_et"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/jesa_script_regular"
-                android:gravity="center_vertical"
-                android:hint="@string/advanced_search_hint"
-                android:imeOptions="actionSearch"
-                android:inputType="textNoSuggestions"
-                android:textColor="@color/header_text_color"
-                android:textSize="18sp"
-                android:theme="@style/MyEditTextTheme" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/search_results_rv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/screen_padding"
-            android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search_container_til"
-            app:spanCount="2"
-            tools:listitem="@layout/tile_item_drink_preview"
-            tools:visibility="gone" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.zemingo.drinksmenu.ui.views.MyFab
         android:id="@+id/filter_mfab"
@@ -81,4 +64,4 @@
         app:strokeWidth="1dp" />
 
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
