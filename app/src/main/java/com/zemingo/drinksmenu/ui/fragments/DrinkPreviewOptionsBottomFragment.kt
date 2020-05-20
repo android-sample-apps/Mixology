@@ -114,9 +114,7 @@ class DrinkPreviewOptionsBottomFragment(
                         android.graphics.PorterDuff.Mode.SRC_IN
                     )
 
-                    val progress = animator.animatedFraction
-                    Timber.d("animatedFraction: $progress")
-                    favorite_card_container.cardElevation = favoriteElevation * progress
+                    favorite_card_container.cardElevation = favoriteElevation * animator.animatedFraction
                 }
             }
 
