@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
@@ -14,39 +15,44 @@ import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
-import com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_drink.*
 import kotlinx.android.synthetic.main.layout_drink_label.*
 import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
-import org.koin.android.viewmodel.ext.android.getViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
 
-class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
+class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
 
-    override fun getViewModel(): DrinkViewModel {
-        return getViewModel { parametersOf(args.id) }
-    }
+    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.id) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()
         initFavoriteToggle()
         initInfoPagerAdapter()
+        observeDrink()
         observeIsFavorite()
     }
 
     private fun initFavoriteToggle() {
         favorite_card_container.setOnClickListener {
-            getViewModel().toggleFavorite()
+            drinkViewModel.toggleFavorite()
         }
     }
 
@@ -94,19 +100,23 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
     }
 
     private fun observeIsFavorite() {
-        getViewModel()
+        drinkViewModel
             .isFavoriteLiveData
             .observe(viewLifecycleOwner, Observer { updateIsFavorite(it) })
     }
 
-    override fun onDrinkError(errorUiModel: DrinkErrorUiModel) {
-        findNavController().navigate(
-            DrinkFragmentDirections
-                .actionDrinkFragmentToConnectivityErrorFragment(errorUiModel)
-        )
+    private fun observeDrink() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            drinkViewModel
+                .drinkFlow
+                .flowOn(Dispatchers.IO)
+                .filterIsInstance<ResultUiModel.Success<DrinkUiModel>>()
+                .map { it.data }
+                .collect { onDrinkReceived(it) }
+        }
     }
 
-    override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+    private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         updateDrinkTitle(drinkUiModel)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)

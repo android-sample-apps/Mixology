@@ -85,6 +85,7 @@ data class DrinkModel(
 
 sealed class Result<T> {
     data class Success<T>(val data: T): Result<T>()
+    data class Loading<T>(val id: String): Result<T>()
     data class Error<T>(val tr: Throwable): Result<T>()
 }
 

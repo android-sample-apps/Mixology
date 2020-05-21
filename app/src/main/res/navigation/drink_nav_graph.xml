@@ -1,5 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/drink_nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drink_nav_graph">
 
+    <fragment
+        android:id="@+id/loadingDrinkFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.LoadingDrinkFragment"
+        android:label="LoadingDrinkFragment"
+        tools:layout="@layout/fragment_loading_drink">
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_loadingDrinkFragment_to_drinkErrorFragment"
+            app:destination="@id/drinkErrorFragment" />
+        <action
+            android:id="@+id/action_loadingDrinkFragment_to_drinkFragment2"
+            app:destination="@id/drinkFragment2" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/drinkErrorFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkErrorFragment"
+        android:label="DrinkErrorFragment"
+        tools:layout="@layout/fragment_connectivity_error">
+        <argument
+            android:name="errorUiModel"
+            app:argType="com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_drinkErrorFragment_to_drinkFragment2"
+            app:popUpToInclusive="true"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/drinkErrorFragment"
+            app:destination="@id/drinkFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/drinkFragment2"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
+        android:label="DrinkFragment"
+        tools:layout="@layout/fragment_drink">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -43,6 +43,7 @@ class GetDrinkUseCase(
     private suspend fun fetchAndStore() {
         Timber.d("fetchById: called with id[$drinkId]")
         try {
+            channel.send(Result.Loading(drinkId))
             fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
         } catch (e: Exception) {
             Timber.e(e, "Unable to fetch by id[$drinkId]")

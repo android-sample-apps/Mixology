@@ -106,9 +106,10 @@ data class DrinkErrorUiModel(
     @StringRes val title: Int,
     @StringRes val description: Int,
     @RawRes val lottieAnimation: Int
-): Parcelable
+) : Parcelable
 
 sealed class ResultUiModel<T> {
     data class Success<T>(val data: T) : ResultUiModel<T>()
+    data class Loading<T>(val id: String) : ResultUiModel<T>()
     data class Error<T>(val errorUiModel: DrinkErrorUiModel) : ResultUiModel<T>()
 }

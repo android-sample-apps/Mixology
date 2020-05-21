@@ -27,6 +27,7 @@ class DrinkViewModel(
 ) : ViewModel() {
 
     init {
+        Timber.d("init called")
         addToRecentlyViewedUseCase.add(drinkId)
     }
 
@@ -36,11 +37,13 @@ class DrinkViewModel(
             .map { it != null }
             .asLiveData()
 
+    val drinkFlow = getDrinkUseCase
+        .drinkChannel
+        .map { resultMapper.apply(it) }
+        .distinctUntilChanged()
+
     val drink: LiveData<ResultUiModel<DrinkUiModel>> =
-        getDrinkUseCase
-            .drinkChannel
-            .map { resultMapper.apply(it) }
-            .distinctUntilChanged()
+        drinkFlow
             .asLiveData()
 
     fun toggleFavorite() {

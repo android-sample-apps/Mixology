@@ -1,10 +1,8 @@
 package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,24 +16,18 @@ import com.zemingo.drinksmenu.ui.view_model.ConnectivityViewModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_connectivity_error.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
-class DrinkErrorFragment : DialogFragment() {
+class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
 
     private val args: DrinkErrorFragmentArgs by navArgs()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.errorUiModel.drinkId) }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_connectivity_error, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,11 +62,12 @@ class DrinkErrorFragment : DialogFragment() {
                 }
             })
 
-        drinkViewModel
-            .drink
-            .observe(viewLifecycleOwner, Observer {
-                onDrinkResultReceived(it)
-            })
+        lifecycleScope.launch(Dispatchers.Main) {
+            drinkViewModel
+                .drinkFlow
+                .flowOn(Dispatchers.IO)
+                .collect { onDrinkResultReceived(it) }
+        }
     }
 
     private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
@@ -92,7 +85,7 @@ class DrinkErrorFragment : DialogFragment() {
     private fun backToDrink() {
         lifecycleScope.launch(Dispatchers.Main) {
             findNavController().navigate(
-                DrinkErrorFragmentDirections.actionConnectivityErrorFragmentToDrinkFragment(
+                DrinkErrorFragmentDirections.actionDrinkErrorFragmentToDrinkFragment2(
                     args.errorUiModel.drinkId
                 )
             )

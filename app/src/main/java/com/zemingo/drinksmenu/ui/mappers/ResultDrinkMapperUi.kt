@@ -21,6 +21,7 @@ class ResultDrinkMapperUi(
         return when (t) {
             is Result.Success -> parseSuccess(t.data)
             is Result.Error -> parseError(t.tr)
+            is Result.Loading -> parseLoading(t.id)
         }
     }
 
@@ -28,6 +29,10 @@ class ResultDrinkMapperUi(
         return ResultUiModel.Success(
             drinkMapper.apply(data)
         )
+    }
+
+    private fun parseLoading(id: String): ResultUiModel<DrinkUiModel> {
+        return ResultUiModel.Loading(id)
     }
 
     private fun parseError(tr: Throwable): ResultUiModel<DrinkUiModel> {
