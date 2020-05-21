@@ -31,12 +31,11 @@ val viewModelModule = module {
 
     viewModel { (id: String) ->
         DrinkViewModel(
-            addToRecentlyViewedUseCase = get(),
-            fetchAndStoreDrinkUseCase = get(),
-            getWatchlistUseCase = get(),
             getDrinkUseCase = get { parametersOf(id) },
+            addToRecentlyViewedUseCase = get(),
+            getWatchlistUseCase = get(),
             toggleWatchlistUseCase = get(),
-            mapper = get<DrinkMapperUi>(),
+            resultMapper = get<ResultDrinkMapperUi> { parametersOf(id) },
             drinkId = id
         )
     }

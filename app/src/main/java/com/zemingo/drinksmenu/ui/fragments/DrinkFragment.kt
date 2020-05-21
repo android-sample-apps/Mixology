@@ -14,6 +14,7 @@ import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
+import com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
@@ -98,9 +99,10 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
             .observe(viewLifecycleOwner, Observer { updateIsFavorite(it) })
     }
 
-    override fun onDrinkError(tr: Throwable) {
+    override fun onDrinkError(errorUiModel: DrinkErrorUiModel) {
         findNavController().navigate(
-            DrinkFragmentDirections.actionDrinkFragmentToConnectivityErrorFragment(args.id)
+            DrinkFragmentDirections
+                .actionDrinkFragmentToConnectivityErrorFragment(errorUiModel)
         )
     }
 

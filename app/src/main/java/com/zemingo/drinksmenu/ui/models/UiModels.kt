@@ -1,10 +1,13 @@
 package com.zemingo.drinksmenu.ui.models
 
+import android.os.Parcelable
 import android.text.SpannableString
+import androidx.annotation.StringRes
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
 import com.zemingo.drinksmenu.domain.models.FilterType
 import com.zemingo.drinksmenu.extensions.dpToPx
+import kotlinx.android.parcel.Parcelize
 
 data class CategoryUiModel(
     val name: String
@@ -94,4 +97,16 @@ data class SearchFiltersUiModel(
             .forEach { size += it }
         return size
     }
+}
+
+@Parcelize
+data class DrinkErrorUiModel(
+    val drinkId: String,
+    @StringRes val title: Int,
+    @StringRes val description: Int
+): Parcelable
+
+sealed class ResultUiModel<T> {
+    data class Success<T>(val data: T) : ResultUiModel<T>()
+    data class Error<T>(val errorUiModel: DrinkErrorUiModel) : ResultUiModel<T>()
 }

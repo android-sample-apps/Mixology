@@ -19,6 +19,13 @@ val mappersModule = module {
 
     factory { DrinkMapper(get<SingleDrinkMapper>()) }
 
+    factory { (drinkId: String) ->
+        ResultDrinkMapperUi(
+            drinkMapper = get<DrinkMapperUi>(),
+            drinkId = drinkId
+        )
+    }
+
     factory { SearchDrinkMapper(get<SingleDrinkMapper>()) }
 
     factory { SearchDrinkPreviewMapper(get<SingleDrinkMapper>()) }

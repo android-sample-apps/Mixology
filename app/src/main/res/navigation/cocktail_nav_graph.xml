@@ -62,12 +62,14 @@
     </fragment>
     <fragment
         android:id="@+id/connectivityErrorFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkConnectivityErrorFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkErrorFragment"
         android:label="ConnectivityErrorFragment"
         tools:layout="@layout/fragment_connectivity_error">
         <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="errorUiModel"
+            app:argType="com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel"
+            app:nullable="false" />
+
         <action
             android:id="@+id/action_connectivityErrorFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"

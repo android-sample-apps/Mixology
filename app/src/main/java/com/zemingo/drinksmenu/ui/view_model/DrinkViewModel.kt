@@ -8,6 +8,7 @@ import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.Result
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.map
@@ -17,11 +18,10 @@ import java.util.function.Function
 
 class DrinkViewModel(
     private val getDrinkUseCase: GetDrinkUseCase,
-    private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
     addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
     getWatchlistUseCase: GetWatchlistUseCase,
     private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
-    mapper: Function<DrinkModel, DrinkUiModel>,
+    resultMapper: Function<Result<DrinkModel>, ResultUiModel<DrinkUiModel>>,
     private val drinkId: String
 ) : ViewModel() {
 
@@ -35,22 +35,10 @@ class DrinkViewModel(
             .map { it != null }
             .asLiveData()
 
-    val drink: LiveData<Result<DrinkUiModel>> =
+    val drink: LiveData<ResultUiModel<DrinkUiModel>> =
         getDrinkUseCase
             .drinkChannel
-            .map { result ->
-                val drinkResult: Result<DrinkUiModel> = when (result) {
-                    is Result.Success -> Result.Success(
-                        mapper.apply(
-                            result.data
-                        )
-                    )
-                    is Result.Error -> Result.Error(
-                        result.tr
-                    )
-                }
-                drinkResult
-            }
+            .map { resultMapper.apply(it) }
             .asLiveData()
 
     fun toggleFavorite() {
