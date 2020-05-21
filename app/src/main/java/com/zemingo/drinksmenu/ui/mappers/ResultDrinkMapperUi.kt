@@ -37,7 +37,7 @@ class ResultDrinkMapperUi(
             return ResultUiModel.Error(timeoutError())
         }
         if (mock == 2) {
-            mock++
+            mock = 0
             return ResultUiModel.Error(defaultError())
         }
 
@@ -56,7 +56,8 @@ class ResultDrinkMapperUi(
         return DrinkErrorUiModel(
             drinkId = drinkId,
             title = R.string.error_title,
-            description = R.string.error_description_connectivity
+            description = R.string.error_description_connectivity,
+            lottieAnimation = R.raw.no_connection
         )
     }
 
@@ -64,7 +65,8 @@ class ResultDrinkMapperUi(
         return DrinkErrorUiModel(
             drinkId = drinkId,
             title = R.string.error_title,
-            description = R.string.error_description_timeout
+            description = R.string.error_description_timeout,
+            lottieAnimation = R.raw.no_connection
         )
     }
 
@@ -72,7 +74,8 @@ class ResultDrinkMapperUi(
         return DrinkErrorUiModel(
             drinkId = drinkId,
             title = R.string.error_title,
-            description = R.string.error_description_default
+            description = R.string.error_description_default,
+            lottieAnimation = R.raw.something_went_wrong
         )
     }
 }
