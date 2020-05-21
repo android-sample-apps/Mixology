@@ -83,6 +83,11 @@ data class DrinkModel(
     val isFavorite: Boolean
 )
 
+sealed class Result<T> {
+    data class Success<T>(val data: T): Result<T>()
+    data class Error<T>(val tr: Throwable): Result<T>()
+}
+
 data class SearchFiltersModel(
     val categories: List<CategoryModel> = emptyList(),
     val alcoholic: List<AlcoholicFilterModel> = emptyList(),

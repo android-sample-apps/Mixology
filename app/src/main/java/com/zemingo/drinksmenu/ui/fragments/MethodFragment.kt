@@ -3,7 +3,6 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.ui.SpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.MethodAdapter

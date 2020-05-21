@@ -9,6 +9,10 @@ import org.koin.dsl.module
 val viewModelModule = module {
 
     viewModel {
+        ConnectivityViewModel()
+    }
+
+    viewModel {
         CategoriesViewModel(
             combineWithFavoriteUseCase = get(),
             categoriesUseCase = get(),
@@ -28,6 +32,7 @@ val viewModelModule = module {
     viewModel { (id: String) ->
         DrinkViewModel(
             addToRecentlyViewedUseCase = get(),
+            fetchAndStoreDrinkUseCase = get(),
             getWatchlistUseCase = get(),
             getDrinkUseCase = get { parametersOf(id) },
             toggleWatchlistUseCase = get(),

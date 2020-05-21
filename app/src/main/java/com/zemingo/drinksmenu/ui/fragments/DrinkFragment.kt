@@ -6,8 +6,8 @@ import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.compatColor
@@ -96,6 +96,12 @@ class DrinkFragment : BaseDrinkFragment(R.layout.fragment_drink) {
         getViewModel()
             .isFavoriteLiveData
             .observe(viewLifecycleOwner, Observer { updateIsFavorite(it) })
+    }
+
+    override fun onDrinkError(tr: Throwable) {
+        findNavController().navigate(
+            DrinkFragmentDirections.actionDrinkFragmentToConnectivityErrorFragment(args.id)
+        )
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
