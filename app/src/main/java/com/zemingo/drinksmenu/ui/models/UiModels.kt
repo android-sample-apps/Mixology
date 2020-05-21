@@ -2,6 +2,7 @@ package com.zemingo.drinksmenu.ui.models
 
 import android.os.Parcelable
 import android.text.SpannableString
+import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.domain.models.DrinkFilter
@@ -103,7 +104,8 @@ data class SearchFiltersUiModel(
 data class DrinkErrorUiModel(
     val drinkId: String,
     @StringRes val title: Int,
-    @StringRes val description: Int
+    @StringRes val description: Int,
+    @RawRes val lottieAnimation: Int
 ): Parcelable
 
 sealed class ResultUiModel<T> {

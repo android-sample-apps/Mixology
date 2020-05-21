@@ -11,6 +11,7 @@ import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -39,6 +40,7 @@ class DrinkViewModel(
         getDrinkUseCase
             .drinkChannel
             .map { resultMapper.apply(it) }
+            .distinctUntilChanged()
             .asLiveData()
 
     fun toggleFavorite() {

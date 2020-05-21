@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.airbnb.lottie.LottieDrawable
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
@@ -47,6 +48,11 @@ class DrinkErrorFragment : DialogFragment() {
         drinkErrorUiModel.run {
             error_title.text = getString(title)
             error_description.text = getString(description)
+            error_lottie.run {
+                setAnimation(lottieAnimation)
+                playAnimation()
+                repeatCount = LottieDrawable.INFINITE
+            }
         }
     }
 
