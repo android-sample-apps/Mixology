@@ -21,7 +21,10 @@ class GetDrinkUseCase(
     private val channel = ConflatedBroadcastChannel<Result<DrinkModel>>()
     val drinkChannel = channel.asFlow().distinctUntilChanged()
 
-    init {
+    init { observeDrink() }
+
+    private fun observeDrink() {
+        job?.cancel()
         job = GlobalScope.launch(Dispatchers.IO) {
             repository
                 .get(drinkId)
@@ -45,6 +48,10 @@ class GetDrinkUseCase(
             Timber.e(e, "Unable to fetch by id[$drinkId]")
             channel.send(Result.Error(e))
         }
+    }
+
+    fun refresh() {
+        observeDrink()
     }
 
     fun cancel() {

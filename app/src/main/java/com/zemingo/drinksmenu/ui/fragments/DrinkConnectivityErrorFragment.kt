@@ -10,6 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.zemingo.drinksmenu.R
+import com.zemingo.drinksmenu.domain.models.Result
+import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.view_model.ConnectivityViewModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_connectivity_error.*
@@ -48,17 +50,23 @@ class DrinkConnectivityErrorFragment : DialogFragment() {
                     onRetry()
                 }
             })
+
+        drinkViewModel
+            .drink
+            .observe(viewLifecycleOwner, Observer {
+                onDrinkResultReceived(it)
+            })
+    }
+
+    private fun onDrinkResultReceived(it: Result<DrinkUiModel>?) {
+        if (it is Result.Success) {
+            backToDrink()
+        }
     }
 
     private fun onRetry() {
         Timber.d("onRetry called:")
-        lifecycleScope.launch(Dispatchers.IO) {
-            if (drinkViewModel.refreshDrink()) {
-                backToDrink()
-            } else {
-                Timber.d("onRetry failed:")
-            }
-        }
+        drinkViewModel.refreshDrink()
     }
 
     private fun backToDrink() {

@@ -59,15 +59,9 @@ class DrinkViewModel(
         }
     }
 
-    suspend fun refreshDrink(): Boolean {
+    fun refreshDrink() {
         Timber.i("refresh drink called for drinkId[$drinkId]")
-        return try {
-            fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
-            true
-        } catch (e: Exception) {
-            Timber.e(e, "refreshDrink failed for drinkId[$drinkId]")
-            false
-        }
+        getDrinkUseCase.refresh()
     }
 
     override fun onCleared() {
