@@ -17,7 +17,7 @@
             app:destination="@id/drinkErrorFragment" />
         <action
             android:id="@+id/action_loadingDrinkFragment_to_drinkFragment2"
-            app:destination="@id/drinkFragment2" />
+            app:destination="@id/drinkFragment" />
 
     </fragment>
     <fragment
@@ -34,10 +34,10 @@
             app:popUpToInclusive="true"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkErrorFragment"
-            app:destination="@id/drinkFragment2" />
+            app:destination="@id/drinkFragment" />
     </fragment>
     <fragment
-        android:id="@+id/drinkFragment2"
+        android:id="@+id/drinkFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
         android:label="DrinkFragment"
         tools:layout="@layout/fragment_drink">

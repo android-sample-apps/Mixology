@@ -58,7 +58,7 @@ class DrinkContainerFragment : Fragment(R.layout.fragment_drink_container) {
             .findNavController(drink_container_nav_host)
             .run {
                 val navGraph = navInflater.inflate(R.navigation.drink_nav_graph)
-                navGraph.startDestination = R.id.drinkFragment2
+                navGraph.startDestination = R.id.drinkFragment
                 setGraph(navGraph, bundleOf("id" to drinkUiModel.id))
             }
     }

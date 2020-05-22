@@ -62,12 +62,12 @@ class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
                 }
             })
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        /*lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drinkFlow
                 .flowOn(Dispatchers.IO)
                 .collect { onDrinkResultReceived(it) }
-        }
+        }*/
     }
 
     private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
