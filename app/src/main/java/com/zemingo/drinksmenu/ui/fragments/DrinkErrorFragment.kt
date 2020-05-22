@@ -61,34 +61,10 @@ class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
                     onRetry()
                 }
             })
-
-        /*lifecycleScope.launch(Dispatchers.Main) {
-            drinkViewModel
-                .drinkFlow
-                .flowOn(Dispatchers.IO)
-                .collect { onDrinkResultReceived(it) }
-        }*/
-    }
-
-    private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
-        when (resultUiModel) {
-            is ResultUiModel.Success -> backToDrink()
-            is ResultUiModel.Error -> updateErrorViews(resultUiModel.errorUiModel)
-        }
     }
 
     private fun onRetry() {
         Timber.d("onRetry called:")
         drinkViewModel.refreshDrink()
-    }
-
-    private fun backToDrink() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            findNavController().navigate(
-                DrinkErrorFragmentDirections.actionDrinkErrorFragmentToDrinkFragment2(
-                    args.errorUiModel.drinkId
-                )
-            )
-        }
     }
 }

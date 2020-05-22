@@ -41,6 +41,11 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.id) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.d("onCreate called:")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()

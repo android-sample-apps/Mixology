@@ -5,22 +5,6 @@
     android:id="@+id/drink_nav_graph">
 
     <fragment
-        android:id="@+id/loadingDrinkFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.LoadingDrinkFragment"
-        android:label="LoadingDrinkFragment"
-        tools:layout="@layout/fragment_loading_drink">
-        <argument
-            android:name="id"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_loadingDrinkFragment_to_drinkErrorFragment"
-            app:destination="@id/drinkErrorFragment" />
-        <action
-            android:id="@+id/action_loadingDrinkFragment_to_drinkFragment2"
-            app:destination="@id/drinkFragment" />
-
-    </fragment>
-    <fragment
         android:id="@+id/drinkErrorFragment"
         android:name="com.zemingo.drinksmenu.ui.fragments.DrinkErrorFragment"
         android:label="DrinkErrorFragment"

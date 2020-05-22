@@ -35,9 +35,9 @@ class DrinkContainerFragment : Fragment(R.layout.fragment_drink_container) {
 
     private fun onResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
         when (resultUiModel) {
-            is ResultUiModel.Success -> navigateToDrink(resultUiModel.data)
             is ResultUiModel.Error -> navigateToError(resultUiModel.errorUiModel)
-            is ResultUiModel.Loading -> navigateToLoading(resultUiModel.id)
+            is ResultUiModel.Loading -> navigateToDrink(resultUiModel.id)
+            is ResultUiModel.Success -> navigateToDrink(resultUiModel.data.id)
         }
     }
 
@@ -52,25 +52,13 @@ class DrinkContainerFragment : Fragment(R.layout.fragment_drink_container) {
             }
     }
 
-    private fun navigateToDrink(drinkUiModel: DrinkUiModel) {
-        Timber.d("navigating to drinkId[${drinkUiModel.id}]")
+    private fun navigateToDrink(id: String) {
+        Timber.d("navigating to drinkId[${id}]")
         Navigation
             .findNavController(drink_container_nav_host)
             .run {
                 val navGraph = navInflater.inflate(R.navigation.drink_nav_graph)
                 navGraph.startDestination = R.id.drinkFragment
-                setGraph(navGraph, bundleOf("id" to drinkUiModel.id))
-            }
-    }
-
-
-    private fun navigateToLoading(id: String) {
-        Timber.d("navigating to loading [$id}]")
-        Navigation
-            .findNavController(drink_container_nav_host)
-            .run {
-                val navGraph = navInflater.inflate(R.navigation.drink_nav_graph)
-                navGraph.startDestination = R.id.loadingDrinkFragment
                 setGraph(navGraph, bundleOf("id" to id))
             }
     }
