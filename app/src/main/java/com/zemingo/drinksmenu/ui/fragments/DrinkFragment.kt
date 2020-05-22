@@ -89,7 +89,6 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
                 endId: Int,
                 progress: Float
             ) {
-                Timber.d("onTransitionChange: startId[$startId], endId[$endId], progress[$progress]")
                 updateCard(progress)
             }
         })

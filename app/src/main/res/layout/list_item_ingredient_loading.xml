@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="1000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackground"
+        android:paddingTop="@dimen/screen_padding"
+        android:paddingBottom="@dimen/screen_padding">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/name_guideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/quantity_guideline"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/ingredient_name_loading"
+            android:layout_width="0dp"
+            android:layout_height="18dp"
+            android:background="@color/header_text_color"
+            app:layout_constraintBottom_toTopOf="@id/ingredient_quantity_loading"
+            app:layout_constraintEnd_toEndOf="@id/name_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Vodka" />
+
+        <View
+            android:id="@+id/ingredient_quantity_loading"
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/secondary_text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/quantity_guideline"
+            app:layout_constraintStart_toStartOf="@id/ingredient_name_loading"
+            app:layout_constraintTop_toBottomOf="@id/ingredient_name_loading"
+            tools:text="1 shot" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

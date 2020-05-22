@@ -48,7 +48,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta5'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
 
@@ -77,6 +77,8 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:3.4.0'
     implementation 'com.job:droidnet:2.0.0'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     debugImplementation 'com.balsikandar.android:crashreporter:1.1.0'
 

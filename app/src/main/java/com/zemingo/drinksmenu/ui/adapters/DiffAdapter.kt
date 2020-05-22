@@ -24,6 +24,8 @@ abstract class DiffAdapter<DATA, VH : RecyclerView.ViewHolder> : RecyclerView.Ad
         }
     }
 
+    protected fun getData(position: Int) = _data[position]
+
     fun update(data: List<DATA>) {
         val diffCallback = DiffUtilCallback(_data, data)
         val diffResult = DiffUtil.calculateDiff(diffCallback)

@@ -46,6 +46,11 @@ data class IngredientUiModel(
     val thumbnail: String? = null
 )
 
+sealed class LoadingIngredientUiModel {
+    object Loading: LoadingIngredientUiModel()
+    data class Loaded(val ingredient: IngredientUiModel): LoadingIngredientUiModel()
+}
+
 data class IngredientFilterUiModel(
     val name: String
 )

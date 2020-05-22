@@ -7,11 +7,15 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
+import com.zemingo.drinksmenu.ui.models.LoadingIngredientUiModel
 import com.zemingo.drinksmenu.ui.utils.InputActions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_ingredient.view.*
 
-class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.IngredientViewHolder>() {
+private const val LOADING = 0
+private const val LOADED = 1
+
+class IngredientAdapter : DiffAdapter<LoadingIngredientUiModel, IngredientAdapter.IngredientViewHolder>() {
 
     inner class IngredientViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -33,17 +37,24 @@ class IngredientAdapter : DiffAdapter<IngredientUiModel, IngredientAdapter.Ingre
         }
     }
 
-    override fun onBindViewHolder(
-        holder: IngredientViewHolder,
-        data: IngredientUiModel,
-        position: Int
-    ) {
-        holder.bind(data)
+    override fun getItemViewType(position: Int): Int {
+        return when(getData(position)) {
+            is LoadingIngredientUiModel.Loading -> LOADING
+            is LoadingIngredientUiModel.Loaded -> LOADED
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         return IngredientViewHolder(
-            parent.viewHolderInflate(R.layout.list_item_ingredient)
+            parent.viewHolderInflate(R.layout.list_item_ingredient_loading)
         )
+    }
+
+    override fun onBindViewHolder(
+        holder: IngredientViewHolder,
+        data: LoadingIngredientUiModel,
+        position: Int
+    ) {
+        TODO("Not yet implemented")
     }
 }

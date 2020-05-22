@@ -1,6 +1,7 @@
 package com.zemingo.drinksmenu.ui.fragments
 
 import android.os.Bundle
+import android.text.SpannableString
 import android.view.View
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
@@ -24,6 +25,9 @@ class MethodFragment : BaseDrinkFragment(R.layout.fragment_method) {
             addItemDecoration(
                 SpacerItemDecoration(bottom = 8.dpToPx().toInt())
             )
+        }
+        methodAdapter.apply {
+            update(listOf(SpannableString("Working on it...")))
         }
     }
 

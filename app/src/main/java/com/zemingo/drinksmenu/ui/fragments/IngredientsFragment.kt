@@ -44,6 +44,15 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             }.let { addItemDecoration(it) }
         }
+
+        val loadingList = mutableListOf<IngredientUiModel>()
+        for (i in 0 until 3) {
+            loadingList.add(IngredientUiModel(
+                name = "■■■■■",
+                quantity = "■■■■■■■"
+            ))
+        }
+        ingredientsAdapter.update(loadingList)
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {

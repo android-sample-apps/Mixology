@@ -3,7 +3,10 @@ package com.zemingo.drinksmenu.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.zemingo.drinksmenu.domain.*
+import com.zemingo.drinksmenu.domain.AddToRecentlyViewedUseCase
+import com.zemingo.drinksmenu.domain.GetDrinkUseCase
+import com.zemingo.drinksmenu.domain.GetWatchlistUseCase
+import com.zemingo.drinksmenu.domain.ToggleWatchlistUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.Result
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
