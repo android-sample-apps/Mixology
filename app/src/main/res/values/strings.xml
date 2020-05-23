@@ -45,4 +45,6 @@
     <string name="error_description_timeout">Seems like we\'re a bit slow today, eh?\nThis might be related to the internet connection.\nGive it a looksie, would you?</string>
     <string name="error_description_default">Well, Something went sideways.\n\n\"To err is human, to forgive, divine.\" - Alexander Pope"</string>
     <string name="error_retry">try again</string>
+    <string name="no_favorites_yet">No favorites</string>
+    <string name="no_favorites_description">Apparently, nothing is good enough for you</string>
 </resources>

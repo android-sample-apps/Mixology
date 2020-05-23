@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
-import com.zemingo.drinksmenu.domain.models.DrinkPreviewModel
 import com.zemingo.drinksmenu.extensions.dpToPx
+import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
@@ -88,7 +88,12 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
         watchlistViewModel
             .watchlist
             .observe(viewLifecycleOwner, Observer {
-                previewAdapter.update(it)
+                updateWatchlist(it)
             })
+    }
+
+    private fun updateWatchlist(watchlist: List<DrinkPreviewUiModel>) {
+        favorite_instructions_container.visibility = watchlist.isEmpty().toVisibility()
+        previewAdapter.update(watchlist)
     }
 }
