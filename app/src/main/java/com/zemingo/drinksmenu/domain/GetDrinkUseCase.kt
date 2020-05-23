@@ -5,9 +5,7 @@ import com.zemingo.drinksmenu.domain.models.Result
 import com.zemingo.drinksmenu.repo.repositories.DrinkRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
 class GetDrinkUseCase(
@@ -28,6 +26,8 @@ class GetDrinkUseCase(
         job = GlobalScope.launch(Dispatchers.IO) {
             repository
                 .get(drinkId)
+                .onStart { channel.send(Result.Loading(drinkId)) }
+                .onEach { delay(8000) }
                 .collect { drink ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
@@ -43,8 +43,6 @@ class GetDrinkUseCase(
     private suspend fun fetchAndStore() {
         Timber.d("fetchById: called with id[$drinkId]")
         try {
-            channel.send(Result.Loading(drinkId))
-            delay(8000L)
             fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
         } catch (e: Exception) {
             Timber.e(e, "Unable to fetch by id[$drinkId]")

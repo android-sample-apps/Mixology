@@ -19,6 +19,20 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/mock_image" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/header_image_placeholder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
+        app:layout_constraintEnd_toEndOf="@id/drink_header_image"
+        app:layout_constraintStart_toStartOf="@id/drink_header_image"
+        app:layout_constraintTop_toTopOf="@id/drink_header_image"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/switching_cocktails" />
+
     <include
         android:id="@+id/info_container"
         layout="@layout/layout_drink_label"
@@ -36,6 +50,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:ellipsize="end"
         android:fitsSystemWindows="true"
         android:shadowColor="@color/black"
         android:shadowDx="2"
@@ -43,7 +58,6 @@
         android:shadowRadius="2"
         android:textColor="@color/white"
         android:textSize="52sp"
-        android:ellipsize="end"
         app:fontFamily="@font/fty_delirium_neon_ncv"
         app:layout_constraintBottom_toBottomOf="@id/drink_header_image"
         app:layout_constraintEnd_toStartOf="@id/favorite_card_container"
@@ -56,8 +70,8 @@
         android:layout_height="@dimen/share_card_size"
         android:layout_marginEnd="@dimen/screen_padding"
         android:layout_marginBottom="@dimen/screen_padding_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/drink_title" />
+        app:layout_constraintBottom_toBottomOf="@id/drink_title"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <include
         layout="@layout/view_favorite_card"
@@ -65,9 +79,8 @@
         android:layout_height="@dimen/share_card_size"
         android:layout_marginEnd="@dimen/screen_padding_x_small"
         android:layout_marginBottom="@dimen/screen_padding_small"
-        app:layout_constraintEnd_toStartOf="@id/share_card_container"
         app:layout_constraintBottom_toBottomOf="@id/drink_title"
-        />
+        app:layout_constraintEnd_toStartOf="@id/share_card_container" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

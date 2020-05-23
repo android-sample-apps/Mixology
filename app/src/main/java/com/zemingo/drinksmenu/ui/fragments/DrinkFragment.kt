@@ -50,6 +50,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()
         updateDrinkTitle(args.drinkPreviewUiModel.name)
+        updateDrinkImage(args.drinkPreviewUiModel.thumbnail)
         initFavoriteToggle()
         initInfoPagerAdapter()
         observeDrink()
@@ -123,7 +124,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         updateDrinkTitle(drinkUiModel.name)
-        updateDrinkImage(drinkUiModel)
+        updateDrinkImage(drinkUiModel.thumbnail)
         updateInfoCard(drinkUiModel)
         updateShare(drinkUiModel)
     }
@@ -138,8 +139,8 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         drink_title.text = drinkName
     }
 
-    private fun updateDrinkImage(drinkUiModel: DrinkUiModel) {
-        drink_header_image.fromLink(drinkUiModel.thumbnail)
+    private fun updateDrinkImage(thumbnail: String?) {
+        drink_header_image.fromLink(thumbnail + "a")
     }
 
     private fun updateInfoCard(drinkUiModel: DrinkUiModel) {
