@@ -56,6 +56,11 @@ data class IngredientUiModel(
     val thumbnail: String? = null
 )
 
+sealed class LoadingMethodUiModel {
+    object Loading : LoadingMethodUiModel()
+    data class Loaded(val method: SpannableString) : LoadingMethodUiModel()
+}
+
 sealed class LoadingIngredientUiModel {
     object Loading : LoadingIngredientUiModel()
     data class Loaded(val ingredient: IngredientUiModel) : LoadingIngredientUiModel()

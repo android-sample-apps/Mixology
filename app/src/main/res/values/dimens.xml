@@ -12,4 +12,6 @@
     <dimen name="share_card_size">50dp</dimen>
     <dimen name="share_card_size_small">50dp</dimen>
     <dimen name="placeholder_text_height">8dp</dimen>
+    <dimen name="placeholder_text_margin">4dp</dimen>
+    <integer name="shimmer_duration">1000</integer>
 </resources>

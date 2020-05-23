@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:shimmer_auto_start="true"
-    app:shimmer_duration="1000">
+    app:shimmer_duration="@integer/shimmer_duration">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,17 +16,17 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/name_guideline"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/quantity_guideline"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
 
         <View
             android:id="@+id/ingredient_name_loading"
@@ -43,7 +43,7 @@
             android:id="@+id/ingredient_quantity_loading"
             android:layout_width="0dp"
             android:layout_height="14dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/placeholder_text_margin"
             android:background="@color/secondary_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/quantity_guideline"

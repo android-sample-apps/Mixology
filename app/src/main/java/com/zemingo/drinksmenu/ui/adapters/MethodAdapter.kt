@@ -6,10 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
+import com.zemingo.drinksmenu.ui.models.LoadingMethodUiModel
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_method.view.*
 
-class MethodAdapter : DiffAdapter<SpannableString, MethodAdapter.MethodViewHolder>() {
+private const val LOADING = 0
+private const val LOADED = 1
+
+class MethodAdapter : DiffAdapter<LoadingMethodUiModel, MethodAdapter.MethodViewHolder>() {
 
     inner class MethodViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -21,13 +25,31 @@ class MethodAdapter : DiffAdapter<SpannableString, MethodAdapter.MethodViewHolde
         }
     }
 
-    override fun onBindViewHolder(holder: MethodViewHolder, data: SpannableString, position: Int) {
-        holder.bind(data)
+    override fun getItemViewType(position: Int): Int {
+        return when (getData(position)) {
+            is LoadingMethodUiModel.Loading -> LOADING
+            is LoadingMethodUiModel.Loaded -> LOADED
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MethodViewHolder {
+        val layout = if (viewType == LOADING) {
+            R.layout.list_item_method_loading
+        } else {
+            R.layout.list_item_method
+        }
         return MethodViewHolder(
-            parent.viewHolderInflate(R.layout.list_item_method)
+            parent.viewHolderInflate(layout)
         )
+    }
+
+    override fun onBindViewHolder(
+        holder: MethodViewHolder,
+        data: LoadingMethodUiModel,
+        position: Int
+    ) {
+        (data as? LoadingMethodUiModel.Loaded)?.let {
+            holder.bind(it.method)
+        }
     }
 }
