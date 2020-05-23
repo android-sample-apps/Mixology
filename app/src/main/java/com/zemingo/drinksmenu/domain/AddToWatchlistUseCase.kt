@@ -2,6 +2,9 @@ package com.zemingo.drinksmenu.domain
 
 import com.zemingo.drinksmenu.domain.models.WatchlistItemModel
 import com.zemingo.drinksmenu.repo.repositories.WatchlistRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AddToWatchlistUseCase(
@@ -11,7 +14,9 @@ class AddToWatchlistUseCase(
 
     suspend fun addToWatchlist(watchlistItemModel: WatchlistItemModel) {
         Timber.d("addToWatchlist: called with $watchlistItemModel")
-        fetchAndStore(watchlistItemModel)
+        GlobalScope.launch(Dispatchers.IO) {
+            fetchAndStore(watchlistItemModel)
+        }
         repository.store(watchlistItemModel)
     }
 
