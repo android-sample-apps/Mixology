@@ -14,7 +14,7 @@ import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_method.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 class MethodFragment(
@@ -22,7 +22,11 @@ class MethodFragment(
 ) : Fragment(R.layout.fragment_method) {
 
     private val methodAdapter = MethodAdapter()
-    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(drinkPreviewUiModel.id) }
+
+    @Suppress("RemoveExplicitTypeArguments")
+    private val drinkViewModel: DrinkViewModel by lazy {
+        requireParentFragment().getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,7 +36,7 @@ class MethodFragment(
             .observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultUiModel.Success -> onDrinkReceived(it.data)
-                    is ResultUiModel.Loading -> onDrinkLoading(it.id)
+                    is ResultUiModel.Loading -> onDrinkLoading()
                 }
             })
     }
@@ -50,7 +54,7 @@ class MethodFragment(
         methodAdapter.update(drinkUiModel.instructions)
     }
 
-    private fun onDrinkLoading(id: String) {
+    private fun onDrinkLoading() {
         methodAdapter.apply {
             update(listOf(SpannableString(getString(R.string.loading_method))))
         }

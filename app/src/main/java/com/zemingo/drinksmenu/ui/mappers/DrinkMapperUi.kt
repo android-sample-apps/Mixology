@@ -32,7 +32,7 @@ class DrinkMapperUi(
             thumbnail = t.thumbnail,
             video = t.video,
             shareText = mapShareText(t),
-            isFavorite = false
+            isFavorite = t.isFavorite
         )
     }
 

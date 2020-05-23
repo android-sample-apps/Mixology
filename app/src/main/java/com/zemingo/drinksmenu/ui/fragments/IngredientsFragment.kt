@@ -17,17 +17,22 @@ import kotlinx.android.synthetic.main.fragment_ingredients.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
 private const val LOADING_ITEM_NUMBER = 3
+
 
 class IngredientsFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
 ) : Fragment(R.layout.fragment_ingredients) {
 
     private val ingredientsAdapter = IngredientAdapter()
-    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(drinkPreviewUiModel.id) }
+
+    @Suppress("RemoveExplicitTypeArguments")
+    private val drinkViewModel: DrinkViewModel by lazy {
+        requireParentFragment().getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class IngredientsFragment(
             .observe(viewLifecycleOwner, Observer {
                 when (it) {
                     is ResultUiModel.Success -> onDrinkReceived(it.data)
-                    is ResultUiModel.Loading -> onDrinkLoading(it.id)
+                    is ResultUiModel.Loading -> onDrinkLoading()
                 }
             })
     }
@@ -87,7 +92,7 @@ class IngredientsFragment(
             )
         }
 
-    private fun onDrinkLoading(id: String) {
+    private fun onDrinkLoading() {
         lifecycleScope.launch(Dispatchers.Main) {
             createLoadingState()
                 .flowOn(Dispatchers.IO)

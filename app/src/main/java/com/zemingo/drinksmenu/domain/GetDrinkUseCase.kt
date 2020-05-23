@@ -34,7 +34,7 @@ class GetDrinkUseCase(
                     drink to isFavorite
                 }
                 .onStart { channel.send(Result.Loading(drinkId)) }
-                .onEach { delay(1000) }
+//                .onEach { delay(3000) }
                 .collect { (drink, isFavorite) ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
@@ -44,8 +44,6 @@ class GetDrinkUseCase(
                         val model = drink.copy(isFavorite = isFavorite)
                         channel.send(Result.Success(model))
                     }
-
-//                    channel.send(Result.Error(Exception()))
                 }
         }
     }
