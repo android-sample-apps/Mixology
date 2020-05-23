@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class GetCategoriesUseCase(
     private val repository: CategoryRepository
@@ -31,6 +32,10 @@ class GetCategoriesUseCase(
     }
 
     private suspend fun fetchCategories() {
-        repository.fetch()
+        try {
+            repository.fetch()
+        } catch (e: Exception) {
+            Timber.e(e, "Unable to fetch categories")
+        }
     }
 }

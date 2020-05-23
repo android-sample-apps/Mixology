@@ -8,6 +8,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class GetGlassesUseCase(
     private val repository: GlassRepository
@@ -21,7 +22,7 @@ class GetGlassesUseCase(
                 .getAll()
                 .collect {
                     if (it.isEmpty()) {
-                        repository.fetchAll()
+                        fetch()
                     } else {
                         _channel.send(it)
                     }
@@ -29,7 +30,11 @@ class GetGlassesUseCase(
         }
     }
 
-    suspend fun refresh() {
-        repository.fetchAll()
+    private suspend fun fetch() {
+        try {
+            repository.fetchAll()
+        } catch (e: Exception) {
+            Timber.d(e, "Failed to fetch glasses")
+        }
     }
 }

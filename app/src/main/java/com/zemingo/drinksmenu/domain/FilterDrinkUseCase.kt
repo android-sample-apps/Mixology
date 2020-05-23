@@ -25,7 +25,8 @@ class FilterDrinkUseCase(
     private val selectedFilterChannel = ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
     override val results = channel.asFlow()
 
-    override val selectedFilters: Flow<Map<FilterType, Set<String>>> = selectedFilterChannel.asFlow()
+    override val selectedFilters: Flow<Map<FilterType, Set<String>>> =
+        selectedFilterChannel.asFlow()
 
     private var searchJob: Job? = null
 
@@ -89,7 +90,8 @@ abstract class AggregateFilterDrinkUseCase(
     override val results = channel.asFlow()
 
     private val selectedFilterChannel = ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
-    override val selectedFilters: Flow<Map<FilterType, Set<String>>> = selectedFilterChannel.asFlow()
+    override val selectedFilters: Flow<Map<FilterType, Set<String>>> =
+        selectedFilterChannel.asFlow()
 
     private val cache =
         Collections.synchronizedMap(mutableMapOf<DrinkFilter, List<DrinkPreviewModel>?>())
@@ -180,7 +182,12 @@ abstract class AggregateFilterDrinkUseCase(
     }
 
     private suspend fun fetchQuery(filter: DrinkFilter): List<DrinkPreviewModel> {
-        return advancedSearchRepository.filterBy(filter)
+        return try {
+            advancedSearchRepository.filterBy(filter)
+        } catch (e: Exception) {
+            Timber.e(e, "Unable to fetch query: $filter")
+            emptyList()
+        }
     }
 }
 

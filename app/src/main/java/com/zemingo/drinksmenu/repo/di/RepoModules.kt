@@ -81,10 +81,9 @@ val repoModule = module {
     factory {
         AdvancedSearchRepository(
             service = get<DrinkService>(),
+            drinkReactiveStore = get(),
             drinkMapper = get<SearchDrinkMapper>(),
-            previewMapper = get<DrinkPreviewMapper>(),
-            previewReactiveStore = get(),
-            drinkReactiveStore = get()
+            previewMapper = get<DrinkPreviewMapper>()
 
         )
     }

@@ -8,6 +8,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class GetIngredientsUseCase(
     private val repository: IngredientRepository
@@ -22,7 +23,7 @@ class GetIngredientsUseCase(
                 .getAll()
                 .collect {
                     if (it.isEmpty()) {
-                        repository.fetchIngredients()
+                        fetch()
                     } else {
                         _channel.send(it)
                     }
@@ -30,7 +31,11 @@ class GetIngredientsUseCase(
         }
     }
 
-    suspend fun refresh() {
-        repository.fetchIngredients()
+    private suspend fun fetch() {
+        try {
+            repository.fetchIngredients()
+        } catch (e: Exception) {
+            Timber.d(e, "Failed to fetch ingredients")
+        }
     }
 }
