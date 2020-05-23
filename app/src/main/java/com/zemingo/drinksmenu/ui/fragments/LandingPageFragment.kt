@@ -89,7 +89,7 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
 
     private fun onDrinkPreviewClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+            HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
         )
     }
 

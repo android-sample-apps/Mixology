@@ -39,7 +39,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
 
-    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.id) }
+    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +49,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()
+        updateDrinkTitle(args.drinkPreviewUiModel.name)
         initFavoriteToggle()
         initInfoPagerAdapter()
         observeDrink()
@@ -121,7 +122,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     }
 
     private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
-        updateDrinkTitle(drinkUiModel)
+        updateDrinkTitle(drinkUiModel.name)
         updateDrinkImage(drinkUiModel)
         updateInfoCard(drinkUiModel)
         updateShare(drinkUiModel)
@@ -133,8 +134,8 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         }
     }
 
-    private fun updateDrinkTitle(drinkUiModel: DrinkUiModel) {
-        drink_title.text = drinkUiModel.name
+    private fun updateDrinkTitle(drinkName: String?) {
+        drink_title.text = drinkName
     }
 
     private fun updateDrinkImage(drinkUiModel: DrinkUiModel) {

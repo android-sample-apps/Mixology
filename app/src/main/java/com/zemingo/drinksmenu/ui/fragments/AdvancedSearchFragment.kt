@@ -40,7 +40,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         requireView().hideKeyboard()
         findNavController().navigate(
             AdvancedSearchFragmentDirections
-                .actionAdvancedSearchFragmentToDrinkFragment(drinkPreview.id)
+                .actionAdvancedSearchFragmentToDrinkFragment(drinkPreview)
         )
     }
 

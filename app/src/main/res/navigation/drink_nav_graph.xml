@@ -15,10 +15,10 @@
             app:nullable="false" />
         <action
             android:id="@+id/action_drinkErrorFragment_to_drinkFragment2"
-            app:popUpToInclusive="true"
+            app:destination="@id/drinkFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkErrorFragment"
-            app:destination="@id/drinkFragment" />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/drinkFragment"
@@ -26,7 +26,7 @@
         android:label="DrinkFragment"
         tools:layout="@layout/fragment_drink">
         <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="drinkPreviewUiModel"
+            app:argType="com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel" />
     </fragment>
 </navigation>

@@ -136,7 +136,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
         Timber.d("onDrinkClicked: $drinkPreviewUiModel")
         findNavController().navigate(
             HomeFragmentDirections
-                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+                .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
         )
     }
 

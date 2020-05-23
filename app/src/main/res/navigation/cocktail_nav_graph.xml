@@ -49,8 +49,8 @@
         android:label="DrinkContainerFragment"
         tools:layout="@layout/fragment_drink_container">
         <argument
-            android:name="id"
-            app:argType="string" />
+            android:name="drinkPreviewUiModel"
+            app:argType="com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel" />
 
     </fragment>
 

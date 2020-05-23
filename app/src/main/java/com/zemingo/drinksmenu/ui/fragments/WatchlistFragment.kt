@@ -27,7 +27,7 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         findNavController().navigate(
-            HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel.id)
+            HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
         )
     }
 

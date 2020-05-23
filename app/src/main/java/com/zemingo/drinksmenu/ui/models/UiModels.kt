@@ -14,12 +14,13 @@ data class CategoryUiModel(
     val name: String
 )
 
+@Parcelize
 data class DrinkPreviewUiModel(
     val id: String,
     val name: String,
     val thumbnail: String?,
     val isFavorite: Boolean
-)
+): Parcelable
 
 data class DrinkUiModel(
     val id: String,
