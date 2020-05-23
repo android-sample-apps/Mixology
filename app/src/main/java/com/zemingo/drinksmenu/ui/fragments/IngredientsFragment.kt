@@ -26,8 +26,8 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenStarted {
             ingredientsAdapter
-                .inputActions.filterIsInstance<InputActions.LongClick<IngredientUiModel>>()
-                .map { it.data }
+                .inputActions.filterIsInstance<InputActions.LongClick<LoadingIngredientUiModel.Loaded>>()
+                .map { it.data.ingredient }
                 .collect {
                     IngredientBottomSheetDialogFragment(it.name).show(childFragmentManager)
                 }

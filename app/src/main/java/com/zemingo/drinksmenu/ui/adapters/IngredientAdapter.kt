@@ -8,6 +8,7 @@ import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.extensions.viewHolderInflate
 import com.zemingo.drinksmenu.ui.models.IngredientUiModel
 import com.zemingo.drinksmenu.ui.models.LoadingIngredientUiModel
+import com.zemingo.drinksmenu.ui.utils.InputActions
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.list_item_ingredient.view.*
 
@@ -30,7 +31,7 @@ class IngredientAdapter :
                 }
                 ingredient_quantity_tv.text = ingredient.quantity
                 setOnLongClickListener {
-//                    sendInputAction(InputActions.LongClick(ingredient))
+                    sendInputAction(InputActions.LongClick(LoadingIngredientUiModel.Loaded(ingredient)))
                     true
                 }
             }
