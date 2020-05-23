@@ -20,8 +20,8 @@
             </KeyAttribute>
 
             <KeyAttribute
+                android:alpha="1"
                 app:framePosition="60"
-                android:alpha="0"
                 app:motionTarget="@id/header_image_placeholder" />
 
             <KeyAttribute
@@ -33,8 +33,8 @@
             </KeyAttribute>
 
             <KeyAttribute
-                app:framePosition="60"
-                android:alpha="1"
+                android:alpha="0"
+                app:framePosition="90"
                 app:motionTarget="@id/header_image_placeholder" />
         </KeyFrameSet>
 
@@ -79,7 +79,8 @@
             android:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
 
 
         <Constraint
@@ -178,7 +179,8 @@
             android:alpha="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
 
         <Constraint
             android:id="@id/info_container"

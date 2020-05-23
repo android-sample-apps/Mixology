@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import coil.ImageLoader
+import coil.request.LoadRequest
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.compatColor
-import com.zemingo.drinksmenu.extensions.fromLink
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
@@ -140,7 +141,15 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     }
 
     private fun updateDrinkImage(thumbnail: String?) {
-        drink_header_image.fromLink(thumbnail + "a")
+        LoadRequest.Builder(requireContext())
+            .data(thumbnail)
+            .crossfade(250)
+            .target { drawable ->
+                header_image_placeholder.visibility = View.GONE
+                drink_header_image.setImageDrawable(drawable)
+            }
+            .build()
+            .run { ImageLoader(requireContext()).execute(this) }
     }
 
     private fun updateInfoCard(drinkUiModel: DrinkUiModel) {
