@@ -21,7 +21,7 @@ class DrinkPreviewGridAdapter :
 
         fun bind(drinkPreviewUiModel: DrinkPreviewUiModel) {
             containerView.run {
-                drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail)
+                drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail, R.drawable.bar)
                 drink_name_tv.text = drinkPreviewUiModel.name
                 cherry_badge_container.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
                 image_container.setOnClickListener {
