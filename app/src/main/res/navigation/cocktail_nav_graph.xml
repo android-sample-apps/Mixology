@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_drinkFragment"
-            app:destination="@id/drinkContainerFragment"
+            app:destination="@id/drinkFragment"
             app:enterAnim="@anim/fragment_close_enter" />
         <action
             android:id="@+id/action_homeFragment_to_advancedSearchFragment"
@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_advanced_search">
         <action
             android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
-            app:destination="@id/drinkContainerFragment"
+            app:destination="@id/drinkFragment"
             app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
@@ -44,14 +44,37 @@
     </fragment>
 
     <fragment
-        android:id="@+id/drinkContainerFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkContainerFragment"
-        android:label="DrinkContainerFragment"
-        tools:layout="@layout/fragment_drink_container">
+        android:id="@+id/drinkFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
+        android:label="DrinkFragment"
+        tools:layout="@layout/fragment_drink">
+
         <argument
             android:name="drinkPreviewUiModel"
             app:argType="com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel" />
+        <action
+            android:id="@+id/action_drinkFragment_to_drinkErrorFragment"
+            app:destination="@id/drinkErrorFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/drinkFragment"
+            app:popUpToInclusive="true" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/drinkErrorFragment"
+        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkErrorFragment"
+        android:label="DrinkErrorFragment"
+        tools:layout="@layout/fragment_connectivity_error">
+        <argument
+            android:name="errorUiModel"
+            app:argType="com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_drinkErrorFragment_to_drinkFragment"
+            app:destination="@id/drinkFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/drinkErrorFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 

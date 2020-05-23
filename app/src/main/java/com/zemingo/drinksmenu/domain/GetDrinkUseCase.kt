@@ -27,7 +27,7 @@ class GetDrinkUseCase(
             repository
                 .get(drinkId)
                 .onStart { channel.send(Result.Loading(drinkId)) }
-                .onEach { delay(8000) }
+                .onEach { delay(1000) }
                 .collect { drink ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
@@ -36,6 +36,8 @@ class GetDrinkUseCase(
                         Timber.d("found drink[$drinkId]")
                         channel.send(Result.Success(drink))
                     }
+
+//                    channel.send(Result.Error(Exception()))
                 }
         }
     }

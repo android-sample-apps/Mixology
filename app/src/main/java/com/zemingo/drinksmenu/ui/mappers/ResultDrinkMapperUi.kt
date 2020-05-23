@@ -15,8 +15,6 @@ class ResultDrinkMapperUi(
     private val drinkId: String
 ) : Function<Result<DrinkModel>, ResultUiModel<DrinkUiModel>> {
 
-    var mock = 0
-
     override fun apply(t: Result<DrinkModel>): ResultUiModel<DrinkUiModel> {
         return when (t) {
             is Result.Success -> parseSuccess(t.data)
@@ -36,18 +34,6 @@ class ResultDrinkMapperUi(
     }
 
     private fun parseError(tr: Throwable): ResultUiModel<DrinkUiModel> {
-
-        if (mock == 1) {
-            mock++
-            return ResultUiModel.Error(timeoutError())
-        }
-        if (mock == 2) {
-            mock = 0
-            return ResultUiModel.Error(defaultError())
-        }
-
-
-        mock++
         val errorUiModel: DrinkErrorUiModel = when (tr) {
             is UnknownHostException -> connectivityError()
             is SocketTimeoutException -> timeoutError()

@@ -8,6 +8,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.ImageLoader
 import coil.request.LoadRequest
@@ -16,6 +17,7 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.shareDrink
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
+import com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
 import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
@@ -26,9 +28,7 @@ import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -52,6 +52,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         initMotionLayoutListener()
         updateDrinkTitle(args.drinkPreviewUiModel.name)
         updateDrinkImage(args.drinkPreviewUiModel.thumbnail)
+        updateIsFavorite(args.drinkPreviewUiModel.isFavorite)
         initFavoriteToggle()
         initInfoPagerAdapter()
         observeDrink()
@@ -117,10 +118,22 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
             drinkViewModel
                 .drinkFlow
                 .flowOn(Dispatchers.IO)
-                .filterIsInstance<ResultUiModel.Success<DrinkUiModel>>()
-                .map { it.data }
-                .collect { onDrinkReceived(it) }
+                .collect { onDrinkResultReceived(it) }
         }
+    }
+
+    private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
+        when (resultUiModel) {
+            is ResultUiModel.Success -> onDrinkReceived(resultUiModel.data)
+            is ResultUiModel.Error -> onErrorReceived(resultUiModel.errorUiModel)
+        }
+    }
+
+    private fun onErrorReceived(errorUiModel: DrinkErrorUiModel) {
+        requireParentFragment().findNavController().navigate(
+            DrinkFragmentDirections
+                .actionDrinkFragmentToDrinkErrorFragment(errorUiModel)
+        )
     }
 
     private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {

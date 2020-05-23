@@ -59,7 +59,7 @@ data class DrinkPreviewModel(
         drinkModel.id,
         drinkModel.name,
         drinkModel.thumbnail,
-        drinkModel.isFavorite
+        false
     )
 }
 

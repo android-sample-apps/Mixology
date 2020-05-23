@@ -20,7 +20,15 @@ data class DrinkPreviewUiModel(
     val name: String,
     val thumbnail: String?,
     val isFavorite: Boolean
-): Parcelable
+) : Parcelable {
+
+    constructor(drinkUiModel: DrinkUiModel) : this(
+        drinkUiModel.id,
+        drinkUiModel.name,
+        drinkUiModel.thumbnail,
+        false
+    )
+}
 
 data class DrinkUiModel(
     val id: String,
@@ -48,8 +56,8 @@ data class IngredientUiModel(
 )
 
 sealed class LoadingIngredientUiModel {
-    object Loading: LoadingIngredientUiModel()
-    data class Loaded(val ingredient: IngredientUiModel): LoadingIngredientUiModel()
+    object Loading : LoadingIngredientUiModel()
+    data class Loaded(val ingredient: IngredientUiModel) : LoadingIngredientUiModel()
 }
 
 data class IngredientFilterUiModel(
