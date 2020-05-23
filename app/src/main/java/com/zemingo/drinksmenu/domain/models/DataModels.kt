@@ -80,7 +80,7 @@ data class DrinkModel(
     val glass: String,
     val video: String?,
     val thumbnail: String?,
-    val isFavorite: Boolean
+    val isFavorite: Boolean = false
 )
 
 sealed class Result<T> {

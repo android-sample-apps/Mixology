@@ -52,8 +52,7 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
             alcoholic = t.strAlcoholic,
             category = t.strCategory,
             glass = t.strGlass,
-            video = t.strVideo,
-            isFavorite = false
+            video = t.strVideo
         )
     }
 

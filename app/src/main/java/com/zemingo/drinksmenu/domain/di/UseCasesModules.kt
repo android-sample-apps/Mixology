@@ -66,6 +66,7 @@ val useCasesModule = module {
     factory { (drinkId: String) ->
         GetDrinkUseCase(
             fetchAndStoreDrinkUseCase = get(),
+            getWatchlistUseCase = get(),
             repository = get(),
             drinkId = drinkId
         )

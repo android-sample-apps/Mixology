@@ -33,7 +33,6 @@ val viewModelModule = module {
         DrinkViewModel(
             getDrinkUseCase = get { parametersOf(id) },
             addToRecentlyViewedUseCase = get(),
-            getWatchlistUseCase = get(),
             toggleWatchlistUseCase = get(),
             resultMapper = get<ResultDrinkMapperUi> { parametersOf(id) },
             drinkId = id

@@ -6,7 +6,6 @@ import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -38,7 +37,12 @@ import timber.log.Timber
 class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     private val args: DrinkFragmentArgs by navArgs()
-    private val pagerAdapter: DrinkPagerAdapter by lazy { DrinkPagerAdapter(this) }
+    private val pagerAdapter: DrinkPagerAdapter by lazy {
+        DrinkPagerAdapter(
+            this,
+            args.drinkPreviewUiModel
+        )
+    }
 
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
 
@@ -56,7 +60,6 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         initFavoriteToggle()
         initInfoPagerAdapter()
         observeDrink()
-        observeIsFavorite()
     }
 
     private fun initFavoriteToggle() {
@@ -107,12 +110,6 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         info_vp.currentItem = 0
     }
 
-    private fun observeIsFavorite() {
-        drinkViewModel
-            .isFavoriteLiveData
-            .observe(viewLifecycleOwner, Observer { updateIsFavorite(it) })
-    }
-
     private fun observeDrink() {
         lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
@@ -141,6 +138,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
         updateDrinkImage(drinkUiModel.thumbnail)
         updateInfoCard(drinkUiModel)
         updateShare(drinkUiModel)
+        updateIsFavorite(drinkUiModel.isFavorite)
     }
 
     private fun updateShare(drinkUiModel: DrinkUiModel) {

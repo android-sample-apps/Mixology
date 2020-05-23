@@ -54,9 +54,10 @@ class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
         requireParentFragment()
             .findNavController()
             .navigate(
-                DrinkErrorFragmentDirections.actionDrinkErrorFragmentToDrinkFragment(
-                    DrinkPreviewUiModel(drinkUiModel)
-                )
+                DrinkErrorFragmentDirections
+                    .actionDrinkErrorFragmentToDrinkFragment(
+                        DrinkPreviewUiModel(drinkUiModel)
+                    )
             )
     }
 

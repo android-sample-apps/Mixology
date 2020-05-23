@@ -11,6 +11,7 @@ import timber.log.Timber
 class GetDrinkUseCase(
     private val repository: DrinkRepository,
     private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
+    private val getWatchlistUseCase: GetWatchlistUseCase,
     private val drinkId: String
 ) {
 
@@ -19,22 +20,29 @@ class GetDrinkUseCase(
     private val channel = ConflatedBroadcastChannel<Result<DrinkModel>>()
     val drinkChannel = channel.asFlow().distinctUntilChanged()
 
-    init { observeDrink() }
+    init {
+        observeDrink()
+    }
 
     private fun observeDrink() {
         job?.cancel()
         job = GlobalScope.launch(Dispatchers.IO) {
             repository
-                .get(drinkId)
+                .get(drinkId).combine(
+                    getWatchlistUseCase.getById(drinkId).map { it != null }
+                ) { drink, isFavorite ->
+                    drink to isFavorite
+                }
                 .onStart { channel.send(Result.Loading(drinkId)) }
                 .onEach { delay(1000) }
-                .collect { drink ->
+                .collect { (drink, isFavorite) ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
                         fetchAndStore()
                     } else {
                         Timber.d("found drink[$drinkId]")
-                        channel.send(Result.Success(drink))
+                        val model = drink.copy(isFavorite = isFavorite)
+                        channel.send(Result.Success(model))
                     }
 
 //                    channel.send(Result.Error(Exception()))

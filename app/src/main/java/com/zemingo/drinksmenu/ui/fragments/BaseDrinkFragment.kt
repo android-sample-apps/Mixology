@@ -9,6 +9,7 @@ import com.zemingo.drinksmenu.ui.models.ResultUiModel
 import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import org.koin.android.viewmodel.ext.android.getViewModel
 
+/*
 abstract class BaseDrinkFragment(contentLayoutId: Int) : Fragment(contentLayoutId) {
 
     protected abstract fun onDrinkReceived(drinkUiModel: DrinkUiModel)
@@ -36,4 +37,4 @@ abstract class BaseDrinkFragment(contentLayoutId: Int) : Fragment(contentLayoutI
             is ResultUiModel.Loading -> onDrinkLoading(result.id)
         }
     }
-}
+}*/

@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.zemingo.drinksmenu.domain.AddToRecentlyViewedUseCase
 import com.zemingo.drinksmenu.domain.GetDrinkUseCase
-import com.zemingo.drinksmenu.domain.GetWatchlistUseCase
 import com.zemingo.drinksmenu.domain.ToggleWatchlistUseCase
 import com.zemingo.drinksmenu.domain.models.DrinkModel
 import com.zemingo.drinksmenu.domain.models.Result
@@ -23,7 +22,6 @@ import java.util.function.Function
 class DrinkViewModel(
     private val getDrinkUseCase: GetDrinkUseCase,
     addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
-    getWatchlistUseCase: GetWatchlistUseCase,
     private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
     resultMapper: Function<Result<DrinkModel>, ResultUiModel<DrinkUiModel>>,
     private val drinkId: String
@@ -33,12 +31,6 @@ class DrinkViewModel(
         Timber.d("init called")
         addToRecentlyViewedUseCase.add(drinkId)
     }
-
-    val isFavoriteLiveData: LiveData<Boolean> =
-        getWatchlistUseCase
-            .getById(drinkId)
-            .map { it != null }
-            .asLiveData()
 
     val drinkFlow = getDrinkUseCase
         .drinkChannel

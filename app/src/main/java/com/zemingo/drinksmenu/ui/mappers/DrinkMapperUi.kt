@@ -31,7 +31,8 @@ class DrinkMapperUi(
             glass = t.glass,
             thumbnail = t.thumbnail,
             video = t.video,
-            shareText = mapShareText(t)
+            shareText = mapShareText(t),
+            isFavorite = false
         )
     }
 

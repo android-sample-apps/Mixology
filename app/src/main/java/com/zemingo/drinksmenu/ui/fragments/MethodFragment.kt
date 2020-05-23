@@ -3,20 +3,38 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.text.SpannableString
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.ui.SpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.MethodAdapter
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
+import com.zemingo.drinksmenu.ui.models.ResultUiModel
+import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_method.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class MethodFragment : BaseDrinkFragment(R.layout.fragment_method) {
+class MethodFragment(
+    private val drinkPreviewUiModel: DrinkPreviewUiModel
+) : Fragment(R.layout.fragment_method) {
 
     private val methodAdapter = MethodAdapter()
+    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(drinkPreviewUiModel.id) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMethodRecyclerView()
+        drinkViewModel
+            .drink
+            .observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ResultUiModel.Success -> onDrinkReceived(it.data)
+                    is ResultUiModel.Loading -> onDrinkLoading(it.id)
+                }
+            })
     }
 
     private fun initMethodRecyclerView() {
@@ -28,11 +46,11 @@ class MethodFragment : BaseDrinkFragment(R.layout.fragment_method) {
         }
     }
 
-    override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+    private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         methodAdapter.update(drinkUiModel.instructions)
     }
 
-    override fun onDrinkLoading(id: String) {
+    private fun onDrinkLoading(id: String) {
         methodAdapter.apply {
             update(listOf(SpannableString(getString(R.string.loading_method))))
         }

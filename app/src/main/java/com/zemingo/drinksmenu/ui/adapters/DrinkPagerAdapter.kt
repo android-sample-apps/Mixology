@@ -7,8 +7,12 @@ import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.ui.fragments.IngredientsFragment
 import com.zemingo.drinksmenu.ui.fragments.MethodFragment
 import com.zemingo.drinksmenu.ui.fragments.NotesFragment
+import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 
-class DrinkPagerAdapter(fragment: Fragment) :
+class DrinkPagerAdapter(
+    fragment: Fragment,
+    private val drinkPreviewUiModel: DrinkPreviewUiModel
+) :
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
@@ -17,9 +21,8 @@ class DrinkPagerAdapter(fragment: Fragment) :
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> IngredientsFragment()
-            1 -> MethodFragment()
-            2 -> NotesFragment()
+            0 -> IngredientsFragment(drinkPreviewUiModel)
+            1 -> MethodFragment(drinkPreviewUiModel)
             else -> throw IllegalStateException("item count is only 3")
         }
     }
@@ -29,7 +32,6 @@ class DrinkPagerAdapter(fragment: Fragment) :
         return when (position) {
             0 -> R.string.ingredients
             1 -> R.string.method
-            2 -> R.string.notes
             else -> throw IllegalStateException("item count is only 3")
         }
     }

@@ -3,24 +3,31 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.ui.adapters.IngredientAdapter
-import com.zemingo.drinksmenu.ui.models.DrinkUiModel
-import com.zemingo.drinksmenu.ui.models.IngredientUiModel
-import com.zemingo.drinksmenu.ui.models.LoadingIngredientUiModel
+import com.zemingo.drinksmenu.ui.models.*
 import com.zemingo.drinksmenu.ui.utils.InputActions
+import com.zemingo.drinksmenu.ui.view_model.DrinkViewModel
 import kotlinx.android.synthetic.main.fragment_ingredients.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 private const val LOADING_ITEM_NUMBER = 3
-class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
+
+class IngredientsFragment(
+    private val drinkPreviewUiModel: DrinkPreviewUiModel
+) : Fragment(R.layout.fragment_ingredients) {
 
     private val ingredientsAdapter = IngredientAdapter()
+    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(drinkPreviewUiModel.id) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +44,14 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initIngredientsRecyclerView()
+        drinkViewModel
+            .drink
+            .observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    is ResultUiModel.Success -> onDrinkReceived(it.data)
+                    is ResultUiModel.Loading -> onDrinkLoading(it.id)
+                }
+            })
     }
 
     private fun initIngredientsRecyclerView() {
@@ -48,7 +63,7 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
         }
     }
 
-    override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
+    private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         lifecycleScope.launch(Dispatchers.Main) {
             wrapLoadedState(drinkUiModel.ingredients)
                 .collect { ingredientsAdapter.update(it) }
@@ -72,7 +87,7 @@ class IngredientsFragment : BaseDrinkFragment(R.layout.fragment_ingredients) {
             )
         }
 
-    override fun onDrinkLoading(id: String) {
+    private fun onDrinkLoading(id: String) {
         lifecycleScope.launch(Dispatchers.Main) {
             createLoadingState()
                 .flowOn(Dispatchers.IO)

@@ -26,7 +26,7 @@ data class DrinkPreviewUiModel(
         drinkUiModel.id,
         drinkUiModel.name,
         drinkUiModel.thumbnail,
-        false
+        drinkUiModel.isFavorite
     )
 }
 
@@ -40,7 +40,8 @@ data class DrinkUiModel(
     val glass: String,
     val video: String?,
     val thumbnail: String?,
-    val shareText: String
+    val shareText: String,
+    val isFavorite: Boolean
 )
 
 data class LandingPageUiModel(
