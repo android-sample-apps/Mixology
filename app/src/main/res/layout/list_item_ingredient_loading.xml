@@ -31,7 +31,7 @@
         <View
             android:id="@+id/ingredient_name_loading"
             android:layout_width="0dp"
-            android:layout_height="18dp"
+            android:layout_height="16dp"
             android:background="@color/header_text_color"
             app:layout_constraintBottom_toTopOf="@id/ingredient_quantity_loading"
             app:layout_constraintEnd_toEndOf="@id/name_guideline"
@@ -42,7 +42,7 @@
         <View
             android:id="@+id/ingredient_quantity_loading"
             android:layout_width="0dp"
-            android:layout_height="16dp"
+            android:layout_height="14dp"
             android:layout_marginTop="4dp"
             android:background="@color/secondary_text_color"
             app:layout_constraintBottom_toBottomOf="parent"

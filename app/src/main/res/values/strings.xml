@@ -39,8 +39,7 @@
     <string name="filter_ingredients">Ingredients</string>
     <string name="no_description_found">No description found</string>
     <string name="search_online">search online</string>
-    <string name="loading_title">Hold on</string>
-    <string name="loading_description">Relax…\nWe\'re on it.</string>
+    <string name="loading_method">Working on it…</string>
     <string name="error_title">Woooops!</string>
     <string name="error_description_connectivity">Seems like we lost our\ninternet connection, eh?\n\nGive it a looksie, would you?</string>
     <string name="error_description_timeout">Seems like we\'re a bit slow today, eh?\nThis might be related to the internet connection.\nGive it a looksie, would you?</string>

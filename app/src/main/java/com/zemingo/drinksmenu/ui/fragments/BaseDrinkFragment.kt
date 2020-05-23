@@ -13,6 +13,8 @@ abstract class BaseDrinkFragment(contentLayoutId: Int) : Fragment(contentLayoutI
 
     protected abstract fun onDrinkReceived(drinkUiModel: DrinkUiModel)
 
+    protected abstract fun onDrinkLoading(id: String)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeDrink()
@@ -31,6 +33,7 @@ abstract class BaseDrinkFragment(contentLayoutId: Int) : Fragment(contentLayoutI
     private fun onDrinkResultReceived(result: ResultUiModel<DrinkUiModel>) {
         when (result) {
             is ResultUiModel.Success -> onDrinkReceived(result.data)
+            is ResultUiModel.Loading -> onDrinkLoading(result.id)
         }
     }
 }

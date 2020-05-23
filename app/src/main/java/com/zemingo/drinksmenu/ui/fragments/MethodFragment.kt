@@ -26,12 +26,15 @@ class MethodFragment : BaseDrinkFragment(R.layout.fragment_method) {
                 SpacerItemDecoration(bottom = 8.dpToPx().toInt())
             )
         }
-        methodAdapter.apply {
-            update(listOf(SpannableString("Working on it...")))
-        }
     }
 
     override fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         methodAdapter.update(drinkUiModel.instructions)
+    }
+
+    override fun onDrinkLoading(id: String) {
+        methodAdapter.apply {
+            update(listOf(SpannableString(getString(R.string.loading_method))))
+        }
     }
 }
