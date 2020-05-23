@@ -20,7 +20,7 @@ class DrinkPreviewAdapter :
 
         fun bind(drinkPreviewUiModel: DrinkPreviewUiModel) {
             containerView.apply {
-                drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail, R.drawable.bar)
+                drink_image_iv.fromLink(drinkPreviewUiModel.thumbnail/*, R.drawable.bar*/)
                 drink_name_tv.text = drinkPreviewUiModel.name
                 cherry_badge_container.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
                 image_container.run {
