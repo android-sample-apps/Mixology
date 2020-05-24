@@ -22,8 +22,16 @@
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:visibilityMode="ignore"
-            />
+            app:visibilityMode="ignore" />
+
+        <!--<Constraint
+            android:id="@+id/filter_mfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visibilityMode="ignore" />-->
 
         <Constraint
             android:id="@id/search_container_til"
@@ -48,6 +56,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
             app:visibilityMode="ignore" />
+
+        <!--<Constraint
+            android:id="@+id/filter_mfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visibilityMode="ignore" />-->
+
         <Constraint
             android:id="@id/connectivity_warning"
             android:layout_width="0dp"
@@ -56,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:visibilityMode="ignore"/>
+            app:visibilityMode="ignore" />
 
     </ConstraintSet>
 

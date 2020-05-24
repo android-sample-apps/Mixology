@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/search_scene"
-    android:padding="@dimen/screen_padding">
+    android:padding="@dimen/screen_padding"
+    app:layoutDescription="@xml/search_scene">
 
     <include
         android:id="@+id/connectivity_warning"
         layout="@layout/view_connectivity_warning"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintVertical_chainStyle="spread"
+        tools:visibility="visible" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_container_til"
@@ -30,10 +29,10 @@
         app:endIconTint="@color/header_text_color"
         app:helperTextTextAppearance="@style/SearchTextAppearance"
         app:hintTextColor="@color/secondary_text_color"
+        app:layout_constraintBottom_toTopOf="@id/search_results_rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
-        app:layout_constraintBottom_toTopOf="@id/search_results_rv"
         app:layout_goneMarginTop="0dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -55,8 +54,8 @@
         android:id="@+id/search_results_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/screen_padding"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +72,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/screen_padding"
         app:cardCornerRadius="32dp"
-        app:layoutDescription="@null"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
