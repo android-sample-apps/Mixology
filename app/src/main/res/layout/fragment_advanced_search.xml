@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/search_scene"
     android:padding="@dimen/screen_padding">
 
     <include
         android:id="@+id/connectivity_warning"
         layout="@layout/view_connectivity_warning"
+        app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_container_til"
@@ -28,6 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
+        app:layout_constraintBottom_toTopOf="@id/search_results_rv"
         app:layout_goneMarginTop="0dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -49,8 +53,8 @@
         android:id="@+id/search_results_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/screen_padding"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/screen_padding"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@id/search_container_til"
         app:spanCount="2"
         tools:listitem="@layout/tile_item_drink_preview"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
 
     <com.zemingo.drinksmenu.ui.views.MyFab
@@ -67,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/screen_padding"
         app:cardCornerRadius="32dp"
+        app:layoutDescription="@null"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,4 +79,4 @@
         app:strokeWidth="1dp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
