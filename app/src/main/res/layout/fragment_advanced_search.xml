@@ -10,6 +10,8 @@
     <include
         android:id="@+id/connectivity_warning"
         layout="@layout/view_connectivity_warning"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
