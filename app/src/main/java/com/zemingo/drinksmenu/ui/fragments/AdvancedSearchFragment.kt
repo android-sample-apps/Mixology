@@ -142,8 +142,6 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                 connectivity_warning.visibility = (!isConnected).toVisibility()
                 search_container_til.visibility = isConnected.toVisibility()
                 filter_mfab.visibility = isConnected.toVisibility()
-
-//                search_results_rv.visibility = connected.toVisibility()
             })
     }
 
