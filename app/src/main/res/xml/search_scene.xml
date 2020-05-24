@@ -22,6 +22,7 @@
             app:layout_constraintBottom_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:visibilityMode="ignore"
             />
 
         <Constraint
@@ -54,7 +55,8 @@
             app:layout_constraintBottom_toTopOf="@id/search_container_til"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore"/>
 
     </ConstraintSet>
 
