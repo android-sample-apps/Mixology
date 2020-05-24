@@ -8,6 +8,7 @@
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
+        <item name="android:colorEdgeEffect">@color/white</item>
     </style>
 
     <style name="MyToolbar">
@@ -42,8 +43,18 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:colorEdgeEffect">@color/white</item>
     </style>
-    
+
+    <style name="BottomSheetCard">
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="android:bottomLeftRadius">0dp</item>
+        <item name="android:bottomRightRadius">0dp</item>
+        <item name="android:topRightRadius">70dp</item>
+        <item name="android:topLeftRadius">@dimen/screen_radius</item>
+    </style>
+
     <style name="MyHeaderText" >
         <item name="android:ellipsize">end</item>
         <item name="android:includeFontPadding">false</item>
