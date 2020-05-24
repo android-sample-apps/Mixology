@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 
 private const val LOADING_ITEM_NUMBER = 3
 
@@ -71,7 +72,10 @@ class IngredientsFragment(
     private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
         lifecycleScope.launch(Dispatchers.Main) {
             wrapLoadedState(drinkUiModel.ingredients)
-                .collect { ingredientsAdapter.update(it) }
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    Timber.d("onDrinkReceived: $it")
+                    ingredientsAdapter.update(it) }
         }
     }
 
@@ -96,7 +100,9 @@ class IngredientsFragment(
         lifecycleScope.launch(Dispatchers.Main) {
             createLoadingState()
                 .flowOn(Dispatchers.IO)
-                .collect { ingredientsAdapter.update(it) }
+                .collect {
+                    Timber.d("onDrinkLoading: $it")
+                    ingredientsAdapter.update(it) }
         }
     }
 }
