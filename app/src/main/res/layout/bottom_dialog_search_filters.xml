@@ -1,187 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    app:shapeAppearance="@style/BottomDialogCardAppShapeAppearance">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/filter_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="450dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filters_header">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/filter_container"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
             android:orientation="vertical"
-            android:padding="@dimen/screen_padding">
+            app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="450dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_header">
 
-            <com.zemingo.drinksmenu.ui.views.FilterHeaderView
-                android:id="@+id/alcoholic_header_tv"
-                style="@style/FilterHeaderText"
-                app:layoutDescription="@xml/filer_badge_scene"
-                app:fhv_headerText="@string/filter_alcoholic"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:fontFamily="@font/fty_delirium_ncv" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filter_alcoholic_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/list_item_selectable_filter" />
-
-            <View
-                android:id="@+id/glasses_div"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:layout_marginBottom="@dimen/screen_padding"
-                android:background="@drawable/divider" />
-
-            <com.zemingo.drinksmenu.ui.views.FilterHeaderView
-                android:id="@+id/glasses_header_tv"
-                style="@style/FilterHeaderText"
-                app:fhv_headerText="@string/filter_glasses"
-                app:layoutDescription="@xml/filer_badge_scene"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:fontFamily="@font/fty_delirium_ncv" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filter_glasses_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/list_item_selectable_filter" />
+                android:orientation="vertical"
+                android:padding="@dimen/screen_padding">
 
-            <View
-                android:id="@+id/category_div"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:layout_marginBottom="@dimen/screen_padding"
-                android:background="@drawable/divider" />
+                <com.zemingo.drinksmenu.ui.views.FilterHeaderView
+                    android:id="@+id/alcoholic_header_tv"
+                    style="@style/FilterHeaderText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fhv_headerText="@string/filter_alcoholic"
+                    app:fontFamily="@font/fty_delirium_ncv"
+                    app:layoutDescription="@xml/filer_badge_scene" />
 
-            <com.zemingo.drinksmenu.ui.views.FilterHeaderView
-                android:id="@+id/category_header_tv"
-                style="@style/FilterHeaderText"
-                app:fhv_headerText="@string/filter_categories"
-                app:layoutDescription="@xml/filer_badge_scene"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:fontFamily="@font/fty_delirium_ncv" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filter_alcoholic_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/list_item_selectable_filter" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filter_category_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
-                tools:listitem="@layout/list_item_selectable_filter" />
+                <View
+                    android:id="@+id/glasses_div"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:layout_marginBottom="@dimen/screen_padding"
+                    android:background="@drawable/divider" />
 
-            <View
-                android:id="@+id/ingredients_div"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:layout_marginBottom="@dimen/screen_padding"
-                android:background="@drawable/divider" />
+                <com.zemingo.drinksmenu.ui.views.FilterHeaderView
+                    android:id="@+id/glasses_header_tv"
+                    style="@style/FilterHeaderText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fhv_headerText="@string/filter_glasses"
+                    app:fontFamily="@font/fty_delirium_ncv"
+                    app:layoutDescription="@xml/filer_badge_scene" />
 
-            <com.zemingo.drinksmenu.ui.views.FilterHeaderView
-                android:id="@+id/ingredient_header_tv"
-                style="@style/FilterHeaderText"
-                app:fhv_headerText="@string/filter_ingredients"
-                app:layoutDescription="@xml/filer_badge_scene"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:fontFamily="@font/fty_delirium_ncv" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filter_glasses_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/list_item_selectable_filter" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/filter_ingredients_rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_padding"
-                android:layout_marginBottom="@dimen/screen_padding"
-                android:nestedScrollingEnabled="false"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="5"
-                tools:listitem="@layout/list_item_selectable_filter" />
+                <View
+                    android:id="@+id/category_div"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:layout_marginBottom="@dimen/screen_padding"
+                    android:background="@drawable/divider" />
 
-        </LinearLayout>
+                <com.zemingo.drinksmenu.ui.views.FilterHeaderView
+                    android:id="@+id/category_header_tv"
+                    style="@style/FilterHeaderText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fhv_headerText="@string/filter_categories"
+                    app:fontFamily="@font/fty_delirium_ncv"
+                    app:layoutDescription="@xml/filer_badge_scene" />
 
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filter_category_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="2"
+                    tools:listitem="@layout/list_item_selectable_filter" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/filters_header"
-        style="@style/MyHeaderText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/screen_padding"
-        android:text="Filters"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <View
+                    android:id="@+id/ingredients_div"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:layout_marginBottom="@dimen/screen_padding"
+                    android:background="@drawable/divider" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fading_edge_height"
-        android:background="@drawable/white_fading_edge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filters_header" />
+                <com.zemingo.drinksmenu.ui.views.FilterHeaderView
+                    android:id="@+id/ingredient_header_tv"
+                    style="@style/FilterHeaderText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:fhv_headerText="@string/filter_ingredients"
+                    app:fontFamily="@font/fty_delirium_ncv"
+                    app:layoutDescription="@xml/filer_badge_scene" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fading_edge_height"
-        android:background="@drawable/white_fading_edge"
-        android:rotation="180"
-        app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/filter_ingredients_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_padding"
+                    android:layout_marginBottom="@dimen/screen_padding"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:spanCount="5"
+                    tools:listitem="@layout/list_item_selectable_filter" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/filter_accept_btn"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:letterSpacing="0.125"
-        android:padding="0dp"
-        android:visibility="gone"
-        android:text="apply"
-        android:textColor="@color/white"
-        android:textSize="22sp"
-        app:backgroundTint="@color/black"
-        app:cornerRadius="0dp"
-        app:fontFamily="@font/fty_delirium_ncv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/filter_container"
-        app:rippleColor="@color/secondary_text_color" />
+            </LinearLayout>
 
+        </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/filters_header"
+            style="@style/MyHeaderText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/screen_padding"
+            android:text="Filters"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fading_edge_height"
+            android:background="@drawable/white_fading_edge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filters_header" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/fading_edge_height"
+            android:background="@drawable/white_fading_edge"
+            android:rotation="180"
+            app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_accept_btn"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0.125"
+            android:padding="0dp"
+            android:text="apply"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:visibility="gone"
+            app:backgroundTint="@color/black"
+            app:cornerRadius="0dp"
+            app:fontFamily="@font/fty_delirium_ncv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filter_container"
+            app:rippleColor="@color/secondary_text_color" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

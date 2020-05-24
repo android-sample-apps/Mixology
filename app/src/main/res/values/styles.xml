@@ -38,7 +38,7 @@
     </style>
 
 
-    <style name="ModalBottomSheetDialog"  parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="ModalBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:navigationBarColor">@color/white</item>
@@ -46,16 +46,20 @@
         <item name="android:colorEdgeEffect">@color/white</item>
     </style>
 
-    <style name="BottomSheetCard">
-        <item name="cornerFamilyTopRight">rounded</item>
+
+    <style name="BottomDialogCardAppShapeAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerFamilyBottomLeft">cut</item>
+        <item name="cornerFamilyBottomRight">cut</item>
         <item name="cornerFamilyTopLeft">rounded</item>
-        <item name="android:bottomLeftRadius">0dp</item>
-        <item name="android:bottomRightRadius">0dp</item>
-        <item name="android:topRightRadius">70dp</item>
-        <item name="android:topLeftRadius">@dimen/screen_radius</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/screen_radius</item>
+        <item name="cornerSizeTopRight">@dimen/screen_radius</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    <style name="MyHeaderText" >
+    <style name="MyHeaderText">
         <item name="android:ellipsize">end</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:letterSpacing">0.125</item>
