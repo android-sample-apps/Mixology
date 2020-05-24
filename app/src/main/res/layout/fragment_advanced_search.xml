@@ -6,11 +6,20 @@
     android:layout_height="match_parent"
     android:padding="@dimen/screen_padding">
 
+    <include
+        android:id="@+id/connectivity_warning"
+        layout="@layout/view_connectivity_warning"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_container_til"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/screen_padding"
+        app:layout_goneMarginTop="0dp"
         app:boxStrokeColor="@color/header_text_color"
         app:endIconMode="clear_text"
         app:endIconTint="@color/header_text_color"
@@ -18,7 +27,7 @@
         app:hintTextColor="@color/secondary_text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/connectivity_warning">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/search_query_et"

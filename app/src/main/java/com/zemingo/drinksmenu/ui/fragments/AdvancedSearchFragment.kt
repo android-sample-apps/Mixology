@@ -10,11 +10,13 @@ import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.hideKeyboard
+import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.utils.InputActions
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
+import com.zemingo.drinksmenu.ui.view_model.ConnectivityViewModel
 import kotlinx.android.synthetic.main.fragment_advanced_search.*
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,6 +25,7 @@ import timber.log.Timber
 class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by viewModel()
+    private val connectivityViewModel: ConnectivityViewModel by viewModel()
 
     private val query: String get() = search_query_et.text?.toString() ?: ""
 
@@ -63,6 +66,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         initResultsRecyclerView()
         observeResults()
         observeSelectedFilters()
+        observeConnectivity()
     }
 
     private fun initFilterFab() {
@@ -128,12 +132,18 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
                     text = getString(R.string.filter_selected, it.activeFiltersBadge)
                     textVisibility = it.activeFiltersBadge != null
                 }
+            })
+    }
 
-                /*filter_search_fab.run {
-//                    filter_search_fab.text = getString(R.string.filter_selected, it.activeFiltersBadge)
-                    filter_search_fab.text =  it.activeFiltersBadge
-                }*/
+    private fun observeConnectivity() {
+        connectivityViewModel
+            .connectivityLiveData
+            .observe(viewLifecycleOwner, Observer { isConnected ->
+                connectivity_warning.visibility = (!isConnected).toVisibility()
+                search_container_til.visibility = isConnected.toVisibility()
+                filter_mfab.visibility = isConnected.toVisibility()
 
+//                search_results_rv.visibility = connected.toVisibility()
             })
     }
 

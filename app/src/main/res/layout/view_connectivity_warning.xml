@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:strokeWidth="0dp"
-    app:cardElevation="0dp"
-    app:strokeColor="@color/secondary_text_color"
     app:cardCornerRadius="@dimen/screen_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/black"
+    app:strokeWidth="0.5dp"
     tools:background="@color/orange">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,31 +15,52 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/screen_padding">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/start_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.25"
+            android:orientation="vertical"/>
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/wifi_animation"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/start_guideline"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_loop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:lottie_autoPlay="true"
+            app:lottie_loop="true"
             app:lottie_rawRes="@raw/no_connection" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/offline_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Offline"
+            android:layout_marginStart="@dimen/screen_padding_small"
+            android:textColor="@color/header_text_color"
+            android:textSize="32sp"
+            android:letterSpacing="0.125"
+            app:fontFamily="@font/fty_delirium_ncv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/start_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/screen_padding"
-            android:text="Lost internet connectivity. Some features may not work properly"
-            android:textColor="@color/header_text_color"
+            android:text="Your network is unavailable.\nCheck your data or wifi connection."
+            android:textColor="@color/secondary_text_color"
+            android:layout_marginTop="@dimen/screen_padding_small"
             android:textSize="16sp"
             app:fontFamily="@font/jesa_script_regular"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/wifi_animation"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/offline_title"
+            app:layout_constraintTop_toBottomOf="@id/offline_title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
