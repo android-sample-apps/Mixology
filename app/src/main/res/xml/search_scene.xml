@@ -27,13 +27,20 @@
             android:id="@id/filter_mfab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="1"
-            android:scaleY="1"
             android:layout_marginEnd="@dimen/screen_padding"
             android:layout_marginBottom="@dimen/screen_padding"
+            android:scaleX="1"
+            android:scaleY="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-        </Constraint>
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <Constraint
+            android:id="@id/connectivity_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </ConstraintSet>
     <ConstraintSet android:id="@+id/offline">
@@ -41,14 +48,23 @@
             android:id="@id/filter_mfab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX="0"
-            android:scaleY="0"
             android:layout_marginEnd="@dimen/screen_padding"
             android:layout_marginBottom="@dimen/screen_padding"
+            android:scaleX="0"
+            android:scaleY="0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
         </Constraint>
+
+        <Constraint
+            android:id="@id/connectivity_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/search_container_til"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/collapsed">
@@ -61,16 +77,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibilityMode="ignore" />
-
-        <!--<Constraint
-            android:id="@id/filter_mfab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/screen_padding"
-            android:scaleX="1"
-            android:scaleY="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />-->
 
         <Constraint
             android:id="@id/search_container_til"
@@ -95,16 +101,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
             app:visibilityMode="ignore" />
-
-        <!--<Constraint
-            android:id="@id/filter_mfab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/screen_padding"
-            android:scaleX="1"
-            android:scaleY="1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />-->
 
         <Constraint
             android:id="@id/connectivity_warning"
