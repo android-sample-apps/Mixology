@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cocktail_nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/splashFragment"
+    >
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.HomeFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -22,7 +23,7 @@
 
     <fragment
         android:id="@+id/advancedSearchFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.AdvancedSearchFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.AdvancedSearchFragment"
         android:label="AdvancedSearchFragment"
         tools:layout="@layout/fragment_advanced_search">
         <action
@@ -32,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.SplashFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
@@ -45,13 +46,13 @@
 
     <fragment
         android:id="@+id/drinkFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.DrinkFragment"
         android:label="DrinkFragment"
         tools:layout="@layout/fragment_drink">
 
         <argument
             android:name="drinkPreviewUiModel"
-            app:argType="com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel" />
+            app:argType="com.yanivsos.mixological.ui.models.DrinkPreviewUiModel" />
         <action
             android:id="@+id/action_drinkFragment_to_drinkErrorFragment"
             app:destination="@id/drinkErrorFragment"
@@ -62,12 +63,12 @@
     </fragment>
     <fragment
         android:id="@+id/drinkErrorFragment"
-        android:name="com.zemingo.drinksmenu.ui.fragments.DrinkErrorFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.DrinkErrorFragment"
         android:label="DrinkErrorFragment"
         tools:layout="@layout/fragment_connectivity_error">
         <argument
             android:name="errorUiModel"
-            app:argType="com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel"
+            app:argType="com.yanivsos.mixological.ui.models.DrinkErrorUiModel"
             app:nullable="false" />
         <action
             android:id="@+id/action_drinkErrorFragment_to_drinkFragment"

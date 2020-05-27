@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.zemingo.drinksmenu">
+    package="com.yanivsos.mixological">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.zemingo.drinksmenu.ui.CocktailApplication"
+        android:name="com.yanivsos.mixological.ui.CocktailApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +15,7 @@
 
         <!--todo - change screen orientation to full sensors-->
         <activity
-            android:name="com.zemingo.drinksmenu.ui.DrinksActivity"
+            android:name="com.yanivsos.mixological.ui.DrinksActivity"
             android:screenOrientation="sensorPortrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>

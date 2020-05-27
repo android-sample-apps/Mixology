@@ -67,7 +67,7 @@
         tools:listitem="@layout/tile_item_drink_preview"
         tools:visibility="visible" />
 
-    <com.zemingo.drinksmenu.ui.views.MyFab
+    <com.yanivsos.mixological.ui.views.MyFab
         android:id="@+id/filter_mfab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
