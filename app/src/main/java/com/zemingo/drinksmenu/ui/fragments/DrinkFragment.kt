@@ -1,5 +1,6 @@
 package com.zemingo.drinksmenu.ui.fragments
 
+import android.graphics.Bitmap
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
@@ -9,12 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import coil.ImageLoader
-import coil.request.LoadRequest
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.compatColor
 import com.zemingo.drinksmenu.extensions.shareDrink
+import com.zemingo.drinksmenu.extensions.toGlideBuilder
 import com.zemingo.drinksmenu.ui.adapters.DrinkPagerAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkErrorUiModel
 import com.zemingo.drinksmenu.ui.models.DrinkUiModel
@@ -45,6 +49,28 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     }
 
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
+
+    private val imageRequestListener = object : RequestListener<Bitmap?> {
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any?,
+            target: Target<Bitmap?>?,
+            isFirstResource: Boolean
+        ): Boolean {
+            return true
+        }
+
+        override fun onResourceReady(
+            resource: Bitmap?,
+            model: Any?,
+            target: Target<Bitmap?>?,
+            dataSource: DataSource?,
+            isFirstResource: Boolean
+        ): Boolean {
+            header_image_placeholder.visibility = View.GONE
+            return false
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,15 +178,10 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
     }
 
     private fun updateDrinkImage(thumbnail: String?) {
-        LoadRequest.Builder(requireContext())
-            .data(thumbnail)
-            .crossfade(250)
-            .target { drawable ->
-                header_image_placeholder.visibility = View.GONE
-                drink_header_image.setImageDrawable(drawable)
-            }
-            .build()
-            .run { ImageLoader(requireContext()).execute(this) }
+        requireContext()
+            .toGlideBuilder(thumbnail)
+            .addListener(imageRequestListener)
+            .into(drink_header_image)
     }
 
     private fun updateInfoCard(drinkUiModel: DrinkUiModel) {
