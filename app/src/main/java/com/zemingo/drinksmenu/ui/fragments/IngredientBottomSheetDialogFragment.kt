@@ -17,13 +17,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
+private const val TAG = "IngredientBottomSheetDialogFragment"
+
 class IngredientBottomSheetDialogFragment(
     private val ingredient: String
 ) : BottomSheetDialogFragment() {
-
-    companion object {
-        const val TAG = "IngredientBottomSheetDialogFragment"
-    }
 
     private val detailsViewModel: IngredientDetailsViewModel by viewModel {
         parametersOf(

@@ -33,10 +33,7 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
     private fun onDrinkLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
-            .show(
-                childFragmentManager,
-                DrinkPreviewOptionsBottomFragment.TAG
-            )
+            .show(childFragmentManager)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

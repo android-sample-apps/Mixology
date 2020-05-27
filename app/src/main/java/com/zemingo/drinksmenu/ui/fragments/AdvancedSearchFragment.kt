@@ -3,6 +3,7 @@ package com.zemingo.drinksmenu.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -10,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.zemingo.drinksmenu.R
 import com.zemingo.drinksmenu.extensions.dpToPx
 import com.zemingo.drinksmenu.extensions.hideKeyboard
-import com.zemingo.drinksmenu.extensions.toVisibility
 import com.zemingo.drinksmenu.ui.GridSpacerItemDecoration
 import com.zemingo.drinksmenu.ui.adapters.DrinkPreviewGridAdapter
 import com.zemingo.drinksmenu.ui.models.DrinkPreviewUiModel
 import com.zemingo.drinksmenu.ui.utils.InputActions
+import com.zemingo.drinksmenu.ui.utils.MyTransitionListener
 import com.zemingo.drinksmenu.ui.view_model.AdvancedSearchViewModel
 import com.zemingo.drinksmenu.ui.view_model.ConnectivityViewModel
 import kotlinx.android.synthetic.main.fragment_advanced_search.*
@@ -33,10 +34,8 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
         Timber.d("onLongClicked: $drinkPreview")
-        DrinkPreviewOptionsBottomFragment(drinkPreview).show(
-            childFragmentManager,
-            DrinkPreviewOptionsBottomFragment.TAG
-        )
+        DrinkPreviewOptionsBottomFragment(drinkPreview)
+            .show(childFragmentManager)
     }
 
     private fun onDrinkClicked(drinkPreview: DrinkPreviewUiModel) {
@@ -61,6 +60,7 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMotionLayout()
         initFilterFab()
         initSearchQuery()
         initResultsRecyclerView()
@@ -69,9 +69,22 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         observeConnectivity()
     }
 
+    private fun initMotionLayout() {
+        advanced_search_ml.setTransitionListener(object : MyTransitionListener() {
+            override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+                val isOnline = currentId == R.id.online
+                Timber.d("filter button enabled: $isOnline")
+                filter_mfab.run {
+                    isClickable = isOnline
+                    isFocusable = isOnline
+                }
+            }
+        })
+    }
+
     private fun initFilterFab() {
         filter_mfab.setOnClickListener {
-            FilterBottomDialogFragment().show(childFragmentManager, "FilterDialog")
+            FilterBottomDialogFragment().show(childFragmentManager)
         }
     }
 
@@ -139,9 +152,6 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         connectivityViewModel
             .connectivityLiveData
             .observe(viewLifecycleOwner, Observer { isConnected ->
-//                connectivity_warning.visibility = (!isConnected).toVisibility()
-//                search_container_til.visibility = isConnected.toVisibility()
-//                filter_mfab.visibility = isConnected.toVisibility()
                 onConnectivityChange(isConnected)
             })
     }

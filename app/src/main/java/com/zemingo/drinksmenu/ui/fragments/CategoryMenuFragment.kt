@@ -143,10 +143,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
     private fun onDrinkLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         Timber.d("onDrinkLongClicked: $drinkPreviewUiModel")
         DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
-            .show(
-                childFragmentManager,
-                DrinkPreviewOptionsBottomFragment.TAG
-            )
+            .show(childFragmentManager)
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {

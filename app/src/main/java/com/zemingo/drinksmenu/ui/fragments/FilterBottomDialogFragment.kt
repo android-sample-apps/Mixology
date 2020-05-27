@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
+private const val TAG = "FilterBottomDialogFragment"
 class FilterBottomDialogFragment : BottomSheetDialogFragment() {
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
@@ -154,6 +156,10 @@ class FilterBottomDialogFragment : BottomSheetDialogFragment() {
             )
             adapter = selectableAdapter
         }
+    }
+
+    fun show(fragmentManager: FragmentManager) {
+        show(fragmentManager, TAG)
     }
 }
 

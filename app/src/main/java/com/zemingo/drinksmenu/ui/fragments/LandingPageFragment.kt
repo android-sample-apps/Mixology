@@ -94,9 +94,7 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
     }
 
     private fun onDrinkPreviewLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel).show(
-            childFragmentManager,
-            DrinkPreviewOptionsBottomFragment.TAG
-        )
+        DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
+            .show(childFragmentManager)
     }
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.zemingo.drinksmenu.R
@@ -21,14 +22,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
+private const val TAG = "DrinkPreviewOptionsBottomFragment"
 
 class DrinkPreviewOptionsBottomFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
 ) : BottomSheetDialogFragment() {
-
-    companion object {
-        const val TAG = "DrinkPreviewOptionsBottomFragment"
-    }
 
     private val optionsViewModel: DrinkPreviewOptionsViewModel by viewModel {
         parametersOf(
@@ -55,6 +53,10 @@ class DrinkPreviewOptionsBottomFragment(
         toggle_watchlist_btn.setOnClickListener {
             addToWatchlist()
         }
+    }
+
+    fun show(fragmentManager: FragmentManager) {
+        show(fragmentManager, TAG)
     }
 
     private fun initDrinkName() {
