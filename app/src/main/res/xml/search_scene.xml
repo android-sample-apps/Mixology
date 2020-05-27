@@ -13,6 +13,44 @@
 
     </Transition>
 
+    <!--<Transition
+        app:constraintSetEnd="@id/offline"
+        app:constraintSetStart="@id/online"
+        app:duration="250"
+        app:motionInterpolator="easeIn">
+
+    </Transition>-->
+
+    <ConstraintSet android:id="@+id/online">
+
+        <Constraint
+            android:id="@id/filter_mfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:layout_marginEnd="@dimen/screen_padding"
+            android:layout_marginBottom="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </Constraint>
+
+    </ConstraintSet>
+    <ConstraintSet android:id="@+id/offline">
+        <Constraint
+            android:id="@id/filter_mfab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:layout_marginEnd="@dimen/screen_padding"
+            android:layout_marginBottom="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        </Constraint>
+    </ConstraintSet>
+
     <ConstraintSet android:id="@+id/collapsed">
 
         <Constraint
@@ -25,13 +63,14 @@
             app:visibilityMode="ignore" />
 
         <!--<Constraint
-            android:id="@+id/filter_mfab"
+            android:id="@id/filter_mfab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/screen_padding"
+            android:scaleX="1"
+            android:scaleY="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:visibilityMode="ignore" />-->
+            app:layout_constraintEnd_toEndOf="parent" />-->
 
         <Constraint
             android:id="@id/search_container_til"
@@ -58,13 +97,14 @@
             app:visibilityMode="ignore" />
 
         <!--<Constraint
-            android:id="@+id/filter_mfab"
+            android:id="@id/filter_mfab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/screen_padding"
+            android:scaleX="1"
+            android:scaleY="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:visibilityMode="ignore" />-->
+            app:layout_constraintEnd_toEndOf="parent" />-->
 
         <Constraint
             android:id="@id/connectivity_warning"

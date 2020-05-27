@@ -139,10 +139,16 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
         connectivityViewModel
             .connectivityLiveData
             .observe(viewLifecycleOwner, Observer { isConnected ->
-                connectivity_warning.visibility = (!isConnected).toVisibility()
-                search_container_til.visibility = isConnected.toVisibility()
-                filter_mfab.visibility = isConnected.toVisibility()
+//                connectivity_warning.visibility = (!isConnected).toVisibility()
+//                search_container_til.visibility = isConnected.toVisibility()
+//                filter_mfab.visibility = isConnected.toVisibility()
+                onConnectivityChange(isConnected)
             })
+    }
+
+    private fun onConnectivityChange(isConnected: Boolean) {
+        val transitionId = if (isConnected) R.id.online else R.id.offline
+        advanced_search_ml.transitionToState(transitionId)
     }
 
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {

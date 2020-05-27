@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/advanced_search_ml"
     android:padding="@dimen/screen_padding"
-    app:layoutDescription="@xml/search_scene">
+    app:layoutDescription="@xml/search_scene"
+    tools:layoutDescription="@null"
+    >
 
     <include
         android:id="@+id/connectivity_warning"
         layout="@layout/view_connectivity_warning"
-        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +66,6 @@
         app:spanCount="2"
         tools:listitem="@layout/tile_item_drink_preview"
         tools:visibility="visible" />
-
 
     <com.zemingo.drinksmenu.ui.views.MyFab
         android:id="@+id/filter_mfab"
