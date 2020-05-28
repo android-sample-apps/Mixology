@@ -16,11 +16,13 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.shareDrink
 import com.yanivsos.mixological.extensions.toGlideBuilder
 import com.yanivsos.mixological.ui.adapters.DrinkPagerAdapter
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
+import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
@@ -147,6 +149,7 @@ class DrinkFragment : Fragment(R.layout.fragment_drink) {
 
     private fun updateShare(drinkUiModel: DrinkUiModel) {
         share_card_container.setOnClickListener {
+            AnalyticsDispatcher.onDrinkShare(args.drinkPreviewUiModel)
             requireActivity().shareDrink(drinkUiModel)
         }
     }
