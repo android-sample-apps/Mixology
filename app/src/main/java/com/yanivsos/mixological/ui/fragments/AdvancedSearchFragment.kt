@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.hideKeyboard
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
@@ -34,11 +36,13 @@ class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
         Timber.d("onLongClicked: $drinkPreview")
+        AnalyticsDispatcher.onDrinkPreviewLongClicked(drinkPreview, ScreenNames.SEARCH)
         DrinkPreviewOptionsBottomFragment(drinkPreview)
             .show(childFragmentManager)
     }
 
     private fun onDrinkClicked(drinkPreview: DrinkPreviewUiModel) {
+        AnalyticsDispatcher.onDrinkPreviewClicked(drinkPreview, ScreenNames.SEARCH)
         requireView().hideKeyboard()
         findNavController().navigate(
             AdvancedSearchFragmentDirections

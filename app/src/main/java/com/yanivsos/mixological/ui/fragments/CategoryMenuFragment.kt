@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.CategoryAdapter
@@ -134,6 +136,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         Timber.d("onDrinkClicked: $drinkPreviewUiModel")
+        AnalyticsDispatcher.onDrinkPreviewClicked(drinkPreviewUiModel, ScreenNames.CATEGORIES)
         findNavController().navigate(
             HomeFragmentDirections
                 .actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
@@ -142,6 +145,7 @@ class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
 
     private fun onDrinkLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
         Timber.d("onDrinkLongClicked: $drinkPreviewUiModel")
+        AnalyticsDispatcher.onDrinkPreviewLongClicked(drinkPreviewUiModel, ScreenNames.CATEGORIES)
         DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
             .show(childFragmentManager)
     }

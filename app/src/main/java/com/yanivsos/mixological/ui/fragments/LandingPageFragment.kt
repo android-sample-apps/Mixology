@@ -8,6 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.DrinkPreviewAdapter
@@ -88,12 +90,14 @@ class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
     }
 
     private fun onDrinkPreviewClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        AnalyticsDispatcher.onDrinkPreviewClicked(drinkPreviewUiModel, ScreenNames.LANDING_PAGE)
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
         )
     }
 
     private fun onDrinkPreviewLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        AnalyticsDispatcher.onDrinkPreviewLongClicked(drinkPreviewUiModel, ScreenNames.LANDING_PAGE)
         DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
             .show(childFragmentManager)
     }

@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.toVisibility
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
@@ -26,12 +28,14 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
     private val previewAdapter = DrinkPreviewGridAdapter()
 
     private fun onDrinkClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        AnalyticsDispatcher.onDrinkPreviewClicked(drinkPreviewUiModel, ScreenNames.FAVORITES)
         findNavController().navigate(
             HomeFragmentDirections.actionHomeFragmentToDrinkFragment(drinkPreviewUiModel)
         )
     }
 
     private fun onDrinkLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        AnalyticsDispatcher.onDrinkPreviewLongClicked(drinkPreviewUiModel, ScreenNames.FAVORITES)
         DrinkPreviewOptionsBottomFragment(drinkPreviewUiModel)
             .show(childFragmentManager)
     }
