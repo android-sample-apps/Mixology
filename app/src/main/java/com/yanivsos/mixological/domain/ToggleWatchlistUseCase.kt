@@ -9,7 +9,7 @@ class ToggleWatchlistUseCase(
     private val addToWatchlistUseCase: AddToWatchlistUseCase,
     private val removeFromWatchlistUseCase: RemoveFromWatchlistUseCase
 ) {
-    suspend fun toggle(watchlistItemModel: WatchlistItemModel) {
+    suspend fun toggle(watchlistItemModel: WatchlistItemModel): Boolean {
         Timber.d("addToWatchlist: called with $watchlistItemModel")
         val isFavorite = getWatchlistUseCase
             .getById(watchlistItemModel.id)
@@ -22,6 +22,6 @@ class ToggleWatchlistUseCase(
             addToWatchlistUseCase.addToWatchlist(watchlistItemModel)
         }
 
-
+        return !isFavorite
     }
 }

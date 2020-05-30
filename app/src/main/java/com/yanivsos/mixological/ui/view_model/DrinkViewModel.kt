@@ -3,12 +3,15 @@ package com.yanivsos.mixological.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.domain.AddToRecentlyViewedUseCase
 import com.yanivsos.mixological.domain.GetDrinkUseCase
 import com.yanivsos.mixological.domain.ToggleWatchlistUseCase
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.Result
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import kotlinx.coroutines.Dispatchers
@@ -41,9 +44,15 @@ class DrinkViewModel(
         drinkFlow
             .asLiveData()
 
-    fun toggleFavorite() {
+    fun toggleFavorite(drinkViewModel: DrinkPreviewUiModel) {
         GlobalScope.launch(Dispatchers.IO) {
-            toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
+            val isFavorite = toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
+            AnalyticsDispatcher
+                .toggleFavorites(
+                    drinkViewModel,
+                    isFavorite,
+                    ScreenNames.DRINK
+                )
         }
     }
 

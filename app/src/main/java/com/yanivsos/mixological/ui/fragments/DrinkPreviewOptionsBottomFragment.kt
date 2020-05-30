@@ -147,11 +147,11 @@ class DrinkPreviewOptionsBottomFragment(
 
     private fun addToWatchlist() {
         Timber.d("addToWatchlist: drinkId[${drinkPreviewUiModel.name}]")
-        optionsViewModel.addToWatchlist(drinkPreviewUiModel.id)
+        optionsViewModel.addToWatchlist(drinkPreviewUiModel)
     }
 
     private fun removeFromWatchlist() {
         Timber.d("removeFromWatchlist: drinkId[${drinkPreviewUiModel.name}]")
-        optionsViewModel.removeFromWatchlist(drinkPreviewUiModel.id)
+        optionsViewModel.removeFromWatchlist(drinkPreviewUiModel)
     }
 }

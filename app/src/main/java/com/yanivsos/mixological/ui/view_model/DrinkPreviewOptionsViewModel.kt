@@ -3,6 +3,8 @@ package com.yanivsos.mixological.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.domain.AddToWatchlistUseCase
 import com.yanivsos.mixological.domain.GetDrinkPreviewUseCase
 import com.yanivsos.mixological.domain.RemoveFromWatchlistUseCase
@@ -32,17 +34,19 @@ class DrinkPreviewOptionsViewModel(
             .map { it.first() }
             .asLiveData()
 
-    fun addToWatchlist(id: String) {
+    fun addToWatchlist(drinkPreviewUiModel: DrinkPreviewUiModel) {
         GlobalScope.launch(Dispatchers.IO) {
             addToWatchlistUseCase.addToWatchlist(
-                WatchlistItemModel(id)
+                WatchlistItemModel(drinkPreviewUiModel.id)
             )
+            AnalyticsDispatcher.addToFavorites(drinkPreviewUiModel, ScreenNames.DRINK_OPTIONS)
         }
     }
 
-    fun removeFromWatchlist(id: String) {
+    fun removeFromWatchlist(drinkPreviewUiModel: DrinkPreviewUiModel) {
         GlobalScope.launch {
-            removeFromWatchlistUseCase.remove(WatchlistItemModel(id))
+            removeFromWatchlistUseCase.remove(WatchlistItemModel(drinkPreviewUiModel.id))
+            AnalyticsDispatcher.removeFromFavorites(drinkPreviewUiModel, ScreenNames.DRINK_OPTIONS)
         }
     }
 }
