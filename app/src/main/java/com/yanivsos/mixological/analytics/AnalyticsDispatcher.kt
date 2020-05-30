@@ -5,8 +5,8 @@ import com.google.firebase.analytics.ktx.ParametersBuilder
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
-import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import timber.log.Timber
 
@@ -80,6 +80,12 @@ object AnalyticsDispatcher {
         }
     }
 
+    fun onDrinkErrorTryAgain(errorUiModel: DrinkErrorUiModel) {
+        firebaseAnalytics.logEvent(Events.DRINK_TRY_AGAIN_CLICKED) {
+            param(FBParam.ITEM_ID, errorUiModel.drinkId)
+        }
+    }
+
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {
         param(FBParam.ITEM_ID, drinkPreviewUiModel.id)
         param(FBParam.ITEM_NAME, drinkPreviewUiModel.name)
@@ -107,6 +113,7 @@ class Events {
         const val EVENT_REMOVE_FROM_FAVORITE = "remove_from_favorite"
         const val EVENT_INGREDIENT_LONG_CLICK = "ingredient_long_clicked"
         const val INGREDIENT_SEARCH_ONLINE = "ingredient_search_online"
+        const val DRINK_TRY_AGAIN_CLICKED = "drink_try_again_clicked"
     }
 }
 

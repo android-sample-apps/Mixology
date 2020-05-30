@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.airbnb.lottie.LottieDrawable
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -91,6 +92,7 @@ class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
 
     private fun onRetry() {
         Timber.d("onRetry called:")
+        AnalyticsDispatcher.onDrinkErrorTryAgain(args.errorUiModel)
         drinkViewModel.refreshDrink()
     }
 }
