@@ -4,7 +4,7 @@
     android:id="@+id/favorite_card_container"
     android:layout_width="@dimen/share_card_size"
     android:layout_height="@dimen/share_card_size"
-    app:cardCornerRadius="@dimen/share_card_size"
+    app:cardCornerRadius="@dimen/share_card_radius_size"
     app:cardElevation="4dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -13,16 +13,16 @@
     app:strokeColor="@color/header_text_color"
     app:strokeWidth="0.5dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/cherry_iv"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/cherry_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/screen_padding_small"
-        android:tint="@color/cherry_red"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cherries" />
+            android:tint="@color/cherry_red"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_cherries" />
 
 </com.google.android.material.card.MaterialCardView>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/share_card_size"
     android:layout_height="@dimen/share_card_size"
-    app:cardCornerRadius="@dimen/share_card_size"
+    app:cardCornerRadius="@dimen/share_card_radius_size"
     android:id="@+id/share_card_container"
     app:cardElevation="4dp"
     app:layout_constraintBottom_toBottomOf="parent"
