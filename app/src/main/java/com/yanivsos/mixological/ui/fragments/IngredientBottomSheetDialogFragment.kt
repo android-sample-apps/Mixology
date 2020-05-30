@@ -8,9 +8,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.extensions.toVisibility
 import com.yanivsos.mixological.extensions.webSearchIntent
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
+import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.ui.view_model.IngredientDetailsViewModel
 import kotlinx.android.synthetic.main.bottom_dialog_ingredient.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -20,7 +22,7 @@ import timber.log.Timber
 private const val TAG = "IngredientBottomSheetDialogFragment"
 
 class IngredientBottomSheetDialogFragment(
-    private val ingredient: String
+    private val ingredient: IngredientUiModel
 ) : BottomSheetDialogFragment() {
 
     private val detailsViewModel: IngredientDetailsViewModel by viewModel {
@@ -29,7 +31,7 @@ class IngredientBottomSheetDialogFragment(
         )
     }
 
-    private var webSearchQuery = ingredient
+    private var webSearchQuery = ingredient.name
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +59,7 @@ class IngredientBottomSheetDialogFragment(
 
     private fun initSearchOnlineButton() {
         search_online_btn.setOnClickListener {
+            AnalyticsDispatcher.onIngredientSearchedOnline(ingredient)
             startActivity(webSearchIntent(webSearchQuery))
         }
     }
@@ -66,7 +69,7 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun updateName() {
-        ingredient_name_tv.text = ingredient
+        ingredient_name_tv.text = ingredient.name
     }
 
     private fun updateDrink(details: IngredientDetailsUiModel) {

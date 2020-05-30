@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.ui.adapters.IngredientAdapter
 import com.yanivsos.mixological.ui.models.*
 import com.yanivsos.mixological.ui.utils.InputActions
@@ -42,9 +44,14 @@ class IngredientsFragment(
                 .inputActions.filterIsInstance<InputActions.LongClick<LoadingIngredientUiModel.Loaded>>()
                 .map { it.data.ingredient }
                 .collect {
-                    IngredientBottomSheetDialogFragment(it.name).show(childFragmentManager)
+                    onIngredientLongClicked(it)
                 }
         }
+    }
+
+    private fun onIngredientLongClicked(ingredientUiModel: IngredientUiModel) {
+        AnalyticsDispatcher.onIngredientLongClicked(ingredientUiModel, ScreenNames.INGREDIENTS)
+        IngredientBottomSheetDialogFragment(ingredientUiModel).show(childFragmentManager)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
