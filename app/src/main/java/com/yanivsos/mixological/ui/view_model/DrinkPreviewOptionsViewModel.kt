@@ -44,7 +44,7 @@ class DrinkPreviewOptionsViewModel(
     }
 
     fun removeFromWatchlist(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        GlobalScope.launch {
+        GlobalScope.launch(Dispatchers.IO) {
             removeFromWatchlistUseCase.remove(WatchlistItemModel(drinkPreviewUiModel.id))
             AnalyticsDispatcher.removeFromFavorites(drinkPreviewUiModel, ScreenNames.DRINK_OPTIONS)
         }

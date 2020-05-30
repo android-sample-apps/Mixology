@@ -1,5 +1,6 @@
 package com.yanivsos.mixological.analytics
 
+import androidx.fragment.app.Fragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.ParametersBuilder
 import com.google.firebase.analytics.ktx.analytics
@@ -88,11 +89,19 @@ object AnalyticsDispatcher {
     }
 
     fun onSearchFilter(drinkFilter: DrinkFilter) {
-        firebaseAnalytics.logEvent(Events.SEARCH_DRINK){
+        firebaseAnalytics.logEvent(Events.SEARCH_DRINK) {
             param(FBParam.SEARCH_TERM, drinkFilter.query)
             param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
             param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
         }
+    }
+
+    fun setCurrentScreen(fragment: Fragment) {
+        firebaseAnalytics.setCurrentScreen(
+            fragment.requireActivity(),
+            fragment::class.simpleName,
+            fragment::class.simpleName
+        )
     }
 
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {

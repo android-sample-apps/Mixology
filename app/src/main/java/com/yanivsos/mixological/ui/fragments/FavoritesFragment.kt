@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
+class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
 
     private val watchlistViewModel: WatchlistViewModel by viewModel()
     private val previewAdapter = DrinkPreviewGridAdapter()

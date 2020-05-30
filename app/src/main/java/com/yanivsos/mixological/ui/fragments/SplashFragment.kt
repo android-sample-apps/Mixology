@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 
 private const val SPLASH_DELAY = 4000L
 
-class SplashFragment : Fragment(R.layout.fragment_splash) {
+class SplashFragment : BaseFragment(R.layout.fragment_splash) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

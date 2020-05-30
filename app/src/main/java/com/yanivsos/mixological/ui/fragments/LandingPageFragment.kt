@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LandingPageFragment : Fragment(R.layout.fragment_landing_page) {
+class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
 
     private val landingPageViewModel: LandingPageViewModel by viewModel()
     private val latestArrivalsAdapter = DrinkPreviewAdapter()

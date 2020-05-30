@@ -23,7 +23,7 @@ private const val TAG = "IngredientBottomSheetDialogFragment"
 
 class IngredientBottomSheetDialogFragment(
     private val ingredient: IngredientUiModel
-) : BottomSheetDialogFragment() {
+) : BaseBottomSheetDialogFragment() {
 
     private val detailsViewModel: IngredientDetailsViewModel by viewModel {
         parametersOf(

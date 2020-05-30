@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class AdvancedSearchFragment : Fragment(R.layout.fragment_advanced_search) {
+class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by viewModel()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()

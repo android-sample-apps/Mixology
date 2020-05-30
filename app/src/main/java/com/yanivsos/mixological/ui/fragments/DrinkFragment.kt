@@ -39,7 +39,7 @@ import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
 
-class DrinkFragment : Fragment(R.layout.fragment_drink) {
+class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy {

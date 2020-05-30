@@ -25,7 +25,7 @@ import org.koin.core.parameter.parametersOf
 
 class MethodFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
-) : Fragment(R.layout.fragment_method) {
+) : BaseFragment(R.layout.fragment_method) {
 
     private val methodAdapter = MethodAdapter()
 

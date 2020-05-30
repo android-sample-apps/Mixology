@@ -25,7 +25,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
-class DrinkErrorFragment : Fragment(R.layout.fragment_connectivity_error) {
+class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
 
     private val args: DrinkErrorFragmentArgs by navArgs()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()

@@ -32,7 +32,7 @@ import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
 private const val TAG = "FilterBottomDialogFragment"
-class FilterBottomDialogFragment : BottomSheetDialogFragment() {
+class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
         @Suppress("RemoveExplicitTypeArguments")

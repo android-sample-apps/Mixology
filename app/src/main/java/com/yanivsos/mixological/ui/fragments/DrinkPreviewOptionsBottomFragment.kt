@@ -26,7 +26,7 @@ private const val TAG = "DrinkPreviewOptionsBottomFragment"
 
 class DrinkPreviewOptionsBottomFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
-) : BottomSheetDialogFragment() {
+) : BaseBottomSheetDialogFragment() {
 
     private val optionsViewModel: DrinkPreviewOptionsViewModel by viewModel {
         parametersOf(

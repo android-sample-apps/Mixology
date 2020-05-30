@@ -28,7 +28,7 @@ private const val LOADING_ITEM_NUMBER = 3
 
 class IngredientsFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
-) : Fragment(R.layout.fragment_ingredients) {
+) : BaseFragment(R.layout.fragment_ingredients) {
 
     private val ingredientsAdapter = IngredientAdapter()
 

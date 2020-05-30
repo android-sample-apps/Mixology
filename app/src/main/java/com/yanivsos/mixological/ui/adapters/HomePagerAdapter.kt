@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.ui.fragments.CategoryMenuFragment
 import com.yanivsos.mixological.ui.fragments.LandingPageFragment
-import com.yanivsos.mixological.ui.fragments.WatchlistFragment
+import com.yanivsos.mixological.ui.fragments.FavoritesFragment
 
 class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
@@ -18,7 +18,7 @@ class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         return when (position) {
             0 -> LandingPageFragment()
             1 -> CategoryMenuFragment()
-            else -> WatchlistFragment()
+            else -> FavoritesFragment()
         }
     }
 

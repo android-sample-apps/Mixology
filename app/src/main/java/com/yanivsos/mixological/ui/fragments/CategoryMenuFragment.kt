@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class CategoryMenuFragment : Fragment(R.layout.fragment_category_menu) {
+class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
 
     private val categoriesViewModel: CategoriesViewModel by viewModel()
     private val categoryAdapter = CategoryAdapter()
