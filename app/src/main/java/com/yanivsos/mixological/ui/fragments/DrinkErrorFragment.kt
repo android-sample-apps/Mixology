@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_connectivity_error.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -43,6 +44,7 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
         lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drinkFlow
+                .onEach { error_retry_btn.isEnabled = true }
                 .filterIsInstance<ResultUiModel.Success<DrinkUiModel>>()
                 .collect {
                     navigateBackToDrink(it.data)
@@ -76,7 +78,10 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     }
 
     private fun initRetryButton() {
-        error_retry_btn.setOnClickListener { onRetry() }
+        error_retry_btn.setOnClickListener {
+            error_retry_btn.isEnabled = false
+            onRetry()
+        }
     }
 
     private fun observeConnectivity() {

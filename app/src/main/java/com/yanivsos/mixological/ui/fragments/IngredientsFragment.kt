@@ -57,14 +57,21 @@ class IngredientsFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initIngredientsRecyclerView()
-        drinkViewModel
-            .drink
-            .observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    is ResultUiModel.Success -> onDrinkReceived(it.data)
-                    is ResultUiModel.Loading -> onDrinkLoading()
+        observeDrink()
+    }
+
+    private fun observeDrink() {
+        lifecycleScope.launch(Dispatchers.Main) {
+            drinkViewModel
+                .drinkFlow
+                .flowOn(Dispatchers.IO)
+                .collect {
+                    when (it) {
+                        is ResultUiModel.Success -> onDrinkReceived(it.data)
+                        is ResultUiModel.Loading -> onDrinkLoading()
+                    }
                 }
-            })
+        }
     }
 
     private fun initIngredientsRecyclerView() {
@@ -82,7 +89,8 @@ class IngredientsFragment(
                 .flowOn(Dispatchers.IO)
                 .collect {
                     Timber.d("onDrinkReceived: $it")
-                    ingredientsAdapter.update(it) }
+                    ingredientsAdapter.update(it)
+                }
         }
     }
 
@@ -109,7 +117,8 @@ class IngredientsFragment(
                 .flowOn(Dispatchers.IO)
                 .collect {
                     Timber.d("onDrinkLoading: $it")
-                    ingredientsAdapter.update(it) }
+                    ingredientsAdapter.update(it)
+                }
         }
     }
 }
