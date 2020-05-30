@@ -27,7 +27,7 @@ class IngredientBottomSheetDialogFragment(
 
     private val detailsViewModel: IngredientDetailsViewModel by viewModel {
         parametersOf(
-            ingredient
+            ingredient.name
         )
     }
 
@@ -49,7 +49,7 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun observeDetails() {
-        Timber.d("observing details with $detailsViewModel")
+        Timber.d("observing details with $ingredient")
         detailsViewModel
             .ingredientDetailsLiveData
             .observe(viewLifecycleOwner, Observer {
