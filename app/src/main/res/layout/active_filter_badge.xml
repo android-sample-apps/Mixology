@@ -7,7 +7,7 @@
     tools:layout_height="@dimen/badge_size"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/screen_radius"
+    app:cardCornerRadius="13dp"
     app:cardElevation="4dp"
     app:cardBackgroundColor="@color/white"
     app:strokeColor="@color/black"
