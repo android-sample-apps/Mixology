@@ -63,14 +63,13 @@ class IngredientsFragment(
     private fun observeDrink() {
         lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
-                .drinkFlow
-                .flowOn(Dispatchers.IO)
-                .collect {
+                .drink
+                .observe(viewLifecycleOwner, Observer {
                     when (it) {
                         is ResultUiModel.Success -> onDrinkReceived(it.data)
                         is ResultUiModel.Loading -> onDrinkLoading()
                     }
-                }
+                })
         }
     }
 

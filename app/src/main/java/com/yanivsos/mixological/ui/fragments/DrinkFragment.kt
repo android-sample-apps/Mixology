@@ -7,6 +7,8 @@ import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -31,6 +33,7 @@ import kotlinx.android.synthetic.main.layout_drink_label.*
 import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -41,6 +44,7 @@ import timber.log.Timber
 
 class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
+    private var drinkJob: Job? = null
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy {
         DrinkPagerAdapter(
@@ -54,6 +58,11 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate called:")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        drinkJob?.cancel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -116,7 +125,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun observeDrink() {
-        lifecycleScope.launch(Dispatchers.Main) {
+        drinkJob = lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drinkFlow
                 .flowOn(Dispatchers.IO)
@@ -157,7 +166,15 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         drink_title.text = drinkName
     }
 
+    private fun clearLottieView() {
+        header_image_placeholder.visibility = View.GONE
+    }
+
     private fun updateDrinkImage(thumbnail: String?) {
+        val clearLottieLiveData = MutableLiveData<Unit>()
+        clearLottieLiveData.observe(viewLifecycleOwner, Observer {
+            clearLottieView()
+        })
         requireContext()
             .toGlideBuilder(thumbnail)
             .addListener(object : RequestListener<Bitmap?> {
@@ -177,7 +194,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    header_image_placeholder.visibility = View.GONE
+                    clearLottieLiveData.postValue(Unit)
                     return false
                 }
             })
