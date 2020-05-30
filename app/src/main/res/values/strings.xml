@@ -47,4 +47,7 @@
     <string name="error_retry">try again</string>
     <string name="no_favorites_yet">No favorites</string>
     <string name="no_favorites_description">Apparently, nothing is good enough for you</string>
+    <string name="filters">Filters</string>
+    <string name="offline">Offline</string>
+    <string name="network_unavailable">Your network is unavailable.\nCheck your data or wifi connection.</string>
 </resources>

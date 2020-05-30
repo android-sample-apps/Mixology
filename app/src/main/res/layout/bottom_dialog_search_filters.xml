@@ -15,7 +15,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_max="450dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +142,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="@dimen/screen_padding"
-            android:text="Filters"
+            android:text="@string/filters"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,31 +160,9 @@
             android:layout_height="@dimen/fading_edge_height"
             android:background="@drawable/white_fading_edge"
             android:rotation="180"
-            app:layout_constraintBottom_toTopOf="@id/filter_accept_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/filter_accept_btn"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:letterSpacing="0.125"
-            android:padding="0dp"
-            android:text="apply"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:visibility="gone"
-            app:backgroundTint="@color/black"
-            app:cornerRadius="0dp"
-            app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/filter_container"
-            app:rippleColor="@color/secondary_text_color" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

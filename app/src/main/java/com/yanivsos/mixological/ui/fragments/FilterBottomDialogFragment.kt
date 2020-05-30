@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.FilterType
@@ -77,9 +76,6 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initFiltersRecyclerView()
         observerFilters()
-        filter_accept_btn.setOnClickListener {
-            dismiss()
-        }
     }
 
     private fun observerFilters() {
