@@ -60,6 +60,8 @@ class DrinkMapperUi(
 
     private fun mapShareText(t: DrinkModel): String {
         return StringBuilder().apply {
+            append(t.name)
+            append("\n\n")
             t.ingredients.run {
                 if (isNotEmpty()) {
                     append(appCtx.getString(R.string.ingredients))
