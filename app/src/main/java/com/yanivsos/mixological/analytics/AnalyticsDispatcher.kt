@@ -5,6 +5,7 @@ import com.google.firebase.analytics.ktx.ParametersBuilder
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
+import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
@@ -86,6 +87,14 @@ object AnalyticsDispatcher {
         }
     }
 
+    fun onSearchFilter(drinkFilter: DrinkFilter) {
+        firebaseAnalytics.logEvent(Events.SEARCH_DRINK){
+            param(FBParam.SEARCH_TERM, drinkFilter.query)
+            param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
+            param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
+        }
+    }
+
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {
         param(FBParam.ITEM_ID, drinkPreviewUiModel.id)
         param(FBParam.ITEM_NAME, drinkPreviewUiModel.name)
@@ -114,8 +123,10 @@ class Events {
         const val EVENT_INGREDIENT_LONG_CLICK = "ingredient_long_clicked"
         const val INGREDIENT_SEARCH_ONLINE = "ingredient_search_online"
         const val DRINK_TRY_AGAIN_CLICKED = "drink_try_again_clicked"
+        const val SEARCH_DRINK = "drink_search"
     }
 }
 
 
 private const val PARAM_IS_FAVORITE = "is_favorite"
+private const val PARAM_IS_ACTIVE = "is_active"

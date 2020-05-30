@@ -3,6 +3,7 @@ package com.yanivsos.mixological.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.domain.GetSearchFiltersUseCase
 import com.yanivsos.mixological.domain.MultipleFilterDrinkUseCase
 import com.yanivsos.mixological.domain.models.DrinkFilter
@@ -62,11 +63,11 @@ class AdvancedSearchViewModel(
         .asLiveData()
 
     fun searchByName(name: String) {
-        filter.updateFilter(DrinkFilter(query = name, type = FilterType.NAME))
+        updateFilter(DrinkFilter(query = name, type = FilterType.NAME))
     }
 
     fun clearByName() {
-        filter.updateFilter(DrinkFilter(query = "", type = FilterType.NAME, active = false))
+        updateFilter(DrinkFilter(query = "", type = FilterType.NAME, active = false))
     }
 
     private fun clearOnGoingSearches() {
@@ -77,6 +78,7 @@ class AdvancedSearchViewModel(
     fun updateFilter(drinkFilter: DrinkFilter) {
         Timber.i("updating filter: $drinkFilter")
         filter.updateFilter(drinkFilter)
+        AnalyticsDispatcher.onSearchFilter(drinkFilter)
     }
 
     override fun onCleared() {
