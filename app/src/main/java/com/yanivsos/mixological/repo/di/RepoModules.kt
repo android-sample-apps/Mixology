@@ -10,6 +10,8 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
+
 @Suppress("RemoveExplicitTypeArguments")
 val repoModule = module {
 
@@ -25,7 +27,7 @@ val repoModule = module {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://www.thecocktaildb.com/api/json/v1/1/")
+            .baseUrl("https://www.thecocktaildb.com/api/json/v2/9973533/")
             .build().create(DrinkService::class.java)
     }
 
