@@ -83,6 +83,110 @@ class FilterDrinkUseCase(
     }
 }
 
+class FilterDrinkByIngredientUseCase(
+    private val advancedSearchRepository: AdvancedSearchRepository
+) : Filterable {
+    private val channel = ConflatedBroadcastChannel<List<DrinkPreviewModel>?>()
+    private val selectedFilterChannel = ConflatedBroadcastChannel<Map<FilterType, Set<String>>>()
+    override val results = channel.asFlow()
+    override val selectedFilters: Flow<Map<FilterType, Set<String>>> =
+        selectedFilterChannel.asFlow()
+
+    private var searchJob: Job? = null
+
+    private val filterCache = mutableSetOf<DrinkFilter>()
+
+    init {
+        searchJob = GlobalScope.launch(Dispatchers.IO) {
+            sendNotActive()
+        }
+    }
+
+    override fun filter(drinkFilter: DrinkFilter) {
+        Timber.d("filtering by [$drinkFilter]")
+        searchJob = GlobalScope.launch(Dispatchers.IO) {
+            if (!drinkFilter.active) {
+                removeFromCache(drinkFilter)
+                if (filterCache.isEmpty()) {
+                    sendNotActive()
+                } else {
+                    sendFilterQuery()
+                }
+            } else {
+                sendFilterQuery(drinkFilter) { addToCache(drinkFilter) }
+            }
+        }
+    }
+
+    private fun addToCache(drinkFilter: DrinkFilter) {
+        Timber.d("adding to cache[$drinkFilter]")
+        filterCache.add(drinkFilter)
+    }
+
+    private fun removeFromCache(drinkFilter: DrinkFilter) {
+        Timber.d("removing from cache[$drinkFilter]")
+        filterCache.remove(drinkFilter)
+    }
+
+    private suspend fun sendFilterQuery(
+        filter: DrinkFilter? = null,
+        onFinished: (() -> Unit)? = null
+    ) {
+        val result: List<DrinkPreviewModel> = try {
+            val searchQuery = buildSearchQuery(filter)
+            fetchQuery(searchQuery).apply {
+                onFinished?.invoke()
+            }
+        } catch (e: CancellationException) {
+            Timber.i(e, "filtering by [$filter] cancelled")
+            emptyList()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed searching by [$filter], sending an empty list")
+            emptyList()
+        }
+
+        selectedFilterChannel.send(buildSelectedFilters())
+        channel.send(result)
+    }
+
+    private suspend fun sendNotActive() {
+        selectedFilterChannel.send(inactiveFilters())
+        channel.send(null)
+    }
+
+    private fun inactiveFilters() =
+        mutableMapOf<FilterType, Set<String>>()
+            .apply { put(FilterType.INGREDIENTS, emptySet()) }
+
+    private fun buildSelectedFilters(): Map<FilterType, Set<String>> {
+        val ingredientSet = filterCache.map { it.query }.toSet()
+        return mutableMapOf<FilterType, Set<String>>().apply {
+            put(FilterType.INGREDIENTS, ingredientSet)
+            Timber.d("buildSelectedFilters: $this")
+        }
+    }
+
+    override fun clear() {
+        Timber.d("Clearing ongoing searches")
+        searchJob?.cancel()
+    }
+
+    private fun buildSearchQuery(filter: DrinkFilter? = null): DrinkFilter {
+        val ingredientQuery = filterCache.toMutableSet().apply {
+            filter?.let { add(filter) }
+        }.map { it.query }.joinToString(separator = ",") { it.replace(" ", "_") }
+
+        return DrinkFilter(
+            query = ingredientQuery,
+            type = FilterType.INGREDIENTS
+        )
+    }
+
+    private suspend fun fetchQuery(filter: DrinkFilter): List<DrinkPreviewModel> {
+        return advancedSearchRepository.filterBy(filter)
+    }
+}
+
 abstract class AggregateFilterDrinkUseCase(
     private val advancedSearchRepository: AdvancedSearchRepository
 ) : Filterable {

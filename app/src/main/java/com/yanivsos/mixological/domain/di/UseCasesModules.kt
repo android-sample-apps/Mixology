@@ -118,13 +118,19 @@ val useCasesModule = module {
     }
 
     factory {
+        FilterDrinkByIngredientUseCase(
+            advancedSearchRepository = get()
+        )
+    }
+
+    factory {
         MultipleFilterDrinkUseCase(
             drinkPreviewRepository = get(),
             combineWithFavoriteUseCase = get(),
             getDrinkPreviewUseCase = get(),
             alcoholicFilter = get<UnionFilterDrinkUseCase>(),
             categoryFilter = get<UnionFilterDrinkUseCase>(),
-            ingredientFilter = get<IntersectionFilterDrinkUseCase>(),
+            ingredientFilter = get<FilterDrinkByIngredientUseCase>(),
             glassFilter = get<UnionFilterDrinkUseCase>(),
             nameFilter = get<FilterDrinkUseCase>()
         )
