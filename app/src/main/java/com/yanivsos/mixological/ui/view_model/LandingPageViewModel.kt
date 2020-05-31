@@ -3,10 +3,7 @@ package com.yanivsos.mixological.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.yanivsos.mixological.domain.GetLatestArrivalsUseCase
-import com.yanivsos.mixological.domain.GetMostPopularUseCase
-import com.yanivsos.mixological.domain.GetRecentlyViewedUseCase
-import com.yanivsos.mixological.domain.UpdateLatestArrivalsUseCase
+import com.yanivsos.mixological.domain.*
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
@@ -20,6 +17,7 @@ class LandingPageViewModel(
     private val latestArrivalsUseCase: GetLatestArrivalsUseCase,
     private val recentSearchesUseCase: GetRecentlyViewedUseCase,
     updateLatestArrivalsUseCase: UpdateLatestArrivalsUseCase,
+    updateMostPopularUseCase: UpdateMostPopularUseCase,
     private val mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
@@ -28,6 +26,7 @@ class LandingPageViewModel(
 
     init {
         updateLatestArrivalsUseCase.update()
+        updateMostPopularUseCase.update()
     }
 
     private fun landingPage(): Flow<LandingPageUiModel> {

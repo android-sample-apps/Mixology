@@ -37,6 +37,8 @@ val reactiveStoreModule = module {
 
     factory<LatestArrivalsDao> { get<DrinksDatabase>().latestArrivalsDao() }
 
+    factory<MostPopularDao> { get<DrinksDatabase>().mostPopularDao() }
+
     factory {
         CategoryReactiveStore(
             categoryDao = get<CategoryDao>()
@@ -94,6 +96,12 @@ val reactiveStoreModule = module {
     factory {
         LatestArrivalsReactiveStore(
             latestArrivalsDao = get()
+        )
+    }
+
+    factory {
+        MostPopularReactiveStore(
+            mostPopularDao = get()
         )
     }
 }

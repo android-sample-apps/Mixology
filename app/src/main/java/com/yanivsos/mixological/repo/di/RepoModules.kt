@@ -11,7 +11,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-
 @Suppress("RemoveExplicitTypeArguments")
 val repoModule = module {
 
@@ -105,8 +104,8 @@ val repoModule = module {
             mapper = get<AlcoholicFilterMapper>()
         )
     }
-    
-    factory { 
+
+    factory {
         WatchlistRepository(
             watchlistReactiveStore = get()
         )
@@ -114,6 +113,14 @@ val repoModule = module {
 
     factory {
         LatestArrivalsRepository(
+            service = get<DrinkService>(),
+            reactiveStore = get(),
+            mapper = get<DrinkPreviewMapper>()
+        )
+    }
+
+    factory {
+        MostPopularRepository(
             service = get<DrinkService>(),
             reactiveStore = get(),
             mapper = get<DrinkPreviewMapper>()
