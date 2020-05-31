@@ -15,7 +15,8 @@ import com.yanivsos.mixological.domain.models.*
         IngredientDetailsModel::class,
         GlassModel::class,
         AlcoholicFilterModel::class,
-        WatchlistItemModel::class
+        WatchlistItemModel::class,
+        LatestArrivalsModel::class
     ],
     version = 1
 )
@@ -30,6 +31,7 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun recentlyViewedDao(): RecentlyViewedDao
     abstract fun ingredientDetailsDao(): IngredientDetailsDao
     abstract fun watchlistDao(): WatchlistDao
+    abstract fun latestArrivalsDao(): LatestArrivalsDao
 
 }
 

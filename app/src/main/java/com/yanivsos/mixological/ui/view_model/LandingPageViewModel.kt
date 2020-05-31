@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.yanivsos.mixological.domain.GetLatestArrivalsUseCase
 import com.yanivsos.mixological.domain.GetMostPopularUseCase
 import com.yanivsos.mixological.domain.GetRecentlyViewedUseCase
+import com.yanivsos.mixological.domain.UpdateLatestArrivalsUseCase
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
@@ -18,11 +19,16 @@ class LandingPageViewModel(
     private val mostPopularUseCase: GetMostPopularUseCase,
     private val latestArrivalsUseCase: GetLatestArrivalsUseCase,
     private val recentSearchesUseCase: GetRecentlyViewedUseCase,
+    updateLatestArrivalsUseCase: UpdateLatestArrivalsUseCase,
     private val mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>
 ) : ViewModel() {
 
     val landingPageLiveData: LiveData<LandingPageUiModel> =
         landingPage().asLiveData()
+
+    init {
+        updateLatestArrivalsUseCase.update()
+    }
 
     private fun landingPage(): Flow<LandingPageUiModel> {
         return latestArrivals().combine(mostPopular()) { latestArrivals, popular ->

@@ -53,6 +53,7 @@ val viewModelModule = module {
             mostPopularUseCase = get(),
             latestArrivalsUseCase = get(),
             recentSearchesUseCase = get(),
+            updateLatestArrivalsUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
     }

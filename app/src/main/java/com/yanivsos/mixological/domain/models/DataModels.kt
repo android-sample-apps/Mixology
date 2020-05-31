@@ -64,6 +64,16 @@ data class DrinkPreviewModel(
 }
 
 @Entity
+data class LatestArrivalsModel(
+    @PrimaryKey val drinkId: String
+)
+
+@Entity
+data class MostPopularModel(
+    @PrimaryKey val drinkId: String
+)
+
+@Entity
 data class RecentlyViewedModel(
     @PrimaryKey val drinkId: String,
     val lastViewedTime: Long

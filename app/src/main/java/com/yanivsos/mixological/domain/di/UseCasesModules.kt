@@ -58,8 +58,15 @@ val useCasesModule = module {
 
     factory {
         GetLatestArrivalsUseCase(
-            combineWithFavoriteUseCase = get(),
+            getDrinkPreviewUseCase = get(),
             repository = get()
+        )
+    }
+
+    factory {
+        UpdateLatestArrivalsUseCase(
+            latestArrivalsRepository = get(),
+            drinkPreviewRepository = get()
         )
     }
 

@@ -111,4 +111,12 @@ val repoModule = module {
             watchlistReactiveStore = get()
         )
     }
+
+    factory {
+        LatestArrivalsRepository(
+            service = get<DrinkService>(),
+            reactiveStore = get(),
+            mapper = get<DrinkPreviewMapper>()
+        )
+    }
 }

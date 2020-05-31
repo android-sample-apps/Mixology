@@ -11,7 +11,9 @@ class GetDrinkPreviewUseCase(
     fun getAll(): Flow<List<DrinkPreviewModel>> =
         combineWithFavoriteUseCase.combine(repository.getAll())
 
-
     fun getById(id: String) =
         combineWithFavoriteUseCase.combine(repository.getByIds(listOf(id)))
+
+    fun getByIds(ids: List<String>) =
+        combineWithFavoriteUseCase.combine(repository.getByIds(ids))
 }
