@@ -2,23 +2,41 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/advanced_search_ml"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/advanced_search_ml"
     android:padding="@dimen/screen_padding"
-    tools:layoutDescription="@null"
-    >
+    app:layoutDescription="@xml/search_scene">
 
     <include
         android:id="@+id/connectivity_warning"
         layout="@layout/view_connectivity_warning"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
         tools:visibility="visible" />
+
+    <ru.nikartm.support.ImageBadgeView
+        android:id="@+id/filter_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="@dimen/screen_padding_small"
+        android:src="@drawable/ic_filter_list"
+        android:visibility="visible"
+        app:ibv_badgeColor="@color/black"
+        app:ibv_maxBadgeValue="99"
+        app:ibv_badgeLimitValue="true"
+        app:ibv_badgePosition="top_right"
+        app:ibv_badgeTextColor="@color/white"
+        app:ibv_badgeTextSize="10sp"
+        app:ibv_fixedBadgeRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/search_container_til"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_container_til"
+        tools:ibv_badgeValue="3" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search_container_til"
@@ -70,31 +88,5 @@
         app:spanCount="2"
         tools:listitem="@layout/tile_item_drink_preview"
         tools:visibility="visible" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/filter_image"
-        android:visibility="visible"
-        android:src="@drawable/ic_filter_list"
-        android:background="?selectableItemBackground"
-        android:layout_width="wrap_content"
-        android:padding="8dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/search_container_til"
-        app:layout_constraintBottom_toBottomOf="@id/search_container_til"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <com.yanivsos.mixological.ui.views.MyFab
-        android:id="@+id/filter_mfab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardCornerRadius="28dp"
-        app:cardElevation="0dp"
-        app:layout_constraintTop_toTopOf="@id/search_container_til"
-        app:layout_constraintBottom_toBottomOf="@id/search_container_til"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/secondary_text_color"
-        app:strokeWidth="1dp" />
-
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

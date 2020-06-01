@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.fragment.app.Fragment
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,6 +16,7 @@ import com.yanivsos.mixological.extensions.hideKeyboard
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.DrinkPreviewGridAdapter
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
+import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.AdvancedSearchViewModel
@@ -78,7 +79,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                 val isOnline = currentId == R.id.online
                 Timber.d("filter button enabled: $isOnline")
-                filter_mfab.run {
+                filter_image.run {
                     isClickable = isOnline
                     isFocusable = isOnline
                 }
@@ -87,12 +88,12 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initFilterFab() {
-        filter_mfab.setOnClickListener {
-            FilterBottomDialogFragment().show(childFragmentManager)
-        }
-
-        filter_image.setOnClickListener {
-            FilterBottomDialogFragment().show(childFragmentManager)
+        filter_image.run {
+            badgeTextFont =
+                ResourcesCompat.getFont(requireContext(), R.font.jesa_script_regular)
+            setOnClickListener {
+                FilterBottomDialogFragment().show(childFragmentManager)
+            }
         }
     }
 
@@ -149,11 +150,15 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         advancedSearchViewModel
             .searchFiltersLiveData
             .observe(viewLifecycleOwner, Observer {
-                filter_mfab.run {
-//                    text = getString(R.string.filter_selected, it.activeFiltersBadge)
-//                    textVisibility = it.activeFiltersBadge != null
-                }
+                onSelectedFiltersReceived(it)
             })
+    }
+
+    private fun onSelectedFiltersReceived(searchFiltersUiModel: SearchFiltersUiModel) {
+        filter_image.run {
+            isShowCounter = searchFiltersUiModel.activeFiltersBadge != null
+            badgeValue = searchFiltersUiModel.activeFiltersBadge ?: 0
+        }
     }
 
     private fun observeConnectivity() {
@@ -166,7 +171,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun onConnectivityChange(isConnected: Boolean) {
         val transitionId = if (isConnected) R.id.online else R.id.offline
-//        advanced_search_ml.transitionToState(transitionId)
+        advanced_search_ml.transitionToState(transitionId)
     }
 
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {

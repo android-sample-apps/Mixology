@@ -102,10 +102,10 @@ data class SearchFiltersUiModel(
 ) {
     val activeFiltersBadge = activeFiltersBadge()
 
-    private fun activeFiltersBadge(): String? {
+    private fun activeFiltersBadge(): Int? {
         val activeFilters = countActiveFilters()
         return if (activeFilters > 0) {
-            activeFilters.toString()
+            activeFilters
         } else {
             null
         }
