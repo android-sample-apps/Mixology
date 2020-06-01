@@ -90,6 +90,10 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         filter_mfab.setOnClickListener {
             FilterBottomDialogFragment().show(childFragmentManager)
         }
+
+        filter_image.setOnClickListener {
+            FilterBottomDialogFragment().show(childFragmentManager)
+        }
     }
 
     private fun initSearchQuery() {
@@ -146,8 +150,8 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             .searchFiltersLiveData
             .observe(viewLifecycleOwner, Observer {
                 filter_mfab.run {
-                    text = getString(R.string.filter_selected, it.activeFiltersBadge)
-                    textVisibility = it.activeFiltersBadge != null
+//                    text = getString(R.string.filter_selected, it.activeFiltersBadge)
+//                    textVisibility = it.activeFiltersBadge != null
                 }
             })
     }
@@ -162,7 +166,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun onConnectivityChange(isConnected: Boolean) {
         val transitionId = if (isConnected) R.id.online else R.id.offline
-        advanced_search_ml.transitionToState(transitionId)
+//        advanced_search_ml.transitionToState(transitionId)
     }
 
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {

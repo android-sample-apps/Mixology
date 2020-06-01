@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/advanced_search_ml"
     android:padding="@dimen/screen_padding"
-    app:layoutDescription="@xml/search_scene"
     tools:layoutDescription="@null"
     >
 
@@ -15,6 +14,7 @@
         layout="@layout/view_connectivity_warning"
         app:layout_constraintBottom_toTopOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread"
@@ -26,13 +26,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/screen_padding"
+        app:boxCornerRadiusBottomEnd="@dimen/screen_radius"
+        app:boxCornerRadiusBottomStart="@dimen/screen_radius"
+        app:boxCornerRadiusTopEnd="@dimen/screen_radius"
+        app:boxCornerRadiusTopStart="@dimen/screen_radius"
         app:boxStrokeColor="@color/header_text_color"
         app:endIconMode="clear_text"
         app:endIconTint="@color/header_text_color"
         app:helperTextTextAppearance="@style/SearchTextAppearance"
         app:hintTextColor="@color/secondary_text_color"
         app:layout_constraintBottom_toTopOf="@id/search_results_rv"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/filter_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
         app:layout_goneMarginTop="0dp">
@@ -67,14 +71,27 @@
         tools:listitem="@layout/tile_item_drink_preview"
         tools:visibility="visible" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/filter_image"
+        android:visibility="visible"
+        android:src="@drawable/ic_filter_list"
+        android:background="?selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:padding="8dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/search_container_til"
+        app:layout_constraintBottom_toBottomOf="@id/search_container_til"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <com.yanivsos.mixological.ui.views.MyFab
         android:id="@+id/filter_mfab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/screen_padding"
+        android:visibility="gone"
         app:cardCornerRadius="28dp"
-        app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toTopOf="@id/search_container_til"
+        app:layout_constraintBottom_toBottomOf="@id/search_container_til"
         app:layout_constraintEnd_toEndOf="parent"
         app:strokeColor="@color/secondary_text_color"
         app:strokeWidth="1dp" />

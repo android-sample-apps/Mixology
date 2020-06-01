@@ -37,8 +37,8 @@
             app:layout_constraintStart_toEndOf="@id/filter_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible"
-            tools:text="1 selected" />
+            tools:visibility="gone"
+            tools:text="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
