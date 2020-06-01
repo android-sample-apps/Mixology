@@ -5,7 +5,7 @@
     <Transition
         app:constraintSetEnd="@id/results"
         app:constraintSetStart="@id/only_categories"
-        app:duration="500"
+        app:duration="250"
         app:motionInterpolator="easeOut">
 
         <OnSwipe

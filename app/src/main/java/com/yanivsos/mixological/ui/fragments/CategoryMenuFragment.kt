@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,6 +24,7 @@ import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.CategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_category_menu.*
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filterIsInstance
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -82,6 +82,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
         lifecycleScope.launchWhenStarted {
             categoryAdapter
                 .inputActions
+                .debounce(250L)
                 .filterIsInstance<InputActions.Click<CategoryUiModel>>()
                 .collect { onCategoryClicked(it.data) }
         }
