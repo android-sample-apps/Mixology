@@ -22,13 +22,6 @@ val viewModelModule = module {
         )
     }
 
-    viewModel {
-        DrinkPreviewByCategoryViewModel(
-            getDrinkPreviewByCategoryUseCase = get(),
-            mapper = get<DrinkPreviewMapperUi>()
-        )
-    }
-
     viewModel { (id: String) ->
         DrinkViewModel(
             getDrinkUseCase = get { parametersOf(id) },
@@ -36,15 +29,6 @@ val viewModelModule = module {
             toggleWatchlistUseCase = get(),
             resultMapper = get<ResultDrinkMapperUi> { parametersOf(id) },
             drinkId = id
-        )
-    }
-
-    viewModel {
-        SearchViewModel(
-            getDrinkPreviewUseCase = get(),
-            getRecentlyViewedUseCase = get(),
-            addToRecentlyViewedUseCase = get(),
-            mapper = get<DrinkPreviewMapperUi>()
         )
     }
 

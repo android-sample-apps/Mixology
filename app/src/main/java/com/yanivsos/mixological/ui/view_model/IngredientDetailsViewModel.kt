@@ -9,6 +9,7 @@ import com.yanivsos.mixological.domain.models.IngredientDetailsModel
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -24,6 +25,7 @@ class IngredientDetailsViewModel(
     val ingredientDetailsLiveData: LiveData<IngredientDetailsUiModel> = getIngredientDetailsUseCase
         .ingredientDetails
         .map { mapper.apply(it) }
+        .flowOn(Dispatchers.IO)
         .asLiveData()
 
 

@@ -17,6 +17,7 @@ import com.yanivsos.mixological.ui.models.ResultUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -42,6 +43,7 @@ class DrinkViewModel(
 
     val drink: LiveData<ResultUiModel<DrinkUiModel>> =
         drinkFlow
+            .flowOn(Dispatchers.IO)
             .asLiveData()
 
     fun toggleFavorite(drinkViewModel: DrinkPreviewUiModel) {

@@ -12,7 +12,9 @@ import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.domain.models.SearchFiltersModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.function.Function
@@ -44,6 +46,7 @@ class AdvancedSearchViewModel(
                 activeFilters = mapToSelectedFilters(selectedFilters)
             )
         }
+        .flowOn(Dispatchers.IO)
         .asLiveData()
 
     private fun mapToSelectedFilters(selectedFilters: Map<FilterType, Set<String>>): Map<FilterType, Int?> {
@@ -60,6 +63,7 @@ class AdvancedSearchViewModel(
     val resultsLiveData = filter
         .filterResults
         .map { mapper.apply(it) }
+        .flowOn(Dispatchers.IO)
         .asLiveData()
 
     fun searchByName(name: String) {

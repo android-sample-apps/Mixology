@@ -14,6 +14,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.function.Function
@@ -32,6 +33,7 @@ class DrinkPreviewOptionsViewModel(
             .filter { it.isNotEmpty() }
             .map { mapper.apply(it) }
             .map { it.first() }
+            .flowOn(Dispatchers.IO)
             .asLiveData()
 
     fun addToWatchlist(drinkPreviewUiModel: DrinkPreviewUiModel) {

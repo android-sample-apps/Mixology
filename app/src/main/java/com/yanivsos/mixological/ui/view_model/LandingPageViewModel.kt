@@ -7,8 +7,10 @@ import com.yanivsos.mixological.domain.*
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.util.function.Function
 
@@ -22,7 +24,9 @@ class LandingPageViewModel(
 ) : ViewModel() {
 
     val landingPageLiveData: LiveData<LandingPageUiModel> =
-        landingPage().asLiveData()
+        landingPage()
+            .flowOn(Dispatchers.IO)
+            .asLiveData()
 
     init {
         updateLatestArrivalsUseCase.update()

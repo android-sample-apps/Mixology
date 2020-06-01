@@ -13,6 +13,7 @@ import com.yanivsos.mixological.ui.models.CategoryUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.function.Function
@@ -36,12 +37,14 @@ class CategoriesViewModel(
                     add(CategoryUiModel("$i"))
                 }
             } }*/
+            .flowOn(Dispatchers.IO)
             .asLiveData()
 
     val drinkPreviews: LiveData<List<DrinkPreviewUiModel>> =
         combineWithFavoriteUseCase.combine(getDrinkPreviewByCategoryUseCase
             .drinkPreviews)
             .map { previewMapper.apply(it) }
+            .flowOn(Dispatchers.IO)
             .asLiveData()
 
 

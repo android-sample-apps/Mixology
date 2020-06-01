@@ -5,6 +5,8 @@ import androidx.lifecycle.asLiveData
 import com.yanivsos.mixological.domain.GetWatchlistUseCase
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import java.util.function.Function
 
@@ -17,5 +19,6 @@ class WatchlistViewModel(
         getWatchlistUseCase
             .watchList
             .map { mapper.apply(it) }
+            .flowOn(Dispatchers.IO)
             .asLiveData()
 }
