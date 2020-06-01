@@ -9,13 +9,14 @@ import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
 import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
 import com.yanivsos.mixological.repo.models.NullableDrinksWrapperResponse
-import com.yanivsos.mixological.repo.reactiveStore.DrinkReactiveStore
+import com.yanivsos.mixological.repo.reactiveStore.DrinkParams
+import com.yanivsos.mixological.repo.reactiveStore.NonRemovableReactiveStore
 import timber.log.Timber
 import java.util.function.Function
 
 class AdvancedSearchRepository(
     private val service: DrinkService,
-    private val drinkReactiveStore: DrinkReactiveStore,
+    private val drinkReactiveStore: NonRemovableReactiveStore<DrinkModel, DrinkParams>,
     private val drinkMapper: Function<NullableDrinksWrapperResponse<DrinkResponse>, List<DrinkModel>>,
     private val previewMapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
@@ -30,12 +31,6 @@ class AdvancedSearchRepository(
     private suspend fun filterByName(name: String): List<DrinkPreviewModel> {
         return fetchByName(name).map { DrinkPreviewModel(it) }
     }
-
-    /*suspend fun filter(filter: DrinkFilter): List<DrinkPreviewModel> {
-        return filterBy(filter).apply {
-            previewReactiveStore.storeAll(this)
-        }
-    }*/
 
     suspend fun filterBy(filter: DrinkFilter): List<DrinkPreviewModel> {
         try {

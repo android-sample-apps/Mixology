@@ -16,6 +16,9 @@ interface LatestArrivalsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(latestArrivals: List<LatestArrivalsModel>)
 
+    @Query("DELETE FROM LatestArrivalsModel WHERE drinkId = :ids")
+    fun remove(ids: List<String>)
+
     @Query("DELETE FROM LatestArrivalsModel")
     fun removeAll()
 }

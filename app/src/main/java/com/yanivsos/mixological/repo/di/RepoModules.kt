@@ -65,7 +65,7 @@ val repoModule = module {
 
     factory {
         DrinkRepository(
-            drinksReactiveStore = get<DrinkReactiveStore>(),
+            reactiveStore = get<DrinkReactiveStore>(),
             service = get<DrinkService>(),
             mapper = get<DrinkMapper>()
         )
@@ -82,7 +82,7 @@ val repoModule = module {
     factory {
         AdvancedSearchRepository(
             service = get<DrinkService>(),
-            drinkReactiveStore = get(),
+            drinkReactiveStore = get<DrinkReactiveStore>(),
             drinkMapper = get<SearchDrinkMapper>(),
             previewMapper = get<DrinkPreviewMapper>()
 
@@ -107,14 +107,14 @@ val repoModule = module {
 
     factory {
         WatchlistRepository(
-            watchlistReactiveStore = get()
+            reactiveStore = get<WatchlistReactiveStore>()
         )
     }
 
     factory {
         LatestArrivalsRepository(
             service = get<DrinkService>(),
-            reactiveStore = get(),
+            reactiveStore = get<LatestArrivalsReactiveStore>(),
             mapper = get<DrinkPreviewMapper>()
         )
     }
@@ -122,7 +122,7 @@ val repoModule = module {
     factory {
         MostPopularRepository(
             service = get<DrinkService>(),
-            reactiveStore = get(),
+            reactiveStore = get<MostPopularReactiveStore>(),
             mapper = get<DrinkPreviewMapper>()
         )
     }

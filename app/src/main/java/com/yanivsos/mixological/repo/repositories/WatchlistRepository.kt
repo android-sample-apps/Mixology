@@ -1,30 +1,30 @@
 package com.yanivsos.mixological.repo.repositories
 
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.repo.reactiveStore.RemovableReactiveStore
 import com.yanivsos.mixological.repo.reactiveStore.WatchlistParam
-import com.yanivsos.mixological.repo.reactiveStore.WatchlistReactiveStore
 import kotlinx.coroutines.flow.Flow
 
 class WatchlistRepository(
-    private val watchlistReactiveStore: WatchlistReactiveStore
+    private val reactiveStore: RemovableReactiveStore<String, WatchlistItemModel, WatchlistParam>
 ) {
     fun getWatchlist(): Flow<List<WatchlistItemModel>> {
-        return watchlistReactiveStore.getAll()
+        return reactiveStore.get(WatchlistParam.All)
     }
 
     fun getById(id: String): Flow<List<WatchlistItemModel>> {
-        return watchlistReactiveStore.getByParam(WatchlistParam.ById(id))
+        return reactiveStore.get(WatchlistParam.ById(id))
     }
 
     fun storeAll(watchlist: List<WatchlistItemModel>) {
-        watchlistReactiveStore.storeAll(watchlist)
+        reactiveStore.storeAll(watchlist)
     }
 
     fun store(watchlistItemModel: WatchlistItemModel) {
-        watchlistReactiveStore.storeAll(listOf(watchlistItemModel))
+        reactiveStore.storeAll(listOf(watchlistItemModel))
     }
 
     fun remove(id: String) {
-        watchlistReactiveStore.remove(id)
+        reactiveStore.remove(listOf(id))
     }
 }

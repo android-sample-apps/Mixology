@@ -7,10 +7,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WatchlistDao {
 
-    //    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN PreviousSearchModel ON id = drinkId ORDER BY lastViewedTime DESC")
-//    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN WatchlistItemModel ON id = id")
-//    fun getAll(): Flow<List<DrinkPreviewModel>>
-
     @Query("SELECT * FROM WatchlistItemModel")
     fun getAll(): Flow<List<WatchlistItemModel>>
 
@@ -25,4 +21,7 @@ interface WatchlistDao {
 
     @Query("DELETE FROM WatchlistItemModel WHERE id = :id")
     fun remove(id: String)
+
+    @Query("DELETE FROM WatchlistItemModel WHERE id IN (:ids)")
+    fun remove(ids: List<String>)
 }

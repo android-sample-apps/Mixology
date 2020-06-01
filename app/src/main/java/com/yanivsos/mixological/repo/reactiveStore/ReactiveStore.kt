@@ -2,13 +2,17 @@ package com.yanivsos.mixological.repo.reactiveStore
 
 import kotlinx.coroutines.flow.Flow
 
-interface ReactiveStore<Key, Value, Param> {
-
-    fun getAll(key: List<Key>? = null): Flow<List<Value>>
-
-    fun getByParam(param: Param): Flow<List<Value>>
-
+interface NonRemovableReactiveStore<Value, Param> {
+    fun get(param: Param): Flow<List<Value>>
     fun storeAll(data: List<Value>)
-
-    fun remove(key: Key)
 }
+
+interface RemovableReactiveStore<Key, Value, Param> : NonRemovableReactiveStore<Value, Param> {
+    fun remove(keys: List<Key>)
+}
+
+interface RemoveAllReactiveStore<Key, Value, Param> : RemovableReactiveStore<Key, Value, Param> {
+    fun removeAll()
+}
+
+

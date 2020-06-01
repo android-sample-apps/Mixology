@@ -6,21 +6,19 @@ import kotlinx.coroutines.flow.Flow
 
 class RecentlyViewedReactiveStore(
     private val recentlyViewedDao: RecentlyViewedDao
-) : ReactiveStore<String, RecentlyViewedModel, Void> {
-
-    override fun getAll(key: List<String>?): Flow<List<RecentlyViewedModel>> {
-        return key?.let { recentlyViewedDao.getAll(it) } ?: recentlyViewedDao.getAll()
-    }
+) : NonRemovableReactiveStore<RecentlyViewedModel, RecentlyViewedParams> {
 
     override fun storeAll(data: List<RecentlyViewedModel>) {
         recentlyViewedDao.insertAll(data)
     }
 
-    override fun getByParam(param: Void): Flow<List<RecentlyViewedModel>> {
-        TODO("Not yet implemented")
+    override fun get(param: RecentlyViewedParams): Flow<List<RecentlyViewedModel>> {
+        return when (param) {
+            is RecentlyViewedParams.All -> recentlyViewedDao.getAll()
+        }
     }
+}
 
-    override fun remove(key: String) {
-        TODO("Not yet implemented")
-    }
+sealed class RecentlyViewedParams {
+    object All : RecentlyViewedParams()
 }

@@ -7,39 +7,28 @@ import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
 import com.yanivsos.mixological.repo.models.NullableDrinksWrapperResponse
 import com.yanivsos.mixological.repo.reactiveStore.DrinkPreviewParam
-import com.yanivsos.mixological.repo.reactiveStore.ReactiveStore
+import com.yanivsos.mixological.repo.reactiveStore.NonRemovableReactiveStore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import java.util.function.Function
 
 class DrinkPreviewRepository(
     private val service: DrinkService,
-    private val reactiveStore: ReactiveStore<String, DrinkPreviewModel, DrinkPreviewParam>,
+    private val reactiveStore: NonRemovableReactiveStore<DrinkPreviewModel, DrinkPreviewParam>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>,
     private val searchMapper: Function<NullableDrinksWrapperResponse<DrinkResponse>, List<DrinkPreviewModel>>
 ) {
 
     fun getAll(): Flow<List<DrinkPreviewModel>> {
-        return reactiveStore.getAll()
+        return reactiveStore.get(DrinkPreviewParam.All)
     }
 
     fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>> {
-        return reactiveStore.getAll(ids)
+        return reactiveStore.get(DrinkPreviewParam.ByIds(ids))
     }
 
     fun storeAll(drinkPreviews: List<DrinkPreviewModel>) {
         reactiveStore.storeAll(drinkPreviews)
-    }
-
-    fun mostPopular(): Flow<List<DrinkPreviewModel>> {
-        //todo - replace with real API
-        return reactiveStore.getAll().map { it.take(5) }
-    }
-
-    fun latestArrivals(): Flow<List<DrinkPreviewModel>> {
-        //todo - replace with real API
-        return reactiveStore.getAll().map { it.takeLast(5) }
     }
 
     suspend fun fetchByCategoryImmediate(category: String): List<DrinkPreviewModel> {

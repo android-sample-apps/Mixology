@@ -5,18 +5,18 @@ import com.yanivsos.mixological.domain.models.MostPopularModel
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
-import com.yanivsos.mixological.repo.reactiveStore.MostPopularReactiveStore
+import com.yanivsos.mixological.repo.reactiveStore.RemoveAllReactiveStore
 import kotlinx.coroutines.flow.Flow
 import java.util.function.Function
 
 class MostPopularRepository(
     private val service: DrinkService,
-    private val reactiveStore: MostPopularReactiveStore,
+    private val reactiveStore: RemoveAllReactiveStore<String, MostPopularModel, Unit>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 
     fun getAll(): Flow<List<MostPopularModel>> {
-        return reactiveStore.getAll()
+        return reactiveStore.get(Unit)
     }
 
     fun storeAll(mostPopular: List<MostPopularModel>)  {

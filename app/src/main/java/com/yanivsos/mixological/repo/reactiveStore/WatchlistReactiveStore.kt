@@ -6,14 +6,11 @@ import kotlinx.coroutines.flow.Flow
 
 class WatchlistReactiveStore(
     private val watchlistDao: WatchlistDao
-) : ReactiveStore<String, WatchlistItemModel, WatchlistParam> {
+) : RemovableReactiveStore<String, WatchlistItemModel, WatchlistParam> {
 
-    override fun getAll(key: List<String>?): Flow<List<WatchlistItemModel>> {
-        return watchlistDao.getAll()
-    }
-
-    override fun getByParam(param: WatchlistParam): Flow<List<WatchlistItemModel>> {
+    override fun get(param: WatchlistParam): Flow<List<WatchlistItemModel>> {
         return when (param) {
+            WatchlistParam.All -> watchlistDao.getAll()
             is WatchlistParam.ById -> watchlistDao.getById(param.id)
         }
     }
@@ -22,11 +19,12 @@ class WatchlistReactiveStore(
         watchlistDao.storeAll(data)
     }
 
-    override fun remove(key: String) {
-        watchlistDao.remove(key)
+    override fun remove(keys: List<String>) {
+        watchlistDao.remove(keys)
     }
 }
 
 sealed class WatchlistParam {
+    object All : WatchlistParam()
     data class ById(val id: String) : WatchlistParam()
 }

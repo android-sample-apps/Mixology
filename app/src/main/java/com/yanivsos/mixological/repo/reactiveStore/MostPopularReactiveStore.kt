@@ -6,25 +6,20 @@ import kotlinx.coroutines.flow.Flow
 
 class MostPopularReactiveStore(
     private val mostPopularDao: MostPopularDao
-) : ReactiveStore<String, MostPopularModel, Unit> {
-
-    override fun getAll(key: List<String>?): Flow<List<MostPopularModel>> {
-        return mostPopularDao.getAll()
-    }
-
-    override fun getByParam(param: Unit): Flow<List<MostPopularModel>> {
-        TODO("Not yet implemented")
-    }
+) : RemoveAllReactiveStore<String, MostPopularModel, Unit> {
 
     override fun storeAll(data: List<MostPopularModel>) {
         mostPopularDao.insertAll(data)
     }
 
-    override fun remove(key: String) {
-        TODO("Not yet implemented")
+    override fun get(param: Unit): Flow<List<MostPopularModel>> {
+        return mostPopularDao.getAll()
     }
 
-    fun removeAll() {
+    override fun remove(keys: List<String>) {
+    }
+
+    override fun removeAll() {
         mostPopularDao.removeAll()
     }
 }

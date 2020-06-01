@@ -6,21 +6,13 @@ import kotlinx.coroutines.flow.Flow
 
 class IngredientReactiveStore(
     private val ingredientDao: IngredientDao
-) : ReactiveStore<String, IngredientModel, Void> {
+) : NonRemovableReactiveStore<IngredientModel, Unit> {
 
     override fun storeAll(data: List<IngredientModel>) {
         ingredientDao.storeAll(data)
     }
 
-    override fun getAll(key: List<String>?): Flow<List<IngredientModel>> {
+    override fun get(param: Unit): Flow<List<IngredientModel>> {
         return ingredientDao.getAll()
-    }
-
-    override fun getByParam(param: Void): Flow<List<IngredientModel>> {
-        TODO("Not yet implemented")
-    }
-
-    override fun remove(key: String) {
-        TODO("Not yet implemented")
     }
 }

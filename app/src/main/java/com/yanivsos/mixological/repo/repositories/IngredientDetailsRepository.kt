@@ -5,7 +5,7 @@ import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.repo.models.IngredientDetailsResponse
 import com.yanivsos.mixological.repo.models.IngredientsWrapperResponse
 import com.yanivsos.mixological.repo.reactiveStore.IngredientDetailsParam
-import com.yanivsos.mixological.repo.reactiveStore.ReactiveStore
+import com.yanivsos.mixological.repo.reactiveStore.NonRemovableReactiveStore
 import kotlinx.coroutines.flow.Flow
 import timber.log.Timber
 import java.util.*
@@ -13,14 +13,14 @@ import java.util.function.Function
 
 class IngredientDetailsRepository(
     private val service: DrinkService,
-    private val reactiveStore: ReactiveStore<String, IngredientDetailsModel, IngredientDetailsParam>,
+    private val reactiveStore: NonRemovableReactiveStore<IngredientDetailsModel, IngredientDetailsParam>,
     private val mapper: Function<IngredientsWrapperResponse<IngredientDetailsResponse>, List<IngredientDetailsModel>>
 ) {
 
-    fun getAll() = reactiveStore.getAll()
+    fun getAll() = reactiveStore.get(IngredientDetailsParam.All)
 
     fun getByName(name: String) : Flow<List<IngredientDetailsModel>> {
-        return reactiveStore.getByParam(IngredientDetailsParam.GetByName(name.toLowerCase(Locale.ROOT)))
+        return reactiveStore.get(IngredientDetailsParam.GetByName(name.toLowerCase(Locale.ROOT)))
     }
 
     suspend fun fetchByName(ingredientName: String) {

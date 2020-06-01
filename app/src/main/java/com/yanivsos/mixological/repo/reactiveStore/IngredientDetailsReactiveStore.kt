@@ -6,27 +6,21 @@ import kotlinx.coroutines.flow.Flow
 
 class IngredientDetailsReactiveStore(
     private val ingredientDetailsDao: IngredientDetailsDao
-) : ReactiveStore<String, IngredientDetailsModel, IngredientDetailsParam> {
-
-    override fun getAll(key: List<String>?): Flow<List<IngredientDetailsModel>> {
-        return ingredientDetailsDao.getAll()
-    }
-
-    override fun getByParam(param: IngredientDetailsParam): Flow<List<IngredientDetailsModel>> {
-        return when (param) {
-            is IngredientDetailsParam.GetByName -> ingredientDetailsDao.getByName(param.name)
-        }
-    }
+) : NonRemovableReactiveStore<IngredientDetailsModel, IngredientDetailsParam> {
 
     override fun storeAll(data: List<IngredientDetailsModel>) {
         ingredientDetailsDao.storeAll(data)
     }
 
-    override fun remove(key: String) {
-        TODO("Not yet implemented")
+    override fun get(param: IngredientDetailsParam): Flow<List<IngredientDetailsModel>> {
+        return when (param) {
+            is IngredientDetailsParam.GetByName -> ingredientDetailsDao.getByName(param.name)
+            is IngredientDetailsParam.All -> ingredientDetailsDao.getAll()
+        }
     }
 }
 
 sealed class IngredientDetailsParam {
+    object All : IngredientDetailsParam()
     data class GetByName(val name: String) : IngredientDetailsParam()
 }
