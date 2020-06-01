@@ -3,6 +3,7 @@ package com.yanivsos.mixological.ui.view_model
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.domain.GetSearchFiltersUseCase
 import com.yanivsos.mixological.domain.MultipleFilterDrinkUseCase
@@ -16,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.function.Function
 
@@ -81,8 +83,10 @@ class AdvancedSearchViewModel(
 
     fun updateFilter(drinkFilter: DrinkFilter) {
         Timber.i("updating filter: $drinkFilter")
-        filter.updateFilter(drinkFilter)
-        AnalyticsDispatcher.onSearchFilter(drinkFilter)
+        viewModelScope.launch(Dispatchers.IO) {
+            filter.updateFilter(drinkFilter)
+            AnalyticsDispatcher.onSearchFilter(drinkFilter)
+        }
     }
 
     override fun onCleared() {
