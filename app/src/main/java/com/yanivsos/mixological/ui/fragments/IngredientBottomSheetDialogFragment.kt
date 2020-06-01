@@ -92,7 +92,7 @@ class IngredientBottomSheetDialogFragment(
 
     private fun updateWebSearchQuery(details: IngredientDetailsUiModel) {
         val postfix = if (details.isAlcoholic) ", alcohol" else ""
-        webSearchQuery = "$ingredient$postfix"
+        webSearchQuery = "${ingredient.name}$postfix"
     }
 }
 
