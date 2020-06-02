@@ -166,13 +166,13 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 class SelectableAdapter :
     DiffAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>() {
 
-    /*override fun getDiffResult(
-        oldData: List<DrinkFilterUiModel>,
-        newData: List<DrinkFilterUiModel>
+    override fun calculateDiff(
+        old: List<DrinkFilterUiModel>,
+        new: List<DrinkFilterUiModel>
     ): DiffUtil.DiffResult {
-        val diffCallback = DrinkFilterDiffCallback(oldData, newData)
+        val diffCallback = DrinkFilterDiffCallback(old, new)
         return DiffUtil.calculateDiff(diffCallback)
-    }*/
+    }
 
     inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
@@ -219,11 +219,8 @@ private class DrinkFilterDiffCallback(
     private val oldList: List<DrinkFilterUiModel>,
     private val newList: List<DrinkFilterUiModel>
 ) : DiffUtil.Callback() {
-
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-        return oldItem.name == newItem.name
+        return oldList[oldItemPosition].drinkFilter.query == newList[newItemPosition].drinkFilter.query
     }
 
     override fun getOldListSize(): Int {
@@ -235,13 +232,8 @@ private class DrinkFilterDiffCallback(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        val oldItem = oldList[oldItemPosition]
-        val newItem = newList[newItemPosition]
-        if (oldItem.name == "7-up") {
-            Timber.d("are content the same old: $oldItem")
-            Timber.d("are content the same new: $newItem")
-        }
-        return (oldItem.selected == newItem.selected)
+        return oldList[oldItemPosition].selected == newList[newItemPosition].selected
     }
+
 
 }
