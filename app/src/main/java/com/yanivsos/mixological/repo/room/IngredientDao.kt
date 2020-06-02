@@ -15,4 +15,7 @@ interface IngredientDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeAll(ingredients: List<IngredientModel>)
+
+    @Query("SELECT * FROM IngredientModel WHERE name LIKE '%'||:name||'%'")
+    fun getByName(name: String): Flow<List<IngredientModel>>
 }

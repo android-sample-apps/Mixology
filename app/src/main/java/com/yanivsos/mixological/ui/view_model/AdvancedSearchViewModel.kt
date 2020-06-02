@@ -14,6 +14,7 @@ import com.yanivsos.mixological.domain.models.SearchFiltersModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -22,7 +23,7 @@ import timber.log.Timber
 import java.util.function.Function
 
 class AdvancedSearchViewModel(
-    getSearchFiltersUseCase: GetSearchFiltersUseCase,
+    private val getSearchFiltersUseCase: GetSearchFiltersUseCase,
     private val filter: MultipleFilterDrinkUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>,
     searchMapper: Function<SearchFiltersModel, SearchFiltersUiModel>
@@ -90,9 +91,18 @@ class AdvancedSearchViewModel(
         }
     }
 
+    fun onIngredientNameSearch(name: String?) {
+        Timber.d("onIngredientNameSearch: $name")
+        GlobalScope.launch(Dispatchers.IO) {
+            getSearchFiltersUseCase
+                .filterIngredientName(name)
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         Timber.d("onCleared")
         clearOnGoingSearches()
+        getSearchFiltersUseCase.clear()
     }
 }

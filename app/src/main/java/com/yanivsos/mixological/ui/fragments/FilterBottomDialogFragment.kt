@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -78,7 +79,15 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initFiltersRecyclerView()
+        initIngredientSearch()
         observerFilters()
+    }
+
+    private fun initIngredientSearch() {
+        ingredient_search_query_et.addTextChangedListener {
+            val name = it?.toString()
+            advancedSearchViewModel.onIngredientNameSearch(name)
+        }
     }
 
     private fun observerFilters() {

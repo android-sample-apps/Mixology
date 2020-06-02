@@ -24,6 +24,12 @@ val useCasesModule = module {
     }
 
     factory {
+        GetIngredientsByNameUseCase(
+            repository = get()
+        )
+    }
+
+    factory {
         GetDrinkPreviewByCategoryUseCase(
             repository = get()
         )
@@ -151,9 +157,9 @@ val useCasesModule = module {
     factory {
         GetSearchFiltersUseCase(
             getAlcoholicFiltersUseCase = get(),
-            getCategoriesUseCase = get(),
             getGlassesUseCase = get(),
-            getIngredientsUseCase = get()
+            getCategoriesUseCase = get(),
+            getIngredientsByNameUseCase = get()
         )
     }
 

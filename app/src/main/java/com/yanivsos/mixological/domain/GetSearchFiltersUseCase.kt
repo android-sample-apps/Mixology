@@ -15,7 +15,7 @@ class GetSearchFiltersUseCase(
     getAlcoholicFiltersUseCase: GetAlcoholicFiltersUseCase,
     getGlassesUseCase: GetGlassesUseCase,
     getCategoriesUseCase: GetCategoriesUseCase,
-    getIngredientsUseCase: GetIngredientsUseCase
+    private val getIngredientsByNameUseCase: GetIngredientsByNameUseCase
 ) {
 
     private val _channel = ConflatedBroadcastChannel<SearchFiltersModel>()
@@ -35,7 +35,7 @@ class GetSearchFiltersUseCase(
                     Timber.d("received: [${ctgr.size}] categories")
                     model.copy(categories = ctgr.sortedBy { it.name })
                 }
-                .combine(getIngredientsUseCase.ingredients) { model: SearchFiltersModel, ingredients: List<IngredientModel> ->
+                .combine(getIngredientsByNameUseCase.ingredients) { model: SearchFiltersModel, ingredients: List<IngredientModel> ->
                     Timber.d("received: [${ingredients.size}] ingredients")
                     model.copy(ingredients = ingredients.sortedBy { it.name })
                 }
@@ -44,5 +44,13 @@ class GetSearchFiltersUseCase(
                     _channel.send(it)
                 }
         }
+    }
+
+    fun filterIngredientName(name: String?) {
+        getIngredientsByNameUseCase.updateName(name ?: "")
+    }
+
+    fun clear() {
+        getIngredientsByNameUseCase.clear()
     }
 }
