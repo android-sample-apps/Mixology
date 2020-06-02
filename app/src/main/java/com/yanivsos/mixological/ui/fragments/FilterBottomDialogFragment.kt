@@ -88,6 +88,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             val name = it?.toString()
             advancedSearchViewModel.onIngredientNameSearch(name)
         }
+        advancedSearchViewModel.onIngredientNameSearch(null)
     }
 
     private fun observerFilters() {
