@@ -34,6 +34,7 @@ class AdvancedSearchViewModel(
         .map { searchMapper.apply(it) }
         .combine(filter.selectedFilters) { searchUiModel: SearchFiltersUiModel,
                                            selectedFilters: Map<FilterType, Set<String>> ->
+
             val filtersMap = searchUiModel.filters.toMutableMap()
             selectedFilters.forEach { (filter, filterSet) ->
                 filtersMap[filter]?.forEach { filter ->

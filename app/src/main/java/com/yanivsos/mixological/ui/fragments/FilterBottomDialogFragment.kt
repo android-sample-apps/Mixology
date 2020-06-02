@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkFilter
@@ -31,6 +32,7 @@ import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
 private const val TAG = "FilterBottomDialogFragment"
+
 class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
@@ -43,6 +45,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private val glassAdapter = SelectableAdapter()
 
     private fun onFilterClicked(drinkFilter: DrinkFilter) {
+        Timber.d("onFilterClicked: $drinkFilter")
         advancedSearchViewModel.updateFilter(drinkFilter)
     }
 
@@ -163,10 +166,17 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 class SelectableAdapter :
     DiffAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>() {
 
+    /*override fun getDiffResult(
+        oldData: List<DrinkFilterUiModel>,
+        newData: List<DrinkFilterUiModel>
+    ): DiffUtil.DiffResult {
+        val diffCallback = DrinkFilterDiffCallback(oldData, newData)
+        return DiffUtil.calculateDiff(diffCallback)
+    }*/
+
     inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        //todo - fix shitty code
         fun bind(filter: DrinkFilterUiModel) {
             containerView.run {
                 setOnClickListener { invokeFilterClicked(filter) }
@@ -203,4 +213,35 @@ class SelectableAdapter :
     ) {
         holder.bind(data)
     }
+}
+
+private class DrinkFilterDiffCallback(
+    private val oldList: List<DrinkFilterUiModel>,
+    private val newList: List<DrinkFilterUiModel>
+) : DiffUtil.Callback() {
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        return oldItem.name == newItem.name
+    }
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+        if (oldItem.name == "7-up") {
+            Timber.d("are content the same old: $oldItem")
+            Timber.d("are content the same new: $newItem")
+        }
+        return (oldItem.selected == newItem.selected)
+    }
+
 }
