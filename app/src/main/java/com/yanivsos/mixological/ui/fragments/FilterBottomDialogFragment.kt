@@ -191,11 +191,11 @@ class SelectableAdapter :
             containerView.run {
                 setOnClickListener { invokeFilterClicked(filter) }
 
-                val selectedColor = context.compatColor(filter.color)
+                val selectedColor = context.compatColor(getColor(filter.selected))
                 card_container.run {
                     strokeColor = selectedColor
-                    elevation = filter.elevation
-                    alpha = filter.alpha
+                    elevation = getElevation(filter.selected)
+                    alpha = getAlpha(filter.selected)
                 }
                 filter_tv.run {
                     setTextColor(selectedColor)
@@ -203,6 +203,18 @@ class SelectableAdapter :
                 }
             }
         }
+    }
+
+    private fun getColor(selected: Boolean): Int {
+        return if (selected) R.color.header_text_color else R.color.secondary_text_color
+    }
+
+    private fun getAlpha(selected: Boolean): Float {
+        return if (selected) 1f else 0.5f
+    }
+
+    private fun getElevation(selected: Boolean): Float {
+        return if (selected) 8.dpToPx() else 0.dpToPx()
     }
 
     private fun invokeFilterClicked(filter: DrinkFilterUiModel) {

@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 class GetIngredientsByNameUseCase(
@@ -15,7 +16,7 @@ class GetIngredientsByNameUseCase(
 ) {
 
     private val _channel = ConflatedBroadcastChannel<List<IngredientModel>>()
-    val ingredients = _channel.asFlow()
+    val ingredients = _channel.asFlow().debounce(250L)
     private var job: Job? = null
 
     init {

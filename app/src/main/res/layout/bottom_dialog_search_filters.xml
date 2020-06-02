@@ -120,6 +120,7 @@
                     app:fontFamily="@font/fty_delirium_ncv"
                     app:layoutDescription="@xml/filer_badge_scene" />
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/search_container_til"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
