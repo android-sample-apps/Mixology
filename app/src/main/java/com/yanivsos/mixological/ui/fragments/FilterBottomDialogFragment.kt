@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkFilter
@@ -17,7 +18,6 @@ import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.viewHolderInflate
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
-import com.yanivsos.mixological.ui.adapters.DiffAdapter
 import com.yanivsos.mixological.ui.models.DrinkFilterUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
@@ -26,9 +26,8 @@ import com.yanivsos.mixological.ui.views.FilterHeaderView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.bottom_dialog_search_filters.*
 import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
@@ -52,11 +51,10 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private fun observeInputActions(adapter: SelectableAdapter) {
         lifecycleScope.launchWhenStarted {
-            adapter.inputActions.filterIsInstance<InputActions.Click<DrinkFilterUiModel>>()
+            adapter.inputActions
+                .filterIsInstance<InputActions.Click<DrinkFilterUiModel>>()
                 .map { it.data.drinkFilter }
-                .collect {
-                    onFilterClicked(it)
-                }
+                .collect { onFilterClicked(it) }
         }
     }
 
@@ -102,7 +100,10 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun updateResults(searchFiltersUiModel: SearchFiltersUiModel) {
-        updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
+        updateSelectableAdapter(
+            alcoholicAdapter,
+            searchFiltersUiModel.filters[FilterType.ALCOHOL]?.toList()
+        )
         updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
         updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
         updateSelectableAdapter(
@@ -142,7 +143,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         selectableAdapter: SelectableAdapter,
         filters: List<DrinkFilterUiModel>?
     ) {
-        selectableAdapter.set(filters ?: emptyList())
+        selectableAdapter.submitList(filters ?: emptyList())
     }
 
     private fun initFiltersRecyclerView() {
@@ -172,20 +173,47 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 }
 
-
 class SelectableAdapter :
-    DiffAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>() {
+    ListAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder2>(DrinkFilterDiffCallback()) {
 
-    override fun calculateDiff(
-        old: List<DrinkFilterUiModel>,
-        new: List<DrinkFilterUiModel>
-    ): DiffUtil.DiffResult {
-        val diffCallback = DrinkFilterDiffCallback(old, new)
-        return DiffUtil.calculateDiff(diffCallback)
+    private val inputActionsChannel =
+        ConflatedBroadcastChannel<InputActions<DrinkFilterUiModel>>()
+    val inputActions: Flow<InputActions<DrinkFilterUiModel>> = inputActionsChannel.asFlow()
+
+    private fun getColor(selected: Boolean): Int {
+        return if (selected) R.color.header_text_color else R.color.secondary_text_color
     }
 
-    inner class SelectableViewHolder(override val containerView: View) :
+    private fun getAlpha(selected: Boolean): Float {
+        return if (selected) 1f else 0.5f
+    }
+
+    private fun getElevation(selected: Boolean): Float {
+        return if (selected) 8.dpToPx() else 0.dpToPx()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder2 {
+        return SelectableViewHolder2(
+            parent.viewHolderInflate(R.layout.list_item_selectable_filter)
+        )
+    }
+
+    override fun onBindViewHolder(holder: SelectableAdapter.SelectableViewHolder2, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+    inner class SelectableViewHolder2(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+
+        private fun sendInputAction(inputActions: InputActions<DrinkFilterUiModel>) {
+            inputActionsChannel.offer(inputActions)
+        }
+
+        private fun invokeFilterClicked(filter: DrinkFilterUiModel) {
+            val drinkFilter = filter.drinkFilter.copy(active = !filter.selected)
+            sendInputAction(InputActions.Click(filter.copy(drinkFilter = drinkFilter)))
+        }
 
         fun bind(filter: DrinkFilterUiModel) {
             containerView.run {
@@ -204,58 +232,22 @@ class SelectableAdapter :
             }
         }
     }
-
-    private fun getColor(selected: Boolean): Int {
-        return if (selected) R.color.header_text_color else R.color.secondary_text_color
-    }
-
-    private fun getAlpha(selected: Boolean): Float {
-        return if (selected) 1f else 0.5f
-    }
-
-    private fun getElevation(selected: Boolean): Float {
-        return if (selected) 8.dpToPx() else 0.dpToPx()
-    }
-
-    private fun invokeFilterClicked(filter: DrinkFilterUiModel) {
-        val drinkFilter = filter.drinkFilter.copy(active = !filter.selected)
-        sendInputAction(InputActions.Click(filter.copy(drinkFilter = drinkFilter)))
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
-        return SelectableViewHolder(
-            parent.viewHolderInflate(R.layout.list_item_selectable_filter)
-        )
-    }
-
-    override fun onBindViewHolder(
-        holder: SelectableViewHolder,
-        data: DrinkFilterUiModel,
-        position: Int
-    ) {
-        holder.bind(data)
-    }
 }
 
-private class DrinkFilterDiffCallback(
-    private val oldList: List<DrinkFilterUiModel>,
-    private val newList: List<DrinkFilterUiModel>
-) : DiffUtil.Callback() {
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].drinkFilter.query == newList[newItemPosition].drinkFilter.query
+
+private class DrinkFilterDiffCallback : DiffUtil.ItemCallback<DrinkFilterUiModel>() {
+
+    override fun areItemsTheSame(
+        oldItem: DrinkFilterUiModel,
+        newItem: DrinkFilterUiModel
+    ): Boolean {
+        return oldItem.name == newItem.name
     }
 
-    override fun getOldListSize(): Int {
-        return oldList.size
+    override fun areContentsTheSame(
+        oldItem: DrinkFilterUiModel,
+        newItem: DrinkFilterUiModel
+    ): Boolean {
+        return oldItem.selected == newItem.selected
     }
-
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].selected == newList[newItemPosition].selected
-    }
-
-
 }

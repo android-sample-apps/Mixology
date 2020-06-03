@@ -89,7 +89,7 @@ data class AlcoholFilterUiModel(
 data class DrinkFilterUiModel(
     val name: String,
     val drinkFilter: DrinkFilter,
-    var selected: Boolean = false
+    val selected: Boolean = false
 )
 
 data class SearchFiltersUiModel(

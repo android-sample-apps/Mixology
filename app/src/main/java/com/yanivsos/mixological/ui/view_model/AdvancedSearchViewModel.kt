@@ -11,6 +11,7 @@ import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.domain.models.SearchFiltersModel
+import com.yanivsos.mixological.ui.models.DrinkFilterUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import kotlinx.coroutines.Dispatchers
@@ -38,12 +39,15 @@ class AdvancedSearchViewModel(
 
             val filtersMap = searchUiModel.filters.toMutableMap()
             selectedFilters.forEach { (filter, filterSet) ->
-                filtersMap[filter]?.forEach { filter ->
-                    filter.selected = filterSet.contains(filter.name)//it.name == key
-                    if (filter.selected) {
-                        Timber.d("selected filter: $filter, ${filter.name}")
+                val newSelectedFilters: List<DrinkFilterUiModel>? = filtersMap[filter]?.map {
+                    val selected = filterSet.contains(it.name)//it.name == key
+                    if (selected) {
+                        Timber.d("selected filter: $filter, ${it.name}")
                     }
+                    it.copy(selected = selected)
                 }
+
+                filtersMap[filter] = newSelectedFilters ?: emptyList()
             }
             SearchFiltersUiModel(
                 filters = filtersMap,
