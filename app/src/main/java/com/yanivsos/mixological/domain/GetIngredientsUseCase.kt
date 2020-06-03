@@ -4,6 +4,7 @@ import com.yanivsos.mixological.domain.models.IngredientModel
 import com.yanivsos.mixological.repo.repositories.IngredientRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
@@ -17,8 +18,10 @@ class GetIngredientsUseCase(
     private val _channel = ConflatedBroadcastChannel<List<IngredientModel>>()
     val ingredients = _channel.asFlow()
 
-    init {
-        GlobalScope.launch(Dispatchers.IO) {
+    private var job: Job? = null
+
+    fun refresh() {
+        job = GlobalScope.launch(Dispatchers.IO) {
             repository
                 .getAll()
                 .collect {
@@ -29,6 +32,10 @@ class GetIngredientsUseCase(
                     }
                 }
         }
+    }
+
+    fun cancel() {
+        job?.cancel()
     }
 
     private suspend fun fetch() {

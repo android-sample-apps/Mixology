@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.domain.GetIngredientsUseCase
 import com.yanivsos.mixological.domain.GetSearchFiltersUseCase
 import com.yanivsos.mixological.domain.MultipleFilterDrinkUseCase
 import com.yanivsos.mixological.domain.models.DrinkFilter
@@ -24,6 +25,7 @@ import timber.log.Timber
 import java.util.function.Function
 
 class AdvancedSearchViewModel(
+    private val getIngredientsUseCase: GetIngredientsUseCase,
     private val getSearchFiltersUseCase: GetSearchFiltersUseCase,
     private val filter: MultipleFilterDrinkUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>,
@@ -68,6 +70,10 @@ class AdvancedSearchViewModel(
         }
     }
 
+    init {
+        getIngredientsUseCase.refresh()
+    }
+
     val resultsLiveData = filter
         .filterResults
         .map { mapper.apply(it) }
@@ -108,5 +114,6 @@ class AdvancedSearchViewModel(
         Timber.d("onCleared")
         clearOnGoingSearches()
         getSearchFiltersUseCase.clear()
+        getIngredientsUseCase.cancel()
     }
 }
