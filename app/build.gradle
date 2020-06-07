@@ -1,10 +1,18 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'com.google.gms.google-services'
+
 apply plugin: 'com.google.firebase.crashlytics'
+def buildTime() {
+    def df = new SimpleDateFormat("dd_MM_yyyy") // you can change it
+    df.setTimeZone(TimeZone.getTimeZone("UTC"))
+    return df.format(new Date())
+}
 
 android {
     compileSdkVersion 29
@@ -39,6 +47,11 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "Mixological_${variant.name}_v${variant.versionCode}_${variant.versionName}_${buildTime()}.apk"
+        }
+    }
 }
 
 dependencies {
