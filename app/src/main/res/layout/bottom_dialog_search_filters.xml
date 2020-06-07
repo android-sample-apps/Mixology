@@ -29,7 +29,7 @@
                 android:padding="@dimen/screen_padding">
 
                 <com.yanivsos.mixological.ui.views.FilterHeaderView
-                    android:id="@+id/ingredient_header_tv"
+                    android:id="@+id/ingredient_header_fhv"
                     style="@style/FilterHeaderText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     tools:listitem="@layout/list_item_selectable_filter" />
 
                 <com.yanivsos.mixological.ui.views.FilterHeaderView
-                    android:id="@+id/alcoholic_header_tv"
+                    android:id="@+id/alcoholic_header_fhv"
                     style="@style/FilterHeaderText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                     android:background="@drawable/divider" />
 
                 <com.yanivsos.mixological.ui.views.FilterHeaderView
-                    android:id="@+id/glasses_header_tv"
+                    android:id="@+id/glasses_header_fhv"
                     style="@style/FilterHeaderText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
                     android:background="@drawable/divider" />
 
                 <com.yanivsos.mixological.ui.views.FilterHeaderView
-                    android:id="@+id/category_header_tv"
+                    android:id="@+id/category_header_fhv"
                     style="@style/FilterHeaderText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

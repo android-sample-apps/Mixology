@@ -150,13 +150,24 @@ class MultipleFilterDrinkUseCase(
         }
     }
 
+    fun clearFilter(filterType: FilterType) {
+        Timber.d("clearing filter: $filterType")
+        when (filterType) {
+            FilterType.ALCOHOL -> alcoholicFilter.clear()
+            FilterType.CATEGORY -> categoryFilter.clear()
+            FilterType.GLASS -> glassFilter.clear()
+            FilterType.INGREDIENTS -> ingredientFilter.clear()
+            FilterType.NAME -> nameFilter.clear()
+        }
+    }
+
     fun cancel() {
         Timber.d("cancelled")
-        alcoholicFilter.clear()
-        categoryFilter.clear()
-        ingredientFilter.clear()
-        glassFilter.clear()
-        nameFilter.clear()
+        alcoholicFilter.cancel()
+        categoryFilter.cancel()
+        ingredientFilter.cancel()
+        glassFilter.cancel()
+        nameFilter.cancel()
         selectedFiltersJob?.cancel()
         resultsJob?.cancel()
     }

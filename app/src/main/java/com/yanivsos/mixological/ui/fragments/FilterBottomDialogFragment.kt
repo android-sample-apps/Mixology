@@ -76,9 +76,29 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initHeaderView()
         initFiltersRecyclerView()
         initIngredientSearch()
         observerFilters()
+    }
+
+    private fun initHeaderView() {
+        ingredient_header_fhv.onFilterClearedClickedListener = {
+            clearFilter(FilterType.INGREDIENTS)
+        }
+        alcoholic_header_fhv.onFilterClearedClickedListener = {
+            clearFilter(FilterType.ALCOHOL)
+        }
+        glasses_header_fhv.onFilterClearedClickedListener = {
+            clearFilter(FilterType.GLASS)
+        }
+        category_header_fhv.onFilterClearedClickedListener = {
+            clearFilter(FilterType.CATEGORY)
+        }
+    }
+
+    private fun clearFilter(filterType: FilterType) {
+        advancedSearchViewModel.clearFilter(filterType)
     }
 
     private fun initIngredientSearch() {
@@ -100,35 +120,29 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun updateResults(searchFiltersUiModel: SearchFiltersUiModel) {
-        updateSelectableAdapter(
-            alcoholicAdapter,
-            searchFiltersUiModel.filters[FilterType.ALCOHOL]?.toList()
-        )
+        updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
         updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
         updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
-        updateSelectableAdapter(
-            ingredientsAdapter,
-            searchFiltersUiModel.filters[FilterType.INGREDIENTS]
-        )
+        updateSelectableAdapter(ingredientsAdapter, searchFiltersUiModel.filters[FilterType.INGREDIENTS])
     }
 
     private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
         Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
         updateFilterHeaders(
-            alcoholic_header_tv,
+            alcoholic_header_fhv,
             searchFiltersUiModel.activeFilters[FilterType.ALCOHOL]
         )
         updateFilterHeaders(
-            category_header_tv,
+            category_header_fhv,
             searchFiltersUiModel.activeFilters[FilterType.CATEGORY]
         )
         updateFilterHeaders(
-            glasses_header_tv,
+            glasses_header_fhv,
             searchFiltersUiModel.activeFilters[FilterType.GLASS]
         )
 
         updateFilterHeaders(
-            ingredient_header_tv,
+            ingredient_header_fhv,
             searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
         )
     }

@@ -109,6 +109,10 @@ class AdvancedSearchViewModel(
         }
     }
 
+    fun clearFilter(filterType: FilterType) {
+        filter.clearFilter(filterType)
+    }
+
     override fun onCleared() {
         super.onCleared()
         Timber.d("onCleared")

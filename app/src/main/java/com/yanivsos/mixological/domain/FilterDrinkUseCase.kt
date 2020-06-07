@@ -16,6 +16,7 @@ interface Filterable {
     val selectedFilters: Flow<Map<FilterType, Set<String>>>
     fun filter(drinkFilter: DrinkFilter)
     fun clear()
+    fun cancel()
 }
 
 class FilterDrinkUseCase(
@@ -58,13 +59,13 @@ class FilterDrinkUseCase(
             emptyList()
         }
 
-        selectedFilterChannel.send(filter.toSelectedFilter())
-        channel.send(result)
+        selectedFilterChannel.offer(filter.toSelectedFilter())
+        channel.offer(result)
     }
 
-    private suspend fun sendNotActive() {
-        selectedFilterChannel.send(emptyMap())
-        channel.send(null)
+    private fun sendNotActive() {
+        selectedFilterChannel.offer(emptyMap())
+        channel.offer(null)
     }
 
     private fun DrinkFilter.toSelectedFilter(): Map<FilterType, Set<String>> {
@@ -74,6 +75,11 @@ class FilterDrinkUseCase(
     }
 
     override fun clear() {
+        cancel()
+        sendNotActive()
+    }
+
+    override fun cancel() {
         Timber.d("Clearing ongoing searches")
         searchJob?.cancel()
     }
@@ -149,9 +155,15 @@ class FilterDrinkByIngredientUseCase(
         channel.send(result)
     }
 
-    private suspend fun sendNotActive() {
-        selectedFilterChannel.send(inactiveFilters())
-        channel.send(null)
+    private fun sendNotActive() {
+        selectedFilterChannel.offer(inactiveFilters())
+        channel.offer(null)
+    }
+
+    override fun clear() {
+        cancel()
+        filterCache.clear()
+        sendNotActive()
     }
 
     private fun inactiveFilters() =
@@ -166,7 +178,7 @@ class FilterDrinkByIngredientUseCase(
         }
     }
 
-    override fun clear() {
+    override fun cancel() {
         Timber.d("Clearing ongoing searches")
         searchJob?.cancel()
     }
@@ -223,6 +235,12 @@ abstract class AggregateFilterDrinkUseCase(
         }
     }
 
+    override fun clear() {
+        cancel()
+        selectedFiltersCache.clear()
+        sendNotActive()
+    }
+
     private suspend fun internalFilter(filter: DrinkFilter) {
         if (!filter.active) {
             removeFromCache(filter)
@@ -275,12 +293,12 @@ abstract class AggregateFilterDrinkUseCase(
 
     protected abstract suspend fun Sequence<List<DrinkPreviewModel>>.combineFilters(): List<DrinkPreviewModel>?
 
-    private suspend fun sendNotActive() {
-        selectedFilterChannel.send(selectedFiltersCache)
-        channel.send(null)
+    private fun sendNotActive() {
+        selectedFilterChannel.offer(selectedFiltersCache)
+        channel.offer(null)
     }
 
-    override fun clear() {
+    override fun cancel() {
         Timber.d("Clearing ongoing searches")
         searchJob?.cancel()
     }

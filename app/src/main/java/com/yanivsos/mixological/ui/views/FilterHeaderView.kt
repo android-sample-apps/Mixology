@@ -20,7 +20,13 @@ class FilterHeaderView @JvmOverloads constructor(
             invalidate()
         }
 
-    var headerText: CharSequence? = null
+    var onFilterClearedClickedListener: (() -> Unit)? = null
+    set(value) {
+        field = value
+        setOnClearFilterClickListener()
+    }
+
+    private var headerText: CharSequence? = null
         set(value) {
             header_tv.text = value
             field = value
@@ -29,6 +35,13 @@ class FilterHeaderView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.view_filter_header, this)
         initAttributes(attrs)
+        setOnClearFilterClickListener()
+    }
+
+    private fun setOnClearFilterClickListener() {
+        onFilterClearedClickedListener?.let { listener ->
+            clear_btn.setOnClickListener { listener.invoke() }
+        } ?: clear_btn.setOnClickListener(null)
     }
 
     private fun initAttributes(attrs: AttributeSet?) {
