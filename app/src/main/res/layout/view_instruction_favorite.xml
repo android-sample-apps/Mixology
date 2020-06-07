@@ -13,13 +13,38 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/screen_padding">
 
-        <include
-            layout="@layout/drink_favorite_badge"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_container"
+            android:layout_width="@dimen/share_card_size_small"
+            android:layout_height="@dimen/share_card_size_small"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/share_card_radius_size"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/screen_padding_small">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/cherry_iv"
+                    android:tint="@color/cherry_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_cherries" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/favorite_instruction_title"
