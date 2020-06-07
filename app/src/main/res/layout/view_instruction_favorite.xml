@@ -54,7 +54,7 @@
             android:letterSpacing="0.1"
             android:text="@string/no_favorites_yet"
             android:textColor="@color/header_text_color"
-            android:textSize="28sp"
+            android:textSize="26sp"
             app:fontFamily="@font/fty_delirium_ncv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/card_container"
