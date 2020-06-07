@@ -188,35 +188,31 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 }
 
 class SelectableAdapter :
-    ListAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder2>(DrinkFilterDiffCallback()) {
+    ListAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>(DrinkFilterDiffCallback()) {
 
     private val inputActionsChannel =
         ConflatedBroadcastChannel<InputActions<DrinkFilterUiModel>>()
     val inputActions: Flow<InputActions<DrinkFilterUiModel>> = inputActionsChannel.asFlow()
 
     private fun getColor(selected: Boolean): Int {
-        return if (selected) R.color.header_text_color else R.color.secondary_text_color
-    }
-
-    private fun getAlpha(selected: Boolean): Float {
-        return if (selected) 1f else 0.5f
+        return if (selected) R.color.header_text_color else R.color.secondary_text_color_alpha_50
     }
 
     private fun getElevation(selected: Boolean): Float {
         return if (selected) 8.dpToPx() else 0.dpToPx()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder2 {
-        return SelectableViewHolder2(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
+        return SelectableViewHolder(
             parent.viewHolderInflate(R.layout.list_item_selectable_filter)
         )
     }
 
-    override fun onBindViewHolder(holder: SelectableAdapter.SelectableViewHolder2, position: Int) {
+    override fun onBindViewHolder(holder: SelectableAdapter.SelectableViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class SelectableViewHolder2(override val containerView: View) :
+    inner class SelectableViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
 
@@ -237,7 +233,6 @@ class SelectableAdapter :
                 card_container.run {
                     strokeColor = selectedColor
                     elevation = getElevation(filter.selected)
-                    alpha = getAlpha(filter.selected)
                 }
                 filter_tv.run {
                     setTextColor(selectedColor)
