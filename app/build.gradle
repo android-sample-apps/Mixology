@@ -47,6 +47,18 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    bundle {
+        language {
+            enableSplit = true
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             outputFileName = "Mixological_${variant.name}_v${variant.versionCode}_${variant.versionName}_${buildTime()}.apk"
