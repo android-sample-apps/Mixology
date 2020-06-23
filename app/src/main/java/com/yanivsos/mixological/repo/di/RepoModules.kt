@@ -1,5 +1,6 @@
 package com.yanivsos.mixological.repo.di
 
+import com.yanivsos.mixological.BuildConfig
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.repo.mappers.*
 import com.yanivsos.mixological.repo.reactiveStore.*
@@ -14,10 +15,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Suppress("RemoveExplicitTypeArguments")
 val repoModule = module {
 
+    factory<HttpLoggingInterceptor.Level> {
+        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+    }
+
     factory<OkHttpClient> {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+                level = get<HttpLoggingInterceptor.Level>()
             })
             .build()
     }
