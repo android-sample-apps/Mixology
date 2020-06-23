@@ -70,10 +70,13 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/search_online_btn"
             style="@style/BottomSheetTextButton"
+            app:strokeWidth="1dp"
+            app:cornerRadius="@dimen/screen_padding_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_online"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/screen_padding"
             app:layout_constraintTop_toBottomOf="@id/description_container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
