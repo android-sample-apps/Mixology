@@ -48,6 +48,11 @@ data class CategoryModel(
     @PrimaryKey val name: String
 )
 
+data class CategoryWithImageModel(
+    val categoryModel: CategoryModel,
+    val image: String?
+)
+
 @Entity
 data class DrinkPreviewModel(
     @PrimaryKey val id: String,

@@ -12,6 +12,13 @@ val useCasesModule = module {
     }
 
     factory {
+        GetCategoriesAndImagesUseCase(
+            getCategoriesUseCase = get(),
+            repository = get()
+        )
+    }
+
+    factory {
         FetchIngredientsUseCase(
             repository = get()
         )
