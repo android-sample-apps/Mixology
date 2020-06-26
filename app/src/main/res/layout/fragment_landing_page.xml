@@ -60,11 +60,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:visibility="gone"
             app:hv_headerText="@string/lp_recent_searches_drinks_header"
             app:layout_constraintBottom_toTopOf="@id/recent_searches_rv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/most_popular_rv" />
+            app:layout_constraintTop_toBottomOf="@id/most_popular_rv"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recent_searches_rv"

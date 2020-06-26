@@ -85,7 +85,19 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
         landingPage.run {
             latestArrivalsAdapter.update(latestArrivals)
             mostPopularAdapter.update(mostPopular)
-            recentSearchesAdapter.update(recentSearches)
+            recentSearchesAdapter.updateWithAction(recentSearches) {
+                recent_searches_header.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun DrinkPreviewAdapter.updateWithAction(
+        data: List<DrinkPreviewUiModel>,
+        action: () -> Unit
+    ) {
+        update(data)
+        if (data.isNotEmpty()) {
+            action()
         }
     }
 
