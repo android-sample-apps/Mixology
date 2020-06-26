@@ -25,7 +25,7 @@ android {
         targetSdkVersion 29
         versionCode 3
         versionName "1.0.0-beta"
-
+        setProperty("archivesBaseName", "Mixological_v" + versionCode + "(" + versionName + ")_" + buildTime())
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
