@@ -11,8 +11,7 @@ interface RemovableReactiveStore<Key, Value, Param> : NonRemovableReactiveStore<
     fun remove(keys: List<Key>)
 }
 
-interface ReplaceAllReactiveStore<Key, Value, Param> : RemovableReactiveStore<Key, Value, Param> {
-    fun removeAll()
+interface ReplaceAllReactiveStore<Value, Param> : NonRemovableReactiveStore<Value, Param> {
     fun replaceAll(data: List<Value>)
 }
 

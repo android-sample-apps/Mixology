@@ -11,7 +11,7 @@ import java.util.function.Function
 
 class LatestArrivalsRepository(
     private val service: DrinkService,
-    private val reactiveStore: ReplaceAllReactiveStore<String, LatestArrivalsModel, Unit>,
+    private val reactiveStore: ReplaceAllReactiveStore<LatestArrivalsModel, Unit>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 

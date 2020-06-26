@@ -13,9 +13,6 @@ interface MostPopularDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(mostPopulars: List<MostPopularModel>)
 
-    @Query("DELETE FROM MostPopularModel WHERE drinkId = :ids")
-    fun remove(ids: List<String>)
-
     @Query("DELETE FROM MostPopularModel")
     fun removeAll()
 

@@ -11,7 +11,7 @@ import java.util.function.Function
 
 class MostPopularRepository(
     private val service: DrinkService,
-    private val reactiveStore: ReplaceAllReactiveStore<String, MostPopularModel, Unit>,
+    private val reactiveStore: ReplaceAllReactiveStore<MostPopularModel, Unit>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 
