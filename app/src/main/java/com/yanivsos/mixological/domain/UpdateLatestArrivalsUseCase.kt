@@ -25,8 +25,7 @@ class UpdateLatestArrivalsUseCase(
         try {
             val latestArrivalsPreviews = latestArrivalsRepository.fetchLatestArrivals()
             val latestArrivals = toLatestArrivals(latestArrivalsPreviews)
-            latestArrivalsRepository.removeAll()
-            latestArrivalsRepository.storeAll(latestArrivals)
+            latestArrivalsRepository.replaceAll(latestArrivals)
             drinkPreviewRepository.storeAll(latestArrivalsPreviews)
         } catch (e: Exception) {
             Timber.e(e, "Failed replacing latest arrivals")

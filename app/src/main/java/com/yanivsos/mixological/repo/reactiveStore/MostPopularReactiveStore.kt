@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class MostPopularReactiveStore(
     private val mostPopularDao: MostPopularDao
-) : RemoveAllReactiveStore<String, MostPopularModel, Unit> {
+) : ReplaceAllReactiveStore<String, MostPopularModel, Unit> {
 
     override fun storeAll(data: List<MostPopularModel>) {
         mostPopularDao.insertAll(data)
@@ -21,5 +21,9 @@ class MostPopularReactiveStore(
 
     override fun removeAll() {
         mostPopularDao.removeAll()
+    }
+
+    override fun replaceAll(data: List<MostPopularModel>) {
+        mostPopularDao.replaceAll(data)
     }
 }

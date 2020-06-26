@@ -1,9 +1,6 @@
 package com.yanivsos.mixological.repo.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.yanivsos.mixological.domain.models.MostPopularModel
 import kotlinx.coroutines.flow.Flow
 
@@ -14,11 +11,17 @@ interface MostPopularDao {
     fun getAll(): Flow<List<MostPopularModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(latestArrivals: List<MostPopularModel>)
+    fun insertAll(mostPopulars: List<MostPopularModel>)
 
     @Query("DELETE FROM MostPopularModel WHERE drinkId = :ids")
     fun remove(ids: List<String>)
 
     @Query("DELETE FROM MostPopularModel")
     fun removeAll()
+
+    @Transaction
+    fun replaceAll(mostPopulars: List<MostPopularModel>) {
+        removeAll()
+        insertAll(mostPopulars)
+    }
 }

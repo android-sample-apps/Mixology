@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class LatestArrivalsReactiveStore(
     private val latestArrivalsDao: LatestArrivalsDao
-) : RemoveAllReactiveStore<String, LatestArrivalsModel, Unit> {
+) : ReplaceAllReactiveStore<String, LatestArrivalsModel, Unit> {
 
     override fun storeAll(data: List<LatestArrivalsModel>) {
         latestArrivalsDao.insertAll(data)
@@ -22,5 +22,9 @@ class LatestArrivalsReactiveStore(
 
     override fun removeAll() {
         latestArrivalsDao.removeAll()
+    }
+
+    override fun replaceAll(data: List<LatestArrivalsModel>) {
+        latestArrivalsDao.replaceAll(data)
     }
 }

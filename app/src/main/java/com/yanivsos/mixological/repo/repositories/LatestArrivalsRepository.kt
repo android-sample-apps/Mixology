@@ -5,13 +5,13 @@ import com.yanivsos.mixological.domain.models.LatestArrivalsModel
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
-import com.yanivsos.mixological.repo.reactiveStore.RemoveAllReactiveStore
+import com.yanivsos.mixological.repo.reactiveStore.ReplaceAllReactiveStore
 import kotlinx.coroutines.flow.Flow
 import java.util.function.Function
 
 class LatestArrivalsRepository(
     private val service: DrinkService,
-    private val reactiveStore: RemoveAllReactiveStore<String, LatestArrivalsModel, Unit>,
+    private val reactiveStore: ReplaceAllReactiveStore<String, LatestArrivalsModel, Unit>,
     private val mapper: Function<DrinksWrapperResponse<DrinkPreviewResponse>, List<DrinkPreviewModel>>
 ) {
 
@@ -19,12 +19,8 @@ class LatestArrivalsRepository(
         return reactiveStore.get(Unit)
     }
 
-    fun storeAll(latestArrivals: List<LatestArrivalsModel>)  {
-        reactiveStore.storeAll(latestArrivals)
-    }
-
-    fun removeAll() {
-        reactiveStore.removeAll()
+    fun replaceAll(data: List<LatestArrivalsModel>) {
+        reactiveStore.replaceAll(data)
     }
 
     suspend fun fetchLatestArrivals(): List<DrinkPreviewModel> {

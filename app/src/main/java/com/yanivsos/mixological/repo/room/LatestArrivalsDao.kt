@@ -1,9 +1,6 @@
 package com.yanivsos.mixological.repo.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.yanivsos.mixological.domain.models.LatestArrivalsModel
 import kotlinx.coroutines.flow.Flow
 
@@ -21,4 +18,10 @@ interface LatestArrivalsDao {
 
     @Query("DELETE FROM LatestArrivalsModel")
     fun removeAll()
+
+    @Transaction
+    fun replaceAll(latestArrivals: List<LatestArrivalsModel>) {
+        removeAll()
+        insertAll(latestArrivals)
+    }
 }

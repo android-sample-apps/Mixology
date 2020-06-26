@@ -1,7 +1,6 @@
 package com.yanivsos.mixological.domain
 
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
-import com.yanivsos.mixological.domain.models.LatestArrivalsModel
 import com.yanivsos.mixological.domain.models.MostPopularModel
 import com.yanivsos.mixological.repo.repositories.DrinkPreviewRepository
 import com.yanivsos.mixological.repo.repositories.MostPopularRepository
@@ -26,8 +25,7 @@ class UpdateMostPopularUseCase(
         try {
             val mostPopularPreviews = mostPopularRepository.fetchMostPopulars()
             val mostPopular = toMostPopular(mostPopularPreviews)
-            mostPopularRepository.removeAll()
-            mostPopularRepository.storeAll(mostPopular)
+            mostPopularRepository.replaceAll(mostPopular)
             drinkPreviewRepository.storeAll(mostPopularPreviews)
         } catch (e: Exception) {
             Timber.e(e, "Failed replacing most popular")
