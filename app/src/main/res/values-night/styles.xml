@@ -82,8 +82,8 @@
     </style>-->
 
     <style name="BlackAndWhiteTab" parent="@style/Widget.MaterialComponents.TabLayout.Colored">
-        <item name="tabIndicatorColor">?attr/colorAccent</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/orange</item>
+        <item name="tabSelectedTextColor">?attr/colorPrimary</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabTextColor">@color/tile_text_color</item>
     </style>

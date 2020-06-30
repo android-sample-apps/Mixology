@@ -11,6 +11,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:strokeColor="@color/header_text_color"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:strokeWidth="0.5dp">
 
     <com.airbnb.lottie.LottieAnimationView

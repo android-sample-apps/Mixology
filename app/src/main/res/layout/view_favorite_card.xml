@@ -10,6 +10,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:strokeColor="@color/header_text_color"
     app:strokeWidth="0.5dp">
 
