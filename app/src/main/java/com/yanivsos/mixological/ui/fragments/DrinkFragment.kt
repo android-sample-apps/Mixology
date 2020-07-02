@@ -209,7 +209,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun updateIsFavorite(isFavorite: Boolean) {
         Timber.d("drink is in favorites[$isFavorite]")
-        val color = if (isFavorite) R.color.cherry_red else R.color.black
+        val color = if (isFavorite) R.color.cherry_red else R.color.cherry_unselected
         setFavoriteColorFilter(color)
     }
 
