@@ -71,7 +71,7 @@
 
     <style name="SearchTextAppearance">
         <item name="fontFamily">@font/jesa_script_regular</item>
-        <item name="android:textColor">@color/header_text_color</item>
+        <item name="android:textColor">?attr/colorAccent</item>
     </style>
 
     <style name="TabTextAppearance">
