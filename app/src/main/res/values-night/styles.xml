@@ -81,12 +81,12 @@
         <item name="android:letterSpacing">0.1</item>
     </style>-->
 
-    <style name="BlackAndWhiteTab" parent="@style/Widget.MaterialComponents.TabLayout.Colored">
-        <item name="tabIndicatorColor">@color/orange</item>
-        <item name="tabSelectedTextColor">?attr/colorPrimary</item>
+    <!--<style name="BlackAndWhiteTab" parent="@style/Widget.MaterialComponents.TabLayout.Colored">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabSelectedTextColor">?attr/colorAccent</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabTextColor">@color/tile_text_color</item>
-    </style>
+    </style>-->
 
     <!--<style name="BottomSheetTextButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="fontFamily">@font/fty_delirium_ncv</item>
@@ -98,12 +98,12 @@
         <item name="rippleColor">@color/ripple_color</item>
     </style>-->
 
-    <style name="ActiveFilterBadge" >
+    <!--<style name="ActiveFilterBadge" >
         <item name="cardCornerRadius">13dp</item>
         <item name="cardElevation">4dp</item>
         <item name="cardBackgroundColor">@color/white</item>
         <item name="strokeColor">@color/white</item>
         <item name="strokeWidth">1dp</item>
-    </style>
+    </style>-->
 
 </resources>

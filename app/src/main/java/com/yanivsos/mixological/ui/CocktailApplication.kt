@@ -1,6 +1,8 @@
 package com.yanivsos.mixological.ui
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import com.droidnet.DroidNet
 import com.yanivsos.mixological.di.KoinStarter
 import com.yanivsos.mixological.domain.FetchAllPreviewsUseCase
@@ -18,6 +20,8 @@ class CocktailApplication : Application() {
         startTimber()
         startDroidNet()
         fetchPreviews()
+        setDefaultNightMode(
+            AppCompatDelegate.MODE_NIGHT_YES)
     }
 
     override fun onLowMemory() {

@@ -48,7 +48,7 @@
         app:boxCornerRadiusBottomStart="@dimen/screen_radius"
         app:boxCornerRadiusTopEnd="@dimen/screen_radius"
         app:boxCornerRadiusTopStart="@dimen/screen_radius"
-        app:boxStrokeColor="@color/header_text_color"
+        app:boxStrokeColor="?attr/colorAccent"
         app:endIconMode="clear_text"
         app:endIconTint="@color/header_text_color"
         app:helperTextTextAppearance="@style/SearchTextAppearance"

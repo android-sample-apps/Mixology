@@ -13,7 +13,7 @@
     </style>
 
     <style name="MyToolbar">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">?attr/colorAccent</item>
         <item name="android:textSize">42sp</item>
         <item name="fontFamily">@font/fty_delirium_neon_ncv</item>
         <item name="android:paddingStart">@dimen/screen_padding</item>
@@ -22,9 +22,9 @@
     </style>
 
     <style name="MyEditTextTheme">
-        <item name="colorControlNormal">@color/black</item>
-        <item name="colorControlActivated">@color/black</item>
-        <item name="colorControlHighlight">@color/black</item>
+        <item name="colorControlNormal">?attr/colorAccent</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="colorControlHighlight">?attr/colorAccent</item>
     </style>
 
     <style name="ModalBottomSheet" parent="Widget.Design.BottomSheet.Modal">
@@ -82,8 +82,8 @@
     </style>
 
     <style name="BlackAndWhiteTab" parent="@style/Widget.MaterialComponents.TabLayout.Colored">
-        <item name="tabIndicatorColor">@color/black</item>
-        <item name="tabSelectedTextColor">@color/black</item>
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabSelectedTextColor">?attr/colorAccent</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabTextColor">@color/tile_text_color</item>
     </style>
