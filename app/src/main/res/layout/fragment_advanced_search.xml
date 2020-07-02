@@ -25,6 +25,7 @@
         android:background="?selectableItemBackgroundBorderless"
         android:padding="@dimen/screen_padding_small"
         android:src="@drawable/ic_filter_list"
+        android:tint="?attr/colorAccent"
         android:visibility="visible"
         app:ibv_badgeColor="?attr/colorAccent"
         app:ibv_maxBadgeValue="99"
