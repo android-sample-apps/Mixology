@@ -16,7 +16,7 @@ class HeaderView @JvmOverloads constructor(
         initAttributes(attrs)
     }
 
-    var headerText: CharSequence? = null
+    private var headerText: CharSequence? = null
         set(value) {
             field = value
             alcoholic_header_fhv.text = value
