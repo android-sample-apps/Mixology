@@ -10,7 +10,7 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:strokeColor="@color/header_text_color"
+    app:strokeColor="@color/drink_fragment_action_button_stroke"
     app:cardBackgroundColor="?attr/colorPrimary"
     app:strokeWidth="0.5dp">
 
