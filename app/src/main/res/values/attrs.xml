@@ -8,4 +8,10 @@
     <declare-styleable name="FilterHeaderView">
         <attr name="fhv_headerText" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="SettingsSwitch">
+        <attr name="ss_title" format="reference"/>
+        <attr name="ss_description" format="reference"/>
+    </declare-styleable>
+
 </resources>

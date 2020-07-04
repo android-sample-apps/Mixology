@@ -51,4 +51,6 @@
     <string name="network_unavailable">Your network is unavailable.\nCheck your data or wifi connection.</string>
     <string name="ingredient_search_hint">Search for ingredient</string>
     <string name="settings">Settings</string>
+    <string name="dark_mode_title">Dark mode</string>
+    <string name="dark_mode_description">Enable or disable dark mode</string>
 </resources>

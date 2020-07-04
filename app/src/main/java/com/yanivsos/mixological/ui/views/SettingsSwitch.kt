@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.extensions.getStringFromResourceId
 import kotlinx.android.synthetic.main.view_settings_switch.view.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
@@ -25,7 +26,22 @@ class SettingsSwitch @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.view_settings_switch, this)
+        initAttributes(attrs)
         initSwitch()
+    }
+
+    private fun initAttributes(attrs: AttributeSet?) {
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.SettingsSwitch, 0, 0
+        ).apply {
+            try {
+                settings_title_tv.text = getStringFromResourceId(R.styleable.SettingsSwitch_ss_title)
+                settings_subtitle_tv.text = getStringFromResourceId(R.styleable.SettingsSwitch_ss_description)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     private fun initSwitch() {

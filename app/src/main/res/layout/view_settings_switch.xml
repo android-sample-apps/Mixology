@@ -13,8 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Dark mode" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/settings_subtitle_tv"
@@ -22,8 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_title_tv"
-        android:text="Enable dark mode in your app" />
+        app:layout_constraintTop_toBottomOf="@id/settings_title_tv" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/settings_switch"
