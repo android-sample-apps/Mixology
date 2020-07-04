@@ -23,7 +23,7 @@
             app:cardBackgroundColor="?attr/colorPrimary"
             app:cardCornerRadius="@dimen/share_card_radius_size"
             app:cardElevation="4dp"
-            app:strokeColor="?attr/colorAccent"
+            app:strokeColor="@color/secondary_text_color"
             app:strokeWidth="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
