@@ -118,4 +118,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
     implementation 'com.github.nikartm:image-support:1.0.5'
+    implementation 'com.chibatching.kotpref:kotpref:2.11.0'
 }

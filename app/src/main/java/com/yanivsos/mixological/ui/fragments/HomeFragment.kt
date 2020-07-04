@@ -22,6 +22,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 HomeFragmentDirections.actionHomeFragmentToAdvancedSearchFragment()
             )
         }
+        settings_action.setOnClickListener {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
+            )
+        }
     }
 
     private fun initHomePagerAdapter() {

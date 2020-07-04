@@ -1,6 +1,7 @@
 package com.yanivsos.mixological.ui.di
 
 import com.yanivsos.mixological.ui.mappers.*
+import com.yanivsos.mixological.ui.utils.SetNightModeUseCase
 import com.yanivsos.mixological.ui.view_model.*
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
@@ -75,5 +76,9 @@ val viewModelModule = module {
             getWatchlistUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
+    }
+
+    viewModel {
+        SettingsViewModel(SetNightModeUseCase())
     }
 }

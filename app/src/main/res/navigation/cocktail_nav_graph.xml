@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cocktail_nav_graph"
-    app:startDestination="@id/splashFragment"
-    >
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -18,6 +17,10 @@
         <action
             android:id="@+id/action_homeFragment_to_advancedSearchFragment"
             app:destination="@id/advancedSearchFragment"
+            app:enterAnim="@anim/fragment_close_enter" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
             app:enterAnim="@anim/fragment_close_enter" />
     </fragment>
 
@@ -77,6 +80,11 @@
             app:popUpTo="@id/drinkErrorFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.yanivsos.mixological.ui.fragments.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/fragment_settings" />
 
 
 </navigation>
