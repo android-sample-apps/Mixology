@@ -33,7 +33,7 @@
     </style>
 
 
-    <style name="ModalBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+    <style name="ModalBottomSheetDialog" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:navigationBarColor">@color/white</item>
@@ -96,6 +96,7 @@
         <item name="android:textColor">@color/header_text_color</item>
         <item name="android:textSize">26sp</item>
         <item name="rippleColor">@color/ripple_color</item>
+        <item name="strokeColor">@color/black</item>
     </style>
 
     <style name="ActiveFilterBadge" >
@@ -116,6 +117,10 @@
         <item name="android:textColor">@color/secondary_text_color</item>
         <item name="fontFamily">@font/jesa_script_regular</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BottomDialogCard">
+        <item name="cardBackgroundColor">@color/white</item>
     </style>
 
 </resources>

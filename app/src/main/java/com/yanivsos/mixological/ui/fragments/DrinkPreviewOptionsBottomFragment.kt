@@ -35,7 +35,7 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private val favoriteColor: Int by lazy { requireContext().compatColor(R.color.cherry_red) }
-    private val notFavoriteColor: Int by lazy { requireContext().compatColor(R.color.black) }
+    private val notFavoriteColor: Int by lazy { requireContext().compatColor(R.color.non_favorite_cherry_tint) }
     private val favoriteElevation: Float by lazy { favorite_card_container.cardElevation }
 
     override fun onCreateView(

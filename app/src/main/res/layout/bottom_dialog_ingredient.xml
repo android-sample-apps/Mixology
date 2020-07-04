@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ingredient_bottom_sheet"
     app:shapeAppearance="@style/BottomDialogCardAppShapeAppearance"
+    style="@style/BottomDialogCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

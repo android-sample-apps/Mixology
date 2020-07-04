@@ -6,6 +6,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_80_alpha">#CC000000</color>
     <color name="orange">#FFA500</color>
     <color name="cherry_red">#790604</color>
     <color name="cherry_unselected">@color/black</color>
@@ -16,4 +17,5 @@
     <color name="tile_text_color">#808080</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">@color/black</color>
     <color name="drink_fragment_action_button_stroke">@color/black</color>
+    <color name="non_favorite_cherry_tint">@color/black</color>
 </resources>
