@@ -9,8 +9,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="13dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/white"
-    app:strokeColor="@color/black"
+    app:cardBackgroundColor="?attr/colorPrimary"
+    app:strokeColor="?attr/colorAccent"
     app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             android:lines="1"
             android:includeFontPadding="false"
             app:fontFamily="@font/jesa_script_regular"
-            android:textColor="@color/header_text_color"
+            android:textColor="?attr/colorAccent"
             android:paddingTop="2dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -71,7 +72,9 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.bottom_dialog_search_filters, container, false)
+        //https://github.com/material-components/material-components-android/issues/99#issuecomment-390380852
+        val contextThemeWrapper = ContextThemeWrapper(requireActivity(), R.style.AppTheme)
+        return inflater.cloneInContext(contextThemeWrapper).inflate(R.layout.bottom_dialog_search_filters, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

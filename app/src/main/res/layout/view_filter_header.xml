@@ -31,6 +31,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/clear_btn"
         android:background="?selectableItemBackgroundBorderless"
+        app:tint="?attr/colorAccent"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
