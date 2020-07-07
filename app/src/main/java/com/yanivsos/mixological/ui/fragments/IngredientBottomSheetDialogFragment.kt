@@ -33,11 +33,11 @@ class IngredientBottomSheetDialogFragment(
 
     private var webSearchQuery = ingredient.name
 
-    override fun onCreateView(
+    override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.bottom_dialog_ingredient, container, false)
     }
 

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
@@ -67,14 +66,12 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         observeInputActions(glassAdapter)
     }
 
-    override fun onCreateView(
+    override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        //https://github.com/material-components/material-components-android/issues/99#issuecomment-390380852
-        val contextThemeWrapper = ContextThemeWrapper(requireActivity(), R.style.AppTheme)
-        return inflater.cloneInContext(contextThemeWrapper).inflate(R.layout.bottom_dialog_search_filters, container, false)
+    ): View {
+        return inflater.inflate(R.layout.bottom_dialog_search_filters, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -126,7 +123,10 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
         updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
         updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
-        updateSelectableAdapter(ingredientsAdapter, searchFiltersUiModel.filters[FilterType.INGREDIENTS])
+        updateSelectableAdapter(
+            ingredientsAdapter,
+            searchFiltersUiModel.filters[FilterType.INGREDIENTS]
+        )
     }
 
     private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {

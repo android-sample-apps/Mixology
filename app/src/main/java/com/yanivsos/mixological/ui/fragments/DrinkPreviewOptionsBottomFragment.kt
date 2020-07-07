@@ -38,11 +38,11 @@ class DrinkPreviewOptionsBottomFragment(
     private val notFavoriteColor: Int by lazy { requireContext().compatColor(R.color.non_favorite_cherry_tint) }
     private val favoriteElevation: Float by lazy { favorite_card_container.cardElevation }
 
-    override fun onCreateView(
+    override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_drink_preview_options, container, false)
     }
 
