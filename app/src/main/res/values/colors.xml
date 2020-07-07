@@ -6,7 +6,6 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="black_80_alpha">#CC000000</color>
     <color name="orange">#FFA500</color>
     <color name="cherry_red">#790604</color>
     <color name="cherry_unselected">@color/black</color>
