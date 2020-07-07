@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/screen_radius"
     app:cardElevation="0dp"
-    app:strokeColor="@color/black"
+    app:strokeColor="?attr/colorAccent"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:strokeWidth="1dp"
     tools:background="@color/orange">
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/offline"
             android:layout_marginStart="@dimen/screen_padding_small"
-            android:textColor="@color/header_text_color"
+            android:textColor="?attr/colorAccent"
             android:textSize="32sp"
             android:letterSpacing="0.125"
             app:fontFamily="@font/fty_delirium_ncv"
