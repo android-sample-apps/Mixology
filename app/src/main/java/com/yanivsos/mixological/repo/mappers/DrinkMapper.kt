@@ -78,7 +78,7 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
     }
 
     private fun MutableMap<String, String?>.putIfValid(ingredient: String?, measurement: String?) {
-        if (ingredient != null) {
+        if (ingredient?.isNotBlank() == true) {
             put(ingredient, measurement)
         }
     }

@@ -22,6 +22,13 @@ class GetDrinkUseCase(
 
     init {
         observeDrink()
+        refreshDrink()
+    }
+
+    private fun refreshDrink() {
+        GlobalScope.launch(Dispatchers.IO) {
+            fetchAndStore()
+        }
     }
 
     private fun observeDrink() {
@@ -34,11 +41,10 @@ class GetDrinkUseCase(
                     drink to isFavorite
                 }
                 .onStart { channel.send(Result.Loading(drinkId)) }
-//                .onEach { delay(3000) }
                 .collect { (drink, isFavorite) ->
                     if (drink == null) {
                         Timber.d("couldn't find drink[$drinkId] in DB - fetching...")
-                        fetchAndStore()
+                        fetchAndStore { channel.offer(Result.Error(it)) }
                     } else {
                         Timber.d("found drink[$drinkId]")
                         val model = drink.copy(isFavorite = isFavorite)
@@ -48,13 +54,13 @@ class GetDrinkUseCase(
         }
     }
 
-    private suspend fun fetchAndStore() {
+    private suspend fun fetchAndStore(onError: ((Exception) -> Unit)? = null) {
         Timber.d("fetchById: called with id[$drinkId]")
         try {
             fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
         } catch (e: Exception) {
             Timber.e(e, "Unable to fetch by id[$drinkId]")
-            channel.send(Result.Error(e))
+            onError?.invoke(e)
         }
     }
 
