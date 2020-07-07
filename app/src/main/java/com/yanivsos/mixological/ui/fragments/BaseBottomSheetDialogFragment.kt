@@ -26,7 +26,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //https://github.com/material-components/material-components-android/issues/99#issuecomment-390380852
         return createView(
             inflater = inflater.cloneInContext(themeContext()),
             container = container,

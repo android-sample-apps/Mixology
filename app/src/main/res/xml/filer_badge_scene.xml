@@ -6,7 +6,7 @@
         app:constraintSetEnd="@id/visible_filter"
         app:constraintSetStart="@id/invisible_filter"
         app:motionInterpolator="easeOut"
-        app:duration="250"/>
+        app:duration="150"/>
 
     <ConstraintSet android:id="@+id/visible_filter">
 

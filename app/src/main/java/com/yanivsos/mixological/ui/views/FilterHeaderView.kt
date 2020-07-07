@@ -17,7 +17,6 @@ class FilterHeaderView @JvmOverloads constructor(
         set(value) {
             field = value
             showFilters(filters)
-            invalidate()
         }
 
     var onFilterClearedClickedListener: (() -> Unit)? = null
@@ -58,20 +57,20 @@ class FilterHeaderView @JvmOverloads constructor(
     }
 
     private fun showFilters(filters: String?) {
+        filter_tv.text = filters
         if (filters != null) {
             visibleBadge()
         }
         else {
             invisibleBadge()
         }
-        filter_tv.text = filters
     }
 
     private fun invisibleBadge() {
-        transitionToStart()
+        transitionToState(R.id.invisible_filter)
     }
 
     private fun visibleBadge() {
-        transitionToEnd()
+        transitionToState(R.id.visible_filter)
     }
 }
