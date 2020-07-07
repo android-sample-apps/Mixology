@@ -113,9 +113,9 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     debugImplementation 'com.balsikandar.android:crashreporter:1.1.0'
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.3'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 
     implementation 'com.github.nikartm:image-support:1.0.5'
     implementation 'com.chibatching.kotpref:kotpref:2.11.0'
