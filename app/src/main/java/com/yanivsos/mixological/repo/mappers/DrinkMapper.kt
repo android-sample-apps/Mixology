@@ -2,11 +2,15 @@ package com.yanivsos.mixological.repo.mappers
 
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
 import com.yanivsos.mixological.repo.models.NullableDrinksWrapperResponse
 import timber.log.Timber
+import java.util.*
 import java.util.function.Function
+
+val LOCAL_SPANISH = Locale("es", "ES")
 
 class SearchDrinkMapper(
     private val singleDrinkMapper: Function<DrinkResponse, DrinkModel>
@@ -43,6 +47,7 @@ class DrinkMapper(
 }
 
 class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
+
     override fun apply(t: DrinkResponse): DrinkModel {
         Timber.d("mapping response: $t")
         return DrinkModel(
@@ -54,7 +59,9 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
             alcoholic = t.strAlcoholic,
             category = t.strCategory,
             glass = t.strGlass,
-            video = t.strVideo
+            video = t.strVideo,
+            nameLocalsMap = nameLocalsMap(t),
+            instructionsLocalsMap = instructionsLocalMap(t)
         )
     }
 
@@ -82,6 +89,22 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
     private fun MutableMap<String, String?>.putIfValid(ingredient: String?, measurement: String?) {
         if (ingredient?.isNotBlank() == true) {
             put(ingredient, measurement)
+        }
+    }
+
+    private fun instructionsLocalMap(t: DrinkResponse): Map<String, String?> {
+        return mutableMapOf<String, String?>().apply {
+            put(Locale.GERMAN.toKey(), t.strInstructionsDE)
+            put(Locale.FRENCH.toKey(), t.strInstructionsFR)
+            put(LOCAL_SPANISH.toKey(), t.strInstructionsES)
+        }
+    }
+
+    private fun nameLocalsMap(t: DrinkResponse): Map<String, String?> {
+        return mutableMapOf<String, String?>().apply {
+            put(Locale.GERMAN.toKey(), t.strDrinkDE)
+            put(Locale.FRENCH.toKey(), t.strDrinkFR)
+            put(LOCAL_SPANISH.toKey(), t.strDrinkES)
         }
     }
 }

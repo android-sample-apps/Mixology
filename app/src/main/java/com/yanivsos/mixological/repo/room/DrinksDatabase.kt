@@ -19,9 +19,9 @@ import com.yanivsos.mixological.domain.models.*
         LatestArrivalsModel::class,
         MostPopularModel::class
     ],
-    version = 1
+    version = 2
 )
-@TypeConverters(Converters::class)
+@TypeConverters(MapStringToStringOptionalConverter::class)
 abstract class DrinksDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun drinkPreviewDao(): DrinkPreviewDao

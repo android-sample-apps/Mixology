@@ -88,7 +88,9 @@ data class RecentlyViewedModel(
 data class DrinkModel(
     @PrimaryKey val id: String,
     val name: String,
+    val nameLocalsMap: Map<String, String?>,
     val instructions: String,
+    val instructionsLocalsMap: Map<String, String?>,
     val ingredients: Map<String, String?>,
     val category: String,
     val alcoholic: String?,
