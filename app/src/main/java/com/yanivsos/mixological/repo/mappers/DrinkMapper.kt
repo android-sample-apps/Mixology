@@ -5,6 +5,7 @@ import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
 import com.yanivsos.mixological.repo.models.NullableDrinksWrapperResponse
+import timber.log.Timber
 import java.util.function.Function
 
 class SearchDrinkMapper(
@@ -43,6 +44,7 @@ class DrinkMapper(
 
 class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
     override fun apply(t: DrinkResponse): DrinkModel {
+        Timber.d("mapping response: $t")
         return DrinkModel(
             id = t.idDrink,
             name = t.strDrink,
