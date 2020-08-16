@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Mixological</string>
-    <string name="long_mock_text">Working one at a time, place a chicken breast on a cutting board so a short side is towards you and holding a chef’s knife parallel to breast, slice along the middle of a long side to make a slit. Continue to slice until you are about ½” from the other side. Open breast up like a book and place between 2 sheets of wax paper or plastic wrap. Using a meat mallet or a rolling pin, pound until ⅓” thick (not making it super thin will keep it from overcooking).
+    <string name="app_name" translatable="false">Mixological</string>
+    <string name="long_mock_text" translatable="false">Working one at a time, place a chicken breast on a cutting board so a short side is towards you and holding a chef’s knife parallel to breast, slice along the middle of a long side to make a slit. Continue to slice until you are about ½” from the other side. Open breast up like a book and place between 2 sheets of wax paper or plastic wrap. Using a meat mallet or a rolling pin, pound until ⅓” thick (not making it super thin will keep it from overcooking).
 
         Combine garlic, lemon juice, and olive oil in a large baking dish. Season chicken cutlets all over with salt (about ¾ tsp. Diamond Crystal or ½ tsp. Morton kosher salt per cutlet). Add to marinade and turn to coat. Let sit at least 20 minutes and up to 1 hour. (The lemon juice will turn the flesh opaque, but that’s nothing to worry about.)
 
@@ -29,7 +29,7 @@
     <string name="add_to_favorites">Add to favorites</string>
     <string name="remove_from_favorite">Remove from favorites</string>
     <string name="search">Search</string>
-    <string name="advanced_search_hint">Search for a cocktails</string>
+    <string name="advanced_search_hint">Search for a cocktail</string>
     <string name="no_results">Sorry, no results</string>
     <string name="alcohol_volume_abv">%1$s\%% ABV.</string>
     <string name="filter_alcoholic">Alcoholic</string>
