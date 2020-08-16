@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.di
 
-import android.app.Application
+import android.content.Context
 import com.yanivsos.mixological.domain.di.useCasesModule
 import com.yanivsos.mixological.repo.di.reactiveStoreModule
 import com.yanivsos.mixological.repo.di.repoModule
@@ -11,9 +11,9 @@ import org.koin.core.module.Module
 
 class KoinStarter {
 
-    fun start(app: Application) {
+    fun start(context: Context) {
         startKoin {
-            androidContext(app)
+            androidContext(context)
             modules(myModules())
         }
     }
