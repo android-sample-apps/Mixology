@@ -6,7 +6,6 @@ import timber.log.Timber
 
 class TimberInitializer: Initializer<Unit> {
     override fun create(context: Context) {
-        print("TimberInitializer on create")
         Timber.plant(Timber.DebugTree())
     }
 
