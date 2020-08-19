@@ -22,6 +22,7 @@ import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.shareDrink
 import com.yanivsos.mixological.extensions.toGlideBuilder
+import com.yanivsos.mixological.in_app_review.RequestInAppReviewUseCase
 import com.yanivsos.mixological.ui.adapters.DrinkPagerAdapter
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -37,6 +38,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -52,6 +54,8 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
             args.drinkPreviewUiModel
         )
     }
+
+    private val requestInAppReviewUseCase : RequestInAppReviewUseCase by inject()
 
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
 
@@ -78,8 +82,22 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun initFavoriteToggle() {
         favorite_card_container.setOnClickListener {
-            drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
+//            drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
+            onFavoriteToggled()
         }
+    }
+
+    private fun onFavoriteToggled() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val isFavorite = drinkViewModel.toggleFavoriteSus(args.drinkPreviewUiModel)
+            if (isFavorite) {
+                launchInAppReview()
+            }
+        }
+    }
+
+    private suspend fun launchInAppReview() {
+        requestInAppReviewUseCase.launchReview(requireActivity())
     }
 
     private fun initMotionLayoutListener() {

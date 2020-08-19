@@ -2,6 +2,7 @@ package com.yanivsos.mixological.di
 
 import android.content.Context
 import com.yanivsos.mixological.domain.di.useCasesModule
+import com.yanivsos.mixological.in_app_review.inAppReviewModule
 import com.yanivsos.mixological.repo.di.reactiveStoreModule
 import com.yanivsos.mixological.repo.di.repoModule
 import com.yanivsos.mixological.ui.di.viewModelModule
@@ -24,7 +25,8 @@ class KoinStarter {
             reactiveStoreModule,
             mappersModule,
             useCasesModule,
-            viewModelModule
+            viewModelModule,
+            inAppReviewModule
         )
     }
 }

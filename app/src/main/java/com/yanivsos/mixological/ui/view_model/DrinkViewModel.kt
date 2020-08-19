@@ -46,16 +46,29 @@ class DrinkViewModel(
             .flowOn(Dispatchers.IO)
             .asLiveData()
 
-    fun toggleFavorite(drinkViewModel: DrinkPreviewUiModel) {
+    fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel) {
         GlobalScope.launch(Dispatchers.IO) {
             val isFavorite = toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
             AnalyticsDispatcher
                 .toggleFavorites(
-                    drinkViewModel,
+                    drinkPreviewUiModel,
                     isFavorite,
                     ScreenNames.DRINK
                 )
         }
+    }
+
+    suspend fun toggleFavoriteSus(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
+        return toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
+            .also { isFavorite ->
+                AnalyticsDispatcher
+                    .toggleFavorites(
+                        drinkPreviewUiModel,
+                        isFavorite,
+                        ScreenNames.DRINK
+                    )
+            }
+
     }
 
     fun refreshDrink() {

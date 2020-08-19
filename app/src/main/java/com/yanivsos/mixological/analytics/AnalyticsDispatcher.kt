@@ -97,11 +97,13 @@ object AnalyticsDispatcher {
     }
 
     fun setCurrentScreen(fragment: Fragment) {
-        firebaseAnalytics.setCurrentScreen(
-            fragment.requireActivity(),
-            fragment::class.simpleName,
-            fragment::class.simpleName
-        )
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, fragment::class.simpleName!!)
+        }
+    }
+
+    fun onInAppReviewLaunched() {
+        firebaseAnalytics.logEvent(Events.EVENT_LAUNCH_IN_APP_REVIEW, null)
     }
 
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {
@@ -118,7 +120,7 @@ class ScreenNames {
         const val DRINK = "Drink"
         const val FAVORITES = "Favorites"
         const val SEARCH = "Search"
-        const val ERROR = "Error"
+//        const val ERROR = "Error"
         const val DRINK_OPTIONS = "Drink Options"
     }
 }
@@ -130,6 +132,7 @@ class Events {
         const val EVENT_ADD_TO_FAVORITE = "add_to_favorite"
         const val EVENT_REMOVE_FROM_FAVORITE = "remove_from_favorite"
         const val EVENT_INGREDIENT_LONG_CLICK = "ingredient_long_clicked"
+        const val EVENT_LAUNCH_IN_APP_REVIEW = "launch_in_app_review"
         const val INGREDIENT_SEARCH_ONLINE = "ingredient_search_online"
         const val DRINK_TRY_AGAIN_CLICKED = "drink_try_again_clicked"
         const val SEARCH_DRINK = "drink_search"
