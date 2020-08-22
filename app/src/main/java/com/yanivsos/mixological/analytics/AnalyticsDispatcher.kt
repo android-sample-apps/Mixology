@@ -102,10 +102,6 @@ object AnalyticsDispatcher {
         }
     }
 
-    fun onInAppReviewLaunched() {
-        firebaseAnalytics.logEvent(Events.EVENT_LAUNCH_IN_APP_REVIEW, null)
-    }
-
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {
         param(FBParam.ITEM_ID, drinkPreviewUiModel.id)
         param(FBParam.ITEM_NAME, drinkPreviewUiModel.name)
@@ -132,7 +128,6 @@ class Events {
         const val EVENT_ADD_TO_FAVORITE = "add_to_favorite"
         const val EVENT_REMOVE_FROM_FAVORITE = "remove_from_favorite"
         const val EVENT_INGREDIENT_LONG_CLICK = "ingredient_long_clicked"
-        const val EVENT_LAUNCH_IN_APP_REVIEW = "launch_in_app_review"
         const val INGREDIENT_SEARCH_ONLINE = "ingredient_search_online"
         const val DRINK_TRY_AGAIN_CLICKED = "drink_try_again_clicked"
         const val SEARCH_DRINK = "drink_search"

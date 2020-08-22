@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -89,7 +87,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun onFavoriteToggled() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val isFavorite = drinkViewModel.toggleFavoriteSus(args.drinkPreviewUiModel)
+            val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
             if (isFavorite) {
                 launchInAppReview()
             }
@@ -190,7 +188,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun updateDrinkImage(thumbnail: String?) {
         val clearLottieLiveData = MutableLiveData<Unit>()
-        clearLottieLiveData.observe(viewLifecycleOwner, Observer {
+        clearLottieLiveData.observe(viewLifecycleOwner, {
             clearLottieView()
         })
         requireContext()

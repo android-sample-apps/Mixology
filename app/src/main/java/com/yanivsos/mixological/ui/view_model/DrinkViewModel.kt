@@ -15,11 +15,9 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.function.Function
 
@@ -46,29 +44,24 @@ class DrinkViewModel(
             .flowOn(Dispatchers.IO)
             .asLiveData()
 
-    fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        GlobalScope.launch(Dispatchers.IO) {
-            val isFavorite = toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
-            AnalyticsDispatcher
-                .toggleFavorites(
-                    drinkPreviewUiModel,
-                    isFavorite,
-                    ScreenNames.DRINK
-                )
-        }
-    }
-
-    suspend fun toggleFavoriteSus(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
+    suspend fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
         return toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkId))
-            .also { isFavorite ->
-                AnalyticsDispatcher
-                    .toggleFavorites(
-                        drinkPreviewUiModel,
-                        isFavorite,
-                        ScreenNames.DRINK
-                    )
+            .also {
+                reportFavoriteAnalytics(drinkPreviewUiModel, it)
             }
 
+    }
+
+    private fun reportFavoriteAnalytics(
+        drinkPreviewUiModel: DrinkPreviewUiModel,
+        isFavorite: Boolean
+    ) {
+        AnalyticsDispatcher
+            .toggleFavorites(
+                drinkPreviewUiModel,
+                isFavorite,
+                ScreenNames.DRINK
+            )
     }
 
     fun refreshDrink() {
