@@ -32,7 +32,6 @@ class AdvancedSearchViewModel(
     searchMapper: Function<SearchFiltersModel, SearchFiltersUiModel>
 ) : ViewModel() {
 
-    //todo - combine to 1 use case
     val searchFiltersLiveData: LiveData<SearchFiltersUiModel> = getSearchFiltersUseCase
         .results
         .map { searchMapper.apply(it) }
