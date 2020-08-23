@@ -17,6 +17,14 @@ val inAppReviewModule = module {
     }
 
     factory {
-        RequestInAppReviewUseCase(get())
+        RequestInAppReviewUseCase(get(), get())
+    }
+
+    factory {
+        ShouldShowInAppReviewUseCase(get())
+    }
+
+    factory {
+        InAppReviewRepository()
     }
 }

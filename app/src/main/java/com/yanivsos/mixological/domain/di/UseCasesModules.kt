@@ -179,7 +179,8 @@ val useCasesModule = module {
     factory {
         AddToWatchlistUseCase(
             fetchAndStoreDrinkUseCase = get(),
-            repository = get()
+            repository = get(),
+            inAppReviewRepository = get()
         )
     }
 
