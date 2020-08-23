@@ -5,6 +5,7 @@ import com.yanivsos.mixological.domain.di.useCasesModule
 import com.yanivsos.mixological.in_app_review.inAppReviewModule
 import com.yanivsos.mixological.repo.di.reactiveStoreModule
 import com.yanivsos.mixological.repo.di.repoModule
+import com.yanivsos.mixological.search_autocomplete.drinkAutoCompleteModule
 import com.yanivsos.mixological.ui.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -26,7 +27,8 @@ class KoinStarter {
             mappersModule,
             useCasesModule,
             viewModelModule,
-            inAppReviewModule
+            inAppReviewModule,
+            drinkAutoCompleteModule
         )
     }
 }

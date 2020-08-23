@@ -12,11 +12,15 @@ import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.domain.models.SearchFiltersModel
+import com.yanivsos.mixological.search_autocomplete.DrinkAutoCompleteUiModel
+import com.yanivsos.mixological.search_autocomplete.GetDrinkAutoCompleteUseCase
+import com.yanivsos.mixological.search_autocomplete.toUiModel
 import com.yanivsos.mixological.ui.models.DrinkFilterUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -27,6 +31,7 @@ import java.util.function.Function
 class AdvancedSearchViewModel(
     private val getIngredientsUseCase: GetIngredientsUseCase,
     private val getSearchFiltersUseCase: GetSearchFiltersUseCase,
+    getAutoCompleteSuggestionsUseCase: GetDrinkAutoCompleteUseCase,
     private val filter: MultipleFilterDrinkUseCase,
     mapper: Function<List<DrinkPreviewModel>, List<DrinkPreviewUiModel>>,
     searchMapper: Function<SearchFiltersModel, SearchFiltersUiModel>
@@ -57,6 +62,12 @@ class AdvancedSearchViewModel(
         }
         .flowOn(Dispatchers.IO)
         .asLiveData()
+
+    val autoCompleteSuggestions: Flow<List<DrinkAutoCompleteUiModel>> =
+        getAutoCompleteSuggestionsUseCase
+            .suggestions
+            .map { it.toUiModel() }
+            .flowOn(Dispatchers.IO)
 
     private fun mapToSelectedFilters(selectedFilters: Map<FilterType, Set<String>>): Map<FilterType, Int?> {
         return selectedFilters.mapValues {

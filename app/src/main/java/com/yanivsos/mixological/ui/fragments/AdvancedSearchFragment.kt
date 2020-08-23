@@ -5,7 +5,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
@@ -60,6 +59,14 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
                     is InputActions.LongClick -> onDrinkLongClicked(it.data)
                 }
             }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            advancedSearchViewModel
+                .autoCompleteSuggestions
+                .collect {
+                    Timber.d("suggestions: $it")
+                }
         }
     }
 
@@ -141,7 +148,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private fun observeResults() {
         advancedSearchViewModel
             .resultsLiveData
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 onResultsReceived(it)
             })
     }
@@ -149,7 +156,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private fun observeSelectedFilters() {
         advancedSearchViewModel
             .searchFiltersLiveData
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 onSelectedFiltersReceived(it)
             })
     }
@@ -164,7 +171,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private fun observeConnectivity() {
         connectivityViewModel
             .connectivityLiveData
-            .observe(viewLifecycleOwner, Observer { isConnected ->
+            .observe(viewLifecycleOwner, { isConnected ->
                 onConnectivityChange(isConnected)
             })
     }
