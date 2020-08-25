@@ -42,12 +42,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
-            manifestPlaceholders = [analyticsCollectionEnabled: "true"]
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "true",
+                                    analyticsCollectionEnabled  : "true"]
         }
         debug {
-            manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
-            manifestPlaceholders = [analyticsCollectionEnabled: "false"]
+            manifestPlaceholders = [crashlyticsCollectionEnabled: "false",
+                                    analyticsCollectionEnabled  : "false"]
             versionNameSuffix '.debug'
         }
     }
@@ -93,12 +93,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
-    implementation "androidx.startup:startup-runtime:1.0.0-alpha02"
+    implementation "androidx.startup:startup-runtime:1.0.0-alpha03"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.2.0'
 
@@ -125,7 +125,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.airbnb.android:lottie:3.4.0'
+    implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.job:droidnet:2.0.0'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
