@@ -35,7 +35,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
     private val drinkAutoCompleteAdapter: ArrayAdapter<String> by lazy {
-        ArrayAdapter<String>(requireContext(), android.R.layout.select_dialog_item)
+        ArrayAdapter<String>(requireContext(), R.layout.list_item_autocomplete_drink/*android.R.layout.select_dialog_item*/)
     }
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
@@ -70,10 +70,9 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
                 .autoCompleteSuggestions
                 .collect { suggestions ->
                     Timber.d("suggestions: $suggestions")
-                    val autoCompleteValues = suggestions.map { it.name }
                     drinkAutoCompleteAdapter.run {
                         clear()
-                        addAll(autoCompleteValues)
+                        addAll(suggestions)
                     }
                 }
         }
@@ -122,6 +121,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         search_query_actv.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 v.hideKeyboard()
+                search_query_actv.dismissDropDown()
                 runSearchQuery()
                 true
             } else {
@@ -130,6 +130,9 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         }
 
         search_query_actv.setAdapter(drinkAutoCompleteAdapter)
+        search_query_actv.setOnItemClickListener { _, _, _, id ->
+            runSearchQuery()
+        }
     }
 
     private fun initResultsRecyclerView() {

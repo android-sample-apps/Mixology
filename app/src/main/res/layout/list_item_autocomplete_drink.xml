@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textview.MaterialTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:textColor="@color/white"
+    android:gravity="center_vertical"
+    android:padding="8dp"
+    android:ellipsize="marquee"
+    android:textSize="14sp"
+    app:fontFamily="@font/jesa_script_regular" />

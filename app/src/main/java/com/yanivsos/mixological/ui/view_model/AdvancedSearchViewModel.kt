@@ -63,10 +63,11 @@ class AdvancedSearchViewModel(
         .flowOn(Dispatchers.IO)
         .asLiveData()
 
-    val autoCompleteSuggestions: Flow<List<DrinkAutoCompleteUiModel>> =
+    val autoCompleteSuggestions: Flow<List<String>> =
         getAutoCompleteSuggestionsUseCase
             .suggestions
             .map { it.toUiModel() }
+            .map { suggestions -> suggestions.map { it.name } }
             .flowOn(Dispatchers.IO)
 
     private fun mapToSelectedFilters(selectedFilters: Map<FilterType, Set<String>>): Map<FilterType, Int?> {
