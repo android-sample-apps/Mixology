@@ -3,6 +3,7 @@ package com.yanivsos.mixological.ui.fragments
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.lifecycleScope
@@ -30,9 +31,12 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private val advancedSearchViewModel: AdvancedSearchViewModel by viewModel()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
 
-    private val query: String get() = search_query_et.text?.toString() ?: ""
+    private val query: String get() = search_query_actv.text?.toString() ?: ""
 
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
+    private val drinkAutoCompleteAdapter: ArrayAdapter<String> by lazy {
+        ArrayAdapter<String>(requireContext(), android.R.layout.select_dialog_item)
+    }
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
         Timber.d("onLongClicked: $drinkPreview")
@@ -64,8 +68,13 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         lifecycleScope.launchWhenStarted {
             advancedSearchViewModel
                 .autoCompleteSuggestions
-                .collect {
-                    Timber.d("suggestions: $it")
+                .collect { suggestions ->
+                    Timber.d("suggestions: $suggestions")
+                    val autoCompleteValues = suggestions.map { it.name }
+                    drinkAutoCompleteAdapter.run {
+                        clear()
+                        addAll(autoCompleteValues)
+                    }
                 }
         }
     }
@@ -110,7 +119,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             clearQuery()
         }
 
-        search_query_et.setOnEditorActionListener { v, actionId, _ ->
+        search_query_actv.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 v.hideKeyboard()
                 runSearchQuery()
@@ -119,6 +128,8 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
                 false
             }
         }
+
+        search_query_actv.setAdapter(drinkAutoCompleteAdapter)
     }
 
     private fun initResultsRecyclerView() {
@@ -136,7 +147,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun clearQuery() {
         advancedSearchViewModel.clearByName()
-        search_query_et.text = null
+        search_query_actv.text = null
         drinkPreviewAdapter.clear()
     }
 
