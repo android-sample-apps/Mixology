@@ -16,4 +16,5 @@
     <dimen name="placeholder_text_height">8dp</dimen>
     <dimen name="placeholder_text_margin">4dp</dimen>
     <integer name="shimmer_duration">1000</integer>
+    <integer name="drink_completion_threshold">3</integer>
 </resources>
