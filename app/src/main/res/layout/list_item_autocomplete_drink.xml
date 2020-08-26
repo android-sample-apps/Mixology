@@ -4,11 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/autocomplete_ripple"
     android:ellipsize="marquee"
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingStart="14dp"
     android:paddingEnd="15dp"
     android:textAppearance="?android:attr/textAppearanceSmall"
+    android:textColor="?colorAccent"
     app:fontFamily="@font/jesa_script_regular"
     tools:text="Whiskey sour" />
