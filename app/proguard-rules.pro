@@ -52,3 +52,7 @@
 }
 
 ##---------------End: proguard configuration for Gson  ----------
+
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
