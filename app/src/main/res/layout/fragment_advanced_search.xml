@@ -69,6 +69,7 @@
             android:hint="@string/advanced_search_hint"
             android:imeOptions="actionSearch"
             android:inputType="textNoSuggestions"
+
             android:completionThreshold="2"
             android:textColor="@color/header_text_color"
             android:textSize="18sp"

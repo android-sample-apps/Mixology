@@ -69,7 +69,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             advancedSearchViewModel
                 .autoCompleteSuggestions
                 .collect { suggestions ->
-                    Timber.d("suggestions: $suggestions")
+                    Timber.d("suggestions: ${suggestions.size}")
                     drinkAutoCompleteAdapter.run {
                         clear()
                         addAll(suggestions)
@@ -113,25 +113,28 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initSearchQuery() {
+        Timber.d("initSearchQuery")
         search_container_til.setEndIconOnClickListener {
             hideNoResults()
             clearQuery()
         }
-
-        search_query_actv.setOnEditorActionListener { v, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                v.hideKeyboard()
-                search_query_actv.dismissDropDown()
-                runSearchQuery()
-                true
-            } else {
-                false
+        search_query_actv.run {
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    onRunSearchQuery()
+                    true
+                } else {
+                    false
+                }
             }
-        }
 
-        search_query_actv.setAdapter(drinkAutoCompleteAdapter)
-        search_query_actv.setOnItemClickListener { _, _, _, id ->
-            runSearchQuery()
+            setAdapter(drinkAutoCompleteAdapter)
+            setOnItemClickListener { _, _, _, _ ->
+                onRunSearchQuery()
+            }
+            setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) dismissDropDown()
+            }
         }
     }
 
@@ -154,8 +157,16 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         drinkPreviewAdapter.clear()
     }
 
-    private fun runSearchQuery() {
+    private fun onRunSearchQuery() {
+        search_query_actv.run {
+            hideKeyboard()
+            dismissDropDown()
+        }
         hideNoResults()
+        search()
+    }
+
+    private fun search() {
         advancedSearchViewModel.searchByName(query)
     }
 
