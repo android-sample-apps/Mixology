@@ -23,8 +23,8 @@ android {
         applicationId "com.yanivsos.mixological"
         minSdkVersion 25
         targetSdkVersion 29
-        versionCode 6
-        versionName "1.2.0"
+        versionCode 7
+        versionName "1.2.1"
         setProperty("archivesBaseName", "Mixological_v" + versionCode + "(" + versionName + ")_" + buildTime())
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -40,14 +40,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             manifestPlaceholders = [crashlyticsCollectionEnabled: "true",
                                     analyticsCollectionEnabled  : "true"]
         }
         debug {
+            minifyEnabled true
+            shrinkResources true
             manifestPlaceholders = [crashlyticsCollectionEnabled: "false",
                                     analyticsCollectionEnabled  : "false"]
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             versionNameSuffix '.debug'
         }
     }
@@ -125,7 +129,7 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.airbnb.android:lottie:3.4.0'
+    implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.job:droidnet:2.0.0'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'

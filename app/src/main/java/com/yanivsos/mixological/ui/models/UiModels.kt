@@ -2,18 +2,18 @@ package com.yanivsos.mixological.ui.models
 
 import android.os.Parcelable
 import android.text.SpannableString
+import androidx.annotation.Keep
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.FilterType
-import com.yanivsos.mixological.extensions.dpToPx
 import kotlinx.android.parcel.Parcelize
 
 data class CategoryUiModel(
     val name: String
 )
 
+@Keep
 @Parcelize
 data class DrinkPreviewUiModel(
     val id: String,
@@ -116,6 +116,7 @@ data class SearchFiltersUiModel(
     }
 }
 
+@Keep
 @Parcelize
 data class DrinkErrorUiModel(
     val drinkId: String,
