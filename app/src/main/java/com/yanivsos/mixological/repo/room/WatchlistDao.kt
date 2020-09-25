@@ -14,9 +14,6 @@ interface WatchlistDao {
     fun getById(id: String): Flow<List<WatchlistItemModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun store(watchlistItemModel: WatchlistItemModel)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeAll(watchList: List<WatchlistItemModel>)
 
     @Query("DELETE FROM watchlist WHERE id = :id")
