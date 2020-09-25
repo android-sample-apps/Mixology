@@ -2,28 +2,29 @@ package com.yanivsos.mixological.domain.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.yanivsos.mixological.repo.room.*
 
-@Entity
+@Entity(tableName = TABLE_NAME_INGREDIENTS)
 data class IngredientModel(
     @PrimaryKey val name: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_GLASSES)
 data class GlassModel(
     @PrimaryKey val name: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_ALCOHOLIC_FILTERS)
 data class AlcoholicFilterModel(
     @PrimaryKey val name: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_WATCHLIST)
 data class WatchlistItemModel(
     @PrimaryKey val id: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_INGREDIENTS_DETAILS)
 data class IngredientDetailsModel(
     @PrimaryKey val id: String,
     val name: String,
@@ -43,7 +44,7 @@ data class IngredientDetailsModel(
     }
 }
 
-@Entity
+@Entity(tableName = TABLE_NAME_CATEGORY)
 data class CategoryModel(
     @PrimaryKey val name: String
 )
@@ -53,7 +54,7 @@ data class CategoryWithImageModel(
     val image: String?
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_DRINK_PREVIEWS)
 data class DrinkPreviewModel(
     @PrimaryKey val id: String,
     val name: String,
@@ -68,23 +69,23 @@ data class DrinkPreviewModel(
     )
 }
 
-@Entity
+@Entity(tableName = TABLE_NAME_LATEST_ARRIVALS)
 data class LatestArrivalsModel(
     @PrimaryKey val drinkId: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_MOST_POPULAR)
 data class MostPopularModel(
     @PrimaryKey val drinkId: String
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_RECENTLY_VIEWED)
 data class RecentlyViewedModel(
     @PrimaryKey val drinkId: String,
     val lastViewedTime: Long
 )
 
-@Entity
+@Entity(tableName = TABLE_NAME_DRINKS)
 data class DrinkModel(
     @PrimaryKey val id: String,
     val name: String,
@@ -101,9 +102,9 @@ data class DrinkModel(
 )
 
 sealed class Result<T> {
-    data class Success<T>(val data: T): Result<T>()
-    data class Loading<T>(val id: String): Result<T>()
-    data class Error<T>(val tr: Throwable): Result<T>()
+    data class Success<T>(val data: T) : Result<T>()
+    data class Loading<T>(val id: String) : Result<T>()
+    data class Error<T>(val tr: Throwable) : Result<T>()
 }
 
 data class SearchFiltersModel(

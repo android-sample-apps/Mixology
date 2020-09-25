@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DrinkDao {
 
-    @Query("SELECT * FROM DrinkModel")
+    @Query("SELECT * FROM drinks")
     fun getAll(): Flow<List<DrinkModel>>
 
-    @Query("SELECT * FROM DrinkModel WHERE id = :id")
+    @Query("SELECT * FROM drinks WHERE id = :id")
     fun getById(id: String): Flow<List<DrinkModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun storeAll(drinks: List<DrinkModel>)
 
-    @Query("DELETE FROM DrinkModel WHERE id = :id")
+    @Query("DELETE FROM drinks WHERE id = :id")
     fun remove(id: String)
 }

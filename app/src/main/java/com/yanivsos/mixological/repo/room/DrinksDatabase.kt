@@ -19,7 +19,7 @@ import com.yanivsos.mixological.domain.models.*
         LatestArrivalsModel::class,
         MostPopularModel::class
     ],
-    version = 2
+    version = 3
 )
 @TypeConverters(MapStringToStringOptionalConverter::class)
 abstract class DrinksDatabase : RoomDatabase() {

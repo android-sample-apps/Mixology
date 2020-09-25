@@ -10,14 +10,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface IngredientDetailsDao {
 
-    @Query("SELECT * FROM IngredientDetailsModel")
+    @Query("SELECT * FROM ingredient_details")
     fun getAll(): Flow<List<IngredientDetailsModel>>
 
-    @Query("SELECT * FROM IngredientDetailsModel WHERE name LIKE :name")
+    @Query("SELECT * FROM ingredient_details WHERE name LIKE :name")
     fun getByName(name: String): Flow<List<IngredientDetailsModel>>
-
-    /*@Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun store(ingredientDetails: IngredientDetailsModel)*/
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun storeAll(ingredientDetails: List<IngredientDetailsModel>)

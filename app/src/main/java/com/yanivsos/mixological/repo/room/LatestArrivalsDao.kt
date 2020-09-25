@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LatestArrivalsDao {
 
-    @Query("SELECT * FROM LatestArrivalsModel")
+    @Query("SELECT * FROM latest_arrivals")
     fun getAll(): Flow<List<LatestArrivalsModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(latestArrivals: List<LatestArrivalsModel>)
 
-    @Query("DELETE FROM LatestArrivalsModel")
+    @Query("DELETE FROM latest_arrivals")
     fun removeAll()
 
     @Transaction

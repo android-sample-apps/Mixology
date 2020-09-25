@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RecentlyViewedDao {
 
-    @Query("SELECT * FROM RecentlyViewedModel")
+    @Query("SELECT * FROM recently_viewed")
     fun getAll(): Flow<List<RecentlyViewedModel>>
 
-    @Query("SELECT * FROM RecentlyViewedModel WHERE drinkId IN (:ids)")
+    @Query("SELECT * FROM recently_viewed WHERE drinkId IN (:ids)")
     fun getAll(ids: List<String>): Flow<List<RecentlyViewedModel>>
 
-    @Query("SELECT DrinkPreviewModel.* FROM RecentlyViewedModel INNER JOIN DrinkPreviewModel ON id = drinkId ORDER BY lastViewedTime DESC")
+    @Query("SELECT drink_previews.* FROM recently_viewed INNER JOIN drink_previews ON id = drinkId ORDER BY lastViewedTime DESC")
     fun getRecentlyViewed(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

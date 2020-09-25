@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AlcoholicFilterDao {
 
-    @Query("SELECT * FROM AlcoholicFilterModel")
+    @Query("SELECT * FROM alcoholic_filters")
     fun getAll(): Flow<List<AlcoholicFilterModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

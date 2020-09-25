@@ -4,6 +4,7 @@ package com.yanivsos.mixological.repo.di
 
 import androidx.room.Room
 import com.yanivsos.mixological.migration.MIGRATION_1_2
+import com.yanivsos.mixological.migration.MIGRATION_2_3
 import com.yanivsos.mixological.repo.reactiveStore.*
 import com.yanivsos.mixological.repo.room.*
 import org.koin.android.ext.koin.androidContext
@@ -17,6 +18,7 @@ val reactiveStoreModule = module {
             DrinksDatabase::class.java, "drinks-db"
         )
             .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_2_3)
             .build()
     }
 

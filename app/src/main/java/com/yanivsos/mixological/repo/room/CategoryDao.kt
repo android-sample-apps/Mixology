@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CategoryDao {
 
-    @Query("SELECT * FROM CategoryModel")
+    @Query("SELECT * FROM categories")
     fun getAll(): Flow<List<CategoryModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

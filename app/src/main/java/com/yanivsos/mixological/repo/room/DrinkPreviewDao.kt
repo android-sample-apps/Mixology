@@ -8,18 +8,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface DrinkPreviewDao {
 
-    @Query("SELECT * FROM DrinkPreviewModel")
+    @Query("SELECT * FROM drink_previews")
     fun getAll(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(drinkPreviews: List<DrinkPreviewModel>)
 
-    @Query("SELECT * FROM DrinkPreviewModel WHERE id IN (:ids)")
+    @Query("SELECT * FROM drink_previews WHERE id IN (:ids)")
     fun getByIds(ids: List<String>): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(searchModel: RecentlyViewedModel)
 
-    @Query("SELECT * FROM DrinkPreviewModel INNER JOIN RecentlyViewedModel ON id = drinkId ORDER BY lastViewedTime DESC")
+    @Query("SELECT * FROM drink_previews INNER JOIN recently_viewed ON id = drinkId ORDER BY lastViewedTime DESC")
     fun getPreviousSearches(): Flow<List<DrinkPreviewModel>>
 }

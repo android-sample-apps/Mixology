@@ -7,13 +7,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MostPopularDao {
 
-    @Query("SELECT * FROM MostPopularModel")
+    @Query("SELECT * FROM most_popular")
     fun getAll(): Flow<List<MostPopularModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(mostPopulars: List<MostPopularModel>)
 
-    @Query("DELETE FROM MostPopularModel")
+    @Query("DELETE FROM most_popular")
     fun removeAll()
 
     @Transaction
