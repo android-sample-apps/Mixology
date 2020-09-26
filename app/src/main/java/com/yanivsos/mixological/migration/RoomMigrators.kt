@@ -2,11 +2,9 @@ package com.yanivsos.mixological.migration
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.yanivsos.mixological.domain.models.AlcoholicFilterModel
-import com.yanivsos.mixological.domain.models.DrinkModel
-import com.yanivsos.mixological.repo.room.MapStringToStringOptionalConverter
-import com.yanivsos.mixological.repo.room.TABLE_NAME_ALCOHOLIC_FILTERS
-import com.yanivsos.mixological.repo.room.TABLE_NAME_DRINKS
+import com.yanivsos.mixological.domain.models.*
+import com.yanivsos.mixological.repo.room.*
+import kotlin.reflect.KClass
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
 
@@ -32,16 +30,28 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 val MIGRATION_2_3 = object : Migration(2, 3) {
 
     override fun migrate(database: SupportSQLiteDatabase) {
-        val drinkModelTableName = DrinkModel::class.java.simpleName
         database.run {
-            execSQL(
-                "ALTER TABLE $drinkModelTableName"
-                        + " RENAME TO $TABLE_NAME_DRINKS"
-            )
-            execSQL(
-                "ALTER TABLE ${AlcoholicFilterModel::class.java.simpleName}"
-                        + " RENAME TO $TABLE_NAME_ALCOHOLIC_FILTERS"
-            )
+            renameTable(IngredientModel::class, TABLE_NAME_INGREDIENTS)
+            renameTable(GlassModel::class, TABLE_NAME_GLASSES)
+            renameTable(AlcoholicFilterModel::class, TABLE_NAME_ALCOHOLIC_FILTERS)
+            renameTable(WatchlistItemModel::class, TABLE_NAME_WATCHLIST)
+            renameTable(IngredientDetailsModel::class, TABLE_NAME_INGREDIENTS_DETAILS)
+            renameTable(CategoryModel::class, TABLE_NAME_CATEGORY)
+            renameTable(DrinkPreviewModel::class, TABLE_NAME_DRINK_PREVIEWS)
+            renameTable(LatestArrivalsModel::class, TABLE_NAME_LATEST_ARRIVALS)
+            renameTable(MostPopularModel::class, TABLE_NAME_MOST_POPULAR)
+            renameTable(RecentlyViewedModel::class, TABLE_NAME_RECENTLY_VIEWED)
+            renameTable(DrinkModel::class, TABLE_NAME_DRINKS)
         }
+    }
+
+    private fun SupportSQLiteDatabase.renameTable(
+        oldClass: KClass<*>, newName: String
+    ) {
+        val oldName = oldClass::class.java.simpleName
+        execSQL(
+            "ALTER TABLE $oldName"
+                    + " RENAME TO $newName"
+        )
     }
 }
