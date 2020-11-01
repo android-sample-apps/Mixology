@@ -20,8 +20,8 @@ class DrinkPagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> IngredientsFragment(drinkPreviewUiModel)
-            1 -> MethodFragment(drinkPreviewUiModel)
+            0 -> IngredientsFragment.newInstance(drinkPreviewUiModel)
+            1 -> MethodFragment.newInstance(drinkPreviewUiModel)
             else -> throw IllegalStateException("item count is only 3")
         }
     }

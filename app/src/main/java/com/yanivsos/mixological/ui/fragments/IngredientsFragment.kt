@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.extensions.toBundle
+import com.yanivsos.mixological.extensions.toDrinkPreviewUiModel
 import com.yanivsos.mixological.ui.adapters.IngredientAdapter
 import com.yanivsos.mixological.ui.models.*
 import com.yanivsos.mixological.ui.utils.InputActions
@@ -23,12 +25,21 @@ import timber.log.Timber
 
 private const val LOADING_ITEM_NUMBER = 3
 
+class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
 
-class IngredientsFragment(
-    private val drinkPreviewUiModel: DrinkPreviewUiModel
-) : BaseFragment(R.layout.fragment_ingredients) {
+    companion object {
+        fun newInstance(drinkPreviewUiModel: DrinkPreviewUiModel): IngredientsFragment {
+            return IngredientsFragment().apply {
+                arguments = drinkPreviewUiModel.toBundle()
+            }
+        }
+    }
 
     private val ingredientsAdapter = IngredientAdapter()
+
+    private val drinkPreviewUiModel: DrinkPreviewUiModel by lazy {
+        requireArguments().toDrinkPreviewUiModel()!!
+    }
 
     @Suppress("RemoveExplicitTypeArguments")
     private val drinkViewModel: DrinkViewModel by lazy {

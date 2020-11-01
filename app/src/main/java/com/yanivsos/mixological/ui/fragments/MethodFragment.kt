@@ -5,6 +5,8 @@ import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.extensions.dpToPx
+import com.yanivsos.mixological.extensions.toBundle
+import com.yanivsos.mixological.extensions.toDrinkPreviewUiModel
 import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.MethodAdapter
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
@@ -21,9 +23,19 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 
-class MethodFragment(
-    private val drinkPreviewUiModel: DrinkPreviewUiModel
-) : BaseFragment(R.layout.fragment_method) {
+class MethodFragment : BaseFragment(R.layout.fragment_method) {
+
+    companion object {
+        fun newInstance(drinkPreviewUiModel: DrinkPreviewUiModel): MethodFragment {
+            return MethodFragment().apply {
+                arguments = drinkPreviewUiModel.toBundle()
+            }
+        }
+    }
+
+    private val drinkPreviewUiModel: DrinkPreviewUiModel by lazy {
+        requireArguments().toDrinkPreviewUiModel()!!
+    }
 
     private val methodAdapter = MethodAdapter()
 
