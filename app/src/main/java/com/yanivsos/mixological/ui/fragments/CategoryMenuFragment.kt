@@ -5,7 +5,6 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -82,7 +81,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
         lifecycleScope.launchWhenStarted {
             categoryAdapter
                 .inputActions
-                .debounce(250L)
+                .debounce(250L) //todo check warning
                 .filterIsInstance<InputActions.Click<CategoryUiModel>>()
                 .collect { onCategoryClicked(it.data) }
         }
@@ -122,7 +121,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
     private fun observeCategories() {
         categoriesViewModel
             .categories
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 categoryAdapter.update(it)
             })
     }
@@ -130,7 +129,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
     private fun observeDrinkPreviews() {
         categoriesViewModel
             .drinkPreviews
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 drinkPreviewAdapter.update(it)
             })
     }

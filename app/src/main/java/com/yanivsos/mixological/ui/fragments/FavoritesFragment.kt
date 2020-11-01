@@ -2,8 +2,6 @@ package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
@@ -88,7 +86,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
     private fun observeWatchlist() {
         watchlistViewModel
             .watchlist
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 updateWatchlist(it)
             })
     }

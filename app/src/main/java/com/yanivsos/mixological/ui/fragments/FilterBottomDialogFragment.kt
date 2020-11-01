@@ -111,7 +111,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private fun observerFilters() {
         advancedSearchViewModel.searchFiltersLiveData.observe(
-            viewLifecycleOwner, Observer {
+            viewLifecycleOwner, {
                 Timber.d("Received filters: ${it.activeFilters}")
                 updateResults(it)
                 updateActiveFilters(it)

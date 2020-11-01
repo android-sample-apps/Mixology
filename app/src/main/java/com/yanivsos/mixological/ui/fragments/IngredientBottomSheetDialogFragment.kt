@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.extensions.toVisibility
@@ -52,7 +50,7 @@ class IngredientBottomSheetDialogFragment(
         Timber.d("observing details with $ingredient")
         detailsViewModel
             .ingredientDetailsLiveData
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 updateDrink(it)
             })
     }

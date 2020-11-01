@@ -12,7 +12,6 @@ import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.domain.models.SearchFiltersModel
-import com.yanivsos.mixological.search_autocomplete.DrinkAutoCompleteUiModel
 import com.yanivsos.mixological.search_autocomplete.GetDrinkAutoCompleteUseCase
 import com.yanivsos.mixological.search_autocomplete.toUiModel
 import com.yanivsos.mixological.ui.models.DrinkFilterUiModel

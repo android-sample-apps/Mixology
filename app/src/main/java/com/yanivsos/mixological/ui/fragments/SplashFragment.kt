@@ -1,7 +1,6 @@
 package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R

@@ -2,8 +2,6 @@ package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -78,7 +76,7 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
     private fun observeLandingPage() {
         landingPageViewModel
             .landingPageLiveData
-            .observe(viewLifecycleOwner, Observer { onLandingPageReceived(it) })
+            .observe(viewLifecycleOwner, { onLandingPageReceived(it) })
     }
 
     private fun onLandingPageReceived(landingPage: LandingPageUiModel) {

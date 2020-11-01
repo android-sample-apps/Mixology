@@ -3,8 +3,6 @@ package com.yanivsos.mixological.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -64,7 +62,7 @@ class IngredientsFragment(
         lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drink
-                .observe(viewLifecycleOwner, Observer {
+                .observe(viewLifecycleOwner, {
                     when (it) {
                         is ResultUiModel.Success -> onDrinkReceived(it.data)
                         is ResultUiModel.Loading -> onDrinkLoading()

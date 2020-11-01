@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
@@ -66,7 +64,7 @@ class DrinkPreviewOptionsBottomFragment(
     private fun observeFavoriteState() {
         optionsViewModel
             .drinkLiveData
-            .observe(viewLifecycleOwner, Observer {
+            .observe(viewLifecycleOwner, {
                 Timber.d("onDrinkChanged: $it")
                 onFavoriteEnabled(it.isFavorite)
             })
