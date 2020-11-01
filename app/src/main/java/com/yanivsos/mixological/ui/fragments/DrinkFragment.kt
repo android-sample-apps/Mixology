@@ -80,7 +80,6 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun initFavoriteToggle() {
         favorite_card_container.setOnClickListener {
-//            drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
             onFavoriteToggled()
         }
     }
