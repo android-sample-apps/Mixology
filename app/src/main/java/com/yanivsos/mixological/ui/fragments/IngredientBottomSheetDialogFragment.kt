@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -58,7 +59,18 @@ class IngredientBottomSheetDialogFragment(
     private fun initSearchOnlineButton() {
         search_online_btn.setOnClickListener {
             AnalyticsDispatcher.onIngredientSearchedOnline(ingredient)
-            startActivity(webSearchIntent(webSearchQuery))
+            try {
+                startActivity(webSearchIntent(webSearchQuery))
+            } catch (e: Exception) {
+                Timber.e(e, "unable to perform web search")
+                dismiss()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.no_search_activity_found,
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }
         }
     }
 
