@@ -33,8 +33,9 @@ import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -53,7 +54,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         )
     }
 
-    private val requestInAppReviewUseCase : RequestInAppReviewUseCase by inject()
+    private val requestInAppReviewUseCase: RequestInAppReviewUseCase by inject()
 
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
 
@@ -140,12 +141,12 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun observeDrink() {
-        drinkJob = lifecycleScope.launch(Dispatchers.Main) {
-            drinkViewModel
-                .drinkFlow
-                .flowOn(Dispatchers.IO)
-                .collect { onDrinkResultReceived(it) }
-        }
+        drinkViewModel
+            .drinkFlow
+            .flowOn(Dispatchers.IO)
+            .onEach { onDrinkResultReceived(it) }
+            .flowOn(Dispatchers.Main)
+            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
