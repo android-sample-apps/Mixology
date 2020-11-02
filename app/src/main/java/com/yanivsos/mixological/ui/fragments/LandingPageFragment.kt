@@ -16,8 +16,9 @@ import com.yanivsos.mixological.ui.models.LandingPageUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.LandingPageViewModel
 import kotlinx.android.synthetic.main.fragment_landing_page.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
@@ -35,18 +36,17 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
     }
 
     private fun observeInputActions(adapter: DrinkPreviewAdapter) {
-        lifecycleScope.launchWhenStarted {
-            adapter
-                .inputActions
-                .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
-                .collect { onDrinkPreviewClicked(it.data) }
-        }
-        lifecycleScope.launchWhenStarted {
-            adapter
-                .inputActions
-                .filterIsInstance<InputActions.LongClick<DrinkPreviewUiModel>>()
-                .collect { onDrinkPreviewLongClicked(it.data) }
-        }
+        adapter
+            .inputActions
+            .filterIsInstance<InputActions.Click<DrinkPreviewUiModel>>()
+            .onEach { onDrinkPreviewClicked(it.data) }
+            .launchIn(lifecycleScope)
+
+        adapter
+            .inputActions
+            .filterIsInstance<InputActions.LongClick<DrinkPreviewUiModel>>()
+            .onEach { onDrinkPreviewLongClicked(it.data) }
+            .launchIn(lifecycleScope)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
