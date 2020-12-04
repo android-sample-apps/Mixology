@@ -13,6 +13,8 @@ import com.yanivsos.mixological.ui.models.CategoryUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -27,22 +29,21 @@ class CategoriesViewModel(
 ) : ViewModel() {
 
     private var categoryJob: Job? = null
+    private val categorySelectedMutableFlow = MutableStateFlow("")
+    val categorySelected: Flow<String> = categorySelectedMutableFlow
 
     val categories: LiveData<List<CategoryUiModel>> =
         categoriesUseCase
             .categories
             .map { categoriesMapper.apply(it) }
-            /*.map { it.toMutableList().apply {
-                for (i in 0 .. 10) {
-                    add(CategoryUiModel("$i"))
-                }
-            } }*/
             .flowOn(Dispatchers.IO)
             .asLiveData()
 
     val drinkPreviews: LiveData<List<DrinkPreviewUiModel>> =
-        combineWithFavoriteUseCase.combine(getDrinkPreviewByCategoryUseCase
-            .drinkPreviews)
+        combineWithFavoriteUseCase.combine(
+            getDrinkPreviewByCategoryUseCase
+                .drinkPreviews
+        )
             .map { previewMapper.apply(it) }
             .flowOn(Dispatchers.IO)
             .asLiveData()
@@ -50,6 +51,7 @@ class CategoriesViewModel(
 
     fun updateCategory(category: String) {
         categoryJob?.cancel()
+        categorySelectedMutableFlow.value = category
         categoryJob = viewModelScope.launch(Dispatchers.IO) {
             getDrinkPreviewByCategoryUseCase
                 .get(category)
