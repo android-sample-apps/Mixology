@@ -22,9 +22,7 @@ import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.CategoriesViewModel
 import kotlinx.android.synthetic.main.fragment_category_menu.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -124,6 +122,13 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
             .observe(viewLifecycleOwner, {
                 categoryAdapter.update(it)
             })
+
+        categoriesViewModel
+            .categorySelected
+            .onEach {
+                selected_title.text = it
+            }
+            .launchIn(lifecycleScope)
     }
 
     private fun observeDrinkPreviews() {
@@ -151,7 +156,6 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
-        selected_title.text = categoryUiModel.name
         category_menu_ml.run {
             setTransitionListener(object : MyTransitionListener() {
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
