@@ -79,7 +79,7 @@ class DrinkMapperUi(
                     forEach { ingredient, quantity ->
                         append("■ ")
                         append(ingredient)
-                        if (quantity?.isNotBlank() == true) {
+                        if (quantity.isNotBlank()) {
                             append(" - ")
                             append(quantity)
                         }

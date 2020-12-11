@@ -27,7 +27,7 @@ class IngredientAdapter :
 
                 ingredient_quantity_tv.run {
                     text = ingredient.quantity
-                    visibility = (ingredient.quantity != null).toVisibility()
+                    visibility = (ingredient.quantity.isNotEmpty()).toVisibility()
                 }
                 ingredient_quantity_tv.text = ingredient.quantity
                 setOnLongClickListener {
