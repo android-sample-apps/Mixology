@@ -65,8 +65,8 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
         )
     }
 
-    private fun ingredientMap(drinkResponse: DrinkResponse): Map<String, String?> {
-        return mutableMapOf<String, String?>()
+    private fun ingredientMap(drinkResponse: DrinkResponse): Map<String, String> {
+        return mutableMapOf<String, String>()
             .apply {
                 putIfValid(drinkResponse.strIngredient1, drinkResponse.strMeasure1)
                 putIfValid(drinkResponse.strIngredient2, drinkResponse.strMeasure2)
@@ -86,9 +86,9 @@ class SingleDrinkMapper : Function<DrinkResponse, DrinkModel> {
             }
     }
 
-    private fun MutableMap<String, String?>.putIfValid(ingredient: String?, measurement: String?) {
+    private fun MutableMap<String, String>.putIfValid(ingredient: String?, measurement: String?) {
         if (ingredient?.isNotBlank() == true) {
-            put(ingredient, measurement)
+            put(ingredient, measurement ?: "")
         }
     }
 

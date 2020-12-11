@@ -92,7 +92,7 @@ data class DrinkModel(
     val nameLocalsMap: Map<String, String?>,
     val instructions: String,
     val instructionsLocalsMap: Map<String, String?>,
-    val ingredients: Map<String, String?>,
+    val ingredients: Map<String, String>,
     val category: String,
     val alcoholic: String?,
     val glass: String,
