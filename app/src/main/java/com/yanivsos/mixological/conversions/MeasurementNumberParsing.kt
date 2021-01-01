@@ -23,11 +23,26 @@ class MeasurementNumberParsing {
     fun parseMeasurements(measurement: String, parseToNumber: (String) -> CharSequence): String {
         return numbersAndFractionRegex.replace(measurement) { matchResult ->
             parseToNumber(matchResult.groupValues[0])
-        }
+        }.also { println(it) }
     }
 
 
-//    fun p
+    fun parseExpression(expression: String): Double {
+        //1 1/2
+        var count: Double = 0.0
+        expression
+            .split(" ")
+            .map {
+                if (it.matches(fractionRegex)) {
+                    it.parseFraction()
+                }
+                else {
+                    it.toDouble()
+                }
+            }
+            .forEach { count += (it ?: 0.0) }
+        return count
+    }
 }
 
 
