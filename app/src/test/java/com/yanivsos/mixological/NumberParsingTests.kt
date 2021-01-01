@@ -54,6 +54,17 @@ class NumberParsingTests {
     }
 
     @Test
+    fun parseExpressions() {
+        val parser = MeasurementNumberParsing()
+        assert(parser.parseExpression("1   1 / 2") == 1.5)
+        assert(parser.parseExpression("1") == 1.0)
+        assert(parser.parseExpression("1 / 2") == 0.5)
+        assert(parser.parseExpression("22 / 44") == 0.5)
+        assert(parser.parseExpression("22 /44") == 0.5)
+        assert(parser.parseExpression("1 22 /44") == 1.5)
+    }
+
+    @Test
     fun parseSplit() {
         val parser = MeasurementNumberParsing()
         val parseToNumber: (String) -> CharSequence = {
@@ -71,6 +82,7 @@ class NumberParsingTests {
             ) == "1.5 - ${2.0 + (1.0.div(3))} oz white"
         )
         assert(parser.parseMeasurements("1/2 oz", parseToNumber) == "0.5 oz")
+        assert(parser.parseMeasurements("1 /2 oz", parseToNumber) == "1-2 oz")
         assert(parser.parseMeasurements("1-2 oz", parseToNumber) == "1-2 oz")
         assert(parser.parseMeasurements("1 oz", parseToNumber) == "1 oz")
     }

@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.conversions
 
-import java.lang.Exception
+import kotlin.math.floor
 
 /*
 *
@@ -14,46 +14,48 @@ import java.lang.Exception
 class MeasurementNumberParsing {
 
     companion object {
-        val fractionOnly: String = "((\\d+) */ *(\\d+))"
-        val numberAndFraction: String = "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
+        private const val fractionOnly: String = "((\\d+) */ *(\\d+))"
+        private const val numberAndFraction: String = "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
         val fractionRegex = Regex(fractionOnly)
         val numbersAndFractionRegex = Regex(numberAndFraction)
     }
 
     fun parseMeasurements(measurement: String, parseToNumber: (String) -> CharSequence): String {
-        return numbersAndFractionRegex.replace(measurement) { matchResult ->
-            parseToNumber(matchResult.groupValues[0])
-        }.also { println(it) }
+        return measurement.parse(numbersAndFractionRegex, parseToNumber).also { println(it) }
     }
 
+    private fun String.parse(regex: Regex, parseToNumber: (String) -> CharSequence): String {
+        return regex.replace(this) { parseToNumber(it.groupValues[0]) }
+    }
 
     fun parseExpression(expression: String): Double {
         //1 1/2
-        var count: Double = 0.0
-        expression
+        return expression.parse(fractionRegex) { fraction ->
+            fraction.parseFraction().toString()
+        }
+            .replace("\\s+".toRegex(), " ")
             .split(" ")
-            .map {
-                if (it.matches(fractionRegex)) {
-                    it.parseFraction()
-                }
-                else {
-                    it.toDouble()
-                }
+            .sumByDouble {
+                it.toDouble()
             }
-            .forEach { count += (it ?: 0.0) }
-        return count
+
+//        return count
     }
 }
 
 
+fun String.parseFraction(): Double {
+    val split = trim().split("/")
+    return split[0].toDouble().div(split[1].toDouble())
+}
 
-fun String.parseFraction(): Double? {
-    return try {
-        val split = trim().split("/")
-        split[0].toDouble().div(split[1].toDouble())
-
-    } catch (e: Exception) {
-        null
+fun Double.prettyDouble(): String? {
+    return this.let { double ->
+        if (double == floor(double)) {
+            double.toInt().toString()
+        } else {
+            double.toString()
+        }
     }
 }
 
