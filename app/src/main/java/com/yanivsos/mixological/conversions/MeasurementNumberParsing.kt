@@ -20,7 +20,7 @@ class MeasurementNumberParsing {
         val numbersAndFractionRegex = Regex(numberAndFraction)
     }
 
-    fun parseMeasurements(measurement: String, parseToNumber: (String) -> CharSequence): String {
+    fun convertMeasurements(measurement: String, parseToNumber: (String) -> CharSequence): String {
         return measurement.parse(numbersAndFractionRegex, parseToNumber).also { println(it) }
     }
 

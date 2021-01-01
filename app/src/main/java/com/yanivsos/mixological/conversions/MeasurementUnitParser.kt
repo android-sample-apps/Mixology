@@ -21,4 +21,14 @@ class DrinkUnitMeasurementParser(
             null
         }
     }
+
+}
+
+private val drinkUnits = listOf(DrinkUnit.Ml, DrinkUnit.Cl, DrinkUnit.Oz)
+
+fun String.parseDrinkUnit(): DrinkUnit? {
+    drinkUnits.forEach { drinkUnit ->
+        if (DrinkUnitMeasurementParser(drinkUnit).parseUnit(this) != null) return drinkUnit
+    }
+    return null
 }
