@@ -38,8 +38,6 @@ class MeasurementNumberParsing {
             .sumByDouble {
                 it.toDouble()
             }
-
-//        return count
     }
 }
 
@@ -49,7 +47,7 @@ fun String.parseFraction(): Double {
     return split[0].toDouble().div(split[1].toDouble())
 }
 
-fun Double.prettyDouble(): String? {
+fun Double.prettyDouble(): String {
     return this.let { double ->
         if (double == floor(double)) {
             double.toInt().toString()
