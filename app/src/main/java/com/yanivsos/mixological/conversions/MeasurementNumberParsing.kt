@@ -1,5 +1,7 @@
 package com.yanivsos.mixological.conversions
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import kotlin.math.floor
 
 /*
@@ -17,7 +19,9 @@ class MeasurementNumberParsing {
         private const val fractionOnly: String = "((\\d+) */ *(\\d+))"
         private const val numberAndFraction: String =
             "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
+        private const val decimalNumbers = "[0-9]+[.][0-9]*"
         val fractionRegex = Regex(fractionOnly)
+        val decimalRegex = Regex(decimalNumbers)
         val numbersAndFractionRegex = Regex(numberAndFraction)
     }
 
@@ -31,6 +35,14 @@ class MeasurementNumberParsing {
 
     fun convert(measurement: String, parseToNumber: (Double, DrinkUnit) -> Double): String {
         val drinkUnit = measurement.parseDrinkUnit() ?: return measurement
+        if (decimalRegex.matches(measurement)) {
+            return decimalRegex.replace(measurement) {
+                val value = parseDecimal(it.groupValues[0])
+                parseToNumber(value, drinkUnit).prettyDouble()
+            }
+
+        }
+
         return numbersAndFractionRegex.replace(measurement) {
             val value = parseExpression(it.groupValues[0])
             parseToNumber(value, drinkUnit).prettyDouble()
@@ -40,7 +52,15 @@ class MeasurementNumberParsing {
     fun parseTo(measurement: String, dstDrinkUnit: DrinkUnit): String {
         val drinkUnit = measurement.parseDrinkUnit() ?: return measurement
         val measurementParser = DrinkUnitMeasurementParser(drinkUnit)
-        return numbersAndFractionRegex.replace(measurementParser.replaceMeasurement(measurement, dstDrinkUnit)) {
+        val replacedMeasurement = measurementParser.replaceMeasurement(measurement, dstDrinkUnit)
+        if (decimalRegex.containsMatchIn(measurement)) {
+            return decimalRegex.replace(replacedMeasurement) {
+                val value = parseDecimal(it.groupValues[0])
+                drinkUnit.convertTo(dstDrinkUnit, value).prettyDouble()
+            }
+
+        }
+        return numbersAndFractionRegex.replace(replacedMeasurement) {
             val value = parseExpression(it.groupValues[0])
             drinkUnit.convertTo(dstDrinkUnit, value).prettyDouble()
         }
@@ -64,6 +84,11 @@ class MeasurementNumberParsing {
             }
     }
 
+    fun parseDecimal(expression: String): Double {
+        //1 1/2
+        return expression.toDouble()
+    }
+
 }
 
 
@@ -77,9 +102,13 @@ fun Double.prettyDouble(): String {
         if (double == floor(double)) {
             double.toInt().toString()
         } else {
-            double.toString()
+            double.roundOffDecimal().toString()
         }
     }
 }
 
-
+fun Double.roundOffDecimal(): Double {
+    val df = DecimalFormat("#.#")
+    df.roundingMode = RoundingMode.HALF_DOWN
+    return df.format(this).toDouble()
+}

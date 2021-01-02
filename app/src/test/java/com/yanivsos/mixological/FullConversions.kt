@@ -50,9 +50,20 @@ class FullConversions {
         val parser = MeasurementNumberParsing()
         assert(parser.parseTo("45 cl", DrinkUnit.Ml) == "450 ml")
         assert(parser.parseTo("30 cl", DrinkUnit.Ml) == "300 ml")
-        assert(parser.parseTo("1.5 - 4.5 cl", DrinkUnit.Ml) == "15 - 45 ml")
         assert(parser.parseTo("4.5 cl", DrinkUnit.Ml) == "45 ml")
+        assert(parser.parseTo("1.5 - 4.5 cl", DrinkUnit.Ml) == "15 - 45 ml")
         assert(parser.parseTo("7.2 cl", DrinkUnit.Ml) == "72 ml")
+    }
+
+    @Test
+    fun  testDoubleRounding() {
+        val parser = MeasurementNumberParsing()
+        assert(parser.parseTo("1 /3 oz", DrinkUnit.Ml) == "10 ml")
+        assert(parser.parseTo("0.3 oz", DrinkUnit.Ml) == "9 ml")
+        assert(parser.parseTo("4.543876 cl", DrinkUnit.Ml) == "45.4 ml")
+        assert(parser.parseTo("0.4543876 cl", DrinkUnit.Ml) == "4.5 ml")
+        assert(parser.parseTo("4.573876 cl", DrinkUnit.Ml) == "45.7 ml")
+        assert(parser.parseTo("4.579876 cl", DrinkUnit.Ml) == "45.8 ml")
     }
 }
 
