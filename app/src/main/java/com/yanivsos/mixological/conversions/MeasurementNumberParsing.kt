@@ -82,10 +82,8 @@ class FractionNumberParser : NumberParser {
 
 class MeasurementNumberParsing {
 
-    companion object {
-        val fractionNumberParser = FractionNumberParser()
-        val decimalParser = DecimalParser()
-    }
+    private val fractionNumberParser = FractionNumberParser()
+    private val decimalParser = DecimalParser()
 
     fun parseTo(measurement: String, dstDrinkUnit: DrinkUnit): String {
         val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
