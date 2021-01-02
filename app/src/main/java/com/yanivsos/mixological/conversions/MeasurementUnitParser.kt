@@ -22,6 +22,11 @@ class DrinkUnitMeasurementParser(
         }
     }
 
+    fun replaceMeasurement(measurement: String, dstDrinkUnit: DrinkUnit): String {
+        val nameRegex  = "\\b${drinkUnit.name}\\b".toRegex()
+        return nameRegex.replace(measurement, dstDrinkUnit.name)
+    }
+
 }
 
 private val drinkUnits = listOf(DrinkUnit.Ml, DrinkUnit.Cl, DrinkUnit.Oz)

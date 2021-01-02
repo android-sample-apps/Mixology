@@ -4,7 +4,7 @@ fun Double.ozToMl(): Double {
     return this.times(30)
 }
 
-fun Double.ozToCl() : Double {
+fun Double.ozToCl(): Double {
     return this.ozToMl().mlToCl()
 }
 
@@ -24,6 +24,13 @@ fun Double.clToOz(): Double {
     return clToMl().mlToOz()
 }
 
+fun DrinkUnit.convertTo(drinkUnit: DrinkUnit, value: Double): Double {
+    return when (this) {
+        DrinkUnit.Oz -> DrinkUnit.Oz.toUnit(value, drinkUnit)
+        DrinkUnit.Cl -> DrinkUnit.Cl.toUnit(value, drinkUnit)
+        DrinkUnit.Ml -> DrinkUnit.Ml.toUnit(value, drinkUnit)
+    }
+}
 
 fun DrinkUnit.Oz.toUnit(value: Double, unit: DrinkUnit): Double {
     return when (unit) {
