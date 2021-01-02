@@ -80,7 +80,7 @@ class FractionNumberParser : NumberParser {
     }
 }
 
-class MeasurementNumberParsing {
+class MeasurementQuantityParser {
 
     private val fractionNumberParser = FractionNumberParser()
     private val decimalParser = DecimalParser()

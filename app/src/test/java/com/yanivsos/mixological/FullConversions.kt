@@ -2,7 +2,7 @@ package com.yanivsos.mixological
 
 import com.yanivsos.mixological.conversions.DrinkUnit
 import com.yanivsos.mixological.conversions.DrinkUnitMeasurementParser
-import com.yanivsos.mixological.conversions.MeasurementNumberParsing
+import com.yanivsos.mixological.conversions.MeasurementQuantityParser
 import org.junit.Test
 
 class FullConversions {
@@ -17,7 +17,7 @@ class FullConversions {
 
     @Test
     fun testOzToMlConversion() {
-        val parser = MeasurementNumberParsing()
+        val parser = MeasurementQuantityParser()
         assert(parser.parseTo("1 1/2 oz", DrinkUnit.Ml) == "45 ml")
         assert(parser.parseTo("1/2 oz", DrinkUnit.Ml) == "15 ml")
         assert(parser.parseTo("1 oz", DrinkUnit.Ml) == "30 ml")
@@ -27,7 +27,7 @@ class FullConversions {
 
     @Test
     fun testMlToOzConversion() {
-        val parser = MeasurementNumberParsing()
+        val parser = MeasurementQuantityParser()
         assert(parser.parseTo("45 ml", DrinkUnit.Oz) == "1.5 oz")
         assert(parser.parseTo("15 ml", DrinkUnit.Oz) == "0.5 oz")
         assert(parser.parseTo("30 ml", DrinkUnit.Oz) == "1 oz")
@@ -37,7 +37,7 @@ class FullConversions {
 
     @Test
     fun testClToMlConversion() {
-        val parser = MeasurementNumberParsing()
+        val parser = MeasurementQuantityParser()
         assert(parser.parseTo("45 cl", DrinkUnit.Ml) == "450 ml")
         assert(parser.parseTo("30 cl", DrinkUnit.Ml) == "300 ml")
         assert(parser.parseTo("4.5 cl", DrinkUnit.Ml) == "45 ml")
@@ -47,7 +47,7 @@ class FullConversions {
 
     @Test
     fun  testDoubleRounding() {
-        val parser = MeasurementNumberParsing()
+        val parser = MeasurementQuantityParser()
         assert(parser.parseTo("1 /3 oz", DrinkUnit.Ml) == "10 ml")
         assert(parser.parseTo("0.3 oz", DrinkUnit.Ml) == "9 ml")
         assert(parser.parseTo("4.543876 cl", DrinkUnit.Ml) == "45.4 ml")

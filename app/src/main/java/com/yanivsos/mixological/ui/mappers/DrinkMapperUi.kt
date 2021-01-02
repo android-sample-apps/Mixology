@@ -4,6 +4,8 @@ import android.content.Context
 import android.text.SpannableString
 import androidx.annotation.WorkerThread
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.conversions.DrinkUnit
+import com.yanivsos.mixological.conversions.MeasurementQuantityParser
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -26,6 +28,7 @@ class DrinkMapperUi(
 ) : Function<DrinkModel, DrinkUiModel> {
 
     private val locale = Locale.getDefault()
+    private val measurementQuantityParser = MeasurementQuantityParser()
 
     @WorkerThread
     override fun apply(t: DrinkModel): DrinkUiModel {
@@ -64,7 +67,7 @@ class DrinkMapperUi(
             .map {
                 IngredientUiModel(
                     name = it.key,
-                    quantity = it.value
+                    quantity = it.value + "(${measurementQuantityParser.parseTo(it.value, DrinkUnit.Ml)})"
                 )
             }
 

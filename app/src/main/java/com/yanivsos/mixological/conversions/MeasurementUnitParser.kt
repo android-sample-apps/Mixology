@@ -23,7 +23,7 @@ class DrinkUnitMeasurementParser(
     }
 
     fun replaceMeasurement(measurement: String, dstDrinkUnit: DrinkUnit): String {
-        val nameRegex  = "\\b${drinkUnit.name}\\b".toRegex()
+        val nameRegex  = "\\b(?i)${drinkUnit.name}\\b".toRegex()
         return nameRegex.replace(measurement, dstDrinkUnit.name)
     }
 
