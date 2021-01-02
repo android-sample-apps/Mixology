@@ -1,5 +1,6 @@
 package com.yanivsos.mixological.conversions
 
+import okhttp3.internal.parseCookie
 import kotlin.math.floor
 
 /*
@@ -15,7 +16,8 @@ class MeasurementNumberParsing {
 
     companion object {
         private const val fractionOnly: String = "((\\d+) */ *(\\d+))"
-        private const val numberAndFraction: String = "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
+        private const val numberAndFraction: String =
+            "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
         val fractionRegex = Regex(fractionOnly)
         val numbersAndFractionRegex = Regex(numberAndFraction)
     }
@@ -26,6 +28,14 @@ class MeasurementNumberParsing {
 
     private fun String.parse(regex: Regex, parseToNumber: (String) -> CharSequence): String {
         return regex.replace(this) { parseToNumber(it.groupValues[0]) }
+    }
+
+    fun convert(measurement: String, parseToNumber: (Double, DrinkUnit) -> Double): String {
+        val drinkUnit = measurement.parseDrinkUnit() ?: return measurement
+        return numbersAndFractionRegex.replace(measurement) {
+            val value = parseExpression(it.groupValues[0])
+            parseToNumber(value, drinkUnit).prettyDouble()
+        }
     }
 
     fun parseExpression(expression: String): Double {
