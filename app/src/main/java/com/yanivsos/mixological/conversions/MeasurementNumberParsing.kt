@@ -13,66 +13,57 @@ import kotlin.math.floor
     1/2 oz white
 *
 * */
-class MeasurementNumberParsing {
+interface NumberParser {
+    fun containsMatch(input: String): Boolean
+    fun parse(input: String, src: DrinkUnit, dst: DrinkUnit): String
+}
+
+class DecimalParser : NumberParser {
+    companion object {
+        private const val decimalNumbers = "[0-9]+[.][0-9]*"
+        val decimalRegex = Regex(decimalNumbers)
+    }
+
+    override fun containsMatch(input: String): Boolean {
+        return decimalRegex.containsMatchIn(input)
+    }
+
+    override fun parse(
+        input: String, src: DrinkUnit, dst: DrinkUnit
+    ): String {
+        return decimalRegex.replace(input) {
+            val value = parseDecimal(it.groupValues[0])
+            src.convertTo(dst, value).prettyDouble()
+        }
+    }
+
+    private fun parseDecimal(expression: String): Double {
+        return expression.toDouble()
+    }
+}
+
+class FractionNumberParser : NumberParser {
 
     companion object {
-        private const val fractionOnly: String = "((\\d+) */ *(\\d+))"
         private const val numberAndFraction: String =
             "(\\d++(?! */))? *-? *(?:(\\d+) */ *(\\d+))|(\\d+)"
-        private const val decimalNumbers = "[0-9]+[.][0-9]*"
-        val fractionRegex = Regex(fractionOnly)
-        val decimalRegex = Regex(decimalNumbers)
+        private const val fractionOnly: String = "((\\d+) */ *(\\d+))"
         val numbersAndFractionRegex = Regex(numberAndFraction)
+        val fractionRegex = Regex(fractionOnly)
     }
 
-    fun convertMeasurements(measurement: String, parseToNumber: (String) -> CharSequence): String {
-        return measurement.parse(numbersAndFractionRegex, parseToNumber).also { println(it) }
+    override fun containsMatch(input: String): Boolean {
+        return numbersAndFractionRegex.containsMatchIn(input)
     }
 
-    private fun String.parse(regex: Regex, parseToNumber: (String) -> CharSequence): String {
-        return regex.replace(this) { parseToNumber(it.groupValues[0]) }
-    }
-
-    fun convert(measurement: String, parseToNumber: (Double, DrinkUnit) -> Double): String {
-        val drinkUnit = measurement.parseDrinkUnit() ?: return measurement
-        if (decimalRegex.matches(measurement)) {
-            return decimalRegex.replace(measurement) {
-                val value = parseDecimal(it.groupValues[0])
-                parseToNumber(value, drinkUnit).prettyDouble()
-            }
-
-        }
-
-        return numbersAndFractionRegex.replace(measurement) {
-            val value = parseExpression(it.groupValues[0])
-            parseToNumber(value, drinkUnit).prettyDouble()
+    override fun parse(input: String, src: DrinkUnit, dst: DrinkUnit): String {
+        return numbersAndFractionRegex.replace(input) {
+            val value = parseNumbersAndFractionsExpression(it.groupValues[0])
+            src.convertTo(dst, value).prettyDouble()
         }
     }
 
-    fun parseTo(measurement: String, dstDrinkUnit: DrinkUnit): String {
-        val drinkUnit = measurement.parseDrinkUnit() ?: return measurement
-        val measurementParser = DrinkUnitMeasurementParser(drinkUnit)
-        val replacedMeasurement = measurementParser.replaceMeasurement(measurement, dstDrinkUnit)
-        if (decimalRegex.containsMatchIn(measurement)) {
-            return decimalRegex.replace(replacedMeasurement) {
-                val value = parseDecimal(it.groupValues[0])
-                drinkUnit.convertTo(dstDrinkUnit, value).prettyDouble()
-            }
-
-        }
-        return numbersAndFractionRegex.replace(replacedMeasurement) {
-            val value = parseExpression(it.groupValues[0])
-            drinkUnit.convertTo(dstDrinkUnit, value).prettyDouble()
-        }
-    }
-
-    fun convert(measurement: String, drinkUnit: DrinkUnit): String {
-        return convert(measurement) { value, originalDrinkUnit ->
-            originalDrinkUnit.convertTo(drinkUnit, value)
-        }
-    }
-
-    fun parseExpression(expression: String): Double {
+    private fun parseNumbersAndFractionsExpression(expression: String): Double {
         //1 1/2
         return expression.parse(fractionRegex) { fraction ->
             fraction.parseFraction().toString()
@@ -84,11 +75,30 @@ class MeasurementNumberParsing {
             }
     }
 
-    fun parseDecimal(expression: String): Double {
-        //1 1/2
-        return expression.toDouble()
+    private fun String.parse(regex: Regex, parseToNumber: (String) -> CharSequence): String {
+        return regex.replace(this) { parseToNumber(it.groupValues[0]) }
+    }
+}
+
+class MeasurementNumberParsing {
+
+    companion object {
+        val fractionNumberParser = FractionNumberParser()
+        val decimalParser = DecimalParser()
     }
 
+    fun parseTo(measurement: String, dstDrinkUnit: DrinkUnit): String {
+        val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
+        val measurementParser = DrinkUnitMeasurementParser(srcDrinkUnit)
+        val replacedMeasurement = measurementParser.replaceMeasurement(measurement, dstDrinkUnit)
+
+        return if (decimalParser.containsMatch(replacedMeasurement)) {
+            decimalParser.parse(replacedMeasurement, srcDrinkUnit, dstDrinkUnit)
+
+        } else {
+            fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstDrinkUnit)
+        }
+    }
 }
 
 

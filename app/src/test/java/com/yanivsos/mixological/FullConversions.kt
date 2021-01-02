@@ -8,16 +8,6 @@ import org.junit.Test
 class FullConversions {
 
     @Test
-    fun testMlToOz() {
-        val parser = MeasurementNumberParsing()
-        assert(parser.convert("1 1/2 oz", DrinkUnit.Ml) == "45 oz")
-        assert(parser.convert("1/2 oz", DrinkUnit.Ml) == "15 oz")
-        assert(parser.convert("1 /2 oz", DrinkUnit.Ml) == "15 oz")
-        assert(parser.convert("1 / 2 oz", DrinkUnit.Ml) == "15 oz")
-        assert(parser.convert("1 - 3 oz", DrinkUnit.Ml) == "30 - 90 oz")
-    }
-
-    @Test
     fun testUnitReplacement() {
         val parser = DrinkUnitMeasurementParser(DrinkUnit.Oz)
         assert(parser.replaceMeasurement("1 1/2 oz", DrinkUnit.Ml) == "1 1/2 ml")
