@@ -1,7 +1,7 @@
 package com.yanivsos.mixological.conversions
 
 interface MeasurementParser {
-    fun parseUnit(measurement: String): DrinkUnit?
+    fun parseUnit(measurement: String): MeasurementUnit?
 }
 
 private fun measurementRegex(unit: String): Regex {
@@ -9,29 +9,38 @@ private fun measurementRegex(unit: String): Regex {
 }
 
 class DrinkUnitMeasurementParser(
-    private val drinkUnit: DrinkUnit
+    private val measurementUnit: MeasurementUnit
 ) : MeasurementParser {
 
-    private val regex = measurementRegex(drinkUnit.name)
+    private val regex = measurementRegex(measurementUnit.name)
 
-    override fun parseUnit(measurement: String): DrinkUnit? {
+    override fun parseUnit(measurement: String): MeasurementUnit? {
         return if (measurement.contains(regex)) {
-            drinkUnit
+            measurementUnit
         } else {
             null
         }
     }
 
-    fun replaceMeasurement(measurement: String, dstDrinkUnit: DrinkUnit): String {
-        val nameRegex  = "\\b(?i)${drinkUnit.name}\\b".toRegex()
-        return nameRegex.replace(measurement, dstDrinkUnit.name)
+    fun replaceMeasurement(measurement: String, dstMeasurementUnit: MeasurementUnit): String {
+        val nameRegex = "\\b(?i)${measurementUnit.name}\\b".toRegex()
+        return nameRegex.replace(measurement, dstMeasurementUnit.name)
     }
 
 }
 
-private val drinkUnits = listOf(DrinkUnit.Ml, DrinkUnit.Cl, DrinkUnit.Oz)
+private val drinkUnits = listOf(
+    MeasurementUnit.Ml,
+    MeasurementUnit.Cl,
+    MeasurementUnit.Oz,
+    MeasurementUnit.Gal,
+    MeasurementUnit.L,
+    MeasurementUnit.Pint,
+    MeasurementUnit.Qt,
+    MeasurementUnit.Quart
+)
 
-fun String.parseDrinkUnit(): DrinkUnit? {
+fun String.parseDrinkUnit(): MeasurementUnit? {
     drinkUnits.forEach { drinkUnit ->
         if (DrinkUnitMeasurementParser(drinkUnit).parseUnit(this) != null) return drinkUnit
     }

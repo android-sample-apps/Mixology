@@ -15,7 +15,7 @@ import kotlin.math.floor
 * */
 interface NumberParser {
     fun containsMatch(input: String): Boolean
-    fun parse(input: String, src: DrinkUnit, dst: DrinkUnit): String
+    fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String
 }
 
 class DecimalParser : NumberParser {
@@ -29,7 +29,7 @@ class DecimalParser : NumberParser {
     }
 
     override fun parse(
-        input: String, src: DrinkUnit, dst: DrinkUnit
+        input: String, src: MeasurementUnit, dst: MeasurementUnit
     ): String {
         return decimalRegex.replace(input) {
             val value = parseDecimal(it.groupValues[0])
@@ -56,7 +56,7 @@ class FractionNumberParser : NumberParser {
         return numbersAndFractionRegex.containsMatchIn(input)
     }
 
-    override fun parse(input: String, src: DrinkUnit, dst: DrinkUnit): String {
+    override fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String {
         return numbersAndFractionRegex.replace(input) {
             val value = parseNumbersAndFractionsExpression(it.groupValues[0])
             src.convertTo(dst, value).prettyDouble()
@@ -85,16 +85,18 @@ class MeasurementQuantityParser {
     private val fractionNumberParser = FractionNumberParser()
     private val decimalParser = DecimalParser()
 
-    fun parseTo(measurement: String, dstDrinkUnit: DrinkUnit): String {
+    fun parseTo(measurement: String, dstMeasurementUnit: MeasurementUnit): String {
         val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
+
         val measurementParser = DrinkUnitMeasurementParser(srcDrinkUnit)
-        val replacedMeasurement = measurementParser.replaceMeasurement(measurement, dstDrinkUnit)
+        val replacedMeasurement =
+            measurementParser.replaceMeasurement(measurement, dstMeasurementUnit)
 
         return if (decimalParser.containsMatch(replacedMeasurement)) {
-            decimalParser.parse(replacedMeasurement, srcDrinkUnit, dstDrinkUnit)
+            decimalParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
 
         } else {
-            fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstDrinkUnit)
+            fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
         }
     }
 }
