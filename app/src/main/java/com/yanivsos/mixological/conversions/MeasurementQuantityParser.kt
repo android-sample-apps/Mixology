@@ -16,6 +16,7 @@ import kotlin.math.floor
 interface NumberParser {
     fun containsMatch(input: String): Boolean
     fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String
+    fun convert(input: String, onConvert: (Double) -> String): String
 }
 
 class DecimalParser : NumberParser {
@@ -34,6 +35,13 @@ class DecimalParser : NumberParser {
         return decimalRegex.replace(input) {
             val value = parseDecimal(it.groupValues[0])
             src.convertTo(dst, value).prettyDouble()
+        }
+    }
+
+    override fun convert(input: String, onConvert: (Double) -> String): String {
+        return decimalRegex.replace(input) {
+            val value = parseDecimal(it.groupValues[0])
+            onConvert(value)
         }
     }
 
@@ -63,6 +71,13 @@ class FractionNumberParser : NumberParser {
         }
     }
 
+    override fun convert(input: String, onConvert: (Double) -> String): String {
+        return numbersAndFractionRegex.replace(input) {
+            val value = parseNumbersAndFractionsExpression(it.groupValues[0])
+            onConvert(value)
+        }
+    }
+
     private fun parseNumbersAndFractionsExpression(expression: String): Double {
         //1 1/2
         return expression.parse(fractionRegex) { fraction ->
@@ -84,6 +99,7 @@ class MeasurementQuantityParser {
 
     private val fractionNumberParser = FractionNumberParser()
     private val decimalParser = DecimalParser()
+    private val measurementSystem = MeasurementSystem.Metric
 
     fun parseTo(measurement: String, dstMeasurementUnit: MeasurementUnit): String {
         val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
@@ -99,7 +115,52 @@ class MeasurementQuantityParser {
             fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
         }
     }
+
+    fun parseTo(measurement: String): String {
+        val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
+        val dstMeasurementUnit = MeasurementUnit.Ml
+
+
+        val measurementParser = DrinkUnitMeasurementParser(srcDrinkUnit)
+        val replacedMeasurement =
+            measurementParser.replaceMeasurement(measurement, dstMeasurementUnit)
+
+        return if (decimalParser.containsMatch(replacedMeasurement)) {
+            decimalParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
+
+        } else {
+            fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
+        }
+    }
 }
+
+
+fun MeasurementUnit.convertToImperial(): MeasurementUnit {
+    return when (this) {
+        MeasurementUnit.Oz -> MeasurementUnit.Oz
+        MeasurementUnit.Cl -> MeasurementUnit.Oz
+        MeasurementUnit.Ml -> MeasurementUnit.Oz
+        MeasurementUnit.Qt -> MeasurementUnit.Qt
+        MeasurementUnit.Quart -> MeasurementUnit.Quart
+        MeasurementUnit.L -> MeasurementUnit.Pint
+        MeasurementUnit.Gal -> MeasurementUnit.Gal
+        MeasurementUnit.Pint -> MeasurementUnit.Pint
+    }
+}
+
+fun MeasurementUnit.convertToMetric(): MeasurementUnit {
+    return when (this) {
+        MeasurementUnit.Oz -> MeasurementUnit.Ml
+        MeasurementUnit.Cl -> MeasurementUnit.Ml
+        MeasurementUnit.Ml -> MeasurementUnit.Ml
+        MeasurementUnit.Qt -> MeasurementUnit.L
+        MeasurementUnit.Quart -> MeasurementUnit.L
+        MeasurementUnit.L -> MeasurementUnit.L
+        MeasurementUnit.Gal -> MeasurementUnit.L
+        MeasurementUnit.Pint -> MeasurementUnit.L
+    }
+}
+
 
 
 fun String.parseFraction(): Double {

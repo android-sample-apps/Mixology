@@ -6,6 +6,7 @@ import androidx.annotation.WorkerThread
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.conversions.MeasurementUnit
 import com.yanivsos.mixological.conversions.MeasurementQuantityParser
+import com.yanivsos.mixological.conversions.MeasurementSystemConverter
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -29,6 +30,7 @@ class DrinkMapperUi(
 
     private val locale = Locale.getDefault()
     private val measurementQuantityParser = MeasurementQuantityParser()
+    private val measurementSystemConverter = MeasurementSystemConverter()
 
     @WorkerThread
     override fun apply(t: DrinkModel): DrinkUiModel {
@@ -73,6 +75,7 @@ class DrinkMapperUi(
 
     private fun parseQuantity(measurement: String): String {
         if (measurement.isBlank()) return measurement
+//        return measurementSystemConverter.convert(measurement)
         return measurement + "(${measurementQuantityParser.parseTo(measurement, MeasurementUnit.Ml)})"
     }
 

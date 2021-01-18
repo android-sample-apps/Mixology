@@ -7,7 +7,7 @@ sealed class MeasurementUnit(val name: String) {
 
     //TODO - support all of these
     //    1 gr = 0.035274 oz
-    object Gr : MeasurementUnit("gr")
+//    object Gr : MeasurementUnit("gr")
 
     object Qt : MeasurementUnit("qt")
 
