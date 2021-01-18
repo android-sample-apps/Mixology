@@ -1,2 +1,3 @@
+include ':conversions'
 rootProject.name='CocktailMenu'
 include ':app'
