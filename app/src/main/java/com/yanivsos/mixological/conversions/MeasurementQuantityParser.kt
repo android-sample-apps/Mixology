@@ -2,7 +2,6 @@ package com.yanivsos.mixological.conversions
 
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.util.concurrent.TimeUnit
 import kotlin.math.floor
 
 /*
@@ -140,10 +139,10 @@ fun MeasurementUnit.convertToImperial(): MeasurementUnit {
         MeasurementUnit.Oz -> MeasurementUnit.Oz
         MeasurementUnit.Cl -> MeasurementUnit.Oz
         MeasurementUnit.Ml -> MeasurementUnit.Oz
-        MeasurementUnit.Qt -> MeasurementUnit.Qt
         MeasurementUnit.Quart -> MeasurementUnit.Quart
-        MeasurementUnit.L -> MeasurementUnit.Pint
-        MeasurementUnit.Gal -> MeasurementUnit.Gal
+        MeasurementUnit.Quart -> MeasurementUnit.Quart
+        MeasurementUnit.Liter -> MeasurementUnit.Pint
+        MeasurementUnit.Gallon -> MeasurementUnit.Gallon
         MeasurementUnit.Pint -> MeasurementUnit.Pint
     }
 }
@@ -153,11 +152,11 @@ fun MeasurementUnit.convertToMetric(): MeasurementUnit {
         MeasurementUnit.Oz -> MeasurementUnit.Ml
         MeasurementUnit.Cl -> MeasurementUnit.Ml
         MeasurementUnit.Ml -> MeasurementUnit.Ml
-        MeasurementUnit.Qt -> MeasurementUnit.L
-        MeasurementUnit.Quart -> MeasurementUnit.L
-        MeasurementUnit.L -> MeasurementUnit.L
-        MeasurementUnit.Gal -> MeasurementUnit.L
-        MeasurementUnit.Pint -> MeasurementUnit.L
+        MeasurementUnit.Quart -> MeasurementUnit.Liter
+        MeasurementUnit.Quart -> MeasurementUnit.Liter
+        MeasurementUnit.Liter -> MeasurementUnit.Liter
+        MeasurementUnit.Gallon -> MeasurementUnit.Liter
+        MeasurementUnit.Pint -> MeasurementUnit.Liter
     }
 }
 

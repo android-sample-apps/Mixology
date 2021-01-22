@@ -12,19 +12,21 @@ class DrinkUnitMeasurementParser(
     private val measurementUnit: MeasurementUnit
 ) : MeasurementParser {
 
-    private val regex = measurementRegex(measurementUnit.name)
+    private val regexList: List<Regex> = measurementUnit
+        .names
+        .map { measurementRegex(it) }
 
     override fun parseUnit(measurement: String): MeasurementUnit? {
-        return if (measurement.contains(regex)) {
-            measurementUnit
-        } else {
-            null
+        for (regex in regexList) {
+            if (measurement.contains(regex)) return measurementUnit
         }
+
+        return null
     }
 
     fun replaceMeasurement(measurement: String, dstMeasurementUnit: MeasurementUnit): String {
-        val nameRegex = "\\b(?i)${measurementUnit.name}\\b".toRegex()
-        return nameRegex.replace(measurement, dstMeasurementUnit.name)
+        val nameRegex = "\\b(?i)${measurementUnit.names.first()}\\b".toRegex()
+        return nameRegex.replace(measurement, dstMeasurementUnit.names.first())
     }
 
 }
@@ -33,10 +35,10 @@ private val drinkUnits = listOf(
     MeasurementUnit.Ml,
     MeasurementUnit.Cl,
     MeasurementUnit.Oz,
-    MeasurementUnit.Gal,
-    MeasurementUnit.L,
+    MeasurementUnit.Gallon,
+    MeasurementUnit.Liter,
     MeasurementUnit.Pint,
-    MeasurementUnit.Qt,
+    MeasurementUnit.Quart,
     MeasurementUnit.Quart
 )
 

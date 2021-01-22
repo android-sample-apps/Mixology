@@ -1,6 +1,8 @@
 package com.yanivsos.mixological.conversions
 
-sealed class MeasurementUnit(val name: String) {
+sealed class MeasurementUnit(vararg names: String) {
+    val names = names.toSet()
+
     object Oz : MeasurementUnit("oz")
     object Cl : MeasurementUnit("cl")
     object Ml : MeasurementUnit("ml")
@@ -9,14 +11,13 @@ sealed class MeasurementUnit(val name: String) {
     //    1 gr = 0.035274 oz
 //    object Gr : MeasurementUnit("gr")
 
-    object Qt : MeasurementUnit("qt")
+    object Quart : MeasurementUnit("qt", "quart")
 
-    object Quart : MeasurementUnit("quart")
 
-    object L : MeasurementUnit("L")
+    object Liter : MeasurementUnit("L")
 
     //1 gal = 3.7 Liter
-    object Gal : MeasurementUnit("gal")
+    object Gallon : MeasurementUnit("gal")
 
     //1 pint = 570 ml
     object Pint : MeasurementUnit("pint")

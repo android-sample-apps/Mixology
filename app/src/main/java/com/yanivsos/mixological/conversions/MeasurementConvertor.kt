@@ -44,10 +44,9 @@ fun MeasurementUnit.convertTo(measurementUnit: MeasurementUnit, value: Double): 
         MeasurementUnit.Cl -> MeasurementUnit.Cl.toUnit(value, measurementUnit)
         MeasurementUnit.Ml -> MeasurementUnit.Ml.toUnit(value, measurementUnit)
 //        MeasurementUnit.Gr -> TODO()
-        MeasurementUnit.Qt -> TODO()
         MeasurementUnit.Quart -> TODO()
-        MeasurementUnit.L -> TODO()
-        MeasurementUnit.Gal -> TODO()
+        MeasurementUnit.Liter -> TODO()
+        MeasurementUnit.Gallon -> TODO()
         MeasurementUnit.Pint -> TODO()
     }
 }
@@ -57,12 +56,11 @@ fun MeasurementUnit.Oz.toUnit(value: Double, unit: MeasurementUnit): Double {
         MeasurementUnit.Oz -> value
         MeasurementUnit.Cl -> value.ozToCl()
         MeasurementUnit.Ml -> value.ozToMl()
-//        MeasurementUnit.Gr -> TODO()
-        MeasurementUnit.Qt -> TODO()
         MeasurementUnit.Quart -> TODO()
-        MeasurementUnit.L -> TODO()
-        MeasurementUnit.Gal -> TODO()
+        MeasurementUnit.Liter -> TODO()
+        MeasurementUnit.Gallon -> TODO()
         MeasurementUnit.Pint -> TODO()
+//        MeasurementUnit.Gr -> TODO()
     }
 }
 
@@ -72,10 +70,9 @@ fun MeasurementUnit.Ml.toUnit(value: Double, unit: MeasurementUnit): Double {
         MeasurementUnit.Cl -> value.mlToCl()
         MeasurementUnit.Ml -> value
 //        MeasurementUnit.Gr -> TODO()
-        MeasurementUnit.Qt -> TODO()
         MeasurementUnit.Quart -> TODO()
-        MeasurementUnit.L -> TODO()
-        MeasurementUnit.Gal -> TODO()
+        MeasurementUnit.Liter -> TODO()
+        MeasurementUnit.Gallon -> TODO()
         MeasurementUnit.Pint -> TODO()
     }
 }
@@ -86,10 +83,9 @@ fun MeasurementUnit.Cl.toUnit(value: Double, unit: MeasurementUnit): Double {
         MeasurementUnit.Cl -> value
         MeasurementUnit.Ml -> value.clToMl()
 //        MeasurementUnit.Gr -> TODO()
-        MeasurementUnit.Qt -> TODO()
         MeasurementUnit.Quart -> TODO()
-        MeasurementUnit.L -> TODO()
-        MeasurementUnit.Gal -> TODO()
+        MeasurementUnit.Liter -> TODO()
+        MeasurementUnit.Gallon -> TODO()
         MeasurementUnit.Pint -> TODO()
     }
 }
@@ -101,10 +97,9 @@ fun MeasurementUnit.toMetric(value: Double): MeasurementConversion {
         MeasurementUnit.Cl -> MeasurementUnit.Cl.toUnit(value, MeasurementUnit.Ml).withUnit(MeasurementUnit.Ml)
         MeasurementUnit.Ml -> value.withUnit(MeasurementUnit.Ml)
 //        MeasurementUnit.Gr -> value.withUnit(MeasurementUnit.Gr)
-        MeasurementUnit.Qt -> value.qtToOz().ozToMl().withUnit(MeasurementUnit.Ml)
         MeasurementUnit.Quart -> value.qtToOz().ozToMl().withUnit(MeasurementUnit.Ml)
-        MeasurementUnit.L -> value.withUnit(MeasurementUnit.L)
-        MeasurementUnit.Gal -> value.galToLiter().withUnit(MeasurementUnit.L)
+        MeasurementUnit.Liter -> value.withUnit(MeasurementUnit.Liter)
+        MeasurementUnit.Gallon -> value.galToLiter().withUnit(MeasurementUnit.Liter)
         MeasurementUnit.Pint -> value.pintToMl().withUnit(MeasurementUnit.Ml)
     }.also {
         Timber.d("toMetric: from [$this], value[$value] = $it ")

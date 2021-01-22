@@ -32,10 +32,10 @@ fun MeasurementUnit.toMetricUnit():  MeasurementUnit {
         MeasurementUnit.Oz -> MeasurementUnit.Ml
         MeasurementUnit.Cl -> MeasurementUnit.Ml
         MeasurementUnit.Ml -> MeasurementUnit.Ml
-        MeasurementUnit.Qt -> MeasurementUnit.Ml
         MeasurementUnit.Quart -> MeasurementUnit.Ml
-        MeasurementUnit.L -> MeasurementUnit.L
-        MeasurementUnit.Gal -> MeasurementUnit.L
+        MeasurementUnit.Quart -> MeasurementUnit.Ml
+        MeasurementUnit.Liter -> MeasurementUnit.Liter
+        MeasurementUnit.Gallon -> MeasurementUnit.Liter
         MeasurementUnit.Pint -> MeasurementUnit.Ml
     }
 }
@@ -45,10 +45,10 @@ fun MeasurementUnit.toImperialUnit():  MeasurementUnit {
         MeasurementUnit.Oz -> MeasurementUnit.Oz
         MeasurementUnit.Cl -> MeasurementUnit.Oz
         MeasurementUnit.Ml -> MeasurementUnit.Oz
-        MeasurementUnit.Qt -> MeasurementUnit.Qt
         MeasurementUnit.Quart -> MeasurementUnit.Quart
-        MeasurementUnit.L -> MeasurementUnit.Pint
-        MeasurementUnit.Gal -> MeasurementUnit.Gal
+        MeasurementUnit.Quart -> MeasurementUnit.Quart
+        MeasurementUnit.Liter -> MeasurementUnit.Pint
+        MeasurementUnit.Gallon -> MeasurementUnit.Gallon
         MeasurementUnit.Pint -> MeasurementUnit.Pint
     }
 }
