@@ -16,8 +16,6 @@ import kotlin.math.floor
 interface NumberParser {
     fun containsMatch(input: String): Boolean
     fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String
-//    fun convert(input: String, onConvert: (Double) -> String): String
-
     fun MeasurementUnit.measurementConversion(dst: MeasurementUnit, value: Double): String {
         return this.convertTo(value, dst).prettyDouble()
     }
@@ -41,13 +39,6 @@ class DecimalParser : NumberParser {
             src.measurementConversion(dst, value)
         }
     }
-
-    /*override fun convert(input: String, onConvert: (Double) -> String): String {
-        return decimalRegex.replace(input) {
-            val value = parseDecimal(it.groupValues[0])
-            onConvert(value)
-        }
-    }*/
 
     private fun parseDecimal(expression: String): Double {
         return expression.toDouble()
@@ -74,13 +65,6 @@ class FractionNumberParser : NumberParser {
             src.measurementConversion(dst, value)
         }
     }
-
-    /*override fun convert(input: String, onConvert: (Double) -> String): String {
-        return numbersAndFractionRegex.replace(input) {
-            val value = parseNumbersAndFractionsExpression(it.groupValues[0])
-            onConvert(value)
-        }
-    }*/
 
     private fun parseNumbersAndFractionsExpression(expression: String): Double {
         //1 1/2
