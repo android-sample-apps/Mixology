@@ -16,7 +16,11 @@ import kotlin.math.floor
 interface NumberParser {
     fun containsMatch(input: String): Boolean
     fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String
-    fun convert(input: String, onConvert: (Double) -> String): String
+//    fun convert(input: String, onConvert: (Double) -> String): String
+
+    fun MeasurementUnit.measurementConversion(dst: MeasurementUnit, value: Double): String {
+        return this.convertTo(value, dst).prettyDouble()
+    }
 }
 
 class DecimalParser : NumberParser {
@@ -34,16 +38,16 @@ class DecimalParser : NumberParser {
     ): String {
         return decimalRegex.replace(input) {
             val value = parseDecimal(it.groupValues[0])
-            src.convertTo(dst, value).prettyDouble()
+            src.measurementConversion(dst, value)
         }
     }
 
-    override fun convert(input: String, onConvert: (Double) -> String): String {
+    /*override fun convert(input: String, onConvert: (Double) -> String): String {
         return decimalRegex.replace(input) {
             val value = parseDecimal(it.groupValues[0])
             onConvert(value)
         }
-    }
+    }*/
 
     private fun parseDecimal(expression: String): Double {
         return expression.toDouble()
@@ -67,16 +71,16 @@ class FractionNumberParser : NumberParser {
     override fun parse(input: String, src: MeasurementUnit, dst: MeasurementUnit): String {
         return numbersAndFractionRegex.replace(input) {
             val value = parseNumbersAndFractionsExpression(it.groupValues[0])
-            src.convertTo(dst, value).prettyDouble()
+            src.measurementConversion(dst, value)
         }
     }
 
-    override fun convert(input: String, onConvert: (Double) -> String): String {
+    /*override fun convert(input: String, onConvert: (Double) -> String): String {
         return numbersAndFractionRegex.replace(input) {
             val value = parseNumbersAndFractionsExpression(it.groupValues[0])
             onConvert(value)
         }
-    }
+    }*/
 
     private fun parseNumbersAndFractionsExpression(expression: String): Double {
         //1 1/2
@@ -99,7 +103,6 @@ class MeasurementQuantityParser {
 
     private val fractionNumberParser = FractionNumberParser()
     private val decimalParser = DecimalParser()
-    private val measurementSystem = MeasurementSystem.Metric
 
     fun parseTo(measurement: String, dstMeasurementUnit: MeasurementUnit): String {
         val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
@@ -115,51 +118,7 @@ class MeasurementQuantityParser {
             fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
         }
     }
-
-    fun parseTo(measurement: String): String {
-        val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
-        val dstMeasurementUnit = MeasurementUnit.Ml
-
-
-        val measurementParser = DrinkUnitMeasurementParser(srcDrinkUnit)
-        val replacedMeasurement =
-            measurementParser.replaceMeasurement(measurement, dstMeasurementUnit)
-        return if (decimalParser.containsMatch(replacedMeasurement)) {
-            decimalParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
-
-        } else {
-            fractionNumberParser.parse(replacedMeasurement, srcDrinkUnit, dstMeasurementUnit)
-        }
-    }
 }
-
-
-fun MeasurementUnit.convertToImperial(): MeasurementUnit {
-    return when (this) {
-        MeasurementUnit.Oz -> MeasurementUnit.Oz
-        MeasurementUnit.Cl -> MeasurementUnit.Oz
-        MeasurementUnit.Ml -> MeasurementUnit.Oz
-        MeasurementUnit.Quart -> MeasurementUnit.Quart
-        MeasurementUnit.Quart -> MeasurementUnit.Quart
-        MeasurementUnit.Liter -> MeasurementUnit.Pint
-        MeasurementUnit.Gallon -> MeasurementUnit.Gallon
-        MeasurementUnit.Pint -> MeasurementUnit.Pint
-    }
-}
-
-fun MeasurementUnit.convertToMetric(): MeasurementUnit {
-    return when (this) {
-        MeasurementUnit.Oz -> MeasurementUnit.Ml
-        MeasurementUnit.Cl -> MeasurementUnit.Ml
-        MeasurementUnit.Ml -> MeasurementUnit.Ml
-        MeasurementUnit.Quart -> MeasurementUnit.Liter
-        MeasurementUnit.Quart -> MeasurementUnit.Liter
-        MeasurementUnit.Liter -> MeasurementUnit.Liter
-        MeasurementUnit.Gallon -> MeasurementUnit.Liter
-        MeasurementUnit.Pint -> MeasurementUnit.Liter
-    }
-}
-
 
 
 fun String.parseFraction(): Double {
