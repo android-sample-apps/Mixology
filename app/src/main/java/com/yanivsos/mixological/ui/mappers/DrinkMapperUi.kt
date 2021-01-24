@@ -76,6 +76,7 @@ class DrinkMapperUi(
             }
 
     private fun parseQuantity(measurement: String): String {
+        //TODO("remove '\n from end of string")
         if (measurement.isBlank()) return measurement
         return measurement + "(${
             measurementUnitMapper.mapTo(measurement)

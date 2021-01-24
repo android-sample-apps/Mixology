@@ -34,6 +34,7 @@ class NumberParsingTests {
         assert(FractionNumberParser.parseFraction("1 /2") == 0.5)
         assert(FractionNumberParser.parseFraction("1 / 2") == 0.5)
         assert(FractionNumberParser.parseFraction("1 / 3") == 1.0.div(3))
+        assert(FractionNumberParser.parseFraction("1 / 4") == 0.25)
     }
 
 

@@ -113,7 +113,6 @@ sealed class FluidUnits(vararg names: String): MeasureUnit {
         }
     }
 
-
     object Quart : FluidUnits("qt", "quart") {
         override fun toOz(d: Double): Double {
             return d.qtToOz()
