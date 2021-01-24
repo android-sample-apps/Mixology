@@ -54,6 +54,8 @@ class FullConversions {
         assert(parser.parseTo("0.4543876 cl") { FluidUnits.Milliliter } == "4.5 ml")
         assert(parser.parseTo("4.573876 cl") { FluidUnits.Milliliter } == "45.7 ml")
         assert(parser.parseTo("4.579876 cl") { FluidUnits.Milliliter } == "45.8 ml")
+        assert(parser.parseTo("1.039876 cl") { FluidUnits.Centiliter } == "1 cl")
+        assert(parser.parseTo("1.2 cl") { FluidUnits.Centiliter } == "1.2 cl")
     }
 }
 

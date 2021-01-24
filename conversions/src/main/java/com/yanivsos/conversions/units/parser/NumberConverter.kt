@@ -12,16 +12,17 @@ interface NumberConverter<T: MeasureUnit> {
 
 fun Double.prettyDouble(): String {
     return this.let { double ->
-        if (double == floor(double)) {
-            double.toInt().toString()
+        val rounded = double.roundOffDecimal()
+        if (rounded == floor(rounded)) {
+            rounded.toInt().toString()
         } else {
-            double.roundOffDecimal().toString()
+            rounded.toString()
         }
     }
 }
 
 fun Double.roundOffDecimal(): Double {
-    val df = DecimalFormat("#.##")
+    val df = DecimalFormat("#.#")
     df.roundingMode = RoundingMode.HALF_DOWN
     return df.format(this).toDouble()
 }
