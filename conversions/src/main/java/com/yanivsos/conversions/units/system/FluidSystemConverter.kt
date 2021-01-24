@@ -9,7 +9,7 @@ class FluidSystemConverter: MeasurementSystemConverter<FluidUnits> {
             FluidUnits.Oz -> FluidUnits.Ml
             FluidUnits.Cl -> FluidUnits.Ml
             FluidUnits.Ml -> FluidUnits.Ml
-            FluidUnits.Quart -> FluidUnits.Liter
+            FluidUnits.Quart -> FluidUnits.Ml
             FluidUnits.Liter -> FluidUnits.Liter
             FluidUnits.Gallon -> FluidUnits.Liter
             FluidUnits.Pint -> FluidUnits.Ml
