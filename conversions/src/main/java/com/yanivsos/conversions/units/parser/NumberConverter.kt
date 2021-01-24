@@ -21,7 +21,7 @@ fun Double.prettyDouble(): String {
 }
 
 fun Double.roundOffDecimal(): Double {
-    val df = DecimalFormat("#.#")
+    val df = DecimalFormat("#.##")
     df.roundingMode = RoundingMode.HALF_DOWN
     return df.format(this).toDouble()
 }
