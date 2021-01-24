@@ -6,21 +6,21 @@ class FluidSystemConverter: MeasurementSystemConverter<FluidUnits> {
 
     override fun toMetricUnit(src: FluidUnits): FluidUnits {
         return when (src) {
-            FluidUnits.Oz -> FluidUnits.Ml
-            FluidUnits.Cl -> FluidUnits.Ml
-            FluidUnits.Ml -> FluidUnits.Ml
-            FluidUnits.Quart -> FluidUnits.Ml
+            FluidUnits.Oz -> FluidUnits.Milliliter
+            FluidUnits.Centiliter -> FluidUnits.Milliliter
+            FluidUnits.Milliliter -> FluidUnits.Milliliter
+            FluidUnits.Quart -> FluidUnits.Milliliter
             FluidUnits.Liter -> FluidUnits.Liter
             FluidUnits.Gallon -> FluidUnits.Liter
-            FluidUnits.Pint -> FluidUnits.Ml
+            FluidUnits.Pint -> FluidUnits.Milliliter
         }
     }
 
     override fun toImperialUnit(src: FluidUnits): FluidUnits {
         return when (src) {
             FluidUnits.Oz -> FluidUnits.Oz
-            FluidUnits.Cl -> FluidUnits.Oz
-            FluidUnits.Ml -> FluidUnits.Oz
+            FluidUnits.Centiliter -> FluidUnits.Oz
+            FluidUnits.Milliliter -> FluidUnits.Oz
             FluidUnits.Quart -> FluidUnits.Quart
             FluidUnits.Liter -> FluidUnits.Quart
             FluidUnits.Gallon -> FluidUnits.Gallon

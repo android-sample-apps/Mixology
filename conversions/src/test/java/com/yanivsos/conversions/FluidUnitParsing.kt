@@ -27,19 +27,19 @@ class FluidUnitParsing {
 
     @Test
     fun testCl() {
-        val parser = FluidUnitParser(FluidUnits.Cl)
+        val parser = FluidUnitParser(FluidUnits.Centiliter)
         assert(parser.parseUnit("1/2cl") == null)
-        assert(parser.parseUnit("1/3 cl") == FluidUnits.Cl)
-        assert(parser.parseUnit("4.5 CL") == FluidUnits.Cl)
-        assert(parser.parseUnit("32 Cl") == FluidUnits.Cl)
-        assert(parser.parseUnit("32 cL") == FluidUnits.Cl)
+        assert(parser.parseUnit("1/3 cl") == FluidUnits.Centiliter)
+        assert(parser.parseUnit("4.5 CL") == FluidUnits.Centiliter)
+        assert(parser.parseUnit("32 Cl") == FluidUnits.Centiliter)
+        assert(parser.parseUnit("32 cL") == FluidUnits.Centiliter)
         assert(parser.parseUnit("32 Ozia") == null)
-        assert(parser.parseUnit("1/2 cl white") == FluidUnits.Cl)
+        assert(parser.parseUnit("1/2 cl white") == FluidUnits.Centiliter)
     }
 
     @Test
     fun testMl() {
-        val drinkUnit = FluidUnits.Ml
+        val drinkUnit = FluidUnits.Milliliter
         val parser = FluidUnitParser(drinkUnit)
         assert(parser.parseUnit("1/2ml") == null)
         assert(parser.parseUnit("1/3 ml") == drinkUnit)

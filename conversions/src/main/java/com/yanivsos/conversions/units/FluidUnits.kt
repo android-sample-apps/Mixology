@@ -14,8 +14,8 @@ sealed class FluidUnits(vararg names: String): MeasureUnit {
     fun convertTo(d: Double, FluidUnits: FluidUnits): Double {
         return when (FluidUnits) {
             Oz -> toOz(d)
-            Cl -> toCl(d)
-            Ml -> toMl(d)
+            Centiliter -> toCl(d)
+            Milliliter -> toMl(d)
             Quart -> toQuart(d)
             Liter -> toLiter(d)
             Gallon -> toGallon(d)
@@ -53,7 +53,7 @@ sealed class FluidUnits(vararg names: String): MeasureUnit {
         }
     }
 
-    object Cl : FluidUnits("cl") {
+    object Centiliter : FluidUnits("cl") {
         override fun toOz(d: Double): Double {
             return d.clToOz()
         }
@@ -83,7 +83,7 @@ sealed class FluidUnits(vararg names: String): MeasureUnit {
         }
     }
 
-    object Ml : FluidUnits("ml") {
+    object Milliliter : FluidUnits("ml") {
         override fun toOz(d: Double): Double {
             return d.mlToOz()
         }

@@ -3,9 +3,6 @@ package com.yanivsos.conversions.units
 import com.yanivsos.conversions.units.parser.DecimalParser
 import com.yanivsos.conversions.units.parser.FractionNumberParser
 import com.yanivsos.conversions.units.parser.NumberConverter
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import kotlin.math.floor
 
 /*
 *
@@ -50,8 +47,8 @@ class FluidUnitsConverter {
 
 
     private val fluidUnits = listOf(
-        FluidUnits.Ml,
-        FluidUnits.Cl,
+        FluidUnits.Milliliter,
+        FluidUnits.Centiliter,
         FluidUnits.Oz,
         FluidUnits.Gallon,
         FluidUnits.Liter,
