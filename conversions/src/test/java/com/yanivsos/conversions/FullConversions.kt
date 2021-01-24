@@ -20,7 +20,7 @@ class FullConversions {
 
     @Test
     fun testOzToMlConversion() {
-        val parser = FluidUnitsConverter(fluidNumberConverter)
+        val parser = FluidUnitsConverter()
         assert(parser.parseTo("1 1/2 oz", FluidUnits.Ml) == "45 ml")
         assert(parser.parseTo("1/2 oz", FluidUnits.Ml) == "15 ml")
         assert(parser.parseTo("1 oz", FluidUnits.Ml) == "30 ml")
@@ -30,7 +30,7 @@ class FullConversions {
 
     @Test
     fun testMlToOzConversion() {
-        val parser = FluidUnitsConverter(fluidNumberConverter)
+        val parser = FluidUnitsConverter()
         assert(parser.parseTo("45 ml", FluidUnits.Oz) == "1.5 oz")
         assert(parser.parseTo("15 ml", FluidUnits.Oz) == "0.5 oz")
         assert(parser.parseTo("30 ml", FluidUnits.Oz) == "1 oz")
@@ -40,7 +40,7 @@ class FullConversions {
 
     @Test
     fun testClToMlConversion() {
-        val parser = FluidUnitsConverter(fluidNumberConverter)
+        val parser = FluidUnitsConverter()
         assert(parser.parseTo("45 cl", FluidUnits.Ml) == "450 ml")
         assert(parser.parseTo("30 cl", FluidUnits.Ml) == "300 ml")
         assert(parser.parseTo("4.5 cl", FluidUnits.Ml) == "45 ml")
@@ -50,7 +50,7 @@ class FullConversions {
 
     @Test
     fun  testDoubleRounding() {
-        val parser = FluidUnitsConverter(fluidNumberConverter)
+        val parser = FluidUnitsConverter()
         assert(parser.parseTo("1 /3 oz", FluidUnits.Ml) == "10 ml")
         assert(parser.parseTo("0.3 oz", FluidUnits.Ml) == "9 ml")
         assert(parser.parseTo("4.543876 cl", FluidUnits.Ml) == "45.4 ml")

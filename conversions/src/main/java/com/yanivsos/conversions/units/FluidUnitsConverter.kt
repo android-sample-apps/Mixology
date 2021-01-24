@@ -17,13 +17,14 @@ import kotlin.math.floor
 *
 * */
 class FluidUnitsConverter {
+
     private val numberConverter: NumberConverter<FluidUnits> = FluidUnitNumberConverter()
     private val fractionNumberParser = FractionNumberParser(numberConverter)
     private val decimalParser = DecimalParser(numberConverter)
 
-    fun parseTo(measurement: String, dstMeasurementUnit: FluidUnits): String {
+    fun parseTo(measurement: String, toDestinationUnit: (FluidUnits) -> FluidUnits): String {
         val srcDrinkUnit = measurement.parseDrinkUnit() ?: return measurement
-
+        val dstMeasurementUnit = toDestinationUnit(srcDrinkUnit)
         val fluidUnitParser = FluidUnitParser(srcDrinkUnit)
         val replacedMeasurement =
             fluidUnitParser.replaceMeasurement(measurement, dstMeasurementUnit)
@@ -39,7 +40,6 @@ class FluidUnitsConverter {
             )
         }
     }
-
 
     private fun String.parseDrinkUnit(): FluidUnits? {
         fluidUnits.forEach { drinkUnit ->
