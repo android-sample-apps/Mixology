@@ -15,6 +15,8 @@ class SettingsViewModel(
             field = value
         }
 
+
+
     private fun toggleDarkMode(darkModeEnabled: Boolean) {
         AppSettings.darkModeEnabled = darkModeEnabled
         setNightModeUseCase.setNightMode(darkModeEnabled)

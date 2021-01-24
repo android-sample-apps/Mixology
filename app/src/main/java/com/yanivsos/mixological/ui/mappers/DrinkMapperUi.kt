@@ -26,11 +26,13 @@ class DrinkMapperListUi(
 }
 
 class DrinkMapperUi(
-    private val appCtx: Context
+    private val appCtx: Context,
 ) : Function<DrinkModel, DrinkUiModel> {
 
     private val locale = Locale.getDefault()
-    private val systemConverter = FluidUnitsToSystemConverter(MeasurementSystem.Metric)
+    private val measurementUnitMapper: MeasurementUnitMapper = FluidMeasurementUnitMapper(
+        FluidUnitsToSystemConverter(MeasurementSystem.Metric)
+    )
 
     @WorkerThread
     override fun apply(t: DrinkModel): DrinkUiModel {
@@ -76,7 +78,7 @@ class DrinkMapperUi(
     private fun parseQuantity(measurement: String): String {
         if (measurement.isBlank()) return measurement
         return measurement + "(${
-            systemConverter.parseTo(measurement)
+            measurementUnitMapper.mapTo(measurement)
         })"
     }
 

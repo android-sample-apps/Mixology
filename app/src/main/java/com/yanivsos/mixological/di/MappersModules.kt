@@ -2,6 +2,7 @@ package com.yanivsos.mixological.di
 
 import com.yanivsos.mixological.repo.mappers.*
 import com.yanivsos.mixological.ui.mappers.*
+import com.yanivsos.mixological.ui.models.AppSettings
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -31,7 +32,6 @@ val mappersModule = module {
     factory { SearchDrinkPreviewMapper(get<SingleDrinkMapper>()) }
 
     factory { SingleDrinkMapper() }
-
 
     factory { DrinkMapperUi(androidContext()) }
 
