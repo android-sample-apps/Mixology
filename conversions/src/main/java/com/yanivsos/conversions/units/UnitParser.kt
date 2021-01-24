@@ -20,7 +20,7 @@ abstract class BaseUnitParser<T : MeasureUnit>(
 
 
     override fun parseUnit(measurement: String): T? {
-        for (regex in regexList) {
+        regexList.forEach { regex ->
             if (measurement.contains(regex)) return unit
         }
 
@@ -28,8 +28,14 @@ abstract class BaseUnitParser<T : MeasureUnit>(
     }
 
     override fun replaceMeasurement(measurement: String, dstMeasurementUnit: FluidUnits): String {
-        val nameRegex = "\\b(?i)${unit.names.first()}\\b".toRegex()
-        return nameRegex.replace(measurement, dstMeasurementUnit.names.first())
+        unit.names.forEach { unitName ->
+            val nameRegex = "\\b(?i)${unitName}\\b".toRegex()
+            if (nameRegex.containsMatchIn(measurement)) {
+                return nameRegex.replace(measurement, dstMeasurementUnit.names.first())
+            }
+        }
+
+        return measurement
     }
 }
 
