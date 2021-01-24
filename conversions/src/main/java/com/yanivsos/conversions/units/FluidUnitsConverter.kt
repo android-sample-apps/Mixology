@@ -16,9 +16,8 @@ import kotlin.math.floor
     1/2 oz white
 *
 * */
-class FluidUnitsConverter(
-    numberConverter: NumberConverter<FluidUnits>
-) {
+class FluidUnitsConverter {
+    private val numberConverter: NumberConverter<FluidUnits> = FluidUnitNumberConverter()
     private val fractionNumberParser = FractionNumberParser(numberConverter)
     private val decimalParser = DecimalParser(numberConverter)
 
@@ -59,5 +58,4 @@ class FluidUnitsConverter(
         FluidUnits.Pint,
         FluidUnits.Quart
     )
-
 }
