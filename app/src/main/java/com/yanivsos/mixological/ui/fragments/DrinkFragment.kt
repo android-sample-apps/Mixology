@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.layout_drink_label.*
 import kotlinx.android.synthetic.main.view_favorite_card.*
 import kotlinx.android.synthetic.main.view_share_card.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -45,7 +44,6 @@ import timber.log.Timber
 
 class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
-    private var drinkJob: Job? = null
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy {
         DrinkPagerAdapter(
@@ -61,11 +59,6 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.d("onCreate called:")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        drinkJob?.cancel()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -87,10 +80,12 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun onFavoriteToggled() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
+            /*val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
             if (isFavorite) {
                 launchInAppReview()
-            }
+            }*/
+
+            drinkViewModel.changeMeasurementPreference()
         }
     }
 

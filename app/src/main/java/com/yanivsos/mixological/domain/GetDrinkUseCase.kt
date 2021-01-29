@@ -16,6 +16,7 @@ class GetDrinkUseCase(
 ) {
 
     private var job: Job? = null
+    private val convertMeasurementUseCase = ConvertMeasurementUseCase()
 
     private val channel = ConflatedBroadcastChannel<Result<DrinkModel>>()
     val drinkChannel = channel.asFlow().distinctUntilChanged()
@@ -35,7 +36,8 @@ class GetDrinkUseCase(
         job?.cancel()
         job = GlobalScope.launch(Dispatchers.IO) {
             repository
-                .get(drinkId).combine(
+                .get(drinkId)
+                .combine(
                     getWatchlistUseCase.getById(drinkId).map { it != null }
                 ) { drink, isFavorite ->
                     drink to isFavorite
@@ -47,7 +49,7 @@ class GetDrinkUseCase(
                         fetchAndStore { channel.offer(Result.Error(it)) }
                     } else {
                         Timber.d("found drink[$drinkId]")
-                        val model = drink.copy(isFavorite = isFavorite)
+                        val model = convertMeasurementUseCase.convert(drink.copy(isFavorite = isFavorite))
                         channel.send(Result.Success(model))
                     }
                 }

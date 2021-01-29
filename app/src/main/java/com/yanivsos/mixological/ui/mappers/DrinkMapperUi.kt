@@ -3,10 +3,6 @@ package com.yanivsos.mixological.ui.mappers
 import android.content.Context
 import android.text.SpannableString
 import androidx.annotation.WorkerThread
-import com.yanivsos.conversions.units.FluidUnits
-import com.yanivsos.conversions.units.FluidUnitsConverter
-import com.yanivsos.conversions.units.FluidUnitsToSystemConverter
-import com.yanivsos.conversions.units.system.MeasurementSystem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.extensions.toKey
@@ -30,9 +26,6 @@ class DrinkMapperUi(
 ) : Function<DrinkModel, DrinkUiModel> {
 
     private val locale = Locale.getDefault()
-    private val measurementUnitMapper: MeasurementUnitMapper = FluidMeasurementUnitMapper(
-        FluidUnitsToSystemConverter(MeasurementSystem.Metric)
-    )
 
     @WorkerThread
     override fun apply(t: DrinkModel): DrinkUiModel {
@@ -76,11 +69,9 @@ class DrinkMapperUi(
             }
 
     private fun parseQuantity(measurement: String): String {
-        //TODO("remove '\n from end of string")
-        if (measurement.isBlank()) return measurement
-        return measurement + "(${
-            measurementUnitMapper.mapTo(measurement)
-        })"
+        return measurement
+            .trim()
+            .replace("\n", "")
     }
 
     private fun mapShareText(t: DrinkModel): String {
