@@ -36,8 +36,10 @@ class SettingsSwitch @JvmOverloads constructor(
             R.styleable.SettingsSwitch, 0, 0
         ).apply {
             try {
-                settings_title_tv.text = getStringFromResourceId(R.styleable.SettingsSwitch_ss_title)
-                settings_subtitle_tv.text = getStringFromResourceId(R.styleable.SettingsSwitch_ss_description)
+                settings_title_tv.text =
+                    getStringFromResourceId(R.styleable.SettingsSwitch_ss_title)
+                settings_subtitle_tv.text =
+                    getStringFromResourceId(R.styleable.SettingsSwitch_ss_description)
             } finally {
                 recycle()
             }

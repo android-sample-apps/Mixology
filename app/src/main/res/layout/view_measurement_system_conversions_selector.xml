@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/conversions_switch"
+        style="@style/SettingsItemTitle"
+        android:text="@string/conversion_mode_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/conversions_rg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversions_switch">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/original_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/original"
+            android:textAppearance="@style/SettingsRadioButtonTextAppearance" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/metric_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/metric"
+            android:textAppearance="@style/SettingsRadioButtonTextAppearance" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/imperial_rb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/imperial"
+            android:textAppearance="@style/SettingsRadioButtonTextAppearance" />
+
+    </RadioGroup>
+
+
+</merge>

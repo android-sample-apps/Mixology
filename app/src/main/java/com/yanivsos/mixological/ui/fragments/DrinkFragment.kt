@@ -80,12 +80,10 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private fun onFavoriteToggled() {
         lifecycleScope.launch(Dispatchers.IO) {
-            /*val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
+            val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
             if (isFavorite) {
                 launchInAppReview()
-            }*/
-
-            drinkViewModel.changeMeasurementPreference()
+            }
         }
     }
 

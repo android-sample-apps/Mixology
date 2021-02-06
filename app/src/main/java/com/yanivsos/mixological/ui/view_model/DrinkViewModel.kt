@@ -11,7 +11,6 @@ import com.yanivsos.mixological.domain.ToggleWatchlistUseCase
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.Result
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
-import com.yanivsos.mixological.ui.models.AppSettings
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
@@ -51,12 +50,6 @@ class DrinkViewModel(
                 reportFavoriteAnalytics(drinkPreviewUiModel, it)
             }
 
-    }
-
-    fun changeMeasurementPreference() {
-        AppSettings.measurementSystem =
-            (AppSettings.measurementSystem + 1).rem(3)
-        refreshDrink()
     }
 
     private fun reportFavoriteAnalytics(
