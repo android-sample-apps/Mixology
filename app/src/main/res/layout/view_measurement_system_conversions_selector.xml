@@ -7,13 +7,22 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/conversions_switch"
+        android:id="@+id/conversions_title"
         style="@style/SettingsItemTitle"
-        android:text="@string/conversion_mode_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:text="@string/conversion_mode_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/conversions_subtitle"
+        style="@style/SettingsItemSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/conversion_mode_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversions_title" />
 
     <RadioGroup
         android:id="@+id/conversions_rg"
@@ -21,7 +30,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/conversions_switch">
+        app:layout_constraintTop_toBottomOf="@id/conversions_subtitle">
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/original_rb"
