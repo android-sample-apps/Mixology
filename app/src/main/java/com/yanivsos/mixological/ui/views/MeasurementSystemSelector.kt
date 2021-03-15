@@ -2,12 +2,12 @@ package com.yanivsos.mixological.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.conversions.*
+import com.yanivsos.mixological.databinding.ViewMeasurementSystemConversionsSelectorBinding
 import com.yanivsos.mixological.ui.models.AppSettings
-import kotlinx.android.synthetic.main.view_measurement_system_conversions_selector.view.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -17,8 +17,12 @@ class MeasurementSystemSelector @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private val binding: ViewMeasurementSystemConversionsSelectorBinding =
+        ViewMeasurementSystemConversionsSelectorBinding.inflate(
+            LayoutInflater.from(context), this
+        )
+
     init {
-        View.inflate(context, R.layout.view_measurement_system_conversions_selector, this)
         initViews()
     }
 
@@ -34,17 +38,17 @@ class MeasurementSystemSelector @JvmOverloads constructor(
 
     private fun initSystemMode() {
         when (AppSettings.measurementSystem) {
-            MEASUREMENT_SYSTEM_ORIGINAL -> original_rb
-            MEASUREMENT_SYSTEM_METRIC -> metric_rb
-            MEASUREMENT_SYSTEM_IMPERIAL -> imperial_rb
-            else -> original_rb
+            MEASUREMENT_SYSTEM_ORIGINAL -> binding.originalRb
+            MEASUREMENT_SYSTEM_METRIC -> binding.metricRb
+            MEASUREMENT_SYSTEM_IMPERIAL -> binding.imperialRb
+            else -> binding.originalRb
         }.run {
             isChecked = true
         }
     }
 
     private fun setOnSystemChangedListener() {
-        conversions_rg.setOnCheckedChangeListener { _, checkedId ->
+        binding.conversionsRg.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.original_rb -> onOriginalChecked()
                 R.id.metric_rb -> onMetricChecked()

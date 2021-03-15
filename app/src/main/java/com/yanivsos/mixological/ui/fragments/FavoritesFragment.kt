@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.databinding.FragmentWatchlistBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.toVisibility
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
@@ -14,7 +15,7 @@ import com.yanivsos.mixological.ui.adapters.DrinkPreviewGridAdapter
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.WatchlistViewModel
-import kotlinx.android.synthetic.main.fragment_watchlist.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
@@ -22,6 +23,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
 
+    private val binding by viewBinding(FragmentWatchlistBinding::bind)
     private val watchlistViewModel: WatchlistViewModel by viewModel()
     private val previewAdapter = DrinkPreviewGridAdapter()
 
@@ -71,7 +73,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
     }
 
     private fun initWatchlistRecyclerView() {
-        watchlist_rv.run {
+        binding.watchlistRv.run {
             adapter = previewAdapter
             addItemDecoration(
                 GridSpacerItemDecoration(
@@ -92,7 +94,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
     }
 
     private fun updateWatchlist(watchlist: List<DrinkPreviewUiModel>) {
-        favorite_instructions_container.visibility = watchlist.isEmpty().toVisibility()
+        binding.favoriteInstructionsContainer.root.visibility = watchlist.isEmpty().toVisibility()
         previewAdapter.update(watchlist)
     }
 }

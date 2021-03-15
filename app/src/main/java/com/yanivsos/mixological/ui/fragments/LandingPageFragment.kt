@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.databinding.FragmentLandingPageBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.DrinkPreviewAdapter
@@ -15,7 +16,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.LandingPageViewModel
-import kotlinx.android.synthetic.main.fragment_landing_page.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -23,6 +24,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
 
+    private val binding by viewBinding(FragmentLandingPageBinding::bind)
     private val landingPageViewModel: LandingPageViewModel by viewModel()
     private val latestArrivalsAdapter = DrinkPreviewAdapter()
     private val mostPopularAdapter = DrinkPreviewAdapter()
@@ -57,9 +59,9 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
 
     private fun setupAdapters() {
         val divider = SpacerItemDecoration(right = 16.dpToPx().toInt())
-        initDrinkPreviewRecyclerView(latest_arrivals_rv, latestArrivalsAdapter, divider)
-        initDrinkPreviewRecyclerView(most_popular_rv, mostPopularAdapter, divider)
-        initDrinkPreviewRecyclerView(recent_searches_rv, recentSearchesAdapter, divider)
+        initDrinkPreviewRecyclerView(binding.latestArrivalsRv, latestArrivalsAdapter, divider)
+        initDrinkPreviewRecyclerView(binding.mostPopularRv, mostPopularAdapter, divider)
+        initDrinkPreviewRecyclerView(binding.recentSearchesRv, recentSearchesAdapter, divider)
     }
 
     private fun initDrinkPreviewRecyclerView(
@@ -84,7 +86,7 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
             latestArrivalsAdapter.update(latestArrivals)
             mostPopularAdapter.update(mostPopular)
             recentSearchesAdapter.updateWithAction(recentSearches) {
-                recent_searches_header.visibility = View.VISIBLE
+                binding.recentSearchesHeader.visibility = View.VISIBLE
             }
         }
     }

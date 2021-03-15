@@ -2,24 +2,29 @@ package com.yanivsos.mixological.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.ListItemHeaderBinding
 import com.yanivsos.mixological.extensions.getStringFromResourceId
-import kotlinx.android.synthetic.main.list_item_header.view.*
 
 class HeaderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
+    private var binding = ListItemHeaderBinding.inflate(
+        LayoutInflater.from(context),
+        this
+    )
+
     init {
-        inflate(context, R.layout.list_item_header, this)
         initAttributes(attrs)
     }
 
     private var headerText: CharSequence? = null
         set(value) {
             field = value
-            alcoholic_header_fhv.text = value
+            binding.alcoholicHeaderFhv.text = value
         }
 
     private fun initAttributes(attrs: AttributeSet?) {

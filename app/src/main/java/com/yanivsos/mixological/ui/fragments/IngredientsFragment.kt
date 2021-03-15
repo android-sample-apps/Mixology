@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.databinding.FragmentIngredientsBinding
 import com.yanivsos.mixological.extensions.toBundle
 import com.yanivsos.mixological.extensions.toDrinkPreviewUiModel
 import com.yanivsos.mixological.ui.adapters.IngredientAdapter
 import com.yanivsos.mixological.ui.models.*
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_ingredients.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,6 +27,8 @@ import timber.log.Timber
 private const val LOADING_ITEM_NUMBER = 3
 
 class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
+
+    private val binding by viewBinding(FragmentIngredientsBinding::bind)
 
     companion object {
         fun newInstance(drinkPreviewUiModel: DrinkPreviewUiModel): IngredientsFragment {
@@ -83,7 +86,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 
     private fun initIngredientsRecyclerView() {
-        ingredients_rv.run {
+        binding.ingredientsRv.run {
             adapter = ingredientsAdapter
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)

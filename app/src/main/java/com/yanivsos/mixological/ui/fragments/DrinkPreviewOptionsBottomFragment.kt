@@ -11,11 +11,10 @@ import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.fragment.app.FragmentManager
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.FragmentDrinkPreviewOptionsBinding
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.view_model.DrinkPreviewOptionsViewModel
-import kotlinx.android.synthetic.main.fragment_drink_preview_options.*
-import kotlinx.android.synthetic.main.view_favorite_card.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -26,6 +25,7 @@ class DrinkPreviewOptionsBottomFragment(
     private val drinkPreviewUiModel: DrinkPreviewUiModel
 ) : BaseBottomSheetDialogFragment() {
 
+    private var binding: FragmentDrinkPreviewOptionsBinding? = null
     private val optionsViewModel: DrinkPreviewOptionsViewModel by viewModel {
         parametersOf(
             drinkPreviewUiModel.id
@@ -34,21 +34,32 @@ class DrinkPreviewOptionsBottomFragment(
 
     private val favoriteColor: Int by lazy { requireContext().compatColor(R.color.cherry_red) }
     private val notFavoriteColor: Int by lazy { requireContext().compatColor(R.color.non_favorite_cherry_tint) }
-    private val favoriteElevation: Float by lazy { favorite_card_container.cardElevation }
+    private val favoriteElevation: Float by lazy { binding?.favoriteContainer?.favoriteCardContainer?.cardElevation ?: 0f  }
 
     override fun createView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_drink_preview_options, container, false)
+        FragmentDrinkPreviewOptionsBinding.inflate(
+            inflater,
+            container, false
+        ).run {
+            binding = this
+            return root
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDrinkName()
         observeFavoriteState()
-        toggle_watchlist_btn.setOnClickListener {
+        binding?.toggleWatchlistBtn?.setOnClickListener {
             addToWatchlist()
         }
     }
@@ -58,7 +69,7 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private fun initDrinkName() {
-        drink_name.text = drinkPreviewUiModel.name
+        binding?.drinkName?.text = drinkPreviewUiModel.name
     }
 
     private fun observeFavoriteState() {
@@ -71,19 +82,17 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private fun onFavoriteEnabled(isFavorite: Boolean) {
-        if (isFavorite) {
-            toggle_watchlist_btn.run {
+        binding?.toggleWatchlistBtn?.run {
+            if (isFavorite) {
                 setOnClickListener { removeFromWatchlist() }
                 text = getString(R.string.remove_from_favorite)
-            }
-            animateToFavorite()
+                animateToFavorite()
 
-        } else {
-            toggle_watchlist_btn.run {
+            } else {
                 setOnClickListener { addToWatchlist() }
                 text = getString(R.string.add_to_favorites)
+                animateToNotFavorite()
             }
-            animateToNotFavorite()
         }
     }
 
@@ -133,14 +142,14 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private fun setCherryTint(tint: Int) {
-        cherry_iv.setColorFilter(
+        binding?.favoriteContainer?.cherryIv?.setColorFilter(
             tint,
             PorterDuff.Mode.SRC_IN
         )
     }
 
     private fun setFavoriteElevation(elevation: Float) {
-        favorite_card_container.cardElevation = elevation
+        binding?.favoriteContainer?.favoriteCardContainer?.cardElevation = elevation
     }
 
     private fun addToWatchlist() {

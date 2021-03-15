@@ -6,26 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.BottomDialogSearchFiltersBinding
+import com.yanivsos.mixological.databinding.ListItemSelectableFilterBinding
 import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.dpToPx
-import com.yanivsos.mixological.extensions.viewHolderInflate
+import com.yanivsos.mixological.extensions.layoutInflater
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
 import com.yanivsos.mixological.ui.models.DrinkFilterUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.AdvancedSearchViewModel
 import com.yanivsos.mixological.ui.views.FilterHeaderView
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.bottom_dialog_search_filters.*
-import kotlinx.android.synthetic.main.list_item_selectable_filter.view.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.getViewModel
@@ -35,6 +33,7 @@ private const val TAG = "FilterBottomDialogFragment"
 
 class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
+    private var binding: BottomDialogSearchFiltersBinding? = null
     private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
         @Suppress("RemoveExplicitTypeArguments")
         requireParentFragment().getViewModel<AdvancedSearchViewModel>()
@@ -71,7 +70,15 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.bottom_dialog_search_filters, container, false)
+        BottomDialogSearchFiltersBinding.inflate(inflater, container, false).run {
+            binding = this
+            return root
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,16 +90,16 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun initHeaderView() {
-        ingredient_header_fhv.onFilterClearedClickedListener = {
+        binding?.ingredientHeaderFhv?.onFilterClearedClickedListener = {
             clearFilter(FilterType.INGREDIENTS)
         }
-        alcoholic_header_fhv.onFilterClearedClickedListener = {
+        binding?.alcoholicHeaderFhv?.onFilterClearedClickedListener = {
             clearFilter(FilterType.ALCOHOL)
         }
-        glasses_header_fhv.onFilterClearedClickedListener = {
+        binding?.glassesHeaderFhv?.onFilterClearedClickedListener = {
             clearFilter(FilterType.GLASS)
         }
-        category_header_fhv.onFilterClearedClickedListener = {
+        binding?.categoryHeaderFhv?.onFilterClearedClickedListener = {
             clearFilter(FilterType.CATEGORY)
         }
     }
@@ -102,7 +109,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun initIngredientSearch() {
-        ingredient_search_query_et.addTextChangedListener {
+        binding?.ingredientSearchQueryEt?.addTextChangedListener {
             val name = it?.toString()
             advancedSearchViewModel.onIngredientNameSearch(name)
         }
@@ -131,23 +138,25 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
         Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
-        updateFilterHeaders(
-            alcoholic_header_fhv,
-            searchFiltersUiModel.activeFilters[FilterType.ALCOHOL]
-        )
-        updateFilterHeaders(
-            category_header_fhv,
-            searchFiltersUiModel.activeFilters[FilterType.CATEGORY]
-        )
-        updateFilterHeaders(
-            glasses_header_fhv,
-            searchFiltersUiModel.activeFilters[FilterType.GLASS]
-        )
+        binding?.run {
+            updateFilterHeaders(
+                alcoholicHeaderFhv,
+                searchFiltersUiModel.activeFilters[FilterType.ALCOHOL]
+            )
+            updateFilterHeaders(
+                categoryHeaderFhv,
+                searchFiltersUiModel.activeFilters[FilterType.CATEGORY]
+            )
+            updateFilterHeaders(
+                glassesHeaderFhv,
+                searchFiltersUiModel.activeFilters[FilterType.GLASS]
+            )
 
-        updateFilterHeaders(
-            ingredient_header_fhv,
-            searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
-        )
+            updateFilterHeaders(
+                ingredientHeaderFhv,
+                searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
+            )
+        }
     }
 
     private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, activeFilters: Int?) {
@@ -164,10 +173,12 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun initFiltersRecyclerView() {
-        initRecyclerView(filter_alcoholic_rv, alcoholicAdapter)
-        initRecyclerView(filter_ingredients_rv, ingredientsAdapter)
-        initRecyclerView(filter_category_rv, categoryAdapter)
-        initRecyclerView(filter_glasses_rv, glassAdapter)
+        binding?.run {
+            initRecyclerView(filterAlcoholicRv, alcoholicAdapter)
+            initRecyclerView(filterIngredientsRv, ingredientsAdapter)
+            initRecyclerView(filterCategoryRv, categoryAdapter)
+            initRecyclerView(filterGlassesRv, glassAdapter)
+        }
     }
 
     private fun initRecyclerView(recyclerView: RecyclerView, selectableAdapter: SelectableAdapter) {
@@ -207,7 +218,11 @@ class SelectableAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
         return SelectableViewHolder(
-            parent.viewHolderInflate(R.layout.list_item_selectable_filter)
+            ListItemSelectableFilterBinding.inflate(
+                parent.layoutInflater(),
+                parent,
+                false
+            )
         )
     }
 
@@ -215,8 +230,8 @@ class SelectableAdapter :
         holder.bind(getItem(position))
     }
 
-    inner class SelectableViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class SelectableViewHolder(private val binding: ListItemSelectableFilterBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
 
         private fun sendInputAction(inputActions: InputActions<DrinkFilterUiModel>) {
@@ -229,15 +244,15 @@ class SelectableAdapter :
         }
 
         fun bind(filter: DrinkFilterUiModel) {
-            containerView.run {
+            binding.root.run {
                 setOnClickListener { invokeFilterClicked(filter) }
 
                 val selectedColor = context.compatColor(getColor(filter.selected))
-                card_container.run {
+                binding.cardContainer.run {
                     strokeColor = selectedColor
                     elevation = getElevation(filter.selected)
                 }
-                filter_tv.run {
+                binding.filterTv.run {
                     setTextColor(selectedColor)
                     text = filter.name
                 }

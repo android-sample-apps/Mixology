@@ -28,6 +28,7 @@
             tools:text="whiskey sour" />
 
         <include
+            android:id="@+id/favorite_container"
             layout="@layout/view_favorite_card"
             android:layout_width="@dimen/share_card_size"
             android:layout_height="@dimen/share_card_size"
@@ -42,10 +43,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            app:layout_constraintBottom_toBottomOf="@id/favorite_card_container"
+            app:layout_constraintBottom_toBottomOf="@id/favorite_container"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/favorite_card_container"
-            app:layout_constraintTop_toTopOf="@id/favorite_card_container"
+            app:layout_constraintStart_toEndOf="@id/favorite_container"
+            app:layout_constraintTop_toTopOf="@id/favorite_container"
             tools:text="Remove from favorites" />
 
 

@@ -2,12 +2,11 @@ package com.yanivsos.mixological.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.ViewFilterHeaderBinding
 import com.yanivsos.mixological.extensions.getStringFromResourceId
-import kotlinx.android.synthetic.main.active_filter_badge.view.*
-import kotlinx.android.synthetic.main.view_filter_header.view.*
 
 class FilterHeaderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -27,20 +26,25 @@ class FilterHeaderView @JvmOverloads constructor(
 
     private var headerText: CharSequence? = null
         set(value) {
-            header_tv.text = value
+            binding.headerTv.text = value
             field = value
         }
 
+    private val binding = ViewFilterHeaderBinding.inflate(
+        LayoutInflater.from(context),
+        this
+    )
+
     init {
-        View.inflate(context, R.layout.view_filter_header, this)
+
         initAttributes(attrs)
         setOnClearFilterClickListener()
     }
 
     private fun setOnClearFilterClickListener() {
         onFilterClearedClickedListener?.let { listener ->
-            clear_btn.setOnClickListener { listener.invoke() }
-        } ?: clear_btn.setOnClickListener(null)
+            binding.clearBtn.setOnClickListener { listener.invoke() }
+        } ?: binding.clearBtn.setOnClickListener(null)
     }
 
     private fun initAttributes(attrs: AttributeSet?) {
@@ -57,7 +61,7 @@ class FilterHeaderView @JvmOverloads constructor(
     }
 
     private fun showFilters(filters: String?) {
-        filter_tv.text = filters
+        binding.badge.filterTv.text = filters
         if (filters != null) {
             visibleBadge()
         }

@@ -64,6 +64,7 @@
         tools:text="Mango Orange smoothie" />
 
     <include
+        android:id="@+id/share_container"
         layout="@layout/view_share_card"
         android:layout_width="@dimen/share_card_size"
         android:layout_height="@dimen/share_card_size"
@@ -73,6 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <include
+        android:id="@+id/favorite_container"
         layout="@layout/view_favorite_card"
         android:layout_width="@dimen/share_card_size"
         android:layout_height="@dimen/share_card_size"

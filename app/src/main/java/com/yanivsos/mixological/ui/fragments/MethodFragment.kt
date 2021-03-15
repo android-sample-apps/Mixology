@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.FragmentMethodBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.toBundle
 import com.yanivsos.mixological.extensions.toDrinkPreviewUiModel
@@ -14,7 +15,7 @@ import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.LoadingMethodUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_method.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -25,6 +26,7 @@ import org.koin.core.parameter.parametersOf
 
 class MethodFragment : BaseFragment(R.layout.fragment_method) {
 
+    private val binding by viewBinding(FragmentMethodBinding::bind)
     companion object {
         fun newInstance(drinkPreviewUiModel: DrinkPreviewUiModel): MethodFragment {
             return MethodFragment().apply {
@@ -58,7 +60,7 @@ class MethodFragment : BaseFragment(R.layout.fragment_method) {
     }
 
     private fun initMethodRecyclerView() {
-        method_rv.run {
+        binding.methodRv.run {
             adapter = methodAdapter
             addItemDecoration(
                 SpacerItemDecoration(bottom = 8.dpToPx().toInt())

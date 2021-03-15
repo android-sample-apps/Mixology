@@ -6,23 +6,25 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.FragmentHomeBinding
 import com.yanivsos.mixological.ui.adapters.HomePagerAdapter
 import com.yanivsos.mixological.ui.utils.SimpleOnTabSelectedListener
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
+    private val binding by viewBinding(FragmentHomeBinding::bind)
     private var itemPosition = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initHomePagerAdapter()
-        search_action.setOnClickListener {
+        binding.searchAction.setOnClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAdvancedSearchFragment()
             )
         }
-        settings_action.setOnClickListener {
+        binding.settingsAction.setOnClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
             )
@@ -31,15 +33,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun initHomePagerAdapter() {
         val homeAdapter = HomePagerAdapter(this@HomeFragment)
-        home_vp.run {
+        binding.homeVp.run {
             isUserInputEnabled = false
             adapter = homeAdapter
-            TabLayoutMediator(home_tabs, this) { tab, position ->
+            TabLayoutMediator(binding.homeTabs, this) { tab, position ->
                 tab.text = getString(homeAdapter.title(position))
                 setCurrentItem(position, true)
             }.attach()
 
-            home_tabs.addOnTabSelectedListener(SimpleOnTabSelectedListener(
+            binding.homeTabs.addOnTabSelectedListener(SimpleOnTabSelectedListener(
                 onSelected = { tab ->
                     itemPosition = tab.position
                 }

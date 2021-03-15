@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.databinding.FragmentCategoryMenuBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.adapters.CategoryAdapter
@@ -21,20 +22,21 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.CategoriesViewModel
-import kotlinx.android.synthetic.main.fragment_category_menu.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
 
+    private val binding by viewBinding(FragmentCategoryMenuBinding::bind)
     private val categoriesViewModel: CategoriesViewModel by viewModel()
     private val categoryAdapter = CategoryAdapter()
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
 
     private val onBackPressedCallback = object : OnBackPressedCallback(false) {
         override fun handleOnBackPressed() {
-            category_menu_ml.transitionToStart()
+            binding.categoryMenuMl.transitionToStart()
         }
     }
 
@@ -95,7 +97,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
 
     private fun initCategoriesMenu() {
         onBackPressedCallback.isEnabled = false
-        category_menu_rv.run {
+        binding.categoryMenuRv.run {
             adapter = categoryAdapter
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
@@ -104,7 +106,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
     }
 
     private fun initDrinkPreviews() {
-        categories_preview_rv.run {
+        binding.categoryMenuRv.run {
             adapter = drinkPreviewAdapter
             addItemDecoration(
                 SpacerItemDecoration(
@@ -126,7 +128,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
         categoriesViewModel
             .categorySelected
             .onEach {
-                selected_title.text = it
+                binding.selectedTitle.text = it
             }
             .launchIn(lifecycleScope)
     }
@@ -156,7 +158,7 @@ class CategoryMenuFragment : BaseFragment(R.layout.fragment_category_menu) {
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
-        category_menu_ml.run {
+        binding.categoryMenuMl.run {
             setTransitionListener(object : MyTransitionListener() {
                 override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                     Timber.d("onTransitionCompleted: currentId[$currentId]")

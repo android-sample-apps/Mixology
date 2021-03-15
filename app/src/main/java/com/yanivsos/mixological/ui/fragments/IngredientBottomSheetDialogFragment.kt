@@ -8,12 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.databinding.BottomDialogIngredientBinding
 import com.yanivsos.mixological.extensions.toVisibility
 import com.yanivsos.mixological.extensions.webSearchIntent
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.ui.view_model.IngredientDetailsViewModel
-import kotlinx.android.synthetic.main.bottom_dialog_ingredient.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -23,6 +23,8 @@ private const val TAG = "IngredientBottomSheetDialogFragment"
 class IngredientBottomSheetDialogFragment(
     private val ingredient: IngredientUiModel
 ) : BaseBottomSheetDialogFragment() {
+
+    private var binding: BottomDialogIngredientBinding? = null
 
     private val detailsViewModel: IngredientDetailsViewModel by viewModel {
         parametersOf(
@@ -37,7 +39,19 @@ class IngredientBottomSheetDialogFragment(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.bottom_dialog_ingredient, container, false)
+        BottomDialogIngredientBinding.inflate(
+            inflater,
+            container,
+            false
+        ).run {
+            binding = this
+            return root
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +71,7 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun initSearchOnlineButton() {
-        search_online_btn.setOnClickListener {
+        binding?.searchOnlineBtn?.setOnClickListener {
             AnalyticsDispatcher.onIngredientSearchedOnline(ingredient)
             try {
                 startActivity(webSearchIntent(webSearchQuery))
@@ -79,7 +93,7 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun updateName() {
-        ingredient_name_tv.text = ingredient.name
+        binding?.ingredientNameTv?.text = ingredient.name
     }
 
     private fun updateDrink(details: IngredientDetailsUiModel) {
@@ -89,7 +103,7 @@ class IngredientBottomSheetDialogFragment(
     }
 
     private fun updateAlcoholVolume(details: IngredientDetailsUiModel) {
-        alcohol_volume_tv.run {
+        binding?.alcoholVolumeTv?.run {
             text = getString(R.string.alcohol_volume_abv, details.alcoholVolume)
             visibility = (details.alcoholVolume != null).toVisibility()
         }
@@ -97,7 +111,7 @@ class IngredientBottomSheetDialogFragment(
 
     private fun updateDescription(details: IngredientDetailsUiModel) {
         val text = details.description ?: getString(R.string.no_description_found)
-        ingredient_description_tv.text = text
+        binding?.ingredientDescriptionTv?.text = text
     }
 
     private fun updateWebSearchQuery(details: IngredientDetailsUiModel) {

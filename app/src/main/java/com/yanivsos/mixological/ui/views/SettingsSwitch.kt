@@ -2,11 +2,12 @@ package com.yanivsos.mixological.ui.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.ViewSettingsSwitchBinding
 import com.yanivsos.mixological.extensions.getStringFromResourceId
-import kotlinx.android.synthetic.main.view_settings_switch.view.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -18,14 +19,18 @@ class SettingsSwitch @JvmOverloads constructor(
     private val _checkedChangedChannel = ConflatedBroadcastChannel<Boolean>()
     val checkedChangedChannel = _checkedChangedChannel.asFlow().distinctUntilChanged()
 
+
     var isChecked: Boolean = false
         set(value) {
-            settings_switch.isChecked = value
+            binding.settingsSwitch.isChecked = value
             field = value
         }
 
+    private val binding = ViewSettingsSwitchBinding.inflate(
+        LayoutInflater.from(context),
+        this
+    )
     init {
-        View.inflate(context, R.layout.view_settings_switch, this)
         initAttributes(attrs)
         initSwitch()
     }
@@ -36,9 +41,9 @@ class SettingsSwitch @JvmOverloads constructor(
             R.styleable.SettingsSwitch, 0, 0
         ).apply {
             try {
-                settings_title_tv.text =
+                binding.settingsTitleTv.text =
                     getStringFromResourceId(R.styleable.SettingsSwitch_ss_title)
-                settings_subtitle_tv.text =
+                binding.settingsSubtitleTv.text =
                     getStringFromResourceId(R.styleable.SettingsSwitch_ss_description)
             } finally {
                 recycle()
@@ -48,10 +53,10 @@ class SettingsSwitch @JvmOverloads constructor(
 
     private fun initSwitch() {
         setOnClickListener {
-            settings_switch.toggle()
+            binding.settingsSwitch.toggle()
         }
 
-        settings_switch.setOnCheckedChangeListener { _, isChecked ->
+        binding.settingsSwitch.setOnCheckedChangeListener { _, isChecked ->
             _checkedChangedChannel.offer(isChecked)
         }
     }

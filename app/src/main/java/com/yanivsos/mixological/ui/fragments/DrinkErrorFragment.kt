@@ -8,13 +8,14 @@ import androidx.navigation.fragment.navArgs
 import com.airbnb.lottie.LottieDrawable
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.databinding.FragmentConnectivityErrorBinding
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_connectivity_error.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filterIsInstance
@@ -26,6 +27,7 @@ import timber.log.Timber
 
 class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
 
+    private val binding by viewBinding(FragmentConnectivityErrorBinding::bind)
     private val args: DrinkErrorFragmentArgs by navArgs()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.errorUiModel.drinkId) }
@@ -42,7 +44,7 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
         lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drinkFlow
-                .onEach { error_retry_btn.isEnabled = true }
+                .onEach { binding.errorRetryBtn.isEnabled = true }
                 .filterIsInstance<ResultUiModel.Success<DrinkUiModel>>()
                 .collect {
                     navigateBackToDrink(it.data)
@@ -65,9 +67,9 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private fun updateErrorViews(drinkErrorUiModel: DrinkErrorUiModel) {
         Timber.d("updateErrorViews: called with $drinkErrorUiModel")
         drinkErrorUiModel.run {
-            error_title.text = getString(title)
-            error_description.text = getString(description)
-            error_lottie.run {
+            binding.errorTitle.text = getString(title)
+            binding.errorDescription.text = getString(description)
+            binding.errorLottie.run {
                 setAnimation(lottieAnimation)
                 playAnimation()
                 repeatCount = LottieDrawable.INFINITE
@@ -76,8 +78,8 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     }
 
     private fun initRetryButton() {
-        error_retry_btn.setOnClickListener {
-            error_retry_btn.isEnabled = false
+        binding.errorRetryBtn.setOnClickListener {
+            binding.errorRetryBtn.isEnabled = false
             onRetry()
         }
     }

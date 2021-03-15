@@ -17,6 +17,7 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import com.yanivsos.mixological.databinding.FragmentDrinkBinding
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.shareDrink
 import com.yanivsos.mixological.extensions.toGlideBuilder
@@ -27,10 +28,7 @@ import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
-import kotlinx.android.synthetic.main.fragment_drink.*
-import kotlinx.android.synthetic.main.layout_drink_label.*
-import kotlinx.android.synthetic.main.view_favorite_card.*
-import kotlinx.android.synthetic.main.view_share_card.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
@@ -44,6 +42,7 @@ import timber.log.Timber
 
 class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
+    private val binding by viewBinding(FragmentDrinkBinding::bind)
     private val args: DrinkFragmentArgs by navArgs()
     private val pagerAdapter: DrinkPagerAdapter by lazy {
         DrinkPagerAdapter(
@@ -73,7 +72,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun initFavoriteToggle() {
-        favorite_card_container.setOnClickListener {
+        binding.favoriteContainer.favoriteCardContainer.setOnClickListener {
             onFavoriteToggled()
         }
     }
@@ -92,22 +91,24 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun initMotionLayoutListener() {
-        drink_ml.setTransitionListener(object : MyTransitionListener() {
 
-            private val shareElevation = share_card_container.cardElevation
-            private val shareStrokeWidth = share_card_container.strokeWidth
-            private val favoriteElevation = share_card_container.cardElevation
-            private val favoriteStrokeWidth = share_card_container.strokeWidth
+        binding.drinkMl.setTransitionListener(object : MyTransitionListener() {
+
+            val shareCardContainer = binding.shareContainer.shareCardContainer
+            private val shareElevation = shareCardContainer.cardElevation
+            private val shareStrokeWidth = shareCardContainer.strokeWidth
+            private val favoriteElevation = shareCardContainer.cardElevation
+            private val favoriteStrokeWidth = shareCardContainer.strokeWidth
 
             private fun updateCard(progress: Float) {
                 //1.0 -> collapsed
                 //0.0 -> expanded
                 val cardProgress = 1f - progress
-                share_card_container.run {
+                shareCardContainer.run {
                     cardElevation = shareElevation * cardProgress
                     strokeWidth = (shareStrokeWidth * cardProgress).toInt()
                 }
-                favorite_card_container.run {
+                shareCardContainer.run {
                     cardElevation = favoriteElevation * cardProgress
                     strokeWidth = (favoriteStrokeWidth * cardProgress).toInt()
                 }
@@ -125,12 +126,12 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun initInfoPagerAdapter() {
-        info_vp.adapter = pagerAdapter
-        TabLayoutMediator(tabs, info_vp) { tab, position ->
+        binding.infoVp.adapter = pagerAdapter
+        TabLayoutMediator(binding.tabs, binding.infoVp) { tab, position ->
             tab.text = getString(pagerAdapter.title(position))
-            info_vp.setCurrentItem(position, true)
+            binding.infoVp.setCurrentItem(position, true)
         }.attach()
-        info_vp.currentItem = 0
+        binding.infoVp.currentItem = 0
     }
 
     private fun observeDrink() {
@@ -165,18 +166,18 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun updateShare(drinkUiModel: DrinkUiModel) {
-        share_card_container.setOnClickListener {
+        binding.shareContainer.shareCardContainer.setOnClickListener {
             AnalyticsDispatcher.onDrinkShare(args.drinkPreviewUiModel)
             requireActivity().shareDrink(drinkUiModel)
         }
     }
 
     private fun updateDrinkTitle(drinkName: String?) {
-        drink_title.text = drinkName
+        binding.drinkTitle.text = drinkName
     }
 
     private fun clearLottieView() {
-        header_image_placeholder.visibility = View.GONE
+        binding.headerImagePlaceholder.visibility = View.GONE
     }
 
     private fun updateDrinkImage(thumbnail: String?) {
@@ -207,13 +208,13 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
                     return false
                 }
             })
-            .into(drink_header_image)
+            .into(binding.drinkHeaderImage)
     }
 
     private fun updateInfoCard(drinkUiModel: DrinkUiModel) {
-        alcoholic_tv.text = drinkUiModel.alcoholic
-        category_tv.text = drinkUiModel.category
-        glass_tv.text = drinkUiModel.glass
+        binding.infoContainer.alcoholicTv.text = drinkUiModel.alcoholic
+        binding.infoContainer.categoryTv.text = drinkUiModel.category
+        binding.infoContainer.glassTv.text = drinkUiModel.glass
     }
 
     private fun updateIsFavorite(isFavorite: Boolean) {
@@ -223,7 +224,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun setFavoriteColorFilter(@ColorRes color: Int) {
-        cherry_iv.setColorFilter(
+        binding.favoriteContainer.cherryIv.setColorFilter(
             requireContext().compatColor(color),
             PorterDuff.Mode.SRC_IN
         )

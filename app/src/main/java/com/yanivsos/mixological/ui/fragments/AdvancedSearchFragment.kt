@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
+import com.yanivsos.mixological.databinding.FragmentAdvancedSearchBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.hideKeyboard
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
@@ -21,21 +22,25 @@ import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.AdvancedSearchViewModel
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
-import kotlinx.android.synthetic.main.fragment_advanced_search.*
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
+    private val binding by viewBinding(FragmentAdvancedSearchBinding::bind)
     private val advancedSearchViewModel: AdvancedSearchViewModel by viewModel()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
 
-    private val query: String get() = search_query_actv.text?.toString() ?: ""
+    private val query: String get() = binding.searchQueryActv.text?.toString() ?: ""
 
     private val drinkPreviewAdapter = DrinkPreviewGridAdapter()
     private val drinkAutoCompleteAdapter: ArrayAdapter<String> by lazy {
-        ArrayAdapter<String>(requireContext(), R.layout.list_item_autocomplete_drink/*android.R.layout.select_dialog_item*/)
+        ArrayAdapter<String>(
+            requireContext(),
+            R.layout.list_item_autocomplete_drink
+        )
     }
 
     private fun onDrinkLongClicked(drinkPreview: DrinkPreviewUiModel) {
@@ -90,11 +95,11 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initMotionLayout() {
-        advanced_search_ml.setTransitionListener(object : MyTransitionListener() {
+       binding.advancedSearchMl.setTransitionListener(object : MyTransitionListener() {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                 val isOnline = currentId == R.id.online
                 Timber.d("filter button enabled: $isOnline")
-                filter_image.run {
+                binding.filterImage.run {
                     isClickable = isOnline
                     isFocusable = isOnline
                 }
@@ -103,7 +108,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initFilterFab() {
-        filter_image.run {
+        binding.filterImage.run {
             badgeTextFont =
                 ResourcesCompat.getFont(requireContext(), R.font.jesa_script_regular)
             setOnClickListener {
@@ -114,11 +119,11 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun initSearchQuery() {
         Timber.d("initSearchQuery")
-        search_container_til.setEndIconOnClickListener {
+        binding.searchContainerTil.setEndIconOnClickListener {
             hideNoResults()
             clearQuery()
         }
-        search_query_actv.run {
+        binding.searchQueryActv.run {
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     onRunSearchQuery()
@@ -139,7 +144,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initResultsRecyclerView() {
-        search_results_rv.run {
+        binding.searchResultsRv.run {
             adapter = drinkPreviewAdapter
             addItemDecoration(
                 GridSpacerItemDecoration(
@@ -153,12 +158,12 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun clearQuery() {
         advancedSearchViewModel.clearByName()
-        search_query_actv.text = null
+        binding.searchQueryActv.text = null
         drinkPreviewAdapter.clear()
     }
 
     private fun onRunSearchQuery() {
-        search_query_actv.run {
+        binding.searchQueryActv.run {
             hideKeyboard()
             dismissDropDown()
         }
@@ -187,7 +192,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun onSelectedFiltersReceived(searchFiltersUiModel: SearchFiltersUiModel) {
-        filter_image.run {
+        binding.filterImage.run {
             isShowCounter = searchFiltersUiModel.activeFiltersBadge != null
             badgeValue = searchFiltersUiModel.activeFiltersBadge ?: 0
         }
@@ -203,7 +208,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun onConnectivityChange(isConnected: Boolean) {
         val transitionId = if (isConnected) R.id.online else R.id.offline
-        advanced_search_ml.transitionToState(transitionId)
+        binding.advancedSearchMl.transitionToState(transitionId)
     }
 
     private fun onResultsReceived(drinks: List<DrinkPreviewUiModel>) {
@@ -217,10 +222,10 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun showNoResults() {
-        search_container_til.helperText = getString(R.string.no_results)
+        binding.searchContainerTil.helperText = getString(R.string.no_results)
     }
 
     private fun hideNoResults() {
-        search_container_til.helperText = null
+        binding.searchContainerTil.helperText = null
     }
 }
