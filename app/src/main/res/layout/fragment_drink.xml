@@ -81,7 +81,7 @@
         android:layout_marginEnd="@dimen/screen_padding_x_small"
         android:layout_marginBottom="@dimen/screen_padding_small"
         app:layout_constraintBottom_toBottomOf="@id/drink_title"
-        app:layout_constraintEnd_toStartOf="@id/share_card_container" />
+        app:layout_constraintEnd_toStartOf="@id/share_container" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

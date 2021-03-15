@@ -95,6 +95,8 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         binding.drinkMl.setTransitionListener(object : MyTransitionListener() {
 
             val shareCardContainer = binding.shareContainer.shareCardContainer
+            val favoriteContainer = binding.favoriteContainer.favoriteCardContainer
+
             private val shareElevation = shareCardContainer.cardElevation
             private val shareStrokeWidth = shareCardContainer.strokeWidth
             private val favoriteElevation = shareCardContainer.cardElevation
@@ -108,7 +110,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
                     cardElevation = shareElevation * cardProgress
                     strokeWidth = (shareStrokeWidth * cardProgress).toInt()
                 }
-                shareCardContainer.run {
+                favoriteContainer.run {
                     cardElevation = favoriteElevation * cardProgress
                     strokeWidth = (favoriteStrokeWidth * cardProgress).toInt()
                 }

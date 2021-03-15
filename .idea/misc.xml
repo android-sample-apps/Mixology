@@ -5,7 +5,7 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/layout/active_filter_badge.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_drink.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_drink.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_drink_preview_options.xml" value="0.13095238095238096" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_drink_label.xml" value="0.26927083333333335" />
