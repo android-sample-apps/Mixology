@@ -3,40 +3,18 @@ package com.yanivsos.mixological.ui.adapters
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.yanivsos.mixological.R
+import com.yanivsos.mixological.databinding.ListItemIngredientBinding
+import com.yanivsos.mixological.databinding.ListItemIngredientLoadingBinding
+import com.yanivsos.mixological.extensions.layoutInflater
 import com.yanivsos.mixological.extensions.toVisibility
-import com.yanivsos.mixological.extensions.viewHolderInflate
-import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.ui.models.LoadingIngredientUiModel
 import com.yanivsos.mixological.ui.utils.InputActions
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.list_item_ingredient.view.*
 
 private const val LOADING = 0
 private const val LOADED = 1
 
 class IngredientAdapter :
     DiffAdapter<LoadingIngredientUiModel, IngredientAdapter.IngredientViewHolder>() {
-
-    inner class IngredientViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-        fun bind(ingredient: IngredientUiModel) {
-            containerView.run {
-                ingredient_name_tv.text = ingredient.name
-
-                ingredient_quantity_tv.run {
-                    text = ingredient.quantity
-                    visibility = (ingredient.quantity.isNotEmpty()).toVisibility()
-                }
-                ingredient_quantity_tv.text = ingredient.quantity
-                setOnLongClickListener {
-                    sendInputAction(InputActions.LongClick(LoadingIngredientUiModel.Loaded(ingredient)))
-                    true
-                }
-            }
-        }
-    }
 
     override fun getItemViewType(position: Int): Int {
         return when (getData(position)) {
@@ -50,19 +28,65 @@ class IngredientAdapter :
         data: LoadingIngredientUiModel,
         position: Int
     ) {
-
-        (data as? LoadingIngredientUiModel.Loaded)?.let { holder.bind(it.ingredient) }
+        holder.bind(data)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
         return if (viewType == LOADED) {
-            IngredientViewHolder(
-                parent.viewHolderInflate(R.layout.list_item_ingredient)
+            IngredientLoadedViewHolder(
+                ListItemIngredientBinding.inflate(
+                    parent.layoutInflater(),
+                    parent,
+                    false
+                )
             )
         } else {
-            IngredientViewHolder(
-                parent.viewHolderInflate(R.layout.list_item_ingredient_loading)
+            IngredientLoadingViewHolder(
+                ListItemIngredientLoadingBinding.inflate(
+                    parent.layoutInflater(),
+                    parent,
+                    false
+                )
             )
         }
     }
+
+    abstract class IngredientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        abstract fun bind(data: LoadingIngredientUiModel)
+    }
+
+    inner class IngredientLoadingViewHolder(binding: ListItemIngredientLoadingBinding) :
+        IngredientViewHolder(binding.root) {
+        override fun bind(data: LoadingIngredientUiModel) {
+            //do nothing
+        }
+    }
+
+    inner class IngredientLoadedViewHolder(private val binding: ListItemIngredientBinding) :
+        IngredientViewHolder(binding.root) {
+
+        override fun bind(data: LoadingIngredientUiModel) {
+            val ingredient = (data as? LoadingIngredientUiModel.Loaded)?.ingredient ?: return
+            binding.run {
+                ingredientNameTv.text = ingredient.name
+
+                ingredientQuantityTv.run {
+                    text = ingredient.quantity
+                    visibility = (ingredient.quantity.isNotEmpty()).toVisibility()
+                }
+                root.setOnLongClickListener {
+                    sendInputAction(
+                        InputActions.LongClick(
+                            LoadingIngredientUiModel.Loaded(
+                                ingredient
+                            )
+                        )
+                    )
+                    true
+                }
+            }
+        }
+    }
 }
+
+

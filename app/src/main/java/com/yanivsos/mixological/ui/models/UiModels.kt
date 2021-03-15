@@ -7,7 +7,7 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.FilterType
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 data class CategoryUiModel(
     val name: String

@@ -1,26 +1,25 @@
 package com.yanivsos.mixological.ui.adapters
 
 import android.text.SpannableString
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.yanivsos.mixological.R
-import com.yanivsos.mixological.extensions.viewHolderInflate
+import androidx.viewbinding.ViewBinding
+import com.yanivsos.mixological.databinding.ListItemMethodBinding
+import com.yanivsos.mixological.databinding.ListItemMethodLoadingBinding
+import com.yanivsos.mixological.extensions.layoutInflater
 import com.yanivsos.mixological.ui.models.LoadingMethodUiModel
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.list_item_method.view.*
 
 private const val LOADING = 0
 private const val LOADED = 1
 
 class MethodAdapter : DiffAdapter<LoadingMethodUiModel, MethodAdapter.MethodViewHolder>() {
 
-    inner class MethodViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView), LayoutContainer {
+    inner class MethodViewHolder(private val binding: ViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(method: SpannableString) {
-            containerView.run {
-                method_tv.text = method
+            (binding as? ListItemMethodBinding)?.run {
+                methodTv.text = method
             }
         }
     }
@@ -33,13 +32,14 @@ class MethodAdapter : DiffAdapter<LoadingMethodUiModel, MethodAdapter.MethodView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MethodViewHolder {
+        val inflater = parent.layoutInflater()
         val layout = if (viewType == LOADING) {
-            R.layout.list_item_method_loading
+            ListItemMethodLoadingBinding.inflate(inflater, parent, false)
         } else {
-            R.layout.list_item_method
+            ListItemMethodBinding.inflate(inflater, parent, false)
         }
         return MethodViewHolder(
-            parent.viewHolderInflate(layout)
+            layout
         )
     }
 
