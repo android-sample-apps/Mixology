@@ -1,3 +1,4 @@
+/*
 package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
@@ -16,7 +17,6 @@ import com.yanivsos.mixological.ui.adapters.IngredientAdapter
 import com.yanivsos.mixological.ui.models.*
 import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
-import com.yanivsos.mixological.v2.drink.states.IngredientsState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -42,8 +42,6 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     private val drinkPreviewUiModel: DrinkPreviewUiModel by lazy {
         requireArguments().toDrinkPreviewUiModel()!!
     }
-
-    private val state: Flow<IngredientsState> = TODO("unimplemented")
 
     @Suppress("RemoveExplicitTypeArguments")
     private val drinkViewModel: DrinkViewModel by lazy {
@@ -84,7 +82,8 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 
     private fun observeDrink() {
-        /*lifecycleScope.launch(Dispatchers.Main) {
+        */
+/*lifecycleScope.launch(Dispatchers.Main) {
             drinkViewModel
                 .drink
                 .observe(viewLifecycleOwner, {
@@ -93,7 +92,8 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
                         is ResultUiModel.Loading -> onDrinkLoading()
                     }
                 })
-        }*/
+        }*//*
+
 
         state
             .onEach { onIngredientsStateReceived(it) }
@@ -160,3 +160,4 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
         }
     }
 }
+*/

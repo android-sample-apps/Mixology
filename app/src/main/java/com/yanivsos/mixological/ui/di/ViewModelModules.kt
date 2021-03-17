@@ -3,6 +3,8 @@ package com.yanivsos.mixological.ui.di
 import com.yanivsos.mixological.ui.mappers.*
 import com.yanivsos.mixological.ui.utils.SetNightModeUseCase
 import com.yanivsos.mixological.ui.view_model.*
+import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
@@ -24,12 +26,18 @@ val viewModelModule = module {
     }
 
     viewModel { (id: String) ->
-        DrinkViewModel(
+        /*DrinkViewModel(
             getDrinkUseCase = get { parametersOf(id) },
             addToRecentlyViewedUseCase = get(),
             toggleWatchlistUseCase = get(),
             resultMapper = get<ResultDrinkMapperUi> { parametersOf(id) },
             drinkId = id
+        )*/
+
+        DrinkViewModel(
+            context = androidContext(),
+            getOrFetchDrinkUseCase = get(),
+            toggleWatchlistUseCase = get()
         )
     }
 

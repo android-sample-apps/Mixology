@@ -1,3 +1,4 @@
+/*
 package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
@@ -104,3 +105,4 @@ class MethodFragment : BaseFragment(R.layout.fragment_method) {
         }
     }
 }
+*/

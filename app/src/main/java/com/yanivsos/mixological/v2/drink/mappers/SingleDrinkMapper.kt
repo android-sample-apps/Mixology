@@ -1,10 +1,119 @@
 package com.yanivsos.mixological.v2.drink.mappers
 
+import android.content.Context
+import android.text.SpannableString
+import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.repo.mappers.LOCAL_SPANISH
 import com.yanivsos.mixological.repo.models.DrinkResponse
+import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
+import com.yanivsos.mixological.ui.models.DrinkUiModel
+import com.yanivsos.mixological.ui.models.IngredientUiModel
+import com.yanivsos.mixological.v2.drink.view_model.DrinkState
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.*
+
+fun DrinkState.Error.toUiModel(): DrinkErrorUiModel {
+    return when (throwable) {
+        is UnknownHostException -> DrinkErrorUiModel(
+            drinkId = drinkId,
+            title = R.string.error_title,
+            description = R.string.error_description_connectivity,
+            lottieAnimation = R.raw.no_connection
+        )
+        is SocketTimeoutException -> DrinkErrorUiModel(
+            drinkId = drinkId,
+            title = R.string.error_title,
+            description = R.string.error_description_timeout,
+            lottieAnimation = R.raw.no_connection
+        )
+        else -> DrinkErrorUiModel(
+            drinkId = drinkId,
+            title = R.string.error_title,
+            description = R.string.error_description_default,
+            lottieAnimation = R.raw.something_went_wrong
+        )
+    }
+}
+
+
+fun DrinkModel.toUiModel(context: Context): DrinkUiModel {
+    val locale = Locale.getDefault()
+    return DrinkUiModel(
+        id = id,
+        name = mapName(locale),
+        instructions = mapInstructions(locale),
+        ingredients = mapIngredients(),
+        category = category,
+        alcoholic = alcoholic,
+        glass = glass,
+        thumbnail = thumbnail,
+        video = video,
+        shareText = mapShareText(context),
+        isFavorite = isFavorite
+    )
+}
+
+private fun DrinkModel.mapName(locale: Locale): String {
+    return nameLocalsMap.fromLocale(locale) ?: name
+}
+
+private fun DrinkModel.mapInstructions(locale: Locale): List<SpannableString> {
+    val localizesInstruction = instructionsLocalsMap.fromLocale(locale) ?: instructions
+    return localizesInstruction
+        .trimIndent()
+        .split(". ")
+        .map { instruction ->
+            SpannableString("$instruction.")
+        }
+}
+
+
+private fun DrinkModel.mapIngredients(): List<IngredientUiModel> =
+    ingredients
+        .map {
+            IngredientUiModel(
+                name = it.key,
+                quantity = it.value.parseQuantity()
+            )
+        }
+
+private fun String.parseQuantity(): String {
+    return trim()
+        .replace("\n", "")
+}
+
+private fun DrinkModel.mapShareText(context: Context): String {
+    return StringBuilder().apply {
+        append(name)
+        append("\n\n")
+        ingredients.run {
+            if (isNotEmpty()) {
+                append(context.getString(R.string.ingredients))
+                append("\n")
+                forEach { ingredient, quantity ->
+                    append("■ ")
+                    append(ingredient)
+                    if (quantity.isNotBlank()) {
+                        append(" - ")
+                        append(quantity)
+                    }
+                    append("\n")
+                }
+                append("\n")
+            }
+        }
+        append(context.getString(R.string.method))
+        append(" - \n")
+        append(instructions)
+    }.toString()
+}
+
+private fun Map<String, String?>.fromLocale(locale: Locale): String? {
+    return get(locale.toKey())
+}
 
 fun DrinkResponse.toModel(): DrinkModel {
     return DrinkModel(

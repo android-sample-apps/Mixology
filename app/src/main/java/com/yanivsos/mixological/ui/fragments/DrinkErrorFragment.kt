@@ -2,7 +2,6 @@ package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.airbnb.lottie.LottieDrawable
@@ -12,15 +11,13 @@ import com.yanivsos.mixological.databinding.FragmentConnectivityErrorBinding
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
-import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
-import com.yanivsos.mixological.ui.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.view_model.DrinkErrorViewModel
+import com.yanivsos.mixological.v2.drink.view_model.DrinkState
+import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -31,6 +28,7 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private val args: DrinkErrorFragmentArgs by navArgs()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.errorUiModel.drinkId) }
+    private val drinkErrorViewModel: DrinkErrorViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,15 +39,22 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     }
 
     private fun observeDrink() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            drinkViewModel
-                .drinkFlow
-                .onEach { binding.errorRetryBtn.isEnabled = true }
-                .filterIsInstance<ResultUiModel.Success<DrinkUiModel>>()
-                .collect {
-                    navigateBackToDrink(it.data)
-                }
+        drinkViewModel
+            .drink
+            .onEach { onDrinkStateReceived(it) }
+            .launchIn(viewLifecycleScope())
+    }
+
+    private fun onDrinkStateReceived(drinkState: DrinkState) {
+        when (drinkState) {
+            is DrinkState.Error -> setRetryButtonEnabled(true)
+            is DrinkState.Success -> navigateBackToDrink(drinkState.model)
+            DrinkState.Loading -> onLoadingState()
         }
+    }
+
+    private fun onLoadingState() {
+        Timber.d("onLoadingState")
     }
 
     private fun navigateBackToDrink(drinkUiModel: DrinkUiModel) {
@@ -77,9 +82,13 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
         }
     }
 
+    private fun setRetryButtonEnabled(isEnabled: Boolean) {
+        binding.errorRetryBtn.isEnabled = isEnabled
+    }
+
     private fun initRetryButton() {
         binding.errorRetryBtn.setOnClickListener {
-            binding.errorRetryBtn.isEnabled = false
+            setRetryButtonEnabled(false)
             onRetry()
         }
     }
@@ -98,6 +107,6 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private fun onRetry() {
         Timber.d("onRetry called:")
         AnalyticsDispatcher.onDrinkErrorTryAgain(args.errorUiModel)
-        drinkViewModel.refreshDrink()
+        drinkErrorViewModel.refreshDrink(args.errorUiModel.drinkId)
     }
 }

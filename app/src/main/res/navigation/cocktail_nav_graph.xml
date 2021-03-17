@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/drinkFragment"
-        android:name="com.yanivsos.mixological.ui.fragments.DrinkFragment"
+        android:name="com.yanivsos.mixological.v2.drink.fragments.DrinkFragment"
         android:label="DrinkFragment"
         tools:layout="@layout/fragment_drink">
 

@@ -14,7 +14,7 @@ interface DrinkDao {
     fun getAll(): Flow<List<DrinkModel>>
 
     @Query("SELECT * FROM drinks WHERE id = :id")
-    fun getById(id: String): Flow<DrinkModel>
+    fun getById(id: String): Flow<DrinkModel?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun storeAll(drinks: List<DrinkModel>)

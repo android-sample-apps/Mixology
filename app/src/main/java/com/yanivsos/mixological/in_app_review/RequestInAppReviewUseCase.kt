@@ -34,6 +34,7 @@ class RequestInAppReviewUseCase(
 
     private suspend fun launchReviewFlow(activity: Activity) {
         try {
+            Timber.d("launching review flow")
             reviewManager.run {
                 launchReview(activity, requestReview())
                 resetShowInAppReviewCondition()

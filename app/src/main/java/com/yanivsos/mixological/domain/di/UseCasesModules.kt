@@ -1,6 +1,8 @@
 package com.yanivsos.mixological.domain.di
 
 import com.yanivsos.mixological.domain.*
+import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 val useCasesModule = module {
@@ -210,5 +212,4 @@ val useCasesModule = module {
             removeFromWatchlistUseCase = get()
         )
     }
-
 }

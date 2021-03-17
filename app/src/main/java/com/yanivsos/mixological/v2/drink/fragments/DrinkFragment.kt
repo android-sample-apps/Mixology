@@ -1,5 +1,4 @@
-/*
-package com.yanivsos.mixological.ui.fragments
+package com.yanivsos.mixological.v2.drink.fragments
 
 import android.graphics.Bitmap
 import android.graphics.PorterDuff
@@ -24,14 +23,15 @@ import com.yanivsos.mixological.extensions.shareDrink
 import com.yanivsos.mixological.extensions.toGlideBuilder
 import com.yanivsos.mixological.in_app_review.RequestInAppReviewUseCase
 import com.yanivsos.mixological.ui.adapters.DrinkPagerAdapter
+import com.yanivsos.mixological.ui.fragments.BaseFragment
+import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
-import com.yanivsos.mixological.ui.models.ResultUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
-import com.yanivsos.mixological.ui.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.view_model.DrinkState
+import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -53,23 +53,17 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private val requestInAppReviewUseCase: RequestInAppReviewUseCase by inject()
-
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Timber.d("onCreate called:")
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMotionLayoutListener()
+        initFavoriteToggle()
+        initInfoPagerAdapter()
         updateDrinkTitle(args.drinkPreviewUiModel.name)
         updateDrinkImage(args.drinkPreviewUiModel.thumbnail)
         updateIsFavorite(args.drinkPreviewUiModel.isFavorite)
-        initFavoriteToggle()
-        initInfoPagerAdapter()
-        observeDrink()
+        observeDrinkState()
     }
 
     private fun initFavoriteToggle() {
@@ -79,8 +73,9 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun onFavoriteToggled() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
+            Timber.d("toggled favorite: isFavorite[$isFavorite]")
             if (isFavorite) {
                 launchInAppReview()
             }
@@ -92,9 +87,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun initMotionLayoutListener() {
-
         binding.drinkMl.setTransitionListener(object : MyTransitionListener() {
-
             val shareCardContainer = binding.shareContainer.shareCardContainer
             val favoriteContainer = binding.favoriteContainer.favoriteCardContainer
 
@@ -137,20 +130,33 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         binding.infoVp.currentItem = 0
     }
 
-    private fun observeDrink() {
+    private fun observeDrinkState() {
         drinkViewModel
-            .drinkFlow
-            .flowOn(Dispatchers.IO)
-            .onEach { onDrinkResultReceived(it) }
-            .flowOn(Dispatchers.Main)
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+            .drink
+            .onEach { onDrinkStateReceived(it) }
+            .launchIn(viewLifecycleScope())
     }
 
-    private fun onDrinkResultReceived(resultUiModel: ResultUiModel<DrinkUiModel>) {
-        when (resultUiModel) {
-            is ResultUiModel.Success -> onDrinkReceived(resultUiModel.data)
-            is ResultUiModel.Error -> onErrorReceived(resultUiModel.errorUiModel)
+    private fun onDrinkStateReceived(drinkState: DrinkState) {
+        when (drinkState) {
+            is DrinkState.Error -> onErrorState(drinkState)
+            DrinkState.Loading -> onLoadingState(drinkState)
+            is DrinkState.Success -> onSuccessState(drinkState)
         }
+    }
+
+    private fun onErrorState(drinkState: DrinkState.Error) {
+        Timber.e(drinkState.throwable, "failed to get drink[${drinkState.drinkId}]")
+        onErrorReceived(drinkState.toUiModel())
+    }
+
+    private fun onLoadingState(drinkState: DrinkState) {
+        Timber.d("onLoadingState: $drinkState")
+    }
+
+    private fun onSuccessState(drinkState: DrinkState.Success) {
+        Timber.d("onSuccessState: $drinkState")
+        onDrinkReceived(drinkState.model)
     }
 
     private fun onErrorReceived(errorUiModel: DrinkErrorUiModel) {
@@ -233,4 +239,3 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         )
     }
 }
-*/

@@ -4,9 +4,9 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.yanivsos.mixological.R
-import com.yanivsos.mixological.ui.fragments.IngredientsFragment
-import com.yanivsos.mixological.ui.fragments.MethodFragment
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
+import com.yanivsos.mixological.v2.drink.fragments.IngredientsFragment
+import com.yanivsos.mixological.v2.drink.fragments.MethodFragment
 
 class DrinkPagerAdapter(
     fragment: Fragment,

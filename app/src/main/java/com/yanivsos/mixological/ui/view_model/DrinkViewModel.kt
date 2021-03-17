@@ -1,3 +1,4 @@
+/*
 package com.yanivsos.mixological.ui.view_model
 
 import androidx.lifecycle.LiveData
@@ -74,3 +75,4 @@ class DrinkViewModel(
         getDrinkUseCase.cancel()
     }
 }
+*/

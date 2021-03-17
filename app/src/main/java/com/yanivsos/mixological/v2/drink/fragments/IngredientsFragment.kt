@@ -21,14 +21,13 @@ import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.ui.models.quantityVisibility
-import com.yanivsos.mixological.ui.view_model.DrinkViewModel
 import com.yanivsos.mixological.v2.drink.EmptyBindableItem
-import com.yanivsos.mixological.v2.drink.states.IngredientsState
+import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.view_model.IngredientsState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.viewmodel.ext.android.getViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
@@ -48,13 +47,17 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
         requireArguments().toDrinkPreviewUiModel()!!
     }
 
-    private val state: Flow<IngredientsState> = TODO("unimplemented")
+    private val viewModel: DrinkViewModel by viewModel {
+        parametersOf(
+            drinkPreviewUiModel.id
+        )
+    }
 
-    @Suppress("RemoveExplicitTypeArguments")
+    /*@Suppress("RemoveExplicitTypeArguments")
     private val drinkViewModel: DrinkViewModel by lazy {
         requireParentFragment()
             .getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
-    }
+    }*/
 
     /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +92,8 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 
     private fun observeDrink() {
-        state
+        viewModel
+            .ingredients
             .onEach { onIngredientsStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }
