@@ -25,21 +25,21 @@ val viewModelModule = module {
         )
     }
 
-    viewModel { (id: String) ->
-        /*DrinkViewModel(
+    /*viewModel { (id: String) ->
+        *//*DrinkViewModel(
             getDrinkUseCase = get { parametersOf(id) },
             addToRecentlyViewedUseCase = get(),
             toggleWatchlistUseCase = get(),
             resultMapper = get<ResultDrinkMapperUi> { parametersOf(id) },
             drinkId = id
-        )*/
+        )*//*
 
         DrinkViewModel(
             context = androidContext(),
             getOrFetchDrinkUseCase = get(),
             toggleWatchlistUseCase = get()
         )
-    }
+    }*/
 
     viewModel {
         LandingPageViewModel(
