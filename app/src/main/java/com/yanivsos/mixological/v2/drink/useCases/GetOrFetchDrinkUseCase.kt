@@ -1,10 +1,7 @@
 package com.yanivsos.mixological.v2.drink.useCases
 
 import com.yanivsos.mixological.domain.models.DrinkModel
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -13,16 +10,18 @@ import kotlin.coroutines.CoroutineContext
 
 class GetOrFetchDrinkUseCase(
     getDrinkUseCase: GetDrinkUseCase,
-    private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase
+    private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
+    mainDispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext =
-        SupervisorJob() + Dispatchers.Default + CoroutineName("GetOrFetchDrinkUseCase")
+        SupervisorJob() + mainDispatcher + CoroutineName("GetOrFetchDrinkUseCase")
 
     private val flow = MutableStateFlow<GetOrFetchDrinkResult>(GetOrFetchDrinkResult.Loading)
     val drinkFlow = flow
 
     init {
+        Timber.d("hashcode: ${hashCode()}")
         getDrinkUseCase
             .drink
             .onEach { onResult(it) }
@@ -30,6 +29,7 @@ class GetOrFetchDrinkUseCase(
     }
 
     private suspend fun onResult(result: DrinkModelResult) {
+        Timber.d("onResult: $result")
         when (result) {
             is DrinkModelResult.Found -> onDrinkFound(result.drinkModel)
             is DrinkModelResult.NotFount -> onDrinkNotFount(result.drinkId)
