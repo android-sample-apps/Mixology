@@ -1,31 +1,36 @@
-package com.yanivsos.mixological.ui.fragments
+package com.yanivsos.mixological.v2.drink.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.databinding.FragmentIngredientsBinding
+import com.yanivsos.mixological.databinding.ListItemIngredientBinding
+import com.yanivsos.mixological.databinding.ListItemIngredientLoadingBinding
 import com.yanivsos.mixological.extensions.toBundle
 import com.yanivsos.mixological.extensions.toDrinkPreviewUiModel
-import com.yanivsos.mixological.ui.adapters.IngredientAdapter
-import com.yanivsos.mixological.ui.models.*
-import com.yanivsos.mixological.ui.utils.InputActions
+import com.yanivsos.mixological.ui.fragments.BaseFragment
+import com.yanivsos.mixological.ui.fragments.IngredientBottomSheetDialogFragment
+import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
+import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
+import com.yanivsos.mixological.ui.models.IngredientUiModel
+import com.yanivsos.mixological.ui.models.quantityVisibility
 import com.yanivsos.mixological.ui.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.EmptyBindableItem
 import com.yanivsos.mixological.v2.drink.states.IngredientsState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
-
-private const val LOADING_ITEM_NUMBER = 3
 
 class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
 
@@ -38,7 +43,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 
     private val binding by viewBinding(FragmentIngredientsBinding::bind)
-    private val ingredientsAdapter = IngredientAdapter()
+    private val ingredientAdapter = GroupieAdapter()
     private val drinkPreviewUiModel: DrinkPreviewUiModel by lazy {
         requireArguments().toDrinkPreviewUiModel()!!
     }
@@ -51,7 +56,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
             .getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    /*override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenStarted {
             ingredientsAdapter
@@ -61,7 +66,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
                     onIngredientLongClicked(it)
                 }
         }
-    }
+    }*/
 
     private fun onIngredientLongClicked(ingredientUiModel: IngredientUiModel) {
         AnalyticsDispatcher.onIngredientLongClicked(ingredientUiModel, ScreenNames.INGREDIENTS)
@@ -76,7 +81,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
 
     private fun initIngredientsRecyclerView() {
         binding.ingredientsRv.run {
-            adapter = ingredientsAdapter
+            adapter = ingredientAdapter
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
                 setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.divider)!!)
             }.let { addItemDecoration(it) }
@@ -84,17 +89,6 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 
     private fun observeDrink() {
-        /*lifecycleScope.launch(Dispatchers.Main) {
-            drinkViewModel
-                .drink
-                .observe(viewLifecycleOwner, {
-                    when (it) {
-                        is ResultUiModel.Success -> onDrinkReceived(it.data)
-                        is ResultUiModel.Loading -> onDrinkLoading()
-                    }
-                })
-        }*/
-
         state
             .onEach { onIngredientsStateReceived(it) }
             .launchIn(viewLifecycleScope())
@@ -110,53 +104,74 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
 
     private fun onSuccessState(state: IngredientsState.Success) {
         Timber.d("onSuccessState: $state")
-//        ingredientsAdapter.update(state.ingredients)
+        ingredientAdapter
+            .updateAsync(
+                createIngredientItems(state.ingredients)
+            )
     }
 
     private fun onLoadingState(state: IngredientsState.Loading) {
         Timber.d("onLoadingState: $state")
+        ingredientAdapter
+            .updateAsync(
+                createLoadingItems(state.itemCount)
+            )
     }
 
     private fun onErrorState(state: IngredientsState.Error) {
         Timber.e(state.throwable, "Failed to get ingredients")
     }
 
-    private fun onDrinkReceived(drinkUiModel: DrinkUiModel) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            wrapLoadedState(drinkUiModel.ingredients)
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    Timber.d("onDrinkReceived: $it")
-                    ingredientsAdapter.update(it)
-                }
-        }
-    }
-
-    private fun createLoadingState() = flow<List<LoadingIngredientUiModel>> {
-        emit(
-            mutableListOf<LoadingIngredientUiModel>().apply {
-                for (i in 0 until LOADING_ITEM_NUMBER) {
-                    add(LoadingIngredientUiModel.Loading)
-                }
-            }
-        )
-    }
-
-    private fun wrapLoadedState(ingredients: List<IngredientUiModel>) =
-        flow<List<LoadingIngredientUiModel>> {
-            emit(
-                ingredients.map { LoadingIngredientUiModel.Loaded(it) }
+    private fun createIngredientItems(ingredients: List<IngredientUiModel>): List<IngredientItem> {
+        return ingredients.map {
+            IngredientItem(
+                ingredient = it,
+                onLongClick = this::onIngredientLongClicked
             )
         }
+    }
 
-    private fun onDrinkLoading() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            createLoadingState()
-                .flowOn(Dispatchers.IO)
-                .collect {
-                    Timber.d("onDrinkLoading: $it")
-                    ingredientsAdapter.update(it)
-                }
+    private fun createLoadingItems(itemCount: Int): List<LoadingIngredientItem> {
+        val items = mutableListOf<LoadingIngredientItem>()
+        for (i in 0 until itemCount) {
+            items.add(LoadingIngredientItem())
         }
+        return items
+    }
+}
+
+class IngredientItem(
+    private val ingredient: IngredientUiModel,
+    private val onLongClick: (IngredientUiModel) -> Unit
+) : BindableItem<ListItemIngredientBinding>() {
+
+    override fun bind(viewBinding: ListItemIngredientBinding, position: Int) {
+        viewBinding.run {
+            root.setOnClickListener { onLongClick(ingredient) }
+            ingredientNameTv.text = ingredient.name
+            ingredientQuantityTv.run {
+                text = ingredient.quantity
+                visibility = ingredient.quantityVisibility()
+            }
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.list_item_ingredient
+    }
+
+    override fun initializeViewBinding(view: View): ListItemIngredientBinding {
+        return ListItemIngredientBinding.bind(view)
+    }
+}
+
+class LoadingIngredientItem : EmptyBindableItem<ListItemIngredientLoadingBinding>() {
+
+    override fun getLayout(): Int {
+        return R.layout.list_item_ingredient_loading
+    }
+
+    override fun initializeViewBinding(view: View): ListItemIngredientLoadingBinding {
+        return ListItemIngredientLoadingBinding.bind(view)
     }
 }

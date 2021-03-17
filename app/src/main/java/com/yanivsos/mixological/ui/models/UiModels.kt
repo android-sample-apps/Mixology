@@ -7,6 +7,7 @@ import androidx.annotation.RawRes
 import androidx.annotation.StringRes
 import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.domain.models.FilterType
+import com.yanivsos.mixological.extensions.toVisibility
 import kotlinx.parcelize.Parcelize
 
 data class CategoryUiModel(
@@ -55,6 +56,8 @@ data class IngredientUiModel(
     val quantity: String,
     val thumbnail: String? = null
 )
+
+fun IngredientUiModel.quantityVisibility() = quantity.isNotEmpty().toVisibility()
 
 sealed class LoadingMethodUiModel {
     object Loading : LoadingMethodUiModel()
