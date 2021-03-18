@@ -59,16 +59,6 @@ data class IngredientUiModel(
 
 fun IngredientUiModel.quantityVisibility() = quantity.isNotEmpty().toVisibility()
 
-sealed class LoadingMethodUiModel {
-    object Loading : LoadingMethodUiModel()
-    data class Loaded(val method: SpannableString) : LoadingMethodUiModel()
-}
-
-sealed class LoadingIngredientUiModel {
-    object Loading : LoadingIngredientUiModel()
-    data class Loaded(val ingredient: IngredientUiModel) : LoadingIngredientUiModel()
-}
-
 data class IngredientFilterUiModel(
     val name: String
 )

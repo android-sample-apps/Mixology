@@ -1,6 +1,5 @@
 package com.yanivsos.mixological.ui.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yanivsos.mixological.databinding.ListItemCategoryBinding
