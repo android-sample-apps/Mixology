@@ -42,7 +42,7 @@ class MethodFragment : BaseFragment(R.layout.fragment_method) {
         requireArguments().toDrinkPreviewUiModel()!!
     }
     private val drinkViewModel: DrinkViewModel by lazy {
-        requireParentFragment().getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
+        requireParentFragment().getViewModel { parametersOf(drinkPreviewUiModel.id) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

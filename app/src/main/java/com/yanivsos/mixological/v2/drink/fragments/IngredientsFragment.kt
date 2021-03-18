@@ -27,7 +27,7 @@ import com.yanivsos.mixological.v2.drink.view_model.IngredientsState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.getViewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
@@ -47,29 +47,9 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
         requireArguments().toDrinkPreviewUiModel()!!
     }
 
-    private val viewModel: DrinkViewModel by viewModel {
-        parametersOf(
-            drinkPreviewUiModel.id
-        )
+    private val viewModel: DrinkViewModel by lazy {
+        requireParentFragment().getViewModel { parametersOf(drinkPreviewUiModel.id) }
     }
-
-    /*@Suppress("RemoveExplicitTypeArguments")
-    private val drinkViewModel: DrinkViewModel by lazy {
-        requireParentFragment()
-            .getViewModel<DrinkViewModel> { parametersOf(drinkPreviewUiModel.id) }
-    }*/
-
-    /*override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        lifecycleScope.launchWhenStarted {
-            ingredientsAdapter
-                .inputActions.filterIsInstance<InputActions.LongClick<LoadingIngredientUiModel.Loaded>>()
-                .map { it.data.ingredient }
-                .collect {
-                    onIngredientLongClicked(it)
-                }
-        }
-    }*/
 
     private fun onIngredientLongClicked(ingredientUiModel: IngredientUiModel) {
         AnalyticsDispatcher.onIngredientLongClicked(ingredientUiModel, ScreenNames.INGREDIENTS)
@@ -151,7 +131,10 @@ class IngredientItem(
 
     override fun bind(viewBinding: ListItemIngredientBinding, position: Int) {
         viewBinding.run {
-            root.setOnClickListener { onLongClick(ingredient) }
+            root.setOnLongClickListener {
+                onLongClick(ingredient)
+                true
+            }
             ingredientNameTv.text = ingredient.name
             ingredientQuantityTv.run {
                 text = ingredient.quantity

@@ -16,6 +16,7 @@ import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 private const val INGREDIENTS_LOADING_ITEM_COUNT = 3
 private const val METHOD_LOADING_ITEM_COUNT = 6
@@ -41,11 +42,12 @@ class DrinkViewModel(
 
     init {
         // TODO: 17/03/2021 add to recently views db
+        Timber.d("init: hashCode: ${hashCode()}")
     }
 
     override fun onCleared() {
         super.onCleared()
-        getOrFetchDrinkUseCase.cancel()
+        getOrFetchDrinkUseCase.cancel("DrinkViewModel cleared")
     }
 
     suspend fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
