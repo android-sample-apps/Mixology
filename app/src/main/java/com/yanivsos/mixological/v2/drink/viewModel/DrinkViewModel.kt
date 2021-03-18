@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.drink.viewModel
 
-import android.content.Context
+import android.app.Application
 import android.text.SpannableString
 import androidx.lifecycle.ViewModel
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -25,14 +25,11 @@ private const val INGREDIENTS_LOADING_ITEM_COUNT = 3
 private const val METHOD_LOADING_ITEM_COUNT = 6
 
 class DrinkViewModel(
-    context: Context,
+    private val application: Application,
     private val getOrFetchDrinkUseCase: GetOrFetchDrinkUseCase,
     private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
-
-    //TODO - fix this context warning
-    private val appContext = context.applicationContext
 
     val drink: Flow<DrinkState> = getOrFetchDrinkUseCase
         .drinkFlow
@@ -79,7 +76,7 @@ class DrinkViewModel(
                 GetOrFetchDrinkResult.Loading -> DrinkState.Loading
                 is GetOrFetchDrinkResult.Success -> DrinkState.Success(
                     result.drinkModel.toUiModel(
-                        appContext
+                        application.applicationContext
                     )
                 )
             }

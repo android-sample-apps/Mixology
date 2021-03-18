@@ -7,7 +7,7 @@ import com.yanivsos.mixological.v2.drink.useCases.GetDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkErrorViewModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
-import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
@@ -48,7 +48,7 @@ val drinkDi = module {
 
     viewModel { (drinkId: String) ->
         DrinkViewModel(
-            context = androidContext(),
+            application = androidApplication(),
             getOrFetchDrinkUseCase = get { parametersOf(drinkId) },
             toggleWatchlistUseCase = get()
         )
