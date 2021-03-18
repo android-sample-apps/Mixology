@@ -8,7 +8,7 @@ import timber.log.Timber
 class AddToWatchlistUseCase(
     private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
     private val repository: WatchlistRepository,
-    private val inAppReviewRepository: InAppReviewRepository,
+    private val inAppReviewRepository: InAppReviewRepository
 ) {
 
     suspend fun addToWatchlist(watchlistItemModel: WatchlistItemModel) {
