@@ -13,9 +13,12 @@ import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkResult
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 private const val INGREDIENTS_LOADING_ITEM_COUNT = 3
@@ -24,7 +27,8 @@ private const val METHOD_LOADING_ITEM_COUNT = 6
 class DrinkViewModel(
     context: Context,
     private val getOrFetchDrinkUseCase: GetOrFetchDrinkUseCase,
-    private val toggleWatchlistUseCase: ToggleWatchlistUseCase
+    private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
     //TODO - fix this context warning
@@ -50,6 +54,7 @@ class DrinkViewModel(
         getOrFetchDrinkUseCase.cancel("DrinkViewModel cleared")
     }
 
+    // TODO: 18/03/2021 remove this to a shared flow callback
     suspend fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
         return toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkPreviewUiModel.id))
             .also { reportFavoriteAnalytics(drinkPreviewUiModel, it) }
@@ -67,31 +72,37 @@ class DrinkViewModel(
             )
     }
 
-    private fun toDrinkState(result: GetOrFetchDrinkResult): DrinkState {
-        return when (result) {
-            is GetOrFetchDrinkResult.Error -> DrinkState.Error(result.throwable, result.drinkId)
-            GetOrFetchDrinkResult.Loading -> DrinkState.Loading
-            is GetOrFetchDrinkResult.Success -> DrinkState.Success(
-                result.drinkModel.toUiModel(
-                    appContext
+    private suspend fun toDrinkState(result: GetOrFetchDrinkResult): DrinkState {
+        return withContext(defaultDispatcher) {
+            when (result) {
+                is GetOrFetchDrinkResult.Error -> DrinkState.Error(result.throwable, result.drinkId)
+                GetOrFetchDrinkResult.Loading -> DrinkState.Loading
+                is GetOrFetchDrinkResult.Success -> DrinkState.Success(
+                    result.drinkModel.toUiModel(
+                        appContext
+                    )
                 )
-            )
+            }
         }
     }
 
-    private fun toIngredientState(drinkState: DrinkState): IngredientsState {
-        return when (drinkState) {
-            is DrinkState.Error -> IngredientsState.Error(drinkState.throwable)
-            DrinkState.Loading -> IngredientsState.Loading(INGREDIENTS_LOADING_ITEM_COUNT)
-            is DrinkState.Success -> IngredientsState.Success(drinkState.model.ingredients)
+    private suspend fun toIngredientState(drinkState: DrinkState): IngredientsState {
+        return withContext(defaultDispatcher) {
+            when (drinkState) {
+                is DrinkState.Error -> IngredientsState.Error(drinkState.throwable)
+                DrinkState.Loading -> IngredientsState.Loading(INGREDIENTS_LOADING_ITEM_COUNT)
+                is DrinkState.Success -> IngredientsState.Success(drinkState.model.ingredients)
+            }
         }
     }
 
-    private fun toMethodState(drinkState: DrinkState): MethodState {
-        return when (drinkState) {
-            is DrinkState.Error -> MethodState.Error(drinkState.throwable)
-            DrinkState.Loading -> MethodState.Loading(METHOD_LOADING_ITEM_COUNT)
-            is DrinkState.Success -> MethodState.Success(drinkState.model.instructions)
+    private suspend fun toMethodState(drinkState: DrinkState): MethodState {
+        return withContext(defaultDispatcher) {
+            when (drinkState) {
+                is DrinkState.Error -> MethodState.Error(drinkState.throwable)
+                DrinkState.Loading -> MethodState.Loading(METHOD_LOADING_ITEM_COUNT)
+                is DrinkState.Success -> MethodState.Success(drinkState.model.instructions)
+            }
         }
     }
 }
