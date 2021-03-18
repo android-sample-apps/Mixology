@@ -16,9 +16,9 @@ import com.yanivsos.mixological.ui.SpacerItemDecoration
 import com.yanivsos.mixological.ui.fragments.BaseFragment
 import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
-import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import com.yanivsos.mixological.v2.drink.EmptyBindableItem
-import com.yanivsos.mixological.v2.drink.view_model.MethodState
+import com.yanivsos.mixological.v2.drink.viewModel.MethodState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

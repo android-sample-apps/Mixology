@@ -3,22 +3,17 @@ package com.yanivsos.mixological.domain
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
 import com.yanivsos.mixological.in_app_review.InAppReviewRepository
 import com.yanivsos.mixological.repo.repositories.WatchlistRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class AddToWatchlistUseCase(
     private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
     private val repository: WatchlistRepository,
-    private val inAppReviewRepository: InAppReviewRepository
+    private val inAppReviewRepository: InAppReviewRepository,
 ) {
 
     suspend fun addToWatchlist(watchlistItemModel: WatchlistItemModel) {
         Timber.d("addToWatchlist: called with $watchlistItemModel")
-        GlobalScope.launch(Dispatchers.IO) {
-            fetchAndStore(watchlistItemModel)
-        }
+        fetchAndStore(watchlistItemModel)
         repository.store(watchlistItemModel)
         inAppReviewRepository.onFavoriteAdded()
     }

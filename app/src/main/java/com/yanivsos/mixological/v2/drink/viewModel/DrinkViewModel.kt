@@ -1,4 +1,4 @@
-package com.yanivsos.mixological.v2.drink.view_model
+package com.yanivsos.mixological.v2.drink.viewModel
 
 import android.content.Context
 import android.text.SpannableString

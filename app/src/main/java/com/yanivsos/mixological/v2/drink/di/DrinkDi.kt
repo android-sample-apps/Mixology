@@ -5,8 +5,8 @@ import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
 import com.yanivsos.mixological.v2.drink.useCases.FetchAndStoreDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
-import com.yanivsos.mixological.v2.drink.view_model.DrinkErrorViewModel
-import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkErrorViewModel
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf

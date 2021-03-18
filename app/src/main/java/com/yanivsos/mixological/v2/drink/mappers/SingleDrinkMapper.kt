@@ -10,7 +10,7 @@ import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
-import com.yanivsos.mixological.v2.drink.view_model.DrinkState
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*

@@ -28,8 +28,8 @@ import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
-import com.yanivsos.mixological.v2.drink.view_model.DrinkState
-import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn

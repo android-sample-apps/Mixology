@@ -22,8 +22,8 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.ui.models.quantityVisibility
 import com.yanivsos.mixological.v2.drink.EmptyBindableItem
-import com.yanivsos.mixological.v2.drink.view_model.DrinkViewModel
-import com.yanivsos.mixological.v2.drink.view_model.IngredientsState
+import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
+import com.yanivsos.mixological.v2.drink.viewModel.IngredientsState
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
