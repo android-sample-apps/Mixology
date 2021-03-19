@@ -3,6 +3,7 @@ package com.yanivsos.mixological.v2.landingPage.repo
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.LatestArrivalsModel
 import com.yanivsos.mixological.domain.models.MostPopularModel
+import com.yanivsos.mixological.domain.models.RecentlyViewedModel
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.v2.drink.mappers.toModel
 import com.yanivsos.mixological.v2.landingPage.dao.LandingPageDao
@@ -54,6 +55,12 @@ class LandingPageRepository(
             withContext(defaultDispatcher) {
                 response.toModel()
             }
+        }
+    }
+
+    suspend fun addToRecentlyViewed(recentlyViewedModel: RecentlyViewedModel) {
+        withContext(ioDispatcher) {
+            landingPageDao.insertRecentlyViewed(recentlyViewedModel)
         }
     }
 }

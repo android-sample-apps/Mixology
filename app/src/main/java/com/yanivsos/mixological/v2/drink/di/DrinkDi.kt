@@ -2,6 +2,7 @@ package com.yanivsos.mixological.v2.drink.di
 
 import com.yanivsos.mixological.repo.room.DrinksDatabase
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
+import com.yanivsos.mixological.v2.drink.useCases.AddToRecentlyViewedUseCase
 import com.yanivsos.mixological.v2.drink.useCases.FetchAndStoreDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
@@ -30,6 +31,12 @@ val drinkDi = module {
         )
     }
 
+    single {
+        AddToRecentlyViewedUseCase(
+            landingPageRepository = get()
+        )
+    }
+
     factory { (drinkId: String) ->
         GetDrinkUseCase(
             drinkId = drinkId,
@@ -48,7 +55,9 @@ val drinkDi = module {
         DrinkViewModel(
             application = androidApplication(),
             getOrFetchDrinkUseCase = get { parametersOf(drinkId) },
-            toggleFavoriteUseCase = get()
+            toggleFavoriteUseCase = get(),
+            addToRecentlyViewedUseCase = get(),
+            drinkId = drinkId
         )
     }
 

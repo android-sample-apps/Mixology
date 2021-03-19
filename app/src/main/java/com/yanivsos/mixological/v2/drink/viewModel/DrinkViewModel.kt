@@ -11,6 +11,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
+import com.yanivsos.mixological.v2.drink.useCases.AddToRecentlyViewedUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkResult
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.ToggleFavoriteUseCase
@@ -25,9 +26,11 @@ private const val METHOD_LOADING_ITEM_COUNT = 6
 
 class DrinkViewModel(
     private val application: Application,
+    private val addToRecentlyViewedUseCase: AddToRecentlyViewedUseCase,
     private val getOrFetchDrinkUseCase: GetOrFetchDrinkUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    private val drinkId: String
 ) : ViewModel() {
 
     val drink: Flow<DrinkState> = getOrFetchDrinkUseCase
@@ -43,8 +46,14 @@ class DrinkViewModel(
         .distinctUntilChanged()
 
     init {
-        // TODO: 17/03/2021 add to recently views db
         Timber.d("init: hashCode: ${hashCode()}")
+        addToRecentlyViewed()
+    }
+
+    private fun addToRecentlyViewed() {
+        viewModelScope.launch {
+            addToRecentlyViewedUseCase.addToRecentlyViewed(drinkId)
+        }
     }
 
     override fun onCleared() {

@@ -27,20 +27,11 @@ interface LandingPageDao {
     }
 
     //Recently viewed
-    @Query("SELECT * FROM drink_previews INNER JOIN recently_viewed ON drinkId = id")
+    @Query("SELECT * FROM drink_previews INNER JOIN recently_viewed ON drinkId = id ORDER BY lastViewedTime DESC")
     fun getRecentlyViewed(): Flow<List<DrinkPreviewModel>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertRecentlyViewed(recentlyViewed: List<RecentlyViewedModel>)
-
-    @Query("DELETE FROM recently_viewed")
-    suspend fun removeRecentlyViewed()
-
-    @Transaction
-    suspend fun replaceRecentlyViewed(recentlyViewed: List<RecentlyViewedModel>) {
-        removeRecentlyViewed()
-        insertRecentlyViewed(recentlyViewed)
-    }
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecentlyViewed(recentlyViewed: RecentlyViewedModel)
 
     //Most populars
     @Query("SELECT * FROM drink_previews INNER JOIN most_popular ON drinkId = id")
