@@ -7,7 +7,6 @@ import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.DataSource
@@ -21,21 +20,18 @@ import com.yanivsos.mixological.databinding.FragmentDrinkBinding
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.shareDrink
 import com.yanivsos.mixological.extensions.toGlideBuilder
-import com.yanivsos.mixological.in_app_review.RequestInAppReviewUseCase
 import com.yanivsos.mixological.ui.adapters.DrinkPagerAdapter
 import com.yanivsos.mixological.ui.fragments.BaseFragment
 import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
+import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
-import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -45,6 +41,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
 
     private val binding by viewBinding(FragmentDrinkBinding::bind)
     private val args: DrinkFragmentArgs by navArgs()
+    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
     private val pagerAdapter: DrinkPagerAdapter by lazy {
         DrinkPagerAdapter(
             this,
@@ -52,8 +49,6 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
         )
     }
 
-    private val requestInAppReviewUseCase: RequestInAppReviewUseCase by inject()
-    private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.drinkPreviewUiModel.id) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,17 +68,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     }
 
     private fun onFavoriteToggled() {
-        lifecycleScope.launch {
-            val isFavorite = drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
-            Timber.d("toggled favorite: isFavorite[$isFavorite]")
-            if (isFavorite) {
-                launchInAppReview()
-            }
-        }
-    }
-
-    private suspend fun launchInAppReview() {
-        requestInAppReviewUseCase.launchReview(requireActivity())
+        drinkViewModel.toggleFavorite(args.drinkPreviewUiModel)
     }
 
     private fun initMotionLayoutListener() {

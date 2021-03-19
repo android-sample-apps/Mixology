@@ -101,6 +101,10 @@ data class DrinkModel(
     val isFavorite: Boolean = false
 )
 
+fun DrinkModel.debugPrint(): String {
+    return "DrinkModel[id: $id, name: $name]"
+}
+
 sealed class Result<T> {
     data class Success<T>(val data: T) : Result<T>()
     data class Loading<T>(val id: String) : Result<T>()

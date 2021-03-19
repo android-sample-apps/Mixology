@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val repoModule = module {
 
     factory<HttpLoggingInterceptor.Level> {
-        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BASIC else HttpLoggingInterceptor.Level.NONE
     }
 
     factory<OkHttpClient> {

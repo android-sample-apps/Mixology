@@ -3,9 +3,9 @@ package com.yanivsos.mixological.v2.drink.viewModel
 import android.app.Application
 import android.text.SpannableString
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
-import com.yanivsos.mixological.domain.ToggleWatchlistUseCase
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -13,12 +13,10 @@ import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkResult
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
+import com.yanivsos.mixological.v2.favorites.useCases.ToggleFavoriteUseCase
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 private const val INGREDIENTS_LOADING_ITEM_COUNT = 3
@@ -27,7 +25,7 @@ private const val METHOD_LOADING_ITEM_COUNT = 6
 class DrinkViewModel(
     private val application: Application,
     private val getOrFetchDrinkUseCase: GetOrFetchDrinkUseCase,
-    private val toggleWatchlistUseCase: ToggleWatchlistUseCase,
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
@@ -52,9 +50,12 @@ class DrinkViewModel(
     }
 
     // TODO: 18/03/2021 remove this to a shared flow callback
-    suspend fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel): Boolean {
-        return toggleWatchlistUseCase.toggle(WatchlistItemModel(drinkPreviewUiModel.id))
-            .also { reportFavoriteAnalytics(drinkPreviewUiModel, it) }
+    fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel) {
+        viewModelScope.launch {
+            toggleFavoriteUseCase
+                .toggleFavorite(WatchlistItemModel(drinkPreviewUiModel.id))
+                .also { reportFavoriteAnalytics(drinkPreviewUiModel, it) }
+        }
     }
 
     private fun reportFavoriteAnalytics(

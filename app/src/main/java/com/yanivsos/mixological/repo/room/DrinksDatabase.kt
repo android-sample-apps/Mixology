@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.yanivsos.mixological.domain.models.*
-import com.yanivsos.mixological.v2.drink.dao.FavoriteDrinksDao
+import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 
 @Database(
     entities = [

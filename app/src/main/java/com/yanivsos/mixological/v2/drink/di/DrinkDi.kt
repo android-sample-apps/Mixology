@@ -16,9 +16,7 @@ val drinkDi = module {
 
     single { get<DrinksDatabase>().drinkDaoV2() }
 
-    single { get<DrinksDatabase>().favoriteDaoV2() }
-
-    factory {
+    single {
         DrinkRepository(
             drinkService = get(),
             drinkDao = get(),
@@ -26,7 +24,7 @@ val drinkDi = module {
         )
     }
 
-    factory {
+    single {
         FetchAndStoreDrinkUseCase(
             repo = get()
         )
@@ -50,7 +48,7 @@ val drinkDi = module {
         DrinkViewModel(
             application = androidApplication(),
             getOrFetchDrinkUseCase = get { parametersOf(drinkId) },
-            toggleWatchlistUseCase = get()
+            toggleFavoriteUseCase = get()
         )
     }
 
