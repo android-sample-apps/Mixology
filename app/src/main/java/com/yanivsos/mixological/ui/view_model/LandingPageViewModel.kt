@@ -38,10 +38,10 @@ class LandingPageViewModel(
             LandingPageUiModel(
                 mostPopular = popular,
                 latestArrivals = latestArrivals,
-                recentSearches = emptyList()
+                recentlyViewed = emptyList()
             )
         }.combine(recentSearches()) { landingPage, recentSearches ->
-            landingPage.copy(recentSearches = recentSearches)
+            landingPage.copy(recentlyViewed = recentSearches)
         }
     }
 

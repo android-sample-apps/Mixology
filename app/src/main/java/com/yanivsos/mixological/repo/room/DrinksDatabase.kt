@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.yanivsos.mixological.domain.models.*
 import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
+import com.yanivsos.mixological.v2.landingPage.dao.LandingPageDao
 
 @Database(
     entities = [
@@ -37,6 +38,7 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun mostPopularDao(): MostPopularDao
     abstract fun drinkDaoV2(): com.yanivsos.mixological.v2.drink.dao.DrinkDao
     abstract fun favoriteDaoV2(): FavoriteDrinksDao
+    abstract fun getLandingPageDao(): LandingPageDao
 
 }
 

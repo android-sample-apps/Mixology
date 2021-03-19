@@ -118,7 +118,7 @@ class MethodItem(private val method: SpannableString) : BindableItem<ListItemMet
 
 }
 
-class LoadingMethodItem : EmptyBindableItem<ListItemMethodLoadingBinding>() {
+private class LoadingMethodItem : EmptyBindableItem<ListItemMethodLoadingBinding>() {
 
     override fun getLayout(): Int {
         return R.layout.list_item_method_loading

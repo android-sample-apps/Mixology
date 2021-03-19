@@ -6,8 +6,8 @@ import com.yanivsos.mixological.domain.models.WatchlistItemModel
 import com.yanivsos.mixological.domain.models.debugPrint
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.v2.drink.dao.DrinkDao
-import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 import com.yanivsos.mixological.v2.drink.mappers.toFirstOrNullModel
+import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

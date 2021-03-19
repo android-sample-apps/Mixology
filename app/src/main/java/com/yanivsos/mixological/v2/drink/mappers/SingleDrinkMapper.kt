@@ -7,6 +7,7 @@ import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.repo.mappers.LOCAL_SPANISH
+import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
 import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
@@ -124,6 +125,15 @@ private fun DrinkModel.mapShareText(context: Context): String {
 
 private fun Map<String, String?>.fromLocale(locale: Locale): String? {
     return get(locale.toKey())
+}
+
+fun DrinkPreviewResponse.toModel(): DrinkPreviewModel {
+    return DrinkPreviewModel(
+        id = idDrink,
+        name = strDrink,
+        thumbnail = strDrinkThumb,
+        isFavorite = false
+    )
 }
 
 fun DrinkResponse.toModel(): DrinkModel {

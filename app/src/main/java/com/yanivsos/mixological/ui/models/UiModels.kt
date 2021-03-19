@@ -48,7 +48,7 @@ data class DrinkUiModel(
 data class LandingPageUiModel(
     val mostPopular: List<DrinkPreviewUiModel>,
     val latestArrivals: List<DrinkPreviewUiModel>,
-    val recentSearches: List<DrinkPreviewUiModel>
+    val recentlyViewed: List<DrinkPreviewUiModel>
 )
 
 data class IngredientUiModel(

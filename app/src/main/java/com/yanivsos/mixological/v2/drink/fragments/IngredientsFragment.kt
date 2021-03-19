@@ -124,7 +124,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     }
 }
 
-class IngredientItem(
+private class IngredientItem(
     private val ingredient: IngredientUiModel,
     private val onLongClick: (IngredientUiModel) -> Unit
 ) : BindableItem<ListItemIngredientBinding>() {

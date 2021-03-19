@@ -112,7 +112,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
     }
 }
 
-class GridDrinkPreviewItem(
+private class GridDrinkPreviewItem(
     private val drinkPreviewUiModel: DrinkPreviewUiModel,
     private val onPreviewClicked: (DrinkPreviewUiModel) -> Unit,
     private val onPreviewLongClicked: (DrinkPreviewUiModel) -> Unit,

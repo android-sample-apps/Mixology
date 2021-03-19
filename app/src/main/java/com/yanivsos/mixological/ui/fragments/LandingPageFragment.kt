@@ -85,7 +85,7 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
         landingPage.run {
             latestArrivalsAdapter.update(latestArrivals)
             mostPopularAdapter.update(mostPopular)
-            recentSearchesAdapter.updateWithAction(recentSearches) {
+            recentSearchesAdapter.updateWithAction(recentlyViewed) {
                 binding.recentSearchesHeader.visibility = View.VISIBLE
             }
         }
