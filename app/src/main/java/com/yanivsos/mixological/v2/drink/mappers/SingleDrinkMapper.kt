@@ -4,16 +4,27 @@ import android.content.Context
 import android.text.SpannableString
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkModel
+import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.repo.mappers.LOCAL_SPANISH
 import com.yanivsos.mixological.repo.models.DrinkResponse
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
+import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
+
+fun DrinkPreviewModel.toUiModel(): DrinkPreviewUiModel {
+    return DrinkPreviewUiModel(
+        id = id,
+        name = name,
+        thumbnail = thumbnail,
+        isFavorite = isFavorite
+    )
+}
 
 fun DrinkState.Error.toUiModel(): DrinkErrorUiModel {
     return when (throwable) {

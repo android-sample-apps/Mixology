@@ -1,6 +1,7 @@
 package com.yanivsos.mixological.v2.drink.repo
 
 import com.yanivsos.mixological.domain.models.DrinkModel
+import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
 import com.yanivsos.mixological.domain.models.debugPrint
 import com.yanivsos.mixological.repo.DrinkService
@@ -60,6 +61,10 @@ class DrinkRepository(
             Timber.d("removeFromFavorites: id[${watchlistItemModel.id}]")
             favoriteDrinksDao.remove(watchlistItemModel.id)
         }
+    }
+
+    fun getFavorites(): Flow<List<DrinkPreviewModel>> {
+        return favoriteDrinksDao.getFavoritePreviews()
     }
 
     fun getFavoriteById(watchlistItemModel: WatchlistItemModel): Flow<WatchlistItemModel?> {

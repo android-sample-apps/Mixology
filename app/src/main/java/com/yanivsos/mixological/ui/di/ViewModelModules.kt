@@ -78,12 +78,12 @@ val viewModelModule = module {
         )
     }
 
-    viewModel {
+    /*viewModel {
         WatchlistViewModel(
             getWatchlistUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
-    }
+    }*/
 
     viewModel {
         SettingsViewModel(SetNightModeUseCase())

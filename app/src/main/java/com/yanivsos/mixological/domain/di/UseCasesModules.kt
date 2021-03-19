@@ -90,15 +90,6 @@ val useCasesModule = module {
         )
     }
 
-    factory { (drinkId: String) ->
-        GetDrinkUseCase(
-            fetchAndStoreDrinkUseCase = get(),
-            getWatchlistUseCase = get(),
-            repository = get(),
-            drinkId = drinkId
-        )
-    }
-
     factory {
         FetchAndStoreDrinkUseCase(
             repository = get()
@@ -184,12 +175,12 @@ val useCasesModule = module {
         )
     }
 
-    factory {
+    /*factory {
         GetWatchlistUseCase(
             watchlistRepository = get(),
             drinkPreviewRepository = get()
         )
-    }
+    }*/
 
     factory {
         RemoveFromWatchlistUseCase(
@@ -203,11 +194,11 @@ val useCasesModule = module {
         )
     }
 
-    factory {
+    /*factory {
         ToggleWatchlistUseCase(
             getWatchlistUseCase = get(),
             addToWatchlistUseCase = get(),
             removeFromWatchlistUseCase = get()
         )
-    }
+    }*/
 }

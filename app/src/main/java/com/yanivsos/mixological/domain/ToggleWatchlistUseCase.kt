@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
+/*
 class ToggleWatchlistUseCase(
     private val getWatchlistUseCase: GetWatchlistUseCase,
     private val addToWatchlistUseCase: AddToWatchlistUseCase,
@@ -31,3 +32,4 @@ class ToggleWatchlistUseCase(
         }
     }
 }
+*/

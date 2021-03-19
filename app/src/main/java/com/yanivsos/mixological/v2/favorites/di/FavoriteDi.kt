@@ -2,8 +2,11 @@ package com.yanivsos.mixological.v2.favorites.di
 
 import com.yanivsos.mixological.repo.room.DrinksDatabase
 import com.yanivsos.mixological.v2.favorites.useCases.AddToFavoritesUseCase
+import com.yanivsos.mixological.v2.favorites.useCases.GetFavoritesUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.RemoveFromFavoritesUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.ToggleFavoriteUseCase
+import com.yanivsos.mixological.v2.favorites.viewModel.FavoritesViewModel
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val favoriteDi = module {
@@ -30,4 +33,17 @@ val favoriteDi = module {
             removeFromFavoritesUseCase = get()
         )
     }
+
+    factory {
+        GetFavoritesUseCase(
+            repository = get()
+        )
+    }
+
+    viewModel {
+        FavoritesViewModel(
+            getFavoritesUseCase = get()
+        )
+    }
+
 }

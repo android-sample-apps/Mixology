@@ -8,6 +8,7 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
+/*
 class GetDrinkUseCase(
     private val repository: DrinkRepository,
     private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
@@ -75,3 +76,4 @@ class GetDrinkUseCase(
         job?.cancel()
     }
 }
+*/
