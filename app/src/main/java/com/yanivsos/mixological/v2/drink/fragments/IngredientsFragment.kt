@@ -59,7 +59,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initIngredientsRecyclerView()
-        observeDrink()
+        observeIngredients()
     }
 
     private fun initIngredientsRecyclerView() {
@@ -71,7 +71,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
         }
     }
 
-    private fun observeDrink() {
+    private fun observeIngredients() {
         viewModel
             .ingredients
             .onEach { onIngredientsStateReceived(it) }

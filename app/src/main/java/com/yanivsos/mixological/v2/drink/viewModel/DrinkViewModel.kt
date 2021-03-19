@@ -16,6 +16,7 @@ import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.ToggleFavoriteUseCase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 
@@ -35,9 +36,11 @@ class DrinkViewModel(
 
     val ingredients: Flow<IngredientsState> = drink
         .map { toIngredientState(it) }
+        .distinctUntilChanged()
 
     val method: Flow<MethodState> = drink
         .map { toMethodState(it) }
+        .distinctUntilChanged()
 
     init {
         // TODO: 17/03/2021 add to recently views db
