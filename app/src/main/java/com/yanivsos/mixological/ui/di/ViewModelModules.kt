@@ -39,7 +39,7 @@ val viewModelModule = module {
         )
     }*/
 
-    viewModel {
+    /*viewModel {
         LandingPageViewModel(
             mostPopularUseCase = get(),
             latestArrivalsUseCase = get(),
@@ -48,7 +48,7 @@ val viewModelModule = module {
             updateMostPopularUseCase = get(),
             mapper = get<DrinkPreviewMapperUi>()
         )
-    }
+    }*/
 
     viewModel { (name: String) ->
         IngredientDetailsViewModel(

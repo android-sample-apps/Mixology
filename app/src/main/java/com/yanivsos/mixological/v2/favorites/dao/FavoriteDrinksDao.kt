@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteDrinksDao {
 
+    @Query("SELECT * FROM watchlist")
+    fun getAll(): Flow<List<WatchlistItemModel>>
+
     @Query("SELECT * FROM watchlist WHERE watchlist.id = :id")
     fun getById(id: String): Flow<WatchlistItemModel?>
 

@@ -16,7 +16,8 @@ val landingPageDi = module {
     single {
         LandingPageRepository(
             landingPageDao = get(),
-            drinkService = get()
+            drinkService = get(),
+            favoritesDao = get()
         )
     }
 
