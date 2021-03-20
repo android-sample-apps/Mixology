@@ -21,7 +21,8 @@ val categoriesDi = module {
 
     factory {
         GetDrinksByCategoryUseCase(
-            categoriesRepository = get()
+            categoriesRepository = get(),
+            drinkRepository = get()
         )
     }
 
