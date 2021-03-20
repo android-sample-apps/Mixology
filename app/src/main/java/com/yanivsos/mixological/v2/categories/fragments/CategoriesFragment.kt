@@ -30,8 +30,7 @@ import com.yanivsos.mixological.v2.categories.viewModel.CategoriesViewModel
 import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -80,15 +79,14 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
             setExpanded()
         }
 
-        binding.categoryMenuMl.addTransitionListener(object : MyTransitionListener() {
-            override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
-                super.onTransitionCompleted(motionLayout, currentId)
-                (currentId == R.id.results).let { isExpanded ->
-                Timber.d("onTransitionCompleted: currentId: $currentId, isExpanded: $isExpanded")
+        binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener().apply {
+            isExpanded
+                .onEach { isExpanded ->
+                    Timber.d("isExpanded: $isExpanded")
                     onBackPressedCallback.isEnabled = isExpanded
                     categoriesViewModel.previewsExpanded = isExpanded
                 }
-            }
+                .launchIn(viewLifecycleScope())
         })
     }
 
@@ -207,7 +205,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
     }
 }
 
-class CategoryItem(
+private class CategoryItem(
     private val categoryUiModel: CategoryUiModel,
     private val onClick: (CategoryUiModel) -> Unit
 ) : BindableItem<ListItemCategoryBinding>() {
@@ -224,5 +222,21 @@ class CategoryItem(
 
     override fun initializeViewBinding(view: View): ListItemCategoryBinding {
         return ListItemCategoryBinding.bind(view)
+    }
+}
+
+private class CategoryTransitionListener : MyTransitionListener() {
+
+    private val isExpandedFlow = MutableStateFlow(false)
+    val isExpanded: Flow<Boolean> = isExpandedFlow
+
+    override fun onTransitionChange(
+        motionLayout: MotionLayout,
+        startId: Int,
+        endId: Int,
+        progress: Float
+    ) {
+        super.onTransitionChange(motionLayout, startId, endId, progress)
+        (progress >= 0.5).also { isExpandedFlow.value = it }
     }
 }

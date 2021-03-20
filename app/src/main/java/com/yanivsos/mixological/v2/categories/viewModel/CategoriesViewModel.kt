@@ -31,6 +31,11 @@ class CategoriesViewModel(
         Timber.d("init: hashcode: ${hashCode()}")
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Timber.d("onCleared")
+    }
+
     private suspend fun mapToUiState(categoriesState: CategoriesState): CategoriesUiState {
         return withContext(defaultDispatcher) {
             categoriesState.toUiState()
