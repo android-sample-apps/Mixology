@@ -10,6 +10,9 @@ import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 typealias FBParam = FirebaseAnalytics.Param
@@ -21,7 +24,7 @@ object AnalyticsDispatcher {
 
     fun onDrinkPreviewClicked(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
         Timber.d("onDrinkPreviewClicked: origin[$origin], drinkPreview[$drinkPreviewUiModel]")
-        firebaseAnalytics.logEvent(Events.EVENT_DRINK_SELECTED) {
+        firebaseAnalytics.asyncLogEvent(Events.EVENT_DRINK_SELECTED) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
             param(PARAM_IS_FAVORITE, drinkPreviewUiModel.isFavorite.toString())
@@ -30,7 +33,7 @@ object AnalyticsDispatcher {
 
     fun onDrinkPreviewLongClicked(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
         Timber.d("onDrinkPreviewLongClicked: origin[$origin], drinkPreview[$drinkPreviewUiModel]")
-        firebaseAnalytics.logEvent(Events.EVENT_DRINK_LONG_CLICK) {
+        firebaseAnalytics.asyncLogEvent(Events.EVENT_DRINK_LONG_CLICK) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
             param(PARAM_IS_FAVORITE, drinkPreviewUiModel.isFavorite.toString())
@@ -38,7 +41,7 @@ object AnalyticsDispatcher {
     }
 
     fun onDrinkShare(drinkPreviewUiModel: DrinkPreviewUiModel) {
-        firebaseAnalytics.logEvent(FBEvent.SHARE) {
+        firebaseAnalytics.asyncLogEvent(FBEvent.SHARE) {
             idAndName(drinkPreviewUiModel)
         }
     }
@@ -56,40 +59,40 @@ object AnalyticsDispatcher {
     }
 
     fun addToFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
-        firebaseAnalytics.logEvent(Events.EVENT_ADD_TO_FAVORITE) {
+        firebaseAnalytics.asyncLogEvent(Events.EVENT_ADD_TO_FAVORITE) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
         }
     }
 
     fun removeFromFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
-        firebaseAnalytics.logEvent(Events.EVENT_REMOVE_FROM_FAVORITE) {
+        firebaseAnalytics.asyncLogEvent(Events.EVENT_REMOVE_FROM_FAVORITE) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
         }
     }
 
     fun onIngredientLongClicked(ingredientUiModel: IngredientUiModel, origin: String) {
-        firebaseAnalytics.logEvent(Events.EVENT_INGREDIENT_LONG_CLICK) {
+        firebaseAnalytics.asyncLogEvent(Events.EVENT_INGREDIENT_LONG_CLICK) {
             param(FBParam.ITEM_NAME, ingredientUiModel.name)
             param(FBParam.ORIGIN, origin)
         }
     }
 
     fun onIngredientSearchedOnline(ingredientUiModel: IngredientUiModel) {
-        firebaseAnalytics.logEvent(Events.INGREDIENT_SEARCH_ONLINE) {
+        firebaseAnalytics.asyncLogEvent(Events.INGREDIENT_SEARCH_ONLINE) {
             param(FBParam.ITEM_NAME, ingredientUiModel.name)
         }
     }
 
     fun onDrinkErrorTryAgain(errorUiModel: DrinkErrorUiModel) {
-        firebaseAnalytics.logEvent(Events.DRINK_TRY_AGAIN_CLICKED) {
+        firebaseAnalytics.asyncLogEvent(Events.DRINK_TRY_AGAIN_CLICKED) {
             param(FBParam.ITEM_ID, errorUiModel.drinkId)
         }
     }
 
     fun onSearchFilter(drinkFilter: DrinkFilter) {
-        firebaseAnalytics.logEvent(Events.SEARCH_DRINK) {
+        firebaseAnalytics.asyncLogEvent(Events.SEARCH_DRINK) {
             param(FBParam.SEARCH_TERM, drinkFilter.query)
             param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
             param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
@@ -97,7 +100,7 @@ object AnalyticsDispatcher {
     }
 
     fun setCurrentScreen(fragment: Fragment) {
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+        firebaseAnalytics.asyncLogEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
             param(FirebaseAnalytics.Param.SCREEN_NAME, fragment::class.simpleName!!)
         }
     }
@@ -105,6 +108,15 @@ object AnalyticsDispatcher {
     private fun ParametersBuilder.idAndName(drinkPreviewUiModel: DrinkPreviewUiModel) {
         param(FBParam.ITEM_ID, drinkPreviewUiModel.id)
         param(FBParam.ITEM_NAME, drinkPreviewUiModel.name)
+    }
+
+    private inline fun FirebaseAnalytics.asyncLogEvent(
+        name: String,
+        crossinline block: ParametersBuilder.() -> Unit
+    ) {
+        GlobalScope.launch(Dispatchers.Default) {
+            logEvent(name, block)
+        }
     }
 }
 
@@ -116,7 +128,8 @@ class ScreenNames {
         const val DRINK = "Drink"
         const val FAVORITES = "Favorites"
         const val SEARCH = "Search"
-//        const val ERROR = "Error"
+
+        //        const val ERROR = "Error"
         const val DRINK_OPTIONS = "Drink Options"
     }
 }
