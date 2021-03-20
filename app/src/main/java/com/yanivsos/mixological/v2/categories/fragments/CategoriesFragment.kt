@@ -74,19 +74,22 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
             }.let { addItemDecoration(it) }
         }
 
+        val previewsExpanded = categoriesViewModel.previewsExpanded
+        Timber.d("initCategoriesMenu: previewsExpanded: $previewsExpanded")
+        if (previewsExpanded) {
+            setExpanded()
+        }
+
         binding.categoryMenuMl.addTransitionListener(object : MyTransitionListener() {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                 super.onTransitionCompleted(motionLayout, currentId)
                 (currentId == R.id.results).let { isExpanded ->
+                Timber.d("onTransitionCompleted: currentId: $currentId, isExpanded: $isExpanded")
                     onBackPressedCallback.isEnabled = isExpanded
                     categoriesViewModel.previewsExpanded = isExpanded
                 }
             }
         })
-
-        if (categoriesViewModel.previewsExpanded) {
-            setExpanded()
-        }
     }
 
     private fun initDrinkPreviews() {
