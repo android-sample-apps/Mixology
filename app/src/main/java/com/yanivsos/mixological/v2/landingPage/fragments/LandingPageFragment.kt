@@ -117,7 +117,6 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
     }
 }
 
-
 private class DrinkPreviewItem(
     private val drinkPreviewUiModel: DrinkPreviewUiModel,
     private val onDrinkClicked: (DrinkPreviewUiModel) -> Unit,

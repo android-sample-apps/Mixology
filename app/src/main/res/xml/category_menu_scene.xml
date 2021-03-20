@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        android:id="@+id/swipe_transition"
         app:constraintSetEnd="@id/results"
         app:constraintSetStart="@id/only_categories"
-        app:duration="250"
+        app:duration="300"
         app:motionInterpolator="easeOut">
 
         <OnSwipe

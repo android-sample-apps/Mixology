@@ -27,6 +27,10 @@ fun DrinkPreviewModel.toUiModel(): DrinkPreviewUiModel {
     )
 }
 
+fun List<DrinkPreviewModel>.toUiModel(): List<DrinkPreviewUiModel> {
+    return map { it.toUiModel() }
+}
+
 fun DrinkState.Error.toUiModel(): DrinkErrorUiModel {
     return when (throwable) {
         is UnknownHostException -> DrinkErrorUiModel(

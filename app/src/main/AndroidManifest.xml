@@ -17,6 +17,7 @@
         <activity
             android:name="com.yanivsos.mixological.ui.DrinksActivity"
             android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

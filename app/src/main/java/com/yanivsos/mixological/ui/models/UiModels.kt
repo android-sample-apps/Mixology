@@ -14,6 +14,11 @@ data class CategoryUiModel(
     val name: String
 )
 
+data class SelectedCategoryUiModel(
+    val name: String,
+    val drinks: List<DrinkPreviewUiModel>
+)
+
 @Keep
 @Parcelize
 data class DrinkPreviewUiModel(
