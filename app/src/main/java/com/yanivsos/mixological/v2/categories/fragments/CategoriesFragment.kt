@@ -77,9 +77,6 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
 
         val previewsExpanded = categoriesViewModel.previewsExpanded
         Timber.d("initCategoriesMenu: previewsExpanded: $previewsExpanded")
-        if (previewsExpanded) {
-            setExpanded()
-        }
 
         binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener().apply {
             isExpanded
@@ -90,6 +87,10 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
                 }
                 .launchIn(viewLifecycleScope())
         })
+
+        if (previewsExpanded) {
+            setExpanded()
+        }
     }
 
     private fun initDrinkPreviews() {
@@ -219,7 +220,6 @@ private class CategoryItem(
 ) : BindableItem<ListItemCategoryBinding>() {
 
     override fun bind(viewBinding: ListItemCategoryBinding, position: Int) {
-        Timber.d("onBind: called")
         viewBinding.root.setOnClickListener { onClick(categoryUiModel) }
         viewBinding.categoryNameTv.text = categoryUiModel.name
     }
