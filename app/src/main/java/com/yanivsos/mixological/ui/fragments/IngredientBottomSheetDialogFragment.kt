@@ -13,7 +13,10 @@ import com.yanivsos.mixological.extensions.toVisibility
 import com.yanivsos.mixological.extensions.webSearchIntent
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
-import com.yanivsos.mixological.ui.view_model.IngredientDetailsViewModel
+import com.yanivsos.mixological.v2.ingredients.IngredientDetailsState
+import com.yanivsos.mixological.v2.ingredients.IngredientDetailsViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -57,17 +60,16 @@ class IngredientBottomSheetDialogFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateName()
-        observeDetails()
         initSearchOnlineButton()
+        observeDetails()
     }
 
     private fun observeDetails() {
         Timber.d("observing details with $ingredient")
         detailsViewModel
-            .ingredientDetailsLiveData
-            .observe(viewLifecycleOwner, {
-                updateDrink(it)
-            })
+            .ingredientDetails
+            .onEach { onStateReceived(it) }
+            .launchIn(viewLifecycleScope())
     }
 
     private fun initSearchOnlineButton() {
@@ -96,21 +98,39 @@ class IngredientBottomSheetDialogFragment(
         binding?.ingredientNameTv?.text = ingredient.name
     }
 
-    private fun updateDrink(details: IngredientDetailsUiModel) {
-        updateDescription(details)
-        updateAlcoholVolume(details)
-        updateWebSearchQuery(details)
-    }
-
-    private fun updateAlcoholVolume(details: IngredientDetailsUiModel) {
-        binding?.alcoholVolumeTv?.run {
-            text = getString(R.string.alcohol_volume_abv, details.alcoholVolume)
-            visibility = (details.alcoholVolume != null).toVisibility()
+    private fun onStateReceived(state: IngredientDetailsState) {
+        when (state) {
+            IngredientDetailsState.Loading -> onLoadingState()
+            IngredientDetailsState.NotFound -> onNotFound()
+            is IngredientDetailsState.Success -> updateDetails(state.model)
         }
     }
 
-    private fun updateDescription(details: IngredientDetailsUiModel) {
-        val text = details.description ?: getString(R.string.no_description_found)
+    private fun onLoadingState() {
+        Timber.d("onLoading:")
+    }
+
+    private fun onNotFound() {
+        Timber.d("onNotFound:")
+        updateDescription()
+        updateAlcoholVolume()
+    }
+
+    private fun updateDetails(details: IngredientDetailsUiModel) {
+        updateDescription(details.description)
+        updateAlcoholVolume(details.alcoholVolume)
+        updateWebSearchQuery(details)
+    }
+
+    private fun updateAlcoholVolume(alcoholVolume: String? = null) {
+        binding?.alcoholVolumeTv?.run {
+            text = getString(R.string.alcohol_volume_abv, alcoholVolume)
+            visibility = (alcoholVolume != null).toVisibility()
+        }
+    }
+
+    private fun updateDescription(description: String? = null) {
+        val text = description ?: getString(R.string.no_description_found)
         binding?.ingredientDescriptionTv?.text = text
     }
 

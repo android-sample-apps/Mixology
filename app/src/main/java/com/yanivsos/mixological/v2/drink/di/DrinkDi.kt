@@ -26,7 +26,8 @@ val drinkDi = module {
 
     single {
         FetchAndStoreDrinkUseCase(
-            repo = get()
+            repo = get(),
+            fetchAndStoreIngredientUseCase = get()
         )
     }
 
