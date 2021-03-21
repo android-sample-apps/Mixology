@@ -249,6 +249,10 @@ private class CategoryTransitionListener : MyTransitionListener() {
     private val isExpandedFlow = MutableStateFlow(false)
     val isExpanded: Flow<Boolean> = isExpandedFlow
 
+    init {
+        Timber.d("init: hashcode: ${hashCode()}")
+    }
+
     override fun onTransitionChange(
         motionLayout: MotionLayout,
         startId: Int,

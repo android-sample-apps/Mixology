@@ -70,6 +70,12 @@ class DrinkViewModel(
         }
     }
 
+    fun refreshDrink() {
+        viewModelScope.launch {
+            getOrFetchDrinkUseCase.refreshDrink()
+        }
+    }
+
     private fun reportFavoriteAnalytics(
         drinkPreviewUiModel: DrinkPreviewUiModel,
         isFavorite: Boolean

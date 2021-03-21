@@ -6,7 +6,6 @@ import com.yanivsos.mixological.v2.drink.useCases.AddToRecentlyViewedUseCase
 import com.yanivsos.mixological.v2.drink.useCases.FetchAndStoreDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetDrinkUseCase
 import com.yanivsos.mixological.v2.drink.useCases.GetOrFetchDrinkUseCase
-import com.yanivsos.mixological.v2.drink.viewModel.DrinkErrorViewModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
@@ -47,7 +46,8 @@ val drinkDi = module {
     factory { (drinkId: String) ->
         GetOrFetchDrinkUseCase(
             getDrinkUseCase = get { parametersOf(drinkId) },
-            fetchAndStoreDrinkUseCase = get()
+            fetchAndStoreDrinkUseCase = get(),
+            drinkId = drinkId
         )
     }
 
@@ -58,12 +58,6 @@ val drinkDi = module {
             toggleFavoriteUseCase = get(),
             addToRecentlyViewedUseCase = get(),
             drinkId = drinkId
-        )
-    }
-
-    viewModel {
-        DrinkErrorViewModel(
-            fetchAndStoreDrinkUseCase = get()
         )
     }
 }

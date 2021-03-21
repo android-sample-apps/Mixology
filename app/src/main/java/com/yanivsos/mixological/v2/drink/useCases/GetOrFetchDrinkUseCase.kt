@@ -11,7 +11,8 @@ import kotlin.coroutines.CoroutineContext
 class GetOrFetchDrinkUseCase(
     getDrinkUseCase: GetDrinkUseCase,
     private val fetchAndStoreDrinkUseCase: FetchAndStoreDrinkUseCase,
-    mainDispatcher: CoroutineDispatcher = Dispatchers.Main
+    mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+    private val drinkId: String
 ) : CoroutineScope {
 
     override val coroutineContext: CoroutineContext =
@@ -26,6 +27,18 @@ class GetOrFetchDrinkUseCase(
             .drink
             .onEach { onResult(it) }
             .launchIn(this)
+    }
+
+    suspend fun refreshDrink() {
+        Timber.d("refreshDrink")
+        runCatching {
+            fetchAndStoreDrinkUseCase.fetchAndStore(drinkId)
+        }
+            .onSuccess { Timber.d("refreshed drink[$drinkId]") }
+            .onFailure {
+                Timber.e(it, "Failed to refresh drink[$drinkId]")
+                emit(GetOrFetchDrinkResult.Error(it, drinkId))
+            }
     }
 
     private suspend fun onResult(result: DrinkModelResult) {

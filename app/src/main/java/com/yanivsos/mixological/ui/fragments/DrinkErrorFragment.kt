@@ -12,7 +12,6 @@ import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
-import com.yanivsos.mixological.v2.drink.viewModel.DrinkErrorViewModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -28,7 +27,6 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private val args: DrinkErrorFragmentArgs by navArgs()
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val drinkViewModel: DrinkViewModel by viewModel { parametersOf(args.errorUiModel.drinkId) }
-    private val drinkErrorViewModel: DrinkErrorViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,6 +44,7 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     }
 
     private fun onDrinkStateReceived(drinkState: DrinkState) {
+        Timber.d("onDrinkStateReceived: $drinkState")
         when (drinkState) {
             is DrinkState.Error -> setRetryButtonEnabled(true)
             is DrinkState.Success -> navigateBackToDrink(drinkState.model)
@@ -107,6 +106,6 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private fun onRetry() {
         Timber.d("onRetry called:")
         AnalyticsDispatcher.onDrinkErrorTryAgain(args.errorUiModel)
-        drinkErrorViewModel.refreshDrink(args.errorUiModel.drinkId)
+        drinkViewModel.refreshDrink()
     }
 }
