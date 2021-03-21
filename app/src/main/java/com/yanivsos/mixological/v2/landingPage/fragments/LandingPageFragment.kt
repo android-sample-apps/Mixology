@@ -5,6 +5,7 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -23,6 +24,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
 import com.yanivsos.mixological.v2.landingPage.viewModel.LandingPageState
 import com.yanivsos.mixological.v2.landingPage.viewModel.LandingPageViewModel
+import com.yanivsos.mixological.v2.mappers.toLongId
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -150,4 +152,14 @@ private class DrinkPreviewItem(
         return TileItemDrinkPreviewBinding.bind(view)
     }
 
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is DrinkPreviewItem -> other.drinkPreviewUiModel == this.drinkPreviewUiModel
+            else -> super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return drinkPreviewUiModel.id.toLongId()
+    }
 }

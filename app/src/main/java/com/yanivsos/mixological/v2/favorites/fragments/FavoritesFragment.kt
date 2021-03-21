@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -21,6 +22,7 @@ import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.favorites.viewModel.FavoritesState
 import com.yanivsos.mixological.v2.favorites.viewModel.FavoritesViewModel
+import com.yanivsos.mixological.v2.mappers.toLongId
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -140,5 +142,16 @@ class GridDrinkPreviewItem(
                 true
             }
         }
+    }
+
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is GridDrinkPreviewItem -> other.drinkPreviewUiModel == this.drinkPreviewUiModel
+            else -> super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return drinkPreviewUiModel.id.toLongId()
     }
 }

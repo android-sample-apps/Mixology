@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -28,6 +29,7 @@ import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.v2.categories.viewModel.CategoriesUiState
 import com.yanivsos.mixological.v2.categories.viewModel.CategoriesViewModel
 import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
+import com.yanivsos.mixological.v2.mappers.toLongId
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -174,6 +176,12 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
         binding.categoryMenuMl.transitionToEnd()
     }
 
+    @Suppress("unused")
+    private fun setCollapsed() {
+        Timber.d("setCollapsed")
+        binding.categoryMenuMl.transitionToStart()
+    }
+
     private fun setSwipeTransitionEnabled(isEnabled: Boolean) {
         binding.categoryMenuMl.getTransition(R.id.swipe_transition).setEnable(isEnabled)
     }
@@ -222,6 +230,17 @@ private class CategoryItem(
 
     override fun initializeViewBinding(view: View): ListItemCategoryBinding {
         return ListItemCategoryBinding.bind(view)
+    }
+
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is CategoryItem -> other.categoryUiModel == this.categoryUiModel
+            else -> super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return categoryUiModel.name.toLongId()
     }
 }
 

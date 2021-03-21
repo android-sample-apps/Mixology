@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.view.View
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.FragmentMethodBinding
@@ -19,6 +20,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import com.yanivsos.mixological.v2.drink.EmptyBindableItem
 import com.yanivsos.mixological.v2.drink.viewModel.MethodState
+import com.yanivsos.mixological.v2.mappers.toLongId
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -116,6 +118,16 @@ class MethodItem(private val method: SpannableString) : BindableItem<ListItemMet
         return ListItemMethodBinding.bind(view)
     }
 
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is MethodItem -> other.method == this.method
+            else -> super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return method.toString().toLongId()
+    }
 }
 
 private class LoadingMethodItem : EmptyBindableItem<ListItemMethodLoadingBinding>() {

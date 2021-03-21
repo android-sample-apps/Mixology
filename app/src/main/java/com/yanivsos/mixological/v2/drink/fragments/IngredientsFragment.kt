@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -24,6 +25,7 @@ import com.yanivsos.mixological.ui.models.quantityVisibility
 import com.yanivsos.mixological.v2.drink.EmptyBindableItem
 import com.yanivsos.mixological.v2.drink.viewModel.DrinkViewModel
 import com.yanivsos.mixological.v2.drink.viewModel.IngredientsState
+import com.yanivsos.mixological.v2.mappers.toLongId
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -149,6 +151,17 @@ private class IngredientItem(
 
     override fun initializeViewBinding(view: View): ListItemIngredientBinding {
         return ListItemIngredientBinding.bind(view)
+    }
+
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is IngredientItem -> other.ingredient == this.ingredient
+            else -> super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return ingredient.name.toLongId()
     }
 }
 

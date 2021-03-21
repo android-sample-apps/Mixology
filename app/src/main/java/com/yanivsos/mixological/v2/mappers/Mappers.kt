@@ -8,6 +8,10 @@ import com.yanivsos.mixological.v2.categories.useCases.SelectedCategoryModel
 import com.yanivsos.mixological.v2.categories.viewModel.CategoriesUiState
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 
+fun String.toLongId(): Long {
+    return this.hashCode().toLong()
+}
+
 fun CategoriesState.toUiState(): CategoriesUiState {
     return when (this) {
         is CategoriesState.CategoryNotSelected ->
