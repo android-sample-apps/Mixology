@@ -14,7 +14,10 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.FragmentDrinkPreviewOptionsBinding
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
-import com.yanivsos.mixological.ui.view_model.DrinkPreviewOptionsViewModel
+import com.yanivsos.mixological.v2.drinkOptions.DrinkPreviewOptionsViewModel
+import com.yanivsos.mixological.v2.drinkOptions.FavoriteUiModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
@@ -59,9 +62,6 @@ class DrinkPreviewOptionsBottomFragment(
         super.onViewCreated(view, savedInstanceState)
         initDrinkName()
         observeFavoriteState()
-        binding?.toggleWatchlistBtn?.setOnClickListener {
-            addToWatchlist()
-        }
     }
 
     fun show(fragmentManager: FragmentManager) {
@@ -74,11 +74,14 @@ class DrinkPreviewOptionsBottomFragment(
 
     private fun observeFavoriteState() {
         optionsViewModel
-            .drinkLiveData
-            .observe(viewLifecycleOwner, {
-                Timber.d("onDrinkChanged: $it")
-                onFavoriteEnabled(it.isFavorite)
-            })
+            .favorite
+            .onEach { onDrinkStateReceived(it) }
+            .launchIn(viewLifecycleScope())
+    }
+
+    private fun onDrinkStateReceived(favoriteUiModel: FavoriteUiModel) {
+        Timber.d("onDrinkStateReceived: isFavorite[${favoriteUiModel.isFavorite}]")
+        onFavoriteEnabled(favoriteUiModel.isFavorite)
     }
 
     private fun onFavoriteEnabled(isFavorite: Boolean) {
@@ -153,12 +156,12 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private fun addToWatchlist() {
-        Timber.d("addToWatchlist: drinkId[${drinkPreviewUiModel.name}]")
-        optionsViewModel.addToWatchlist(drinkPreviewUiModel)
+        Timber.d("addToFavorites: drinkId[${drinkPreviewUiModel.name}]")
+        optionsViewModel.addToFavorites()
     }
 
     private fun removeFromWatchlist() {
-        Timber.d("removeFromWatchlist: drinkId[${drinkPreviewUiModel.name}]")
-        optionsViewModel.removeFromWatchlist(drinkPreviewUiModel)
+        Timber.d("removeFromFavorites: drinkId[${drinkPreviewUiModel.name}]")
+        optionsViewModel.removeFromFavorites()
     }
 }

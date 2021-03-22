@@ -9,6 +9,7 @@ import com.yanivsos.mixological.search_autocomplete.drinkAutoCompleteModule
 import com.yanivsos.mixological.ui.di.viewModelModule
 import com.yanivsos.mixological.v2.categories.di.categoriesDi
 import com.yanivsos.mixological.v2.drink.di.drinkDi
+import com.yanivsos.mixological.v2.drinkOptions.di.drinkOptionsDi
 import com.yanivsos.mixological.v2.favorites.di.favoriteDi
 import com.yanivsos.mixological.v2.ingredients.di.ingredientsDi
 import com.yanivsos.mixological.v2.landingPage.di.landingPageDi
@@ -38,7 +39,8 @@ class KoinStarter {
             favoriteDi,
             landingPageDi,
             categoriesDi,
-            ingredientsDi
+            ingredientsDi,
+            drinkOptionsDi
         )
     }
 }
