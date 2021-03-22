@@ -60,6 +60,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("onViewCreated")
         initCategoriesMenu()
         initDrinkPreviews()
         observeCategoriesState()
@@ -75,6 +76,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
             }.let { addItemDecoration(it) }
         }
 
+        // TODO: 22/03/2021 sometimes the expand state is incorrect
         val previewsExpanded = categoriesViewModel.previewsExpanded
         Timber.d("initCategoriesMenu: previewsExpanded: $previewsExpanded")
 
