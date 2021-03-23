@@ -42,6 +42,7 @@
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment"
+            app:enterAnim="@anim/fragment_close_enter"
             app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
@@ -59,6 +60,7 @@
         <action
             android:id="@+id/action_drinkFragment_to_drinkErrorFragment"
             app:destination="@id/drinkErrorFragment"
+            app:enterAnim="@anim/fragment_close_enter"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkFragment"
             app:popUpToInclusive="true" />
@@ -76,6 +78,7 @@
         <action
             android:id="@+id/action_drinkErrorFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
+            app:enterAnim="@anim/fragment_close_enter"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkErrorFragment"
             app:popUpToInclusive="true" />
