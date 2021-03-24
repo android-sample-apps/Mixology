@@ -12,10 +12,10 @@ class FilterHeaderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : MotionLayout(context, attrs, defStyleAttr) {
 
-    var filters: String? = null
+    var selectedCount: Int? = null
         set(value) {
             field = value
-            showFilters(filters)
+            showFilters(selectedCount)
         }
 
     var onFilterClearedClickedListener: (() -> Unit)? = null
@@ -36,7 +36,6 @@ class FilterHeaderView @JvmOverloads constructor(
     )
 
     init {
-
         initAttributes(attrs)
         setOnClearFilterClickListener()
     }
@@ -60,9 +59,9 @@ class FilterHeaderView @JvmOverloads constructor(
         }
     }
 
-    private fun showFilters(filters: String?) {
-        binding.badge.filterTv.text = filters
-        if (filters != null) {
+    private fun showFilters(selectedCount: Int?) {
+        binding.badge.filterTv.text = selectedCount?.toString()
+        if (selectedCount != null) {
             visibleBadge()
         }
         else {

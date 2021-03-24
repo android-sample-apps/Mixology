@@ -32,45 +32,50 @@ class GetAllFiltersUseCase(
         selectedFilter: SelectedFilters,
         alcoholics: List<AlcoholicFilterModel>
     ) = withContext(defaultDispatcher) {
-        selectedFilter.copy(alcoholic = alcoholics.map {
+        selectedFilter.copy(alcoholic = FilterCollection(alcoholics.map {
             FilterModel(it.name)
-        })
+        }))
     }
 
     private suspend fun mergeCategories(
         selectedFilter: SelectedFilters,
         categories: List<CategoryModel>
     ) = withContext(defaultDispatcher) {
-        selectedFilter.copy(categories = categories.map {
+        selectedFilter.copy(categories = FilterCollection(categories.map {
             FilterModel(it.name)
-        })
+        }))
     }
 
     private suspend fun mergeGlasses(
         selectedFilter: SelectedFilters,
         glasses: List<GlassModel>
     ) = withContext(defaultDispatcher) {
-        selectedFilter.copy(glasses = glasses.map {
+        selectedFilter.copy(glasses = FilterCollection(glasses.map {
             FilterModel(it.name)
-        })
+        }))
     }
 
     private suspend fun List<IngredientModel>.ingredientsToSelectedFilters() =
         withContext(defaultDispatcher) {
             SelectedFilters(
-                ingredients = map { FilterModel(it.name) }
+                ingredients = FilterCollection(map { FilterModel(it.name) })
             )
         }
 }
 
 data class SelectedFilters(
-    val ingredients: List<FilterModel> = emptyList(),
-    val alcoholic: List<FilterModel> = emptyList(),
-    val glasses: List<FilterModel> = emptyList(),
-    val categories: List<FilterModel> = emptyList()
+    val ingredients: FilterCollection = FilterCollection(),
+    val alcoholic: FilterCollection = FilterCollection(),
+    val glasses: FilterCollection = FilterCollection(),
+    val categories: FilterCollection = FilterCollection()
 )
 
 data class FilterModel(
     val name: String,
     val isSelected: Boolean = false
+)
+
+data class FilterCollection(
+    val filters: List<FilterModel> = emptyList(),
+    val selectedCount: Int = 0
 )

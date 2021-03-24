@@ -15,10 +15,10 @@ import com.yanivsos.mixological.databinding.ListItemSelectableFilterBinding
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
-import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
 import com.yanivsos.mixological.ui.views.FilterHeaderView
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.mappers.toLongId
+import com.yanivsos.mixological.v2.search.useCases.FilterCollection
 import com.yanivsos.mixological.v2.search.useCases.FilterModel
 import com.yanivsos.mixological.v2.search.useCases.SelectedFilters
 import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
@@ -104,20 +104,41 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private suspend fun onSelectedFiltersState(selectedFilters: SelectedFilters) {
+        updateFilters(selectedFilters)
+        updateFilterHeaderCount(selectedFilters)
+    }
+
+    private fun updateFilterHeaderCount(selectedFilters: SelectedFilters) {
+        selectedFilters.run {
+            binding?.run {
+                updateFilterHeaders(
+                    alcoholicHeaderFhv,
+                    alcoholic.selectedCount
+                )
+                updateFilterHeaders(
+                    categoryHeaderFhv,
+                    categories.selectedCount
+                )
+                updateFilterHeaders(
+                    glassesHeaderFhv,
+                    glasses.selectedCount
+                )
+
+                updateFilterHeaders(
+                    ingredientHeaderFhv,
+                    ingredients.selectedCount
+                )
+            }
+        }
+    }
+
+    private suspend fun updateFilters(selectedFilters: SelectedFilters) {
         selectedFilters.run {
             alcoholicAdapter.updateAsync(alcoholic.toItems {
-                onFilterClicked(
-                    DrinkFilter.Alcoholic(
-                        it.name
-                    )
-                )
+                onFilterClicked(DrinkFilter.Alcoholic(it.name))
             })
             categoryAdapter.updateAsync(categories.toItems {
-                onFilterClicked(
-                    DrinkFilter.Category(
-                        it.name
-                    )
-                )
+                onFilterClicked(DrinkFilter.Category(it.name))
             })
             ingredientsAdapter.updateAsync(ingredients.toItems {
                 /*onFilterClicked(
@@ -133,9 +154,9 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
-    private suspend fun List<FilterModel>.toItems(onFilterClicked: (FilterModel) -> Unit): List<FilterItem> {
+    private suspend fun FilterCollection.toItems(onFilterClicked: (FilterModel) -> Unit): List<FilterItem> {
         return withContext(Dispatchers.Default) {
-            map {
+            filters.map {
                 FilterItem(
                     filter = it,
                     onFilterClicked = onFilterClicked
@@ -144,42 +165,9 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
-    private fun updateResults(searchFiltersUiModel: SearchFiltersUiModel) {
-        /*updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
-        updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
-        updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
-        updateSelectableAdapter(
-            ingredientsAdapter,
-            searchFiltersUiModel.filters[FilterType.INGREDIENTS]
-        )*/
-    }
-
-    /*private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
-        Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
-        binding?.run {
-            updateFilterHeaders(
-                alcoholicHeaderFhv,
-                searchFiltersUiModel.activeFilters[FilterType.ALCOHOL]
-            )
-            updateFilterHeaders(
-                categoryHeaderFhv,
-                searchFiltersUiModel.activeFilters[FilterType.CATEGORY]
-            )
-            updateFilterHeaders(
-                glassesHeaderFhv,
-                searchFiltersUiModel.activeFilters[FilterType.GLASS]
-            )
-
-            updateFilterHeaders(
-                ingredientHeaderFhv,
-                searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
-            )
-        }
-    }*/
-
     private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, count: Int) {
         filterHeaderView.run {
-            filters = count.toString()
+            selectedCount = if (count == 0) null else count
         }
     }
 

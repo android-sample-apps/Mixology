@@ -74,10 +74,10 @@ class SearchViewModel(
     private suspend fun mapToFilterBadgeState(selectedFilters: SelectedFilters): FilterBadgeState {
         return withContext(defaultDispatcher) {
             var count = 0
-            count += selectedFilters.alcoholic.countSelected()
-            count += selectedFilters.glasses.countSelected()
-            count += selectedFilters.categories.countSelected()
-            count += selectedFilters.ingredients.countSelected()
+            count += selectedFilters.alcoholic.selectedCount
+            count += selectedFilters.glasses.selectedCount
+            count += selectedFilters.categories.selectedCount
+            count += selectedFilters.ingredients.selectedCount
             if (count == 0) {
                 FilterBadgeState.None
             } else {
@@ -85,8 +85,6 @@ class SearchViewModel(
             }
         }
     }
-
-    private fun List<FilterModel>.countSelected() = count { it.isSelected }
 
     private suspend fun mapToPreviewStats(list: List<DrinkPreviewModel>): PreviewState {
         return withContext(defaultDispatcher) {

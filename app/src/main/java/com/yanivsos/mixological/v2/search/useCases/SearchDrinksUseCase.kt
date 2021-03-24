@@ -54,7 +54,7 @@ class SearchDrinksUseCase(
     }
 
     suspend fun clearAlcoholicFilter() {
-       Timber.d("clearAlcoholicFilter")
+        Timber.d("clearAlcoholicFilter")
         alcoholicFilterByUseCase.clear()
     }
 
@@ -98,10 +98,19 @@ class SearchDrinksUseCase(
             filter.filters.filterIsInstance<DrinkFilter.Category>().map { it.category }.toSet()
 
         return SelectedFilters(
-            glasses = allFilters.glasses.map { it.copy(isSelected = it.name in glassesSet) },
-            alcoholic = allFilters.alcoholic.map { it.copy(isSelected = it.name in alcoholicSet) },
-            categories = allFilters.categories.map { it.copy(isSelected = it.name in categoriesSet) },
-            ingredients = emptyList() // TODO: 23/03/2021 complete ingredients
+            glasses = FilterCollection(
+                allFilters.glasses.filters.map { it.copy(isSelected = it.name in glassesSet) },
+                glassesSet.size
+            ),
+            alcoholic = FilterCollection(
+                allFilters.alcoholic.filters.map { it.copy(isSelected = it.name in alcoholicSet) },
+                alcoholicSet.size
+            ),
+            categories = FilterCollection(
+                allFilters.categories.filters.map { it.copy(isSelected = it.name in categoriesSet) },
+                categoriesSet.size
+            ),
+            ingredients = FilterCollection() // TODO: 23/03/2021 complete ingredients
         )
     }
 
