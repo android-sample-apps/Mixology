@@ -219,6 +219,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun onFilterBadgeState(filterBadgeState: FilterBadgeState) {
+        Timber.d("onFilterBadgeState: $filterBadgeState")
         when (filterBadgeState) {
             is FilterBadgeState.Active -> showSelectedBadge(filterBadgeState)
             FilterBadgeState.None -> hideSelectedBadge()
@@ -226,7 +227,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun hideSelectedBadge() {
-        binding.filterImage.isShowCounter = false
+        binding.filterImage.run {
+            isShowCounter = false
+            badgeValue = 0
+        }
     }
 
     private fun showSelectedBadge(state: FilterBadgeState.Active) {

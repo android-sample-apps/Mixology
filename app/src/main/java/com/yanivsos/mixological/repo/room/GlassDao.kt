@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GlassDao {
 
-    @Query("SELECT * FROM glasses")
+    @Query("SELECT * FROM glasses ORDER BY name")
     fun getAll(): Flow<List<GlassModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

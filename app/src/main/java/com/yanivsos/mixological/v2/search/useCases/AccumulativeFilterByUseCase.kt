@@ -67,8 +67,10 @@ class AccumulativeFilterByUseCase(
     private suspend fun emitMap(map: Map<DrinkFilter, List<DrinkPreviewModel>>) {
         withContext(defaultDispatcher) {
             resultFlow.value = if (map.isEmpty()) {
+                Timber.d("emitting empty")
                 AccumulativeFilterState.All
             } else {
+                Timber.d("emitting map: keys[${map.keys}]")
                 AccumulativeFilterState.Result(
                     filters = map.keys,
                     results = map.values.flatten().toSet()

@@ -77,7 +77,7 @@ class SearchViewModel(
             count += selectedFilters.alcoholic.countSelected()
             count += selectedFilters.glasses.countSelected()
             count += selectedFilters.categories.countSelected()
-            count += selectedFilters.categories.countSelected()
+            count += selectedFilters.ingredients.countSelected()
             if (count == 0) {
                 FilterBadgeState.None
             } else {

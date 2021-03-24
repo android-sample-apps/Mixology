@@ -14,7 +14,7 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredient_details WHERE name LIKE :name")
     fun getByName(name: String): Flow<List<IngredientDetailsModel>>
 
-    @Query("SELECT * FROM ingredients")
+    @Query("SELECT * FROM ingredients ORDER BY name")
     fun getAll(): Flow<List<IngredientModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
