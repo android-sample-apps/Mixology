@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/advancedSearchFragment"
-        android:name="com.yanivsos.mixological.ui.fragments.AdvancedSearchFragment"
+        android:name="com.yanivsos.mixological.v2.search.fragments.SearchFragment"
         android:label="AdvancedSearchFragment"
         tools:layout="@layout/fragment_advanced_search">
         <action

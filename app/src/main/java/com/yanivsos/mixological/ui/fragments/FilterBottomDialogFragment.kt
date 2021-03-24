@@ -4,28 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.xwray.groupie.GroupieAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.BottomDialogSearchFiltersBinding
 import com.yanivsos.mixological.databinding.ListItemSelectableFilterBinding
-import com.yanivsos.mixological.domain.models.DrinkFilter
-import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.extensions.compatColor
 import com.yanivsos.mixological.extensions.dpToPx
-import com.yanivsos.mixological.extensions.layoutInflater
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
-import com.yanivsos.mixological.ui.models.DrinkFilterUiModel
 import com.yanivsos.mixological.ui.models.SearchFiltersUiModel
-import com.yanivsos.mixological.ui.utils.InputActions
-import com.yanivsos.mixological.ui.view_model.AdvancedSearchViewModel
 import com.yanivsos.mixological.ui.views.FilterHeaderView
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.*
+import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
+import com.yanivsos.mixological.v2.mappers.toLongId
+import com.yanivsos.mixological.v2.search.useCases.FilterModel
+import com.yanivsos.mixological.v2.search.useCases.SelectedFilters
+import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
@@ -34,35 +34,19 @@ private const val TAG = "FilterBottomDialogFragment"
 class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private var binding: BottomDialogSearchFiltersBinding? = null
-    private val advancedSearchViewModel: AdvancedSearchViewModel by lazy {
-        @Suppress("RemoveExplicitTypeArguments")
-        requireParentFragment().getViewModel<AdvancedSearchViewModel>()
+
+    private val searchViewModel: SearchViewModel by lazy {
+        requireParentFragment().getViewModel()
     }
-    private val alcoholicAdapter = SelectableAdapter()
-    private val ingredientsAdapter = SelectableAdapter()
-    private val categoryAdapter = SelectableAdapter()
-    private val glassAdapter = SelectableAdapter()
+
+    private val alcoholicAdapter = GroupieAdapter()
+    private val ingredientsAdapter = GroupieAdapter()
+    private val categoryAdapter = GroupieAdapter()
+    private val glassAdapter = GroupieAdapter()
 
     private fun onFilterClicked(drinkFilter: DrinkFilter) {
         Timber.d("onFilterClicked: $drinkFilter")
-        advancedSearchViewModel.updateFilter(drinkFilter)
-    }
-
-    private fun observeInputActions(adapter: SelectableAdapter) {
-        lifecycleScope.launchWhenStarted {
-            adapter.inputActions
-                .filterIsInstance<InputActions.Click<DrinkFilterUiModel>>()
-                .map { it.data.drinkFilter }
-                .collect { onFilterClicked(it) }
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        observeInputActions(alcoholicAdapter)
-        observeInputActions(ingredientsAdapter)
-        observeInputActions(categoryAdapter)
-        observeInputActions(glassAdapter)
+        searchViewModel.toggleFilter(drinkFilter)
     }
 
     override fun createView(
@@ -85,58 +69,92 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initHeaderView()
         initFiltersRecyclerView()
-        initIngredientSearch()
+//        initIngredientSearch()
         observerFilters()
     }
 
     private fun initHeaderView() {
         binding?.ingredientHeaderFhv?.onFilterClearedClickedListener = {
-            clearFilter(FilterType.INGREDIENTS)
+            searchViewModel.clearIngredientsFilter()
         }
         binding?.alcoholicHeaderFhv?.onFilterClearedClickedListener = {
-            clearFilter(FilterType.ALCOHOL)
+            searchViewModel.clearAlcoholicFilter()
         }
         binding?.glassesHeaderFhv?.onFilterClearedClickedListener = {
-            clearFilter(FilterType.GLASS)
+            searchViewModel.clearGlassesFilter()
         }
         binding?.categoryHeaderFhv?.onFilterClearedClickedListener = {
-            clearFilter(FilterType.CATEGORY)
+            searchViewModel.clearCategoriesFilter()
         }
     }
 
-    private fun clearFilter(filterType: FilterType) {
-        advancedSearchViewModel.clearFilter(filterType)
-    }
-
-    private fun initIngredientSearch() {
+    /*private fun initIngredientSearch() {
         binding?.ingredientSearchQueryEt?.addTextChangedListener {
             val name = it?.toString()
             advancedSearchViewModel.onIngredientNameSearch(name)
         }
         advancedSearchViewModel.onIngredientNameSearch(null)
-    }
+    }*/
 
     private fun observerFilters() {
-        advancedSearchViewModel.searchFiltersLiveData.observe(
-            viewLifecycleOwner, {
-                Timber.d("Received filters: ${it.activeFilters}")
-                updateResults(it)
-                updateActiveFilters(it)
+        searchViewModel
+            .selectedFilters
+            .onEach { onSelectedFiltersState(it) }
+            .launchIn(viewLifecycleScope())
+    }
+
+    private suspend fun onSelectedFiltersState(selectedFilters: SelectedFilters) {
+        selectedFilters.run {
+            alcoholicAdapter.updateAsync(alcoholic.toItems {
+                onFilterClicked(
+                    DrinkFilter.Alcoholic(
+                        it.name
+                    )
+                )
+            })
+            categoryAdapter.updateAsync(categories.toItems {
+                onFilterClicked(
+                    DrinkFilter.Category(
+                        it.name
+                    )
+                )
+            })
+            ingredientsAdapter.updateAsync(ingredients.toItems {
+                /*onFilterClicked(
+                    DrinkFilter.Ingredients(
+                        it.name
+                    )
+                )*/
+                // TODO: 23/03/2021 complete this
+            })
+            glassAdapter.updateAsync(glasses.toItems {
+                onFilterClicked(DrinkFilter.Glass(it.name))
+            })
+        }
+    }
+
+    private suspend fun List<FilterModel>.toItems(onFilterClicked: (FilterModel) -> Unit): List<FilterItem> {
+        return withContext(Dispatchers.Default) {
+            map {
+                FilterItem(
+                    filter = it,
+                    onFilterClicked = onFilterClicked
+                )
             }
-        )
+        }
     }
 
     private fun updateResults(searchFiltersUiModel: SearchFiltersUiModel) {
-        updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
+        /*updateSelectableAdapter(alcoholicAdapter, searchFiltersUiModel.filters[FilterType.ALCOHOL])
         updateSelectableAdapter(categoryAdapter, searchFiltersUiModel.filters[FilterType.CATEGORY])
         updateSelectableAdapter(glassAdapter, searchFiltersUiModel.filters[FilterType.GLASS])
         updateSelectableAdapter(
             ingredientsAdapter,
             searchFiltersUiModel.filters[FilterType.INGREDIENTS]
-        )
+        )*/
     }
 
-    private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
+    /*private fun updateActiveFilters(searchFiltersUiModel: SearchFiltersUiModel) {
         Timber.d("updateActiveFilters: ${searchFiltersUiModel.activeFilters}")
         binding?.run {
             updateFilterHeaders(
@@ -157,20 +175,20 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
                 searchFiltersUiModel.activeFilters[FilterType.INGREDIENTS]
             )
         }
-    }
+    }*/
 
-    private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, activeFilters: Int?) {
+    private fun updateFilterHeaders(filterHeaderView: FilterHeaderView, count: Int) {
         filterHeaderView.run {
-            filters = activeFilters?.toString()
+            filters = count.toString()
         }
     }
 
-    private fun updateSelectableAdapter(
+    /*private fun updateSelectableAdapter(
         selectableAdapter: SelectableAdapter,
         filters: List<DrinkFilterUiModel>?
     ) {
         selectableAdapter.submitList(filters ?: emptyList())
-    }
+    }*/
 
     private fun initFiltersRecyclerView() {
         binding?.run {
@@ -181,7 +199,10 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
-    private fun initRecyclerView(recyclerView: RecyclerView, selectableAdapter: SelectableAdapter) {
+    private fun initRecyclerView(
+        recyclerView: RecyclerView,
+        filterAdapter: RecyclerView.Adapter<*>
+    ) {
         recyclerView.run {
             val padding = 4.dpToPx().toInt()
             addItemDecoration(
@@ -192,7 +213,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
                     right = padding
                 )
             )
-            adapter = selectableAdapter
+            adapter = filterAdapter
         }
     }
 
@@ -201,12 +222,34 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 }
 
-class SelectableAdapter :
-    ListAdapter<DrinkFilterUiModel, SelectableAdapter.SelectableViewHolder>(DrinkFilterDiffCallback()) {
+class FilterItem(
+    private val filter: FilterModel,
+    private val onFilterClicked: (FilterModel) -> Unit
+) : BindableItem<ListItemSelectableFilterBinding>() {
 
-    private val inputActionsChannel =
-        ConflatedBroadcastChannel<InputActions<DrinkFilterUiModel>>()
-    val inputActions: Flow<InputActions<DrinkFilterUiModel>> = inputActionsChannel.asFlow()
+    override fun bind(viewBinding: ListItemSelectableFilterBinding, position: Int) {
+        viewBinding.root.run {
+            setOnClickListener { onFilterClicked(filter) }
+
+            val selectedColor = context.compatColor(getColor(filter.isSelected))
+            viewBinding.cardContainer.run {
+                strokeColor = selectedColor
+                elevation = getElevation(filter.isSelected)
+            }
+            viewBinding.filterTv.run {
+                setTextColor(selectedColor)
+                text = filter.name
+            }
+        }
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.list_item_selectable_filter
+    }
+
+    override fun initializeViewBinding(view: View): ListItemSelectableFilterBinding {
+        return ListItemSelectableFilterBinding.bind(view)
+    }
 
     private fun getColor(selected: Boolean): Int {
         return if (selected) R.color.header_text_color else R.color.secondary_text_color_alpha_50
@@ -216,65 +259,14 @@ class SelectableAdapter :
         return if (selected) 8.dpToPx() else 0.dpToPx()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectableViewHolder {
-        return SelectableViewHolder(
-            ListItemSelectableFilterBinding.inflate(
-                parent.layoutInflater(),
-                parent,
-                false
-            )
-        )
+    override fun getId(): Long {
+        return filter.name.toLongId()
     }
 
-    override fun onBindViewHolder(holder: SelectableAdapter.SelectableViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-
-    inner class SelectableViewHolder(private val binding: ListItemSelectableFilterBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-
-        private fun sendInputAction(inputActions: InputActions<DrinkFilterUiModel>) {
-            inputActionsChannel.offer(inputActions)
+    override fun hasSameContentAs(other: Item<*>): Boolean {
+        return when (other) {
+            is FilterItem -> other.filter == this.filter
+            else -> super.hasSameContentAs(other)
         }
-
-        private fun invokeFilterClicked(filter: DrinkFilterUiModel) {
-            val drinkFilter = filter.drinkFilter.copy(active = !filter.selected)
-            sendInputAction(InputActions.Click(filter.copy(drinkFilter = drinkFilter)))
-        }
-
-        fun bind(filter: DrinkFilterUiModel) {
-            binding.root.run {
-                setOnClickListener { invokeFilterClicked(filter) }
-
-                val selectedColor = context.compatColor(getColor(filter.selected))
-                binding.cardContainer.run {
-                    strokeColor = selectedColor
-                    elevation = getElevation(filter.selected)
-                }
-                binding.filterTv.run {
-                    setTextColor(selectedColor)
-                    text = filter.name
-                }
-            }
-        }
-    }
-}
-
-
-private class DrinkFilterDiffCallback : DiffUtil.ItemCallback<DrinkFilterUiModel>() {
-
-    override fun areItemsTheSame(
-        oldItem: DrinkFilterUiModel,
-        newItem: DrinkFilterUiModel
-    ): Boolean {
-        return oldItem.name == newItem.name
-    }
-
-    override fun areContentsTheSame(
-        oldItem: DrinkFilterUiModel,
-        newItem: DrinkFilterUiModel
-    ): Boolean {
-        return oldItem.selected == newItem.selected
     }
 }

@@ -13,6 +13,7 @@ import com.yanivsos.mixological.v2.drinkOptions.di.drinkOptionsDi
 import com.yanivsos.mixological.v2.favorites.di.favoriteDi
 import com.yanivsos.mixological.v2.ingredients.di.ingredientsDi
 import com.yanivsos.mixological.v2.landingPage.di.landingPageDi
+import com.yanivsos.mixological.v2.search.di.searchDi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -40,7 +41,8 @@ class KoinStarter {
             landingPageDi,
             categoriesDi,
             ingredientsDi,
-            drinkOptionsDi
+            drinkOptionsDi,
+            searchDi
         )
     }
 }

@@ -41,7 +41,7 @@ abstract class DrinksDatabase : RoomDatabase() {
     abstract fun favoriteDaoV2(): FavoriteDrinksDao
     abstract fun getLandingPageDao(): LandingPageDao
     abstract fun getCategoriesDao(): CategoriesDao
-    abstract fun getIngredientDetailsDao(): com.yanivsos.mixological.v2.ingredients.dao.IngredientDetailsDao
+    abstract fun getIngredientDao(): com.yanivsos.mixological.v2.ingredients.dao.IngredientDao
 
 }
 

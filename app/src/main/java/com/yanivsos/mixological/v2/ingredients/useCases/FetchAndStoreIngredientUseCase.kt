@@ -1,13 +1,13 @@
 package com.yanivsos.mixological.v2.ingredients.useCases
 
-import com.yanivsos.mixological.v2.ingredients.repository.IngredientsRepository
+import com.yanivsos.mixological.v2.ingredients.repository.IngredientDetailsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class FetchAndStoreIngredientUseCase(
-    private val ingredientsRepository: IngredientsRepository,
+    private val ingredientDetailsRepository: IngredientDetailsRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
@@ -22,10 +22,10 @@ class FetchAndStoreIngredientUseCase(
     private suspend fun fetchAndStore(name: String) {
         runCatching {
             Timber.d("fetching: $name")
-            ingredientsRepository.fetchIngredient(name)
+            ingredientDetailsRepository.fetchIngredient(name)
         }.onSuccess {
             Timber.d("fetched: $name")
-            ingredientsRepository.store(it)
+            ingredientDetailsRepository.store(it)
         }
             .onFailure { Timber.e(it, "Failed fetching ingredient [$name]") }
     }

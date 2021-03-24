@@ -22,6 +22,7 @@ import com.yanivsos.mixological.ui.utils.InputActions
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.AdvancedSearchViewModel
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
+import com.yanivsos.mixological.v2.search.fragments.SearchFragmentDirections
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.collect
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -54,7 +55,7 @@ class AdvancedSearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
         AnalyticsDispatcher.onDrinkPreviewClicked(drinkPreview, ScreenNames.SEARCH)
         requireView().hideKeyboard()
         findNavController().navigate(
-            AdvancedSearchFragmentDirections
+            SearchFragmentDirections
                 .actionAdvancedSearchFragmentToDrinkFragment(drinkPreview)
         )
     }

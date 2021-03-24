@@ -5,14 +5,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.yanivsos.mixological.domain.models.IngredientDetailsModel
+import com.yanivsos.mixological.domain.models.IngredientModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface IngredientDetailsDao {
+interface IngredientDao {
 
     @Query("SELECT * FROM ingredient_details WHERE name LIKE :name")
     fun getByName(name: String): Flow<List<IngredientDetailsModel>>
 
+    @Query("SELECT * FROM ingredients")
+    fun getAll(): Flow<List<IngredientModel>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun store(ingredientDetails: IngredientDetailsModel)
+
 }
