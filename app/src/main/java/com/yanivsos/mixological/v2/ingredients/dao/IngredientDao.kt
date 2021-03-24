@@ -17,6 +17,9 @@ interface IngredientDao {
     @Query("SELECT * FROM ingredients ORDER BY name")
     fun getAll(): Flow<List<IngredientModel>>
 
+    @Query("SELECT * FROM ingredients WHERE name LIKE '%'||:name||'%'")
+    suspend fun findIngredientsBySimilarName(name: String): List<IngredientModel>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun store(ingredientDetails: IngredientDetailsModel)
 

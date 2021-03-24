@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xwray.groupie.GroupieAdapter
@@ -69,7 +70,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         initHeaderView()
         initFiltersRecyclerView()
-//        initIngredientSearch()
+        initIngredientSearch()
         observerFilters()
     }
 
@@ -88,13 +89,11 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         }
     }
 
-    /*private fun initIngredientSearch() {
-        binding?.ingredientSearchQueryEt?.addTextChangedListener {
-            val name = it?.toString()
-            advancedSearchViewModel.onIngredientNameSearch(name)
+    private fun initIngredientSearch() {
+        binding?.ingredientSearchQueryEt?.addTextChangedListener { text ->
+            searchViewModel.findRelevantIngredients(text?.toString())
         }
-        advancedSearchViewModel.onIngredientNameSearch(null)
-    }*/
+    }
 
     private fun observerFilters() {
         searchViewModel

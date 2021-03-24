@@ -9,15 +9,13 @@ import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.search.useCases.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SearchViewModel(
     getAutoCompleteSuggestionsUseCase: GetAutoCompleteSuggestionsUseCase,
+    private val findSimilarIngredientsByNameUseCase: FindSimilarIngredientsByNameUseCase,
     private val searchDrinksUseCase: SearchDrinksUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
@@ -39,7 +37,12 @@ class SearchViewModel(
             .filters
             .map { mapToFilterBadgeState(it) }
 
-    val selectedFilters = searchDrinksUseCase.filters
+    val selectedFilters: Flow<SelectedFilters> =
+        searchDrinksUseCase
+            .filters
+            .combine(findSimilarIngredientsByNameUseCase.similarIngredients) { selectedFilters, similarIngredientsState ->
+                mergeWithSimilarIngredients(selectedFilters, similarIngredientsState)
+            }
 
     fun toggleFilter(drinkFilter: DrinkFilter) {
         viewModelScope.launch {
@@ -68,6 +71,31 @@ class SearchViewModel(
     fun clearIngredientsFilter() {
         viewModelScope.launch {
             searchDrinksUseCase.clearIngredientsFilter()
+        }
+    }
+
+    fun findRelevantIngredients(name: String?) {
+        viewModelScope.launch {
+            findSimilarIngredientsByNameUseCase.updateName(name)
+        }
+    }
+
+    private suspend fun mergeWithSimilarIngredients(
+        selectedFilters: SelectedFilters,
+        similarIngredientsState: SimilarIngredientsState
+    ): SelectedFilters {
+        return withContext(defaultDispatcher) {
+            when (similarIngredientsState) {
+                SimilarIngredientsState.All -> selectedFilters
+                is SimilarIngredientsState.Found -> run {
+                    val filteredIngredients = FilterCollection(
+                        filters = similarIngredientsState.results,
+                        selectedCount = selectedFilters.ingredients.selectedCount
+                    )
+                    selectedFilters.copy(ingredients = filteredIngredients)
+                }
+            }
+
         }
     }
 
