@@ -11,5 +11,5 @@ interface CategoryDao {
     fun getAll(): Flow<List<CategoryModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(categories: List<CategoryModel>)
+    suspend fun store(categories: List<CategoryModel>)
 }

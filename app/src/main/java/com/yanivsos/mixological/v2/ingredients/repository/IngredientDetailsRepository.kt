@@ -27,6 +27,4 @@ class IngredientDetailsRepository(
     }
 
     fun getByName(name: String) = ingredientDao.getByName(name)
-
-    fun getIngredients() = ingredientDao.getAll()
 }

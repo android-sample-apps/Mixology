@@ -1,20 +1,66 @@
 package com.yanivsos.mixological.v2.search.useCases
 
-import com.yanivsos.mixological.v2.ingredients.repository.IngredientDetailsRepository
+import com.yanivsos.mixological.domain.models.AlcoholicFilterModel
+import com.yanivsos.mixological.domain.models.CategoryModel
+import com.yanivsos.mixological.domain.models.GlassModel
+import com.yanivsos.mixological.domain.models.IngredientModel
+import com.yanivsos.mixological.v2.search.repo.SearchRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class GetAllFiltersUseCase(
-    ingredientDetailsRepository: IngredientDetailsRepository,
+    searchRepository: SearchRepository,
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     val allFilters: Flow<SelectedFilters> =
-        ingredientDetailsRepository
+        searchRepository
             .getIngredients()
-            .map { ingredients ->
-                SelectedFilters(
-                    ingredients = ingredients.map { FilterModel(it.name) }
-                )
+            .map { ingredients -> ingredients.ingredientsToSelectedFilters() }
+            .combine(searchRepository.getAlcoholicFilters()) { selectedFilter, alcoholics ->
+                mergeAlcoholic(selectedFilter, alcoholics)
+            }.combine(searchRepository.getCategories()) { selectedFilter, categories ->
+                mergeCategories(selectedFilter, categories)
+            }.combine(searchRepository.getGlasses()) { selectedFilter, glasses ->
+                mergeGlasses(selectedFilter, glasses)
             }
+
+    private suspend fun mergeAlcoholic(
+        selectedFilter: SelectedFilters,
+        alcoholics: List<AlcoholicFilterModel>
+    ) = withContext(defaultDispatcher) {
+        selectedFilter.copy(alcoholic = alcoholics.map {
+            FilterModel(it.name)
+        })
+    }
+
+    private suspend fun mergeCategories(
+        selectedFilter: SelectedFilters,
+        categories: List<CategoryModel>
+    ) = withContext(defaultDispatcher) {
+        selectedFilter.copy(categories = categories.map {
+            FilterModel(it.name)
+        })
+    }
+
+    private suspend fun mergeGlasses(
+        selectedFilter: SelectedFilters,
+        glasses: List<GlassModel>
+    ) = withContext(defaultDispatcher) {
+        selectedFilter.copy(glasses = glasses.map {
+            FilterModel(it.name)
+        })
+    }
+
+    private suspend fun List<IngredientModel>.ingredientsToSelectedFilters() =
+        withContext(defaultDispatcher) {
+            SelectedFilters(
+                ingredients = map { FilterModel(it.name) }
+            )
+        }
 }
 
 data class SelectedFilters(

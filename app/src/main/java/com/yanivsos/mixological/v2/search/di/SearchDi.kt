@@ -1,5 +1,6 @@
 package com.yanivsos.mixological.v2.search.di
 
+import com.yanivsos.mixological.v2.search.repo.SearchRepository
 import com.yanivsos.mixological.v2.search.useCases.AccumulativeFilterByUseCase
 import com.yanivsos.mixological.v2.search.useCases.GetAllFiltersUseCase
 import com.yanivsos.mixological.v2.search.useCases.GetAutoCompleteSuggestionsUseCase
@@ -15,8 +16,17 @@ val searchDi = module {
     ) }
 
     single {
+        SearchRepository(
+            ingredientDao = get(),
+            alcoholicFilterDao = get(),
+            categoryDao = get(),
+            glassDao = get()
+        )
+    }
+
+    single {
         GetAllFiltersUseCase(
-            ingredientDetailsRepository = get()
+            searchRepository = get()
         )
     }
 

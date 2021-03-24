@@ -14,5 +14,5 @@ interface AlcoholicFilterDao {
     fun getAll(): Flow<List<AlcoholicFilterModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun storeAll(alcoholicFilters: List<AlcoholicFilterModel>)
+    suspend fun storeAll(alcoholicFilters: List<AlcoholicFilterModel>)
 }

@@ -14,5 +14,5 @@ interface GlassDao {
     fun getAll(): Flow<List<GlassModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun storeAll(glasses: List<GlassModel>)
+    suspend fun store(glasses: List<GlassModel>)
 }

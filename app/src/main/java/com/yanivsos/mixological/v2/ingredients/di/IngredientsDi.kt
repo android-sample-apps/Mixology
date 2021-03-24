@@ -21,7 +21,7 @@ val ingredientsDi = module {
 
     single {
         FetchAndStoreIngredientUseCase(
-            ingredientsRepository = get()
+            ingredientDetailsRepository = get()
         )
     }
 
