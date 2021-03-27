@@ -36,6 +36,14 @@ class DrinkRepository(
         }
     }
 
+    suspend fun fetchByName(name: String): List<DrinkModel> {
+        return withContext(ioDispatcher) {
+            drinkService
+                .searchByName(name)
+                .toModel()
+        }
+    }
+
     suspend fun store(drinkModel: DrinkModel) {
         withContext(ioDispatcher) {
             Timber.d("store: id[${drinkModel.debugPrint()}]")

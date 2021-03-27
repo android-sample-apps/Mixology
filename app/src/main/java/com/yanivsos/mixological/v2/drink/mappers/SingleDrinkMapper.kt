@@ -54,6 +54,14 @@ fun DrinkState.Error.toUiModel(): DrinkErrorUiModel {
     }
 }
 
+fun DrinkModel.toPreviewModel(): DrinkPreviewModel {
+    return DrinkPreviewModel(
+        id = id,
+        name = name,
+        thumbnail = thumbnail,
+        isFavorite = isFavorite
+    )
+}
 
 fun DrinkModel.toUiModel(context: Context): DrinkUiModel {
     val locale = Locale.getDefault()
@@ -109,7 +117,7 @@ private fun DrinkModel.mapShareText(context: Context): String {
             if (isNotEmpty()) {
                 append(context.getString(R.string.ingredients))
                 append("\n")
-                forEach { ingredient, quantity ->
+                forEach { (ingredient, quantity) ->
                     append("■ ")
                     append(ingredient)
                     if (quantity.isNotBlank()) {

@@ -16,6 +16,7 @@ class SearchDrinksUseCase(
     private val alcoholicFilterByUseCase: AccumulativeFilterByUseCase,
     private val glassFilterByUseCase: AccumulativeFilterByUseCase,
     private val categoriesFilterByUseCase: AccumulativeFilterByUseCase,
+    private val fetchDrinkByNameUseCase: FetchDrinkByNameUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
 
@@ -32,6 +33,8 @@ class SearchDrinksUseCase(
         filterResults
             .combine(drinkRepository.getAllPreviews()) { filterResults, allPreviews ->
                 mapToPreviews(filterResults, allPreviews)
+            }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
+                intersectDrinks(filteredResults, resultsByName)
             }
 
     val filters: Flow<SelectedFilters> =
@@ -73,6 +76,16 @@ class SearchDrinksUseCase(
         // TODO: 23/03/2021 implement
     }
 
+    suspend fun fetchByName(name: String) {
+        Timber.d("fetchByName: name[$name]")
+        fetchDrinkByNameUseCase.fetchByName(name)
+    }
+
+    fun clearByName() {
+        Timber.d("clearByName: ")
+        fetchDrinkByNameUseCase.clear()
+    }
+
     private suspend fun mapToFilterModel(
         filter: AccumulativeFilterState,
         allFilters: SelectedFilters
@@ -83,6 +96,33 @@ class SearchDrinksUseCase(
                 is AccumulativeFilterState.Result -> combineToSelectedFilters(filter, allFilters)
             }
         }
+    }
+
+    private suspend fun intersectDrinks(
+        filteredResults: List<DrinkPreviewModel>,
+        drinkState: FetchDrinkState
+    ): List<DrinkPreviewModel> {
+        return withContext(defaultDispatcher) {
+            when (drinkState) {
+                is FetchDrinkState.FoundResults -> intersectDrinks(filteredResults, drinkState)
+                FetchDrinkState.NoResults -> emptyList()
+                FetchDrinkState.NotSelected -> filteredResults
+            }
+        }
+    }
+
+    private fun intersectDrinks(
+        filteredResults: List<DrinkPreviewModel>,
+        results: FetchDrinkState.FoundResults
+    ): List<DrinkPreviewModel> {
+        val result = mutableListOf<DrinkPreviewModel>()
+        val filteredResultsMap: Map<String, DrinkPreviewModel> =
+            filteredResults.associateBy { it.id }
+
+        results.drinks.forEach {
+            filteredResultsMap[it.id]?.let { preview -> result.add(preview) }
+        }
+        return result
     }
 
     private fun combineToSelectedFilters(

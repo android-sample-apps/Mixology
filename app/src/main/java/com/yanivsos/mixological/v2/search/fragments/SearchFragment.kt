@@ -6,6 +6,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.xwray.groupie.GroupieAdapter
 import com.yanivsos.mixological.R
@@ -115,7 +117,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private fun initSearchQuery() {
         Timber.d("initSearchQuery")
         binding.searchContainerTil.setEndIconOnClickListener {
-            hideNoResults()
             clearQuery()
         }
         binding.searchQueryActv.run {
@@ -131,7 +132,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             setOnItemClickListener { _, _, _, _ ->
                 onRunSearchQuery()
             }
-            setOnFocusChangeListener { v, hasFocus ->
+            setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) dismissDropDown()
             }
         }
@@ -151,9 +152,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun clearQuery() {
-//        advancedSearchViewModel.clearByName()
+        searchViewModel.clearByName()
         binding.searchQueryActv.text = null
-        previewAdapter.clear()
     }
 
     private fun onRunSearchQuery() {
@@ -161,7 +161,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
             hideKeyboard()
             dismissDropDown()
         }
-        hideNoResults()
         search()
     }
 
@@ -174,7 +173,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun search() {
-//        advancedSearchViewModel.searchByName(query)
+        searchViewModel.fetchByName(query)
     }
 
     private fun observeResults() {
@@ -214,6 +213,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     private fun observeFiltersBadge() {
         searchViewModel
             .filterBadge
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { onFilterBadgeState(it) }
             .launchIn(viewLifecycleScope())
     }

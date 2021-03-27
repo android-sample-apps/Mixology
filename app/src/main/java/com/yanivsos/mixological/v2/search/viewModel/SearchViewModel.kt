@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class SearchViewModel(
     getAutoCompleteSuggestionsUseCase: GetAutoCompleteSuggestionsUseCase,
@@ -77,6 +78,20 @@ class SearchViewModel(
     fun findRelevantIngredients(name: String?) {
         viewModelScope.launch {
             findSimilarIngredientsByNameUseCase.updateName(name)
+        }
+    }
+
+    fun fetchByName(name: String) {
+        viewModelScope.launch {
+            runCatching {
+                searchDrinksUseCase.fetchByName(name)
+            }.onFailure { Timber.e(it, "Failed fetching by name: $name") }
+        }
+    }
+
+    fun clearByName() {
+        viewModelScope.launch {
+            searchDrinksUseCase.clearByName()
         }
     }
 

@@ -35,6 +35,12 @@ val searchDi = module {
         )
     }
 
+    single {
+        FetchDrinkByNameUseCase(
+            drinkRepository = get()
+        )
+    }
+
     factory {
         AccumulativeFilterByUseCase(
             drinkRepository = get()
@@ -47,7 +53,8 @@ val searchDi = module {
             getAllFiltersUseCase = get(),
             alcoholicFilterByUseCase = get(),
             glassFilterByUseCase = get(),
-            categoriesFilterByUseCase = get()
+            categoriesFilterByUseCase = get(),
+            fetchDrinkByNameUseCase = get()
         )
     }
 
