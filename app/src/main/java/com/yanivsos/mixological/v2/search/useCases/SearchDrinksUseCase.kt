@@ -7,15 +7,17 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SearchDrinksUseCase(
     drinkRepository: DrinkRepository,
     getAllFiltersUseCase: GetAllFiltersUseCase,
-    private val alcoholicFilterByUseCase: AccumulativeFilterByUseCase,
-    private val glassFilterByUseCase: AccumulativeFilterByUseCase,
-    private val categoriesFilterByUseCase: AccumulativeFilterByUseCase,
+    private val alcoholicFilterByUseCase: AlcoholicFilterUseCase,
+    private val glassFilterByUseCase: GlassFilterUseCase,
+    private val categoriesFilterByUseCase: CategoryFilterUseCase,
+    private val ingredientsFilterUseCase: IngredientsFilterUseCase,
     private val fetchDrinkByNameUseCase: FetchDrinkByNameUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
@@ -26,6 +28,8 @@ class SearchDrinksUseCase(
                 mergeFilterStates(alcoholics, glasses)
             }.combine(categoriesFilterByUseCase.results) { previous, categories ->
                 mergeFilterStates(previous, categories)
+            }.combine(ingredientsFilterUseCase.results) { previous, ingredients ->
+                mergeFilterStates(previous, ingredients)
             }
 
 
@@ -48,10 +52,7 @@ class SearchDrinksUseCase(
                 is DrinkFilter.Alcoholic -> alcoholicFilterByUseCase.toggle(drinkFilter)
                 is DrinkFilter.Category -> categoriesFilterByUseCase.toggle(drinkFilter)
                 is DrinkFilter.Glass -> glassFilterByUseCase.toggle(drinkFilter)
-                is DrinkFilter.Ingredients -> {
-                    // TODO: 23/03/2021 implement ingredients
-                    Timber.d("filter $drinkFilter unimplemented ")
-                }
+                is DrinkFilter.Ingredients -> ingredientsFilterUseCase.toggle(drinkFilter)
             }
         }
     }
@@ -73,7 +74,7 @@ class SearchDrinksUseCase(
 
     suspend fun clearIngredientsFilter() {
         Timber.d("clearIngredientsFilter")
-        // TODO: 23/03/2021 implement
+        ingredientsFilterUseCase.clear()
     }
 
     suspend fun fetchByName(name: String) {
@@ -115,14 +116,7 @@ class SearchDrinksUseCase(
         filteredResults: List<DrinkPreviewModel>,
         results: FetchDrinkState.FoundResults
     ): List<DrinkPreviewModel> {
-        val result = mutableListOf<DrinkPreviewModel>()
-        val filteredResultsMap: Map<String, DrinkPreviewModel> =
-            filteredResults.associateBy { it.id }
-
-        results.drinks.forEach {
-            filteredResultsMap[it.id]?.let { preview -> result.add(preview) }
-        }
-        return result
+        return filteredResults.intersectDrinks(results.drinks)
     }
 
     private fun combineToSelectedFilters(
@@ -131,26 +125,32 @@ class SearchDrinksUseCase(
     ): SelectedFilters {
 
         val alcoholicSet: Set<String> =
-            filter.filters.filterIsInstance<DrinkFilter.Alcoholic>().map { it.alcoholic }.toSet()
+            filter.toStringSet(DrinkFilter.Alcoholic::class.java) { it.alcoholic }
         val glassesSet: Set<String> =
-            filter.filters.filterIsInstance<DrinkFilter.Glass>().map { it.glass }.toSet()
+            filter.toStringSet(DrinkFilter.Glass::class.java) { it.glass }
         val categoriesSet: Set<String> =
-            filter.filters.filterIsInstance<DrinkFilter.Category>().map { it.category }.toSet()
+            filter.toStringSet(DrinkFilter.Category::class.java) { it.category }
+        val ingredientsSet: Set<String> =
+            filter.toStringSet(DrinkFilter.Ingredients::class.java) { it.ingredient }
 
         return SelectedFilters(
-            glasses = FilterCollection(
-                allFilters.glasses.filters.map { it.copy(isSelected = it.name in glassesSet) },
-                glassesSet.size
-            ),
-            alcoholic = FilterCollection(
-                allFilters.alcoholic.filters.map { it.copy(isSelected = it.name in alcoholicSet) },
-                alcoholicSet.size
-            ),
-            categories = FilterCollection(
-                allFilters.categories.filters.map { it.copy(isSelected = it.name in categoriesSet) },
-                categoriesSet.size
-            ),
-            ingredients = FilterCollection() // TODO: 23/03/2021 complete ingredients
+            glasses = allFilters.glasses.mergeSelected(glassesSet),
+            alcoholic = allFilters.alcoholic.mergeSelected(alcoholicSet),
+            categories = allFilters.categories.mergeSelected(categoriesSet),
+            ingredients = allFilters.ingredients.mergeSelected(ingredientsSet)
+        )
+    }
+
+    private inline fun <reified T : DrinkFilter> AccumulativeFilterState.Result.toStringSet(
+        klass: Class<T>,
+        mapBy: (T) -> String
+    ) = filters.filterIsInstance(klass).map(mapBy).toSet()
+
+
+    private fun FilterCollection.mergeSelected(selectedSet: Set<String>): FilterCollection {
+        return FilterCollection(
+            filters.map { it.copy(isSelected = it.name in selectedSet) },
+            selectedSet.size
         )
     }
 
@@ -187,7 +187,22 @@ class SearchDrinksUseCase(
                     results = lhs.results.intersect(rhs.results)
                 )
                 else -> throw IllegalStateException("cannot find suitable case")
+            }.also {
+                Timber.d("mergeFilterStates: result[$it]")
             }
         }
     }
+}
+
+
+private fun List<DrinkPreviewModel>.intersectDrinks(list: List<DrinkPreviewModel>): List<DrinkPreviewModel> {
+    val filteredResultsMap: Map<String, DrinkPreviewModel> =
+        associateBy { it.id }
+    return list.mapNotNull { filteredResultsMap[it.id] }
+}
+
+private fun Set<DrinkPreviewModel>.intersectDrinks(set: Set<DrinkPreviewModel>): Set<DrinkPreviewModel> {
+    val filteredResultsMap: Map<String, DrinkPreviewModel> =
+        associateBy { it.id }
+    return set.mapNotNull { filteredResultsMap[it.id] }.toSet()
 }

@@ -140,12 +140,11 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
                 onFilterClicked(DrinkFilter.Category(it.name))
             })
             ingredientsAdapter.updateAsync(ingredients.toItems {
-                /*onFilterClicked(
+                onFilterClicked(
                     DrinkFilter.Ingredients(
                         it.name
                     )
-                )*/
-                // TODO: 23/03/2021 complete this
+                )
             })
             glassAdapter.updateAsync(glasses.toItems {
                 onFilterClicked(DrinkFilter.Glass(it.name))
@@ -169,13 +168,6 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             selectedCount = if (count == 0) null else count
         }
     }
-
-    /*private fun updateSelectableAdapter(
-        selectableAdapter: SelectableAdapter,
-        filters: List<DrinkFilterUiModel>?
-    ) {
-        selectableAdapter.submitList(filters ?: emptyList())
-    }*/
 
     private fun initFiltersRecyclerView() {
         binding?.run {

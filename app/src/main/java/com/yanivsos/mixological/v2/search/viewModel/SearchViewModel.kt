@@ -47,7 +47,10 @@ class SearchViewModel(
 
     fun toggleFilter(drinkFilter: DrinkFilter) {
         viewModelScope.launch {
-            searchDrinksUseCase.toggleFilter(drinkFilter)
+            runCatching {
+                searchDrinksUseCase.toggleFilter(drinkFilter)
+            }.onFailure { Timber.e(it, "failed toggling filter $drinkFilter") }
+
         }
     }
 
