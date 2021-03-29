@@ -106,6 +106,8 @@ class SearchViewModel(
             when (similarIngredientsState) {
                 SimilarIngredientsState.All -> selectedFilters
                 is SimilarIngredientsState.Found -> run {
+                    // TODO: 29/03/2021 copy with selected
+
                     val filteredIngredients = FilterCollection(
                         filters = similarIngredientsState.results,
                         selectedCount = selectedFilters.ingredients.selectedCount
