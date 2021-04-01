@@ -8,6 +8,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -15,12 +16,18 @@ import timber.log.Timber
 
 abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
     private val drinkRepository: DrinkRepository,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
+    initialOperator: AccumulativeOperator = AccumulativeOperator.Intersection
 ) : FilterUseCase<T> {
     private val mutex = Mutex()
+    private val operatorFlow = MutableStateFlow(initialOperator)
     private val resultFlow =
-        MutableStateFlow<AccumulativeFilterState>(AccumulativeFilterState.All)
-    override val results: Flow<AccumulativeFilterState> = resultFlow
+        MutableStateFlow<PreOperatorFilterResults>(PreOperatorFilterResults.All)
+
+    override val results: Flow<AccumulativeFilterState> =
+        resultFlow.combine(operatorFlow) { results, operator ->
+            accumulateWithOperator(results, operator)
+        }
 
     private val resultMap = mutableMapOf<DrinkFilter, List<DrinkPreviewModel>>()
 
@@ -34,6 +41,11 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
     override suspend fun clear() {
         Timber.d("clear")
         clearResults()
+    }
+
+    fun setOperator(operator: AccumulativeOperator) {
+        Timber.d("setOperator: $operator")
+        operatorFlow.value = operator
     }
 
     private suspend fun toggleFilter(filter: T) {
@@ -66,17 +78,58 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
         withContext(defaultDispatcher) {
             resultFlow.value = if (map.isEmpty()) {
                 Timber.d("emitting empty")
-                AccumulativeFilterState.All
+                PreOperatorFilterResults.All
             } else {
-                AccumulativeFilterState.Result(
-                    filters = map.keys,
-                    results = map.values.flatten().toSet()
-                ).also {
-                    Timber.d("emitting: $it")
-                }
+                PreOperatorFilterResults.Result(
+                    map = map
+                )
             }
         }
     }
+
+    private suspend fun accumulateWithOperator(
+        results: PreOperatorFilterResults,
+        operator: AccumulativeOperator
+    ): AccumulativeFilterState = withContext(defaultDispatcher) {
+        Timber.d("accumulateWithOperator: $operator, $results")
+        when (results) {
+            PreOperatorFilterResults.All -> AccumulativeFilterState.All
+            is PreOperatorFilterResults.Result -> AccumulativeFilterState.Result(
+                filters = results.map.keys,
+                results = operator.accumulate(results.map)
+            )
+        }
+    }
+}
+
+
+sealed class AccumulativeOperator {
+    abstract fun accumulate(map: Map<DrinkFilter, List<DrinkPreviewModel>>): Set<DrinkPreviewModel>
+
+    object Union : AccumulativeOperator() {
+        override fun accumulate(map: Map<DrinkFilter, List<DrinkPreviewModel>>): Set<DrinkPreviewModel> {
+            return map.values.flatten().toSet()
+        }
+    }
+
+    object Intersection : AccumulativeOperator() {
+        override fun accumulate(map: Map<DrinkFilter, List<DrinkPreviewModel>>): Set<DrinkPreviewModel> {
+            var result = map.values.firstOrNull()?.toSet() ?: return emptySet()
+            map.values
+                .map { list -> list.toSet() }
+                .forEach { set ->
+                    result = result.intersect(set)
+                }
+
+            return result
+        }
+    }
+}
+
+private sealed class PreOperatorFilterResults {
+    object All : PreOperatorFilterResults()
+    data class Result(val map: Map<DrinkFilter, List<DrinkPreviewModel>>) :
+        PreOperatorFilterResults()
 }
 
 sealed class AccumulativeFilterState {

@@ -19,9 +19,19 @@ class FilterHeaderView @JvmOverloads constructor(
         }
 
     var onFilterClearedClickedListener: (() -> Unit)? = null
-    set(value) {
-        field = value
-        setOnClearFilterClickListener()
+        set(value) {
+            field = value
+            setOnClearFilterClickListener()
+        }
+
+    var onOperatorChanged: (() -> Unit)? = null
+        set(value) {
+            field = value
+            setOnOperatorClick(field)
+        }
+
+    private fun setOnOperatorClick(onOperatorChanged: (() -> Unit)?) {
+        binding.headerTv.setOnClickListener { onOperatorChanged?.invoke() }
     }
 
     private var headerText: CharSequence? = null
@@ -63,8 +73,7 @@ class FilterHeaderView @JvmOverloads constructor(
         binding.badge.filterTv.text = selectedCount?.toString()
         if (selectedCount != null) {
             visibleBadge()
-        }
-        else {
+        } else {
             invisibleBadge()
         }
     }

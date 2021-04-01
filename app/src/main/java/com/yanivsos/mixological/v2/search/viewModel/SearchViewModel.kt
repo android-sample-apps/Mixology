@@ -72,6 +72,10 @@ class SearchViewModel(
         }
     }
 
+    fun setIngredientsOperator(operator: AccumulativeOperator) {
+        searchDrinksUseCase.setIngredientsOperator(operator)
+    }
+
     fun clearAlcoholicFilter() {
         viewModelScope.launch {
             searchDrinksUseCase.clearAlcoholicFilter()
@@ -127,7 +131,6 @@ class SearchViewModel(
             when (similarIngredientsState) {
                 SimilarIngredientsState.All -> selectedFilters
                 is SimilarIngredientsState.Found -> run {
-                    // TODO: 29/03/2021 copy with selected
                     val filteredResults =
                         selectedFilters.ingredients.filters.filter { it.name in similarIngredientsState.results }
                     val filteredIngredients = FilterCollection(

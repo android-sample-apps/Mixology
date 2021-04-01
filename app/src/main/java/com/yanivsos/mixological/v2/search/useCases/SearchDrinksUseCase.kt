@@ -86,6 +86,10 @@ class SearchDrinksUseCase(
         fetchDrinkByNameUseCase.clear()
     }
 
+    fun setIngredientsOperator(operator: AccumulativeOperator) {
+        ingredientsFilterUseCase.setOperator(operator)
+    }
+
     private suspend fun mapToFilterModel(
         filter: AccumulativeFilterState,
         allFilters: SelectedFilters
