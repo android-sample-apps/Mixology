@@ -85,13 +85,16 @@ data class DrinkResponse(
 )
 
 data class DrinksWrapperResponse<T>(
-    @SerializedName("drinks") val data: List<T>
+    @SerializedName(SERIALIZED_NAME_DRINKS) val data: List<T>
 )
 
 data class NullableDrinksWrapperResponse<T>(
-    @SerializedName("drinks") val data: List<T>?
+    @SerializedName(SERIALIZED_NAME_DRINKS) val data: List<T>?
 )
 
 data class IngredientsWrapperResponse<T>(
     @SerializedName("ingredients") val data: List<T>
 )
+
+const val SERIALIZED_NAME_DRINKS = "drinks"
+const val SERIALIZED_NAME_NONE_FOUND = "None Found"

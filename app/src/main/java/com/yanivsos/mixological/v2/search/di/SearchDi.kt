@@ -63,7 +63,7 @@ val searchDi = module {
     }
 
     factory {
-        Ingredients2FilterUseCase(
+        IngredientsFilterUseCase(
             drinkRepository = get()
         )
     }

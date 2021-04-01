@@ -7,7 +7,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -17,7 +16,7 @@ class SearchDrinksUseCase(
     private val alcoholicFilterByUseCase: AlcoholicFilterUseCase,
     private val glassFilterByUseCase: GlassFilterUseCase,
     private val categoriesFilterByUseCase: CategoryFilterUseCase,
-    private val ingredientsFilterUseCase: Ingredients2FilterUseCase,
+    private val ingredientsFilterUseCase: IngredientsFilterUseCase,
     private val fetchDrinkByNameUseCase: FetchDrinkByNameUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
@@ -201,8 +200,3 @@ private fun List<DrinkPreviewModel>.intersectDrinks(list: List<DrinkPreviewModel
     return list.mapNotNull { filteredResultsMap[it.id] }
 }
 
-private fun Set<DrinkPreviewModel>.intersectDrinks(set: Set<DrinkPreviewModel>): Set<DrinkPreviewModel> {
-    val filteredResultsMap: Map<String, DrinkPreviewModel> =
-        associateBy { it.id }
-    return set.mapNotNull { filteredResultsMap[it.id] }.toSet()
-}

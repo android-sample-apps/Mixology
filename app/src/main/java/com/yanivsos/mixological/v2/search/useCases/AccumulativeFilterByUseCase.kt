@@ -42,15 +42,13 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
                 if (resultMap.containsKey(filter)) {
                     Timber.d("toggleFilter: removing $filter")
                     resultMap.remove(filter)
-                    emitMap(resultMap)
                 } else {
                     Timber.d("toggleFilter: fetching $filter ...")
-                    drinkRepository.filterBy(toFilterRequest(filter))
                     resultMap[filter] = drinkRepository.filterBy(toFilterRequest(filter)).also {
                         Timber.d("toggleFilter: fetched $filter")
                     }
-                    emitMap(resultMap)
                 }
+                emitMap(resultMap.toMap())
             }
         }
     }
@@ -59,7 +57,7 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
         withContext(defaultDispatcher) {
             mutex.withLock {
                 resultMap.clear()
-                emitMap(resultMap)
+                emitMap(resultMap.toMap())
             }
         }
     }
@@ -70,11 +68,12 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
                 Timber.d("emitting empty")
                 AccumulativeFilterState.All
             } else {
-                Timber.d("emitting map: keys[${map.keys}]")
                 AccumulativeFilterState.Result(
                     filters = map.keys,
                     results = map.values.flatten().toSet()
-                )
+                ).also {
+                    Timber.d("emitting: $it")
+                }
             }
         }
     }
@@ -88,13 +87,13 @@ sealed class AccumulativeFilterState {
     ) : AccumulativeFilterState()
 }
 
-class Ingredients2FilterUseCase(
+class IngredientsFilterUseCase(
     drinkRepository: DrinkRepository,
     defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : AccumulativeFilterByUseCase<DrinkFilter.Ingredients>(drinkRepository, defaultDispatcher) {
 
     override fun toFilterRequest(filter: DrinkFilter.Ingredients): DrinkFilterRequest {
-        return DrinkFilterRequest.SingleIngredient(filter.ingredient)
+        return DrinkFilterRequest.Ingredient(filter.ingredient)
     }
 }
 

@@ -97,24 +97,16 @@ class DrinkRepository(
             is DrinkFilterRequest.Alcoholic -> drinkService.filterByAlcoholic(filter.alcoholic)
             is DrinkFilterRequest.Category -> drinkService.filterByCategory(filter.category)
             is DrinkFilterRequest.Glass -> drinkService.filterByGlass(filter.glass)
-//            is DrinkFilterRequest.Ingredients -> drinkService.filterByIngredient(filter.ingredient.toQueryParams())
-            is DrinkFilterRequest.SingleIngredient -> drinkService.filterByIngredient(filter.ingredient)
+            is DrinkFilterRequest.Ingredient -> drinkService.filterByIngredient(filter.ingredient)
         }.toModel()
     }
-
-    /*private suspend fun List<String>.toQueryParams(): String {
-        return withContext(defaultDispatcher) {
-            joinToString(separator = ",") { it.replace(' ', '_') }
-        }.also { Timber.d("toQueryParams: $it") }
-    }*/
 }
 
 sealed class DrinkFilterRequest {
     data class Alcoholic(val alcoholic: String) : DrinkFilterRequest()
     data class Category(val category: String) : DrinkFilterRequest()
     data class Glass(val glass: String) : DrinkFilterRequest()
-//    data class Ingredients(val ingredient: List<String>) : DrinkFilterRequest()
-    data class SingleIngredient(val ingredient: String) : DrinkFilterRequest()
+    data class Ingredient(val ingredient: String) : DrinkFilterRequest()
 }
 
 sealed class DrinkFilter(val name: String) {

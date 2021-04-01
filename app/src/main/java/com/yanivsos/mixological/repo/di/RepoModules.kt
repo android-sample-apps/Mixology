@@ -1,13 +1,19 @@
 package com.yanivsos.mixological.repo.di
 
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import com.yanivsos.mixological.BuildConfig
+import com.yanivsos.mixological.network.FilterResponseDeserializer
 import com.yanivsos.mixological.repo.DrinkService
 import com.yanivsos.mixological.repo.mappers.*
+import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
+import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
 import com.yanivsos.mixological.repo.reactiveStore.*
 import com.yanivsos.mixological.repo.repositories.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -27,10 +33,22 @@ val repoModule = module {
             .build()
     }
 
+    single<Converter.Factory> {
+        GsonConverterFactory
+            .create(
+                GsonBuilder()
+                    .registerTypeAdapter(
+                        object : TypeToken<DrinksWrapperResponse<DrinkPreviewResponse>>() {}.type,
+                        FilterResponseDeserializer()
+                    )
+                    .create()
+            )
+    }
+
     single<DrinkService> {
         Retrofit.Builder()
             .client(get<OkHttpClient>())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(get())
             .baseUrl("https://www.thecocktaildb.com/api/json/v2/9973533/")
             .build().create(DrinkService::class.java)
     }
