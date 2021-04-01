@@ -97,27 +97,29 @@ class DrinkRepository(
             is DrinkFilterRequest.Alcoholic -> drinkService.filterByAlcoholic(filter.alcoholic)
             is DrinkFilterRequest.Category -> drinkService.filterByCategory(filter.category)
             is DrinkFilterRequest.Glass -> drinkService.filterByGlass(filter.glass)
-            is DrinkFilterRequest.Ingredients -> drinkService.filterByIngredient(filter.ingredient.toQueryParams())
+//            is DrinkFilterRequest.Ingredients -> drinkService.filterByIngredient(filter.ingredient.toQueryParams())
+            is DrinkFilterRequest.SingleIngredient -> drinkService.filterByIngredient(filter.ingredient)
         }.toModel()
     }
 
-    private suspend fun List<String>.toQueryParams(): String {
+    /*private suspend fun List<String>.toQueryParams(): String {
         return withContext(defaultDispatcher) {
             joinToString(separator = ",") { it.replace(' ', '_') }
         }.also { Timber.d("toQueryParams: $it") }
-    }
+    }*/
 }
 
 sealed class DrinkFilterRequest {
     data class Alcoholic(val alcoholic: String) : DrinkFilterRequest()
     data class Category(val category: String) : DrinkFilterRequest()
     data class Glass(val glass: String) : DrinkFilterRequest()
-    data class Ingredients(val ingredient: List<String>) : DrinkFilterRequest()
+//    data class Ingredients(val ingredient: List<String>) : DrinkFilterRequest()
+    data class SingleIngredient(val ingredient: String) : DrinkFilterRequest()
 }
 
-sealed class DrinkFilter {
-    data class Alcoholic(val alcoholic: String) : DrinkFilter()
-    data class Category(val category: String) : DrinkFilter()
-    data class Glass(val glass: String) : DrinkFilter()
-    data class Ingredients(val ingredient: String) : DrinkFilter()
+sealed class DrinkFilter(val name: String) {
+    data class Alcoholic(val alcoholic: String) : DrinkFilter(alcoholic)
+    data class Category(val category: String) : DrinkFilter(category)
+    data class Glass(val glass: String) : DrinkFilter(glass)
+    data class Ingredients(val ingredient: String) : DrinkFilter(ingredient)
 }

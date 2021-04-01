@@ -11,7 +11,7 @@ class AlcoholicFiltersReactiveStore(
 ): NonRemovableReactiveStore<AlcoholicFilterModel, Unit> {
 
     override fun storeAll(data: List<AlcoholicFilterModel>) {
-        GlobalScope.launch { alcoholicFilterDao.storeAll(data) }
+        GlobalScope.launch { alcoholicFilterDao.store(data) }
     }
 
     override fun get(param: Unit): Flow<List<AlcoholicFilterModel>> {

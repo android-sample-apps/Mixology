@@ -38,13 +38,13 @@ class FindSimilarIngredientsByNameUseCase(
         }
     }
 
-    private fun mapToFilterModel(results: List<IngredientModel>): List<FilterModel> {
-        return results.map { FilterModel(it.name) }
+    private fun mapToFilterModel(results: List<IngredientModel>): Set<String> {
+        return results.map { it.name }.toSet()
     }
 }
 
 
 sealed class SimilarIngredientsState {
     object All : SimilarIngredientsState()
-    data class Found(val results: List<FilterModel>) : SimilarIngredientsState()
+    data class Found(val results: Set<String>) : SimilarIngredientsState()
 }

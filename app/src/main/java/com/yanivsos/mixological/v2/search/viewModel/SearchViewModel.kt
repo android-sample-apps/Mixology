@@ -1,5 +1,7 @@
 package com.yanivsos.mixological.v2.search.viewModel
 
+import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
@@ -15,11 +17,19 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SearchViewModel(
+    private val application: Application,
     getAutoCompleteSuggestionsUseCase: GetAutoCompleteSuggestionsUseCase,
     private val findSimilarIngredientsByNameUseCase: FindSimilarIngredientsByNameUseCase,
+    private val fetchAndStoreFiltersUseCase: FetchAndStoreFiltersUseCase,
     private val searchDrinksUseCase: SearchDrinksUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            fetchAndStoreFiltersUseCase.fetchAndStore()
+        }
+    }
 
     val previewsState: Flow<PreviewState> =
         searchDrinksUseCase
@@ -49,7 +59,15 @@ class SearchViewModel(
         viewModelScope.launch {
             runCatching {
                 searchDrinksUseCase.toggleFilter(drinkFilter)
-            }.onFailure { Timber.e(it, "failed toggling filter $drinkFilter") }
+            }.onFailure {
+                Timber.e(it, "failed toggling filter $drinkFilter")
+                // TODO: 01/04/2021 move this to strings file
+                Toast.makeText(
+                    application.applicationContext,
+                    "Failed toggling ${drinkFilter.name}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
         }
     }
@@ -88,7 +106,10 @@ class SearchViewModel(
         viewModelScope.launch {
             runCatching {
                 searchDrinksUseCase.fetchByName(name)
-            }.onFailure { Timber.e(it, "Failed fetching by name: $name") }
+            }.onFailure {
+                // TODO: 01/04/2021 handle errors
+                Timber.e(it, "Failed fetching by name: $name")
+            }
         }
     }
 
@@ -107,9 +128,10 @@ class SearchViewModel(
                 SimilarIngredientsState.All -> selectedFilters
                 is SimilarIngredientsState.Found -> run {
                     // TODO: 29/03/2021 copy with selected
-
+                    val filteredResults =
+                        selectedFilters.ingredients.filters.filter { it.name in similarIngredientsState.results }
                     val filteredIngredients = FilterCollection(
-                        filters = similarIngredientsState.results,
+                        filters = filteredResults,
                         selectedCount = selectedFilters.ingredients.selectedCount
                     )
                     selectedFilters.copy(ingredients = filteredIngredients)

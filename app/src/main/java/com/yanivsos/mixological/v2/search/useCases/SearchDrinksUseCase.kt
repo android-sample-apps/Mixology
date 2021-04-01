@@ -17,7 +17,7 @@ class SearchDrinksUseCase(
     private val alcoholicFilterByUseCase: AlcoholicFilterUseCase,
     private val glassFilterByUseCase: GlassFilterUseCase,
     private val categoriesFilterByUseCase: CategoryFilterUseCase,
-    private val ingredientsFilterUseCase: IngredientsFilterUseCase,
+    private val ingredientsFilterUseCase: Ingredients2FilterUseCase,
     private val fetchDrinkByNameUseCase: FetchDrinkByNameUseCase,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {

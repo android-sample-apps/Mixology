@@ -23,4 +23,6 @@ interface IngredientDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun store(ingredientDetails: IngredientDetailsModel)
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun store(ingredients: List<IngredientModel>)
 }

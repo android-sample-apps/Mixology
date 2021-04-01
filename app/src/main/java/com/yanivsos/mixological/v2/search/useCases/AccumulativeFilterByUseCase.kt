@@ -44,14 +44,12 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
                     resultMap.remove(filter)
                     emitMap(resultMap)
                 } else {
-                    runCatching {
-                        Timber.d("toggleFilter: fetching $filter ...")
-                        drinkRepository.filterBy(toFilterRequest(filter))
-                    }.onSuccess {
+                    Timber.d("toggleFilter: fetching $filter ...")
+                    drinkRepository.filterBy(toFilterRequest(filter))
+                    resultMap[filter] = drinkRepository.filterBy(toFilterRequest(filter)).also {
                         Timber.d("toggleFilter: fetched $filter")
-                        resultMap[filter] = it
-                        emitMap(resultMap)
-                    }.onFailure { Timber.e(it, "failed to fetch filter $filter") }
+                    }
+                    emitMap(resultMap)
                 }
             }
         }
@@ -90,6 +88,15 @@ sealed class AccumulativeFilterState {
     ) : AccumulativeFilterState()
 }
 
+class Ingredients2FilterUseCase(
+    drinkRepository: DrinkRepository,
+    defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+) : AccumulativeFilterByUseCase<DrinkFilter.Ingredients>(drinkRepository, defaultDispatcher) {
+
+    override fun toFilterRequest(filter: DrinkFilter.Ingredients): DrinkFilterRequest {
+        return DrinkFilterRequest.SingleIngredient(filter.ingredient)
+    }
+}
 
 class AlcoholicFilterUseCase(
     drinkRepository: DrinkRepository,

@@ -3,6 +3,7 @@ package com.yanivsos.mixological.v2.search.di
 import com.yanivsos.mixological.v2.search.repo.SearchRepository
 import com.yanivsos.mixological.v2.search.useCases.*
 import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -19,7 +20,8 @@ val searchDi = module {
             ingredientDao = get(),
             alcoholicFilterDao = get(),
             categoryDao = get(),
-            glassDao = get()
+            glassDao = get(),
+            drinkService = get()
         )
     }
 
@@ -61,7 +63,7 @@ val searchDi = module {
     }
 
     factory {
-        IngredientsFilterUseCase(
+        Ingredients2FilterUseCase(
             drinkRepository = get()
         )
     }
@@ -78,11 +80,46 @@ val searchDi = module {
         )
     }
 
+    single {
+        FetchAndStoreAlcoholicsUseCase(
+            searchRepository = get()
+        )
+    }
+
+    single {
+        FetchAndStoreGlassesUseCase(
+            searchRepository = get()
+        )
+    }
+
+    single {
+        FetchAndStoreCategoriesUseCase(
+            searchRepository = get()
+        )
+    }
+
+    single {
+        FetchAndStoreIngredientsUseCase(
+            searchRepository = get()
+        )
+    }
+
+    single {
+        FetchAndStoreFiltersUseCase(
+            fetchAndStoreAlcoholicsUseCase = get(),
+            fetchAndStoreCategoriesUseCase = get(),
+            fetchAndStoreGlassesUseCase = get(),
+            fetchAndStoreIngredientsUseCase = get()
+        )
+    }
+
     viewModel {
         SearchViewModel(
+            androidApplication(),
             getAutoCompleteSuggestionsUseCase = get(),
             searchDrinksUseCase = get(),
-            findSimilarIngredientsByNameUseCase = get()
+            findSimilarIngredientsByNameUseCase = get(),
+            fetchAndStoreFiltersUseCase = get()
         )
     }
 }
