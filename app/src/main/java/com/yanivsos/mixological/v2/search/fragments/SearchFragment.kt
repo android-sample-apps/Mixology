@@ -93,16 +93,24 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun initMotionLayout() {
-        /*binding.advancedSearchMl.setTransitionListener(object : MyTransitionListener() {
+        binding.advancedSearchMl.setTransitionListener(object : MyTransitionListener() {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
-                val isOnline = currentId == R.id.online
-                Timber.d("filter button enabled: $isOnline")
-                binding.filterImage.run {
-                    isClickable = isOnline
-                    isFocusable = isOnline
+                val searchEnabled = (currentId != R.id.offline)
+
+                Timber.d("filter button enabled: $searchEnabled")
+                binding.run {
+                    filterImage.run {
+                        isClickable = searchEnabled
+                        isFocusable = searchEnabled
+
+                    }
+                    searchContainerTil.isEnabled = searchEnabled
+                    if (!searchEnabled) {
+                        searchContainerTil.hideKeyboard()
+                    }
                 }
             }
-        })*/
+        })
     }
 
     private fun initFilterFab() {
