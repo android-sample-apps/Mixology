@@ -4,7 +4,8 @@
     android:id="@+id/no_results_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/orange">
+
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

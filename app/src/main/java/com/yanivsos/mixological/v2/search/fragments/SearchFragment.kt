@@ -173,13 +173,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun showNoResults() {
-        binding.searchContainerTil.helperText = getString(R.string.no_results)
-//        binding.advancedSearchMl.transitionToState(R.id.no_results)
+        binding.advancedSearchMl.transitionToState(R.id.no_results)
     }
 
     private fun hideNoResults() {
-        binding.searchContainerTil.helperText = null
-//        binding.advancedSearchMl.transitionToState(R.id.results)
+        binding.advancedSearchMl.transitionToState(R.id.has_results)
     }
 
     private fun search() {

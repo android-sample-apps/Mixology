@@ -79,13 +79,12 @@
         android:id="@+id/search_results_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/screen_padding"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_container_til"
+        app:layout_constraintTop_toBottomOf="@id/lottie_no_result"
         app:spanCount="2"
         tools:listitem="@layout/tile_item_drink_preview"
         tools:visibility="visible" />
@@ -94,11 +93,12 @@
         android:id="@+id/lottie_no_result"
         layout="@layout/list_item_no_results"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/screen_padding"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/search_results_rv" />
+        app:layout_constraintTop_toBottomOf="@id/search_container_til" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
