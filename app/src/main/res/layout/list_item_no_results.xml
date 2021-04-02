@@ -4,7 +4,6 @@
     android:id="@+id/no_results_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     >
 
     <androidx.constraintlayout.widget.Guideline
@@ -30,6 +29,7 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         style="@style/ErrorTitleTextView"
+        android:textSize="32sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/no_results_title"

@@ -49,7 +49,9 @@
 
     <Transition
         app:constraintSetEnd="@id/offline"
-        app:constraintSetStart="@+id/online" />
+        app:constraintSetStart="@+id/online"
+        app:duration="250"
+        app:motionInterpolator="easeInOut" />
 
     <ConstraintSet android:id="@+id/has_results">
         <Constraint
@@ -76,7 +78,9 @@
     </ConstraintSet>
     <Transition
         app:constraintSetEnd="@+id/no_results"
-        app:constraintSetStart="@+id/has_results" />
+        app:constraintSetStart="@+id/has_results"
+        app:duration="250"
+        app:motionInterpolator="easeInOut" />
 
 
 </MotionScene>
