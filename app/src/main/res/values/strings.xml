@@ -31,6 +31,7 @@
     <string name="search">Search</string>
     <string name="advanced_search_hint">Search for a cocktail</string>
     <string name="no_results">Sorry, no results</string>
+    <string name="no_results_title">Sorry,\nno results</string>
     <string name="alcohol_volume_abv">%1$s\%% ABV.</string>
     <string name="filter_alcoholic">Alcoholic</string>
     <string name="filter_glasses">Glasses</string>

@@ -129,4 +129,12 @@
         <item name="cardBackgroundColor">@color/white</item>
     </style>
 
+    <style name="ErrorTitleTextView" parent="Widget.MaterialComponents.TextView" >
+        <item name="android:gravity">center</item>
+        <item name="android:letterSpacing">0.25</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textSize">52sp</item>
+        <item name="fontFamily">@font/fty_delirium_ncv</item>
+    </style>
+
 </resources>
