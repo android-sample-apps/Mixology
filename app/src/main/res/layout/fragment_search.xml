@@ -6,16 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/screen_padding"
-    app:layoutDescription="@xml/search_scene">
-
-    <include
-        android:id="@+id/connectivity_warning"
-        layout="@layout/view_connectivity_warning"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_chainStyle="spread"
-        tools:visibility="visible" />
+    app:layoutDescription="@xml/fragment_search_scene">
 
     <ru.nikartm.support.ImageBadgeView
         android:id="@+id/filter_image"
@@ -55,7 +46,7 @@
         app:hintTextColor="@color/secondary_text_color"
         app:layout_constraintEnd_toStartOf="@id/filter_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/connectivity_warning"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginTop="0dp">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -74,6 +65,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <include
+        android:id="@+id/connectivity_warning"
+        layout="@layout/view_connectivity_warning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_results_rv"
         android:layout_width="0dp"
@@ -91,13 +92,13 @@
 
     <include
         android:id="@+id/lottie_no_result"
+        layout="@layout/list_item_no_results"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        layout="@layout/list_item_no_results"
-        app:layout_constraintTop_toTopOf="@id/search_results_rv"
-        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/search_results_rv" />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

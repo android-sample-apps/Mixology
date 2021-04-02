@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/online">
+
+        <Constraint
+            android:id="@+id/connectivity_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Constraint
+            android:id="@+id/search_container_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_padding"
+            app:layout_constraintEnd_toStartOf="@id/filter_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginTop="0dp" />
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/offline">
+
+        <Constraint
+            android:id="@+id/connectivity_warning"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/search_container_til"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="@id/connectivity_warning"
+            app:layout_constraintEnd_toStartOf="@id/filter_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_goneMarginTop="0dp" />
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/offline"
+        app:constraintSetStart="@+id/online" />
+
+
+</MotionScene>

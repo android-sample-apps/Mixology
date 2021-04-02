@@ -7,7 +7,13 @@
         app:constraintSetStart="@id/online"
         app:duration="250"
         app:motionInterpolator="easeOut">
+    </Transition>
 
+    <Transition
+        app:constraintSetEnd="@id/results"
+        app:constraintSetStart="@id/no_results"
+        app:duration="250"
+        app:motionInterpolator="easeOut">
     </Transition>
 
     <ConstraintSet android:id="@+id/online">
@@ -42,6 +48,7 @@
             app:layout_goneMarginTop="0dp" />
 
     </ConstraintSet>
+
     <ConstraintSet android:id="@+id/offline">
         <Constraint
             android:id="@id/filter_image"
@@ -71,5 +78,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_goneMarginTop="0dp" />
     </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/no_results">
+
+        <Constraint
+            android:id="@id/lottie_no_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/screen_padding"
+            app:layout_constraintTop_toBottomOf="@id/search_container_til" />
+
+        <!--<Constraint
+            android:id="@+id/search_results_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            android:alpha="1"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/screen_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_container_til"
+            />-->
+    </ConstraintSet>
+
+
+    <ConstraintSet android:id="@+id/results">
+
+        <Constraint
+            android:id="@id/lottie_no_result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/search_results_rv"
+            android:alpha="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </ConstraintSet>
+
 
 </MotionScene>

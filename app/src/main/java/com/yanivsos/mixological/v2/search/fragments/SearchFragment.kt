@@ -14,6 +14,7 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.databinding.FragmentAdvancedSearchBinding
+import com.yanivsos.mixological.databinding.FragmentSearchBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.hideKeyboard
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
@@ -34,9 +35,9 @@ import kotlinx.coroutines.withContext
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
+class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
-    private val binding by viewBinding(FragmentAdvancedSearchBinding::bind)
+    private val binding by viewBinding(FragmentSearchBinding::bind)
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val searchViewModel: SearchViewModel by viewModel()
 
@@ -92,7 +93,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
     }
 
     private fun initMotionLayout() {
-        binding.advancedSearchMl.setTransitionListener(object : MyTransitionListener() {
+        /*binding.advancedSearchMl.setTransitionListener(object : MyTransitionListener() {
             override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
                 val isOnline = currentId == R.id.online
                 Timber.d("filter button enabled: $isOnline")
@@ -101,7 +102,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
                     isFocusable = isOnline
                 }
             }
-        })
+        })*/
     }
 
     private fun initFilterFab() {
@@ -166,10 +167,12 @@ class SearchFragment : BaseFragment(R.layout.fragment_advanced_search) {
 
     private fun showNoResults() {
         binding.searchContainerTil.helperText = getString(R.string.no_results)
+//        binding.advancedSearchMl.transitionToState(R.id.no_results)
     }
 
     private fun hideNoResults() {
         binding.searchContainerTil.helperText = null
+//        binding.advancedSearchMl.transitionToState(R.id.results)
     }
 
     private fun search() {
