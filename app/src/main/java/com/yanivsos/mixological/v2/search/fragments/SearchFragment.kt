@@ -13,7 +13,6 @@ import com.xwray.groupie.GroupieAdapter
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
-import com.yanivsos.mixological.databinding.FragmentAdvancedSearchBinding
 import com.yanivsos.mixological.databinding.FragmentSearchBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.hideKeyboard
