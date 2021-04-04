@@ -4,6 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
@@ -67,10 +68,9 @@ class SearchViewModel(
                 searchDrinksUseCase.toggleFilter(drinkFilter)
             }.onFailure {
                 Timber.e(it, "failed toggling filter $drinkFilter")
-                // TODO: 01/04/2021 move this to strings file
                 Toast.makeText(
                     application.applicationContext,
-                    "Failed toggling ${drinkFilter.name}",
+                    R.string.filter_toggle_failure,
                     Toast.LENGTH_SHORT
                 ).show()
             }
