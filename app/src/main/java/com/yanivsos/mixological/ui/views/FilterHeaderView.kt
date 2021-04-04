@@ -31,7 +31,8 @@ class FilterHeaderView @JvmOverloads constructor(
         }
 
     private fun setOnOperatorClick(onOperatorChanged: (() -> Unit)?) {
-        binding.headerTv.setOnClickListener { onOperatorChanged?.invoke() }
+        // TODO: 04/04/2021 complete this
+//        binding.headerTv.setOnClickListener { onOperatorChanged?.invoke() }
     }
 
     private var headerText: CharSequence? = null

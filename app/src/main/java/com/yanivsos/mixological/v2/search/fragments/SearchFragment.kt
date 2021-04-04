@@ -9,14 +9,11 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.fragment.findNavController
-import com.xwray.groupie.GroupieAdapter
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
 import com.yanivsos.mixological.databinding.FragmentSearchBinding
-import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.extensions.hideKeyboard
-import com.yanivsos.mixological.ui.GridSpacerItemDecoration
 import com.yanivsos.mixological.ui.fragments.*
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
@@ -42,7 +39,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private val query: String get() = binding.searchQueryActv.text?.toString() ?: ""
 
-//    private val previewAdapter = GroupieAdapter()
     private val suggestionsAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter<String>(
             requireContext(),
@@ -117,6 +113,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 ResourcesCompat.getFont(requireContext(), R.font.jesa_script_regular)
             setOnClickListener {
                 FilterBottomDialogFragment().show(childFragmentManager)
+                binding.searchContainerTil.clearFocus()
             }
         }
     }

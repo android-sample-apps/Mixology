@@ -19,7 +19,6 @@ import com.yanivsos.mixological.ui.GridSpacerItemDecoration
 import com.yanivsos.mixological.ui.views.FilterHeaderView
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.mappers.toLongId
-import com.yanivsos.mixological.v2.search.useCases.AccumulativeOperator
 import com.yanivsos.mixological.v2.search.useCases.FilterCollection
 import com.yanivsos.mixological.v2.search.useCases.FilterModel
 import com.yanivsos.mixological.v2.search.useCases.SelectedFilters
@@ -80,14 +79,14 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             onFilterClearedClickedListener = {
                 searchViewModel.clearIngredientsFilter()
             }
-            var operator: AccumulativeOperator = AccumulativeOperator.Union
+            /*var operator: AccumulativeOperator = AccumulativeOperator.Union
             onOperatorChanged = {
                 operator = when (operator) {
                     AccumulativeOperator.Intersection -> AccumulativeOperator.Union
                     AccumulativeOperator.Union -> AccumulativeOperator.Intersection
                 }
                 searchViewModel.setIngredientsOperator(operator)
-            }
+            }*/
         }
         binding?.alcoholicHeaderFhv?.onFilterClearedClickedListener = {
             searchViewModel.clearAlcoholicFilter()
