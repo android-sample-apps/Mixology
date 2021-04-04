@@ -75,27 +75,13 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_results_rv"
+    <com.yanivsos.mixological.v2.search.view.SearchResultView
+        android:id="@+id/search_results"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:paddingTop="@dimen/screen_padding"
+        app:layoutDescription="@xml/view_search_results_scene"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lottie_no_result"
-        app:spanCount="2"
-        tools:listitem="@layout/tile_item_drink_preview"
-        tools:visibility="visible" />
-
-    <include
-        android:id="@+id/lottie_no_result"
-        layout="@layout/list_item_no_results"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/screen_padding"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_container_til" />

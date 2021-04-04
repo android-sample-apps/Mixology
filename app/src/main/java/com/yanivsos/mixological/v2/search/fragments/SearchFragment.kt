@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private val query: String get() = binding.searchQueryActv.text?.toString() ?: ""
 
-    private val previewAdapter = GroupieAdapter()
+//    private val previewAdapter = GroupieAdapter()
     private val suggestionsAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter<String>(
             requireContext(),
@@ -84,7 +84,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         initMotionLayout()
         initFilterFab()
         initSearchQuery()
-        initResultsRecyclerView()
+//        initResultsRecyclerView()
         observeAutoCompleteSuggestions()
         observeResults()
         observeFiltersBadge()
@@ -146,7 +146,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    private fun initResultsRecyclerView() {
+    /*private fun initResultsRecyclerView() {
         binding.searchResultsRv.run {
             adapter = previewAdapter
             addItemDecoration(
@@ -157,7 +157,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 )
             )
         }
-    }
+    }*/
 
     private fun clearQuery() {
         searchViewModel.clearByName()
@@ -172,13 +172,13 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         search()
     }
 
-    private fun showNoResults() {
-        binding.advancedSearchMl.transitionToState(R.id.no_results)
-    }
+//    private fun showNoResults() {
+//        binding.advancedSearchMl.transitionToState(R.id.no_results)
+//    }
 
-    private fun hideNoResults() {
-        binding.advancedSearchMl.transitionToState(R.id.has_results)
-    }
+//    private fun hideNoResults() {
+//        binding.advancedSearchMl.transitionToState(R.id.has_results)
+//    }
 
     private fun search() {
         searchViewModel.fetchByName(query)
@@ -258,14 +258,18 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onPreviewNoResults() {
         Timber.d("onPreviewNoResults:")
-        previewAdapter.updateAsync(emptyList())
-        showNoResults()
+//        previewAdapter.updateAsync(emptyList())
+//        showNoResults()
+        binding.searchResults.updateNoResults()
     }
 
     private suspend fun onPreviewResults(drinks: List<DrinkPreviewUiModel>) {
         Timber.d("results: received ${drinks.size} drinks")
-        previewAdapter.updateAsync(createPreviewItems(drinks))
-        hideNoResults()
+//        previewAdapter.updateAsync(createPreviewItems(drinks))
+//        hideNoResults()
+        createPreviewItems(drinks).also {
+            binding.searchResults.updateResults(it)
+        }
     }
 
     private suspend fun createPreviewItems(drinks: List<DrinkPreviewUiModel>): List<GridDrinkPreviewItem> {
