@@ -53,7 +53,13 @@ class SearchViewModel(
             .filters
             .combine(findSimilarIngredientsByNameUseCase.similarIngredients) { selectedFilters, similarIngredientsState ->
                 mergeWithSimilarIngredients(selectedFilters, similarIngredientsState)
-            }
+            }.onEach { mutableSearchKeyword = it.ingredientKeyword }
+
+    private var mutableSearchKeyword: String? = null
+    val searchKeyword: String?
+        get() {
+            return mutableSearchKeyword
+        }
 
     fun toggleFilter(drinkFilter: DrinkFilter) {
         viewModelScope.launch {
@@ -137,7 +143,10 @@ class SearchViewModel(
                         filters = filteredResults,
                         selectedCount = selectedFilters.ingredients.selectedCount
                     )
-                    selectedFilters.copy(ingredients = filteredIngredients)
+                    selectedFilters.copy(
+                        ingredients = filteredIngredients,
+                        ingredientKeyword = similarIngredientsState.keyword
+                    )
                 }
             }
 

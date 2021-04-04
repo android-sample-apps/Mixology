@@ -67,7 +67,8 @@ data class SelectedFilters(
     val ingredients: FilterCollection = FilterCollection(),
     val alcoholic: FilterCollection = FilterCollection(),
     val glasses: FilterCollection = FilterCollection(),
-    val categories: FilterCollection = FilterCollection()
+    val categories: FilterCollection = FilterCollection(),
+    val ingredientKeyword: String? = null
 )
 
 data class FilterModel(

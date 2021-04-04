@@ -34,7 +34,7 @@ class FindSimilarIngredientsByNameUseCase(
             similarIngredientsFlow.value = SimilarIngredientsState.All
         } else {
             val results = searchRepository.findIngredientsBySimilarName(name)
-            similarIngredientsFlow.value = SimilarIngredientsState.Found(mapToFilterModel(results))
+            similarIngredientsFlow.value = SimilarIngredientsState.Found(mapToFilterModel(results), name)
         }
     }
 
@@ -46,5 +46,5 @@ class FindSimilarIngredientsByNameUseCase(
 
 sealed class SimilarIngredientsState {
     object All : SimilarIngredientsState()
-    data class Found(val results: Set<String>) : SimilarIngredientsState()
+    data class Found(val results: Set<String>, val keyword: String?) : SimilarIngredientsState()
 }

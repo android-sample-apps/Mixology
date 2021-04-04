@@ -101,8 +101,12 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     }
 
     private fun initIngredientSearch() {
-        binding?.ingredientSearchQueryEt?.addTextChangedListener { text ->
-            searchViewModel.findRelevantIngredients(text?.toString())
+        binding?.ingredientSearchQueryEt?.run {
+            setText(searchViewModel.searchKeyword)
+            addTextChangedListener { text ->
+                searchViewModel.findRelevantIngredients(text?.toString())
+            }
+
         }
     }
 
