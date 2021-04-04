@@ -7,9 +7,19 @@
             android:id="@+id/lottie_no_result"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:alpha="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/search_results_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottie_no_result" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/has_results">
@@ -17,15 +27,24 @@
             android:id="@+id/lottie_no_result"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:alpha="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/search_results_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lottie_no_result" />
     </ConstraintSet>
 
     <Transition
         app:constraintSetEnd="@id/no_result"
         app:constraintSetStart="@id/has_results"
         app:duration="250"
-        app:motionInterpolator="easeInOut"
-        />
+        app:motionInterpolator="easeInOut" />
 </MotionScene>

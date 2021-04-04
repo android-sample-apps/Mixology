@@ -84,7 +84,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         initMotionLayout()
         initFilterFab()
         initSearchQuery()
-//        initResultsRecyclerView()
         observeAutoCompleteSuggestions()
         observeResults()
         observeFiltersBadge()
@@ -146,19 +145,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
-    /*private fun initResultsRecyclerView() {
-        binding.searchResultsRv.run {
-            adapter = previewAdapter
-            addItemDecoration(
-                GridSpacerItemDecoration(
-                    right = 4.dpToPx().toInt(),
-                    left = 4.dpToPx().toInt(),
-                    bottom = 4.dpToPx().toInt()
-                )
-            )
-        }
-    }*/
-
     private fun clearQuery() {
         searchViewModel.clearByName()
         binding.searchQueryActv.text = null
@@ -171,14 +157,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
         search()
     }
-
-//    private fun showNoResults() {
-//        binding.advancedSearchMl.transitionToState(R.id.no_results)
-//    }
-
-//    private fun hideNoResults() {
-//        binding.advancedSearchMl.transitionToState(R.id.has_results)
-//    }
 
     private fun search() {
         searchViewModel.fetchByName(query)
@@ -258,15 +236,11 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onPreviewNoResults() {
         Timber.d("onPreviewNoResults:")
-//        previewAdapter.updateAsync(emptyList())
-//        showNoResults()
         binding.searchResults.updateNoResults()
     }
 
     private suspend fun onPreviewResults(drinks: List<DrinkPreviewUiModel>) {
         Timber.d("results: received ${drinks.size} drinks")
-//        previewAdapter.updateAsync(createPreviewItems(drinks))
-//        hideNoResults()
         createPreviewItems(drinks).also {
             binding.searchResults.updateResults(it)
         }
