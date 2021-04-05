@@ -27,6 +27,6 @@ class FetchAndStoreIngredientUseCase(
             Timber.d("fetched: $name")
             ingredientDetailsRepository.store(it)
         }
-            .onFailure { Timber.e(it, "Failed fetching ingredient [$name]") }
+            .onFailure { Timber.w(it, "Failed fetching ingredient [$name]") }
     }
 }
