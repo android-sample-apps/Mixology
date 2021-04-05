@@ -53,6 +53,12 @@ val landingPageDi = module {
         )
     }
 
+    factory {
+        FetchPreviewsByLetterUseCase(
+            drinkRepository = get()
+        )
+    }
+
     viewModel {
         LandingPageViewModel(
             getLandingPagePreviewsUseCase = get(),
