@@ -1,10 +1,10 @@
-package com.yanivsos.mixological.migration
+package com.yanivsos.mixological.database.migration
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.yanivsos.mixological.database.*
 import com.yanivsos.mixological.database.MapStringToStringOptionalConverter
-import com.yanivsos.mixological.domain.models.DrinkModel
+import com.yanivsos.mixological.database.DrinkModel
 
 val MIGRATION_1_2 = object : Migration(1, 2) {
 

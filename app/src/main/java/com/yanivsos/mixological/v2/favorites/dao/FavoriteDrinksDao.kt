@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
-import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
+import com.yanivsos.mixological.database.WatchlistItemModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

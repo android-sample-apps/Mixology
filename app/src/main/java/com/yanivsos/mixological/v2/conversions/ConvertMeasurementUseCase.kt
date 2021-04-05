@@ -1,13 +1,13 @@
-package com.yanivsos.mixological.domain
+package com.yanivsos.mixological.v2.conversions
 
 import com.yanivsos.conversions.units.FluidUnitsToSystemConverter
 import com.yanivsos.conversions.units.system.MeasurementSystem
 import com.yanivsos.mixological.conversions.MeasurementPreference
 import com.yanivsos.mixological.conversions.MeasurementSystemParser
-import com.yanivsos.mixological.domain.models.DrinkModel
-import com.yanivsos.mixological.ui.mappers.FluidMeasurementUnitMapper
-import com.yanivsos.mixological.ui.mappers.KeepOriginalMeasurementUnitMapper
-import com.yanivsos.mixological.ui.mappers.MeasurementUnitMapper
+import com.yanivsos.mixological.database.DrinkModel
+import com.yanivsos.mixological.v2.conversions.mappers.FluidMeasurementUnitMapper
+import com.yanivsos.mixological.v2.conversions.mappers.KeepOriginalMeasurementUnitMapper
+import com.yanivsos.mixological.v2.conversions.mappers.MeasurementUnitMapper
 import com.yanivsos.mixological.ui.models.AppSettings
 import timber.log.Timber
 

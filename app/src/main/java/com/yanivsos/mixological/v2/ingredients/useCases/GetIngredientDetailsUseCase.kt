@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.ingredients.useCases
 
-import com.yanivsos.mixological.domain.models.IngredientDetailsModel
+import com.yanivsos.mixological.database.IngredientDetailsModel
 import com.yanivsos.mixological.v2.ingredients.repository.IngredientDetailsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

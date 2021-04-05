@@ -1,7 +1,6 @@
 package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.yanivsos.mixological.R
@@ -11,7 +10,6 @@ import com.yanivsos.mixological.ui.view_model.SettingsViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

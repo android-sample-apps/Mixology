@@ -1,9 +1,9 @@
 package com.yanivsos.mixological.v2.search.useCases
 
-import com.yanivsos.mixological.domain.models.AlcoholicFilterModel
-import com.yanivsos.mixological.domain.models.CategoryModel
-import com.yanivsos.mixological.domain.models.GlassModel
-import com.yanivsos.mixological.domain.models.IngredientModel
+import com.yanivsos.mixological.database.AlcoholicFilterModel
+import com.yanivsos.mixological.database.CategoryModel
+import com.yanivsos.mixological.database.GlassModel
+import com.yanivsos.mixological.database.IngredientModel
 import com.yanivsos.mixological.v2.search.repo.SearchRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

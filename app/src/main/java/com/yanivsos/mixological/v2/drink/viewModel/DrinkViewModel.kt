@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
-import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.database.WatchlistItemModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel

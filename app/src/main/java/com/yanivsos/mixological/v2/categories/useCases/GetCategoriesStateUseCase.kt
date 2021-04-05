@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.categories.useCases
 
-import com.yanivsos.mixological.domain.models.CategoryModel
+import com.yanivsos.mixological.database.CategoryModel
 import com.yanivsos.mixological.ui.models.CategoryUiModel
 import com.yanivsos.mixological.v2.categories.repo.CategoriesRepository
 import kotlinx.coroutines.flow.Flow

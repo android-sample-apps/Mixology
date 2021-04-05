@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.drink.useCases
 
-import com.yanivsos.mixological.domain.models.RecentlyViewedModel
+import com.yanivsos.mixological.database.RecentlyViewedModel
 import com.yanivsos.mixological.v2.landingPage.repo.LandingPageRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

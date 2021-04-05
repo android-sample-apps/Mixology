@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.drink.useCases
 
-import com.yanivsos.mixological.domain.models.DrinkModel
+import com.yanivsos.mixological.database.DrinkModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
 import com.yanivsos.mixological.v2.ingredients.useCases.FetchAndStoreIngredientUseCase
 

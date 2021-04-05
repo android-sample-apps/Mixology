@@ -1,8 +1,7 @@
-package com.yanivsos.mixological.domain.models
+package com.yanivsos.mixological.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yanivsos.mixological.database.*
 
 @Entity(tableName = TABLE_NAME_INGREDIENTS)
 data class IngredientModel(

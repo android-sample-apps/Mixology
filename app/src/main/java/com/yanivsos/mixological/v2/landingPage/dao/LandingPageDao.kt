@@ -1,10 +1,10 @@
 package com.yanivsos.mixological.v2.landingPage.dao
 
 import androidx.room.*
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
-import com.yanivsos.mixological.domain.models.LatestArrivalsModel
-import com.yanivsos.mixological.domain.models.MostPopularModel
-import com.yanivsos.mixological.domain.models.RecentlyViewedModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
+import com.yanivsos.mixological.database.LatestArrivalsModel
+import com.yanivsos.mixological.database.MostPopularModel
+import com.yanivsos.mixological.database.RecentlyViewedModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

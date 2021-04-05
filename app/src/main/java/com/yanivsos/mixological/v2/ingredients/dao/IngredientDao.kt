@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.yanivsos.mixological.domain.models.IngredientDetailsModel
-import com.yanivsos.mixological.domain.models.IngredientModel
+import com.yanivsos.mixological.database.IngredientDetailsModel
+import com.yanivsos.mixological.database.IngredientModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

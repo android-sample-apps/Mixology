@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.landingPage.useCases
 
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged

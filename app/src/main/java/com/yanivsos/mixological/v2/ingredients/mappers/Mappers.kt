@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.ingredients.mappers
 
-import com.yanivsos.mixological.domain.models.IngredientDetailsModel
+import com.yanivsos.mixological.database.IngredientDetailsModel
 import com.yanivsos.mixological.network.response.IngredientDetailsResponse
 import com.yanivsos.mixological.network.response.IngredientsWrapperResponse
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel

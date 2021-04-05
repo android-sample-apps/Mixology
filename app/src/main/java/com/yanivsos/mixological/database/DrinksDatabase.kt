@@ -3,7 +3,6 @@ package com.yanivsos.mixological.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.yanivsos.mixological.domain.models.*
 import com.yanivsos.mixological.v2.search.dao.AlcoholicFilterDao
 import com.yanivsos.mixological.v2.search.dao.CategoryDao
 import com.yanivsos.mixological.v2.search.dao.GlassDao

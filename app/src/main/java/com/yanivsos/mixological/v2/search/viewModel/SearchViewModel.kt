@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yanivsos.mixological.R
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter

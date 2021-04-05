@@ -2,7 +2,7 @@ package com.yanivsos.mixological.v2.categories.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.yanivsos.mixological.domain.models.CategoryModel
+import com.yanivsos.mixological.database.CategoryModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.categories.repo
 
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.categories.dao.CategoriesDao
 import com.yanivsos.mixological.v2.drink.mappers.toModel

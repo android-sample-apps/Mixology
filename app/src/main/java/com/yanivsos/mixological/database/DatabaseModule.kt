@@ -2,8 +2,8 @@
 package com.yanivsos.mixological.database
 
 import androidx.room.Room
-import com.yanivsos.mixological.migration.MIGRATION_1_2
-import com.yanivsos.mixological.migration.MIGRATION_2_3
+import com.yanivsos.mixological.database.migration.MIGRATION_1_2
+import com.yanivsos.mixological.database.migration.MIGRATION_2_3
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

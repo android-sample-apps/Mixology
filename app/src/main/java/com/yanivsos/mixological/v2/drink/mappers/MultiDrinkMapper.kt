@@ -1,7 +1,7 @@
 package com.yanivsos.mixological.v2.drink.mappers
 
-import com.yanivsos.mixological.domain.models.DrinkModel
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.database.DrinkModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.network.response.DrinkPreviewResponse
 import com.yanivsos.mixological.network.response.DrinkResponse
 import com.yanivsos.mixological.network.response.DrinksWrapperResponse

@@ -1,4 +1,4 @@
-package com.yanivsos.mixological.ui.mappers
+package com.yanivsos.mixological.v2.conversions.mappers
 
 import com.yanivsos.conversions.units.FluidUnitsToSystemConverter
 

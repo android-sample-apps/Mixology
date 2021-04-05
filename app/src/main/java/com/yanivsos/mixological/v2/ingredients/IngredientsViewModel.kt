@@ -2,7 +2,7 @@ package com.yanivsos.mixological.v2.ingredients
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yanivsos.mixological.domain.models.IngredientDetailsModel
+import com.yanivsos.mixological.database.IngredientDetailsModel
 import com.yanivsos.mixological.ui.models.IngredientDetailsUiModel
 import com.yanivsos.mixological.v2.ingredients.mappers.toUiModel
 import com.yanivsos.mixological.v2.ingredients.useCases.GetIngredientDetailsUseCase

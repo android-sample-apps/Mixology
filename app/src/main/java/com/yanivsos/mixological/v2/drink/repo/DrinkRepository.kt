@@ -1,9 +1,9 @@
 package com.yanivsos.mixological.v2.drink.repo
 
-import com.yanivsos.mixological.domain.models.DrinkModel
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
-import com.yanivsos.mixological.domain.models.WatchlistItemModel
-import com.yanivsos.mixological.domain.models.debugPrint
+import com.yanivsos.mixological.database.DrinkModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
+import com.yanivsos.mixological.database.WatchlistItemModel
+import com.yanivsos.mixological.database.debugPrint
 import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.drink.dao.DrinkDao
 import com.yanivsos.mixological.v2.drink.mappers.toFirstOrNullModel

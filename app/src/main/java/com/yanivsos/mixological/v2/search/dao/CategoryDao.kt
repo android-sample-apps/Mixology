@@ -1,7 +1,7 @@
 package com.yanivsos.mixological.v2.search.dao
 
 import androidx.room.*
-import com.yanivsos.mixological.domain.models.CategoryModel
+import com.yanivsos.mixological.database.CategoryModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -3,8 +3,8 @@ package com.yanivsos.mixological.v2.drink.mappers
 import android.content.Context
 import android.text.SpannableString
 import com.yanivsos.mixological.R
-import com.yanivsos.mixological.domain.models.DrinkModel
-import com.yanivsos.mixological.domain.models.DrinkPreviewModel
+import com.yanivsos.mixological.database.DrinkModel
+import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.extensions.toKey
 import com.yanivsos.mixological.network.response.DrinkPreviewResponse
 import com.yanivsos.mixological.network.response.DrinkResponse

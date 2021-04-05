@@ -1,9 +1,9 @@
 package com.yanivsos.mixological.v2.search.mapper
 
-import com.yanivsos.mixological.domain.models.AlcoholicFilterModel
-import com.yanivsos.mixological.domain.models.CategoryModel
-import com.yanivsos.mixological.domain.models.GlassModel
-import com.yanivsos.mixological.domain.models.IngredientModel
+import com.yanivsos.mixological.database.AlcoholicFilterModel
+import com.yanivsos.mixological.database.CategoryModel
+import com.yanivsos.mixological.database.GlassModel
+import com.yanivsos.mixological.database.IngredientModel
 import com.yanivsos.mixological.network.response.*
 
 fun DrinksWrapperResponse<IngredientResponse>.toIngredientsModel(): List<IngredientModel> {

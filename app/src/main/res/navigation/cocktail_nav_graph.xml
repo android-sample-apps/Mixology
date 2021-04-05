@@ -28,7 +28,7 @@
         android:id="@+id/advancedSearchFragment"
         android:name="com.yanivsos.mixological.v2.search.fragments.SearchFragment"
         android:label="AdvancedSearchFragment"
-        tools:layout="@layout/fragment_advanced_search">
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"

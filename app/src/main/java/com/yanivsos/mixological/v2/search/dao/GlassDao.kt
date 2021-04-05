@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.yanivsos.mixological.domain.models.GlassModel
+import com.yanivsos.mixological.database.GlassModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -2,7 +2,7 @@ package com.yanivsos.mixological.v2.drinkOptions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.database.WatchlistItemModel
 import com.yanivsos.mixological.v2.drink.useCases.DrinkModelResult
 import com.yanivsos.mixological.v2.drink.useCases.GetDrinkUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.AddToFavoritesUseCase

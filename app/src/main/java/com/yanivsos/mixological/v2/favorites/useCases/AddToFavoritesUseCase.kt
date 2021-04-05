@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.favorites.useCases
 
-import com.yanivsos.mixological.domain.models.WatchlistItemModel
+import com.yanivsos.mixological.database.WatchlistItemModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
 import com.yanivsos.mixological.v2.drink.useCases.FetchAndStoreDrinkUseCase
 import timber.log.Timber
