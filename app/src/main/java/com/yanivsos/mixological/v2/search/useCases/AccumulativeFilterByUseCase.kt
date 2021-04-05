@@ -17,7 +17,7 @@ import timber.log.Timber
 abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
     private val drinkRepository: DrinkRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
-    initialOperator: AccumulativeOperator = AccumulativeOperator.Intersection
+    initialOperator: AccumulativeOperator = AccumulativeOperator.Union
 ) : FilterUseCase<T> {
     private val mutex = Mutex()
     private val operatorFlow = MutableStateFlow(initialOperator)
@@ -143,7 +143,7 @@ sealed class AccumulativeFilterState {
 class IngredientsFilterUseCase(
     drinkRepository: DrinkRepository,
     defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-) : AccumulativeFilterByUseCase<DrinkFilter.Ingredients>(drinkRepository, defaultDispatcher) {
+) : AccumulativeFilterByUseCase<DrinkFilter.Ingredients>(drinkRepository, defaultDispatcher, AccumulativeOperator.Intersection) {
 
     override fun toFilterRequest(filter: DrinkFilter.Ingredients): DrinkFilterRequest {
         return DrinkFilterRequest.Ingredient(filter.ingredient)
