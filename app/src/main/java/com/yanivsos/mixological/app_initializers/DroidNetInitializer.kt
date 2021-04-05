@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.startup.Initializer
 import com.droidnet.DroidNet
 
+@Suppress("unused")
 class DroidNetInitializer : Initializer<DroidNet> {
     override fun create(context: Context): DroidNet {
         return DroidNet.init(context)

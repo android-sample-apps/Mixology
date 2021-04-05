@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.drink.di
 
-import com.yanivsos.mixological.repo.room.DrinksDatabase
+import com.yanivsos.mixological.database.DrinksDatabase
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
 import com.yanivsos.mixological.v2.drink.useCases.AddToRecentlyViewedUseCase
 import com.yanivsos.mixological.v2.drink.useCases.FetchAndStoreDrinkUseCase
@@ -14,7 +14,7 @@ import org.koin.dsl.module
 
 val drinkDi = module {
 
-    single { get<DrinksDatabase>().drinkDaoV2() }
+    single { get<DrinksDatabase>().getDrinkDao() }
 
     single {
         DrinkRepository(

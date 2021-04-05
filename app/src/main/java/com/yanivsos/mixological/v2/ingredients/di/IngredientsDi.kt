@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.ingredients.di
 
-import com.yanivsos.mixological.repo.room.DrinksDatabase
+import com.yanivsos.mixological.database.DrinksDatabase
 import com.yanivsos.mixological.v2.ingredients.IngredientDetailsViewModel
 import com.yanivsos.mixological.v2.ingredients.repository.IngredientDetailsRepository
 import com.yanivsos.mixological.v2.ingredients.useCases.FetchAndStoreIngredientUseCase

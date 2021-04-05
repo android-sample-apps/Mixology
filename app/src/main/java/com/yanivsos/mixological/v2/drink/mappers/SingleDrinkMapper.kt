@@ -6,9 +6,8 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.extensions.toKey
-import com.yanivsos.mixological.repo.mappers.LOCAL_SPANISH
-import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
-import com.yanivsos.mixological.repo.models.DrinkResponse
+import com.yanivsos.mixological.network.response.DrinkPreviewResponse
+import com.yanivsos.mixological.network.response.DrinkResponse
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.DrinkUiModel
@@ -17,6 +16,8 @@ import com.yanivsos.mixological.v2.drink.viewModel.DrinkState
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.util.*
+
+val LOCAL_SPANISH = Locale("es", "ES")
 
 fun DrinkPreviewModel.toUiModel(): DrinkPreviewUiModel {
     return DrinkPreviewUiModel(
@@ -29,6 +30,10 @@ fun DrinkPreviewModel.toUiModel(): DrinkPreviewUiModel {
 
 fun List<DrinkPreviewModel>.toUiModel(): List<DrinkPreviewUiModel> {
     return map { it.toUiModel() }
+}
+
+fun List<DrinkModel>.toPreviewModel(): List<DrinkPreviewModel> {
+    return map { it.toPreviewModel() }
 }
 
 fun DrinkState.Error.toUiModel(): DrinkErrorUiModel {

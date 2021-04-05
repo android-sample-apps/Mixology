@@ -4,7 +4,7 @@ import com.yanivsos.mixological.domain.models.AlcoholicFilterModel
 import com.yanivsos.mixological.domain.models.CategoryModel
 import com.yanivsos.mixological.domain.models.GlassModel
 import com.yanivsos.mixological.domain.models.IngredientModel
-import com.yanivsos.mixological.repo.models.*
+import com.yanivsos.mixological.network.response.*
 
 fun DrinksWrapperResponse<IngredientResponse>.toIngredientsModel(): List<IngredientModel> {
     return data.map {

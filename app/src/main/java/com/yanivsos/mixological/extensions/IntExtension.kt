@@ -10,10 +10,3 @@ fun Number.dpToPx(
     val metrics: DisplayMetrics = Resources.getSystem().displayMetrics
     return toFloat() * metrics.density
 }
-
-@Dimension(unit = Dimension.DP)
-fun Number.pxToDp(
-): Float {
-    val metrics: DisplayMetrics = Resources.getSystem().displayMetrics
-    return toFloat() / metrics.density
-}

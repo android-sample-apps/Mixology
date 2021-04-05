@@ -4,10 +4,11 @@ import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.WatchlistItemModel
 import com.yanivsos.mixological.domain.models.debugPrint
-import com.yanivsos.mixological.repo.DrinkService
+import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.drink.dao.DrinkDao
 import com.yanivsos.mixological.v2.drink.mappers.toFirstOrNullModel
 import com.yanivsos.mixological.v2.drink.mappers.toModel
+import com.yanivsos.mixological.v2.drink.mappers.toPreviewModel
 import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 import com.yanivsos.mixological.v2.landingPage.repo.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
@@ -91,15 +92,29 @@ class DrinkRepository(
             .mergeWithFavorites(favoriteDrinksDao, defaultDispatcher)
     }
 
+    suspend fun fetchPreviewsByLetter(char: Char): List<DrinkPreviewModel> =
+        withContext(ioDispatcher) {
+            drinkService
+                .searchByFirstLetter(char.toString())
+                .toModel()
+                .toPreviewModel()
+        }
+
+    suspend fun storePreviews(previews: List<DrinkPreviewModel>) =
+        withContext(ioDispatcher) {
+            drinkDao.storePreviews(previews)
+        }
+
     //filtering
-    suspend fun filterBy(filter: DrinkFilterRequest): List<DrinkPreviewModel> {
-        return when (filter) {
-            is DrinkFilterRequest.Alcoholic -> drinkService.filterByAlcoholic(filter.alcoholic)
-            is DrinkFilterRequest.Category -> drinkService.filterByCategory(filter.category)
-            is DrinkFilterRequest.Glass -> drinkService.filterByGlass(filter.glass)
-            is DrinkFilterRequest.Ingredient -> drinkService.filterByIngredient(filter.ingredient)
-        }.toModel()
-    }
+    suspend fun filterBy(filter: DrinkFilterRequest): List<DrinkPreviewModel> =
+        withContext(ioDispatcher) {
+            when (filter) {
+                is DrinkFilterRequest.Alcoholic -> drinkService.filterByAlcoholic(filter.alcoholic)
+                is DrinkFilterRequest.Category -> drinkService.filterByCategory(filter.category)
+                is DrinkFilterRequest.Glass -> drinkService.filterByGlass(filter.glass)
+                is DrinkFilterRequest.Ingredient -> drinkService.filterByIngredient(filter.ingredient)
+            }.toModel()
+        }
 }
 
 sealed class DrinkFilterRequest {

@@ -68,11 +68,7 @@ class SearchViewModel(
                 searchDrinksUseCase.toggleFilter(drinkFilter)
             }.onFailure {
                 Timber.e(it, "failed toggling filter $drinkFilter")
-                Toast.makeText(
-                    application.applicationContext,
-                    R.string.filter_toggle_failure,
-                    Toast.LENGTH_SHORT
-                ).show()
+                showErrorToast()
             }
 
         }
@@ -117,8 +113,8 @@ class SearchViewModel(
             runCatching {
                 searchDrinksUseCase.fetchByName(name)
             }.onFailure {
-                // TODO: 01/04/2021 handle errors
                 Timber.e(it, "Failed fetching by name: $name")
+                showErrorToast()
             }
         }
     }
@@ -127,6 +123,14 @@ class SearchViewModel(
         viewModelScope.launch {
             searchDrinksUseCase.clearByName()
         }
+    }
+
+    private fun showErrorToast() {
+        Toast.makeText(
+            application.applicationContext,
+            R.string.filter_toggle_failure,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private suspend fun mergeWithSimilarIngredients(

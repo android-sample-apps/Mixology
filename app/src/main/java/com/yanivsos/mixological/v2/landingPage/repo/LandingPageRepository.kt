@@ -4,7 +4,7 @@ import com.yanivsos.mixological.domain.models.DrinkPreviewModel
 import com.yanivsos.mixological.domain.models.LatestArrivalsModel
 import com.yanivsos.mixological.domain.models.MostPopularModel
 import com.yanivsos.mixological.domain.models.RecentlyViewedModel
-import com.yanivsos.mixological.repo.DrinkService
+import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.drink.mappers.toModel
 import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 import com.yanivsos.mixological.v2.landingPage.dao.LandingPageDao

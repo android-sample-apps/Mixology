@@ -2,7 +2,7 @@ package com.yanivsos.mixological.domain.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.yanivsos.mixological.repo.room.*
+import com.yanivsos.mixological.database.*
 
 @Entity(tableName = TABLE_NAME_INGREDIENTS)
 data class IngredientModel(
@@ -32,26 +32,11 @@ data class IngredientDetailsModel(
     val isAlcoholic: Boolean,
     val image: String,
     val alcoholVolume: Int?
-) {
-    private fun shortDescription(): String? {
-        return description?.take(10)?.let {
-            "$it..."
-        }
-    }
-
-    fun debugPrint(): String {
-        return "IngredientDetailsModel(id=$id, name=$name, description=${shortDescription()}, isAlcoholic=$isAlcoholic, ABV= ${alcoholVolume},image=$image"
-    }
-}
+)
 
 @Entity(tableName = TABLE_NAME_CATEGORY)
 data class CategoryModel(
     @PrimaryKey val name: String
-)
-
-data class CategoryWithImageModel(
-    val categoryModel: CategoryModel,
-    val image: String?
 )
 
 @Entity(tableName = TABLE_NAME_DRINK_PREVIEWS)
@@ -104,16 +89,3 @@ data class DrinkModel(
 fun DrinkModel.debugPrint(): String {
     return "DrinkModel[id: $id, name: $name]"
 }
-
-sealed class Result<T> {
-    data class Success<T>(val data: T) : Result<T>()
-    data class Loading<T>(val id: String) : Result<T>()
-    data class Error<T>(val tr: Throwable) : Result<T>()
-}
-
-data class SearchFiltersModel(
-    val categories: List<CategoryModel> = emptyList(),
-    val alcoholic: List<AlcoholicFilterModel> = emptyList(),
-    val ingredients: List<IngredientModel> = emptyList(),
-    val glasses: List<GlassModel> = emptyList()
-)

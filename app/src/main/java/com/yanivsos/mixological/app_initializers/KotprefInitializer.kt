@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.startup.Initializer
 import com.chibatching.kotpref.Kotpref
 
+@Suppress("unused")
 class KotprefInitializer: Initializer<Unit> {
     override fun create(context: Context) {
         Kotpref.init(context)

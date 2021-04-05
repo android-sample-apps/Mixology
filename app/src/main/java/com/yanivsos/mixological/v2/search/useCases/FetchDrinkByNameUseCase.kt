@@ -28,7 +28,7 @@ class FetchDrinkByNameUseCase(
                 if (results.isEmpty()) {
                     FetchDrinkState.NoResults
                 } else {
-                    FetchDrinkState.FoundResults(results.map { it.toPreviewModel() })
+                    FetchDrinkState.FoundResults(results.toPreviewModel())
                 }.also {
                     fetchDrinkStateFlow.value = it
                 }

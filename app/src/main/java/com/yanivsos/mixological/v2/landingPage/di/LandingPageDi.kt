@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.landingPage.di
 
-import com.yanivsos.mixological.repo.room.DrinksDatabase
+import com.yanivsos.mixological.database.DrinksDatabase
 import com.yanivsos.mixological.v2.landingPage.repo.LandingPageRepository
 import com.yanivsos.mixological.v2.landingPage.useCases.*
 import com.yanivsos.mixological.v2.landingPage.viewModel.LandingPageViewModel

@@ -2,10 +2,10 @@ package com.yanivsos.mixological.network
 
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
-import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
-import com.yanivsos.mixological.repo.models.SERIALIZED_NAME_DRINKS
-import com.yanivsos.mixological.repo.models.SERIALIZED_NAME_NONE_FOUND
+import com.yanivsos.mixological.network.response.DrinkPreviewResponse
+import com.yanivsos.mixological.network.response.DrinksWrapperResponse
+import com.yanivsos.mixological.network.response.SERIALIZED_NAME_DRINKS
+import com.yanivsos.mixological.network.response.SERIALIZED_NAME_NONE_FOUND
 import java.lang.reflect.Type
 
 class FilterResponseDeserializer : JsonDeserializer<DrinksWrapperResponse<DrinkPreviewResponse>> {

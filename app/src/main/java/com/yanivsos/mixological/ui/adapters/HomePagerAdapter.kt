@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.yanivsos.mixological.R
-import com.yanivsos.mixological.ui.fragments.CategoryMenuFragment
 import com.yanivsos.mixological.v2.categories.fragments.CategoriesFragment
 import com.yanivsos.mixological.v2.favorites.fragments.FavoritesFragment
 import com.yanivsos.mixological.v2.landingPage.fragments.LandingPageFragment

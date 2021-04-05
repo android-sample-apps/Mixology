@@ -6,10 +6,10 @@ import com.google.firebase.analytics.ktx.ParametersBuilder
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.ktx.Firebase
-import com.yanivsos.mixological.domain.models.DrinkFilter
 import com.yanivsos.mixological.ui.models.DrinkErrorUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.IngredientUiModel
+import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -91,11 +91,12 @@ object AnalyticsDispatcher {
         }
     }
 
+    // TODO: 05/04/2021 complete this
     fun onSearchFilter(drinkFilter: DrinkFilter) {
         firebaseAnalytics.asyncLogEvent(Events.SEARCH_DRINK) {
-            param(FBParam.SEARCH_TERM, drinkFilter.query)
-            param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
-            param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
+//            param(FBParam.SEARCH_TERM, drinkFilter.name)
+//            param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
+//            param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
         }
     }
 

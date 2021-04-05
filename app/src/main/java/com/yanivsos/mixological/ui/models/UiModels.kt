@@ -5,8 +5,6 @@ import android.text.SpannableString
 import androidx.annotation.Keep
 import androidx.annotation.RawRes
 import androidx.annotation.StringRes
-import com.yanivsos.mixological.domain.models.DrinkFilter
-import com.yanivsos.mixological.domain.models.FilterType
 import com.yanivsos.mixological.extensions.toVisibility
 import kotlinx.parcelize.Parcelize
 
@@ -64,10 +62,6 @@ data class IngredientUiModel(
 
 fun IngredientUiModel.quantityVisibility() = quantity.isNotEmpty().toVisibility()
 
-data class IngredientFilterUiModel(
-    val name: String
-)
-
 data class IngredientDetailsUiModel(
     val name: String,
     val description: String?,
@@ -75,44 +69,6 @@ data class IngredientDetailsUiModel(
     val isAlcoholic: Boolean,
     val alcoholVolume: String?
 )
-
-data class GlassUiModel(
-    val name: String
-)
-
-data class AlcoholFilterUiModel(
-    val name: String
-)
-
-data class DrinkFilterUiModel(
-    val name: String,
-    val drinkFilter: DrinkFilter,
-    val selected: Boolean = false
-)
-
-data class SearchFiltersUiModel(
-    val filters: Map<FilterType, List<DrinkFilterUiModel>>,
-    val activeFilters: Map<FilterType, Int?>
-) {
-    val activeFiltersBadge = activeFiltersBadge()
-
-    private fun activeFiltersBadge(): Int? {
-        val activeFilters = countActiveFilters()
-        return if (activeFilters > 0) {
-            activeFilters
-        } else {
-            null
-        }
-    }
-
-    private fun countActiveFilters(): Int {
-        var size = 0
-        activeFilters
-            .mapNotNull { it.value }
-            .forEach { size += it }
-        return size
-    }
-}
 
 @Keep
 @Parcelize
@@ -122,9 +78,3 @@ data class DrinkErrorUiModel(
     @StringRes val description: Int,
     @RawRes val lottieAnimation: Int
 ) : Parcelable
-
-sealed class ResultUiModel<T> {
-    data class Success<T>(val data: T) : ResultUiModel<T>()
-    data class Loading<T>(val id: String) : ResultUiModel<T>()
-    data class Error<T>(val errorUiModel: DrinkErrorUiModel) : ResultUiModel<T>()
-}

@@ -1,7 +1,7 @@
 package com.yanivsos.mixological.v2.ingredients.repository
 
 import com.yanivsos.mixological.domain.models.IngredientDetailsModel
-import com.yanivsos.mixological.repo.DrinkService
+import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.ingredients.dao.IngredientDao
 import com.yanivsos.mixological.v2.ingredients.mappers.toModel
 import kotlinx.coroutines.CoroutineDispatcher

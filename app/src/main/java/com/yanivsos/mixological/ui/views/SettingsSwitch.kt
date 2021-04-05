@@ -3,21 +3,18 @@ package com.yanivsos.mixological.ui.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.ViewSettingsSwitchBinding
 import com.yanivsos.mixological.extensions.getStringFromResourceId
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 
 class SettingsSwitch @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val _checkedChangedChannel = ConflatedBroadcastChannel<Boolean>()
-    val checkedChangedChannel = _checkedChangedChannel.asFlow().distinctUntilChanged()
+    private val _checkedChangedChannel = MutableStateFlow<Boolean?>(null)
+    val checkedChangedChannel: Flow<Boolean> = _checkedChangedChannel.filterNotNull()
 
 
     var isChecked: Boolean = false
@@ -30,6 +27,7 @@ class SettingsSwitch @JvmOverloads constructor(
         LayoutInflater.from(context),
         this
     )
+
     init {
         initAttributes(attrs)
         initSwitch()
@@ -57,7 +55,7 @@ class SettingsSwitch @JvmOverloads constructor(
         }
 
         binding.settingsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            _checkedChangedChannel.offer(isChecked)
+            _checkedChangedChannel.value = isChecked
         }
     }
 }

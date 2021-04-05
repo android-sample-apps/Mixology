@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.categories.di
 
-import com.yanivsos.mixological.repo.room.DrinksDatabase
+import com.yanivsos.mixological.database.DrinksDatabase
 import com.yanivsos.mixological.v2.categories.repo.CategoriesRepository
 import com.yanivsos.mixological.v2.categories.useCases.GetCategoriesStateUseCase
 import com.yanivsos.mixological.v2.categories.useCases.GetDrinksByCategoryUseCase

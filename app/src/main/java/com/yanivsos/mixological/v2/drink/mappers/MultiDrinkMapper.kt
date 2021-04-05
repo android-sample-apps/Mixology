@@ -2,10 +2,10 @@ package com.yanivsos.mixological.v2.drink.mappers
 
 import com.yanivsos.mixological.domain.models.DrinkModel
 import com.yanivsos.mixological.domain.models.DrinkPreviewModel
-import com.yanivsos.mixological.repo.models.DrinkPreviewResponse
-import com.yanivsos.mixological.repo.models.DrinkResponse
-import com.yanivsos.mixological.repo.models.DrinksWrapperResponse
-import com.yanivsos.mixological.repo.models.NullableDrinksWrapperResponse
+import com.yanivsos.mixological.network.response.DrinkPreviewResponse
+import com.yanivsos.mixological.network.response.DrinkResponse
+import com.yanivsos.mixological.network.response.DrinksWrapperResponse
+import com.yanivsos.mixological.network.response.NullableDrinksWrapperResponse
 
 fun DrinksWrapperResponse<DrinkResponse>.toFirstOrNullModel(): DrinkModel? {
     return this.data.firstOrNull()?.toModel()

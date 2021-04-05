@@ -61,7 +61,6 @@ class DrinkViewModel(
         getOrFetchDrinkUseCase.cancel("DrinkViewModel cleared")
     }
 
-    // TODO: 18/03/2021 remove this to a shared flow callback
     fun toggleFavorite(drinkPreviewUiModel: DrinkPreviewUiModel) {
         viewModelScope.launch {
             toggleFavoriteUseCase

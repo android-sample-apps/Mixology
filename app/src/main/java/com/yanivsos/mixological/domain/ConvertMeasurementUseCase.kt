@@ -11,6 +11,8 @@ import com.yanivsos.mixological.ui.mappers.MeasurementUnitMapper
 import com.yanivsos.mixological.ui.models.AppSettings
 import timber.log.Timber
 
+// TODO: 05/04/2021 refactor this thing
+@Suppress("unused")
 class ConvertMeasurementUseCase {
 
     fun convert(drinkModel: DrinkModel): DrinkModel {

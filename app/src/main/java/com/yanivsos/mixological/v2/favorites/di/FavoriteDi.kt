@@ -1,6 +1,6 @@
 package com.yanivsos.mixological.v2.favorites.di
 
-import com.yanivsos.mixological.repo.room.DrinksDatabase
+import com.yanivsos.mixological.database.DrinksDatabase
 import com.yanivsos.mixological.v2.favorites.useCases.AddToFavoritesUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.GetFavoritesUseCase
 import com.yanivsos.mixological.v2.favorites.useCases.RemoveFromFavoritesUseCase
@@ -11,7 +11,7 @@ import org.koin.dsl.module
 
 val favoriteDi = module {
 
-    single { get<DrinksDatabase>().favoriteDaoV2() }
+    single { get<DrinksDatabase>().getFavoriteDao() }
 
     factory {
         AddToFavoritesUseCase(
