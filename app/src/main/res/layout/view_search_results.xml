@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/lottie_no_result"
-        layout="@layout/list_item_no_results"
+        layout="@layout/view_no_results"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="visible"

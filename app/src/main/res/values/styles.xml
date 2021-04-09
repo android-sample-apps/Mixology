@@ -137,4 +137,12 @@
         <item name="fontFamily">@font/fty_delirium_ncv</item>
     </style>
 
+    <style name="ErrorDescriptionTextView" parent="Widget.MaterialComponents.TextView" >
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/screen_padding</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/jesa_script_regular</item>
+    </style>
+
 </resources>
