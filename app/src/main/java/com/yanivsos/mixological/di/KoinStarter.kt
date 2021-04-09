@@ -1,14 +1,14 @@
 package com.yanivsos.mixological.di
 
 import android.content.Context
-import com.yanivsos.mixological.in_app_review.inAppReviewModule
-import com.yanivsos.mixological.network.networkModule
 import com.yanivsos.mixological.database.databaseModule
+import com.yanivsos.mixological.network.networkModule
 import com.yanivsos.mixological.ui.di.viewModelModule
 import com.yanivsos.mixological.v2.categories.di.categoriesDi
 import com.yanivsos.mixological.v2.drink.di.drinkDi
 import com.yanivsos.mixological.v2.drinkOptions.di.drinkOptionsDi
 import com.yanivsos.mixological.v2.favorites.di.favoriteDi
+import com.yanivsos.mixological.v2.inAppReview.inAppReviewModule
 import com.yanivsos.mixological.v2.ingredients.di.ingredientsDi
 import com.yanivsos.mixological.v2.landingPage.di.landingPageDi
 import com.yanivsos.mixological.v2.search.di.searchDi
@@ -29,8 +29,8 @@ class KoinStarter {
         return listOf(
             networkModule,
             databaseModule,
-            viewModelModule,
             inAppReviewModule,
+            viewModelModule,
             drinkDi,
             favoriteDi,
             landingPageDi,

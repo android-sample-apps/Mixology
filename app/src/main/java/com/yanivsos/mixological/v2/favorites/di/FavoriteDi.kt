@@ -16,7 +16,8 @@ val favoriteDi = module {
     factory {
         AddToFavoritesUseCase(
             repository = get(),
-            fetchAndStoreDrinkUseCase = get()
+            fetchAndStoreDrinkUseCase = get(),
+            inAppReviewRepository = get()
         )
     }
 

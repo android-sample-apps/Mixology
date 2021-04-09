@@ -16,7 +16,6 @@ class SettingsSwitch @JvmOverloads constructor(
     private val _checkedChangedChannel = MutableStateFlow<Boolean?>(null)
     val checkedChangedChannel: Flow<Boolean> = _checkedChangedChannel.filterNotNull()
 
-
     var isChecked: Boolean = false
         set(value) {
             binding.settingsSwitch.isChecked = value

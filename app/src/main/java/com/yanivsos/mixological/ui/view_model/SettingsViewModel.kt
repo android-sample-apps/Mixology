@@ -1,25 +1,17 @@
 package com.yanivsos.mixological.ui.view_model
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yanivsos.conversions.units.system.MeasurementSystem
 import com.yanivsos.mixological.conversions.MEASUREMENT_SYSTEM_IMPERIAL
 import com.yanivsos.mixological.conversions.MEASUREMENT_SYSTEM_METRIC
 import com.yanivsos.mixological.conversions.MEASUREMENT_SYSTEM_ORIGINAL
 import com.yanivsos.mixological.conversions.MeasurementPreference
 import com.yanivsos.mixological.ui.models.AppSettings
-import com.yanivsos.mixological.ui.utils.SetNightModeUseCase
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SettingsViewModel(
-    private val setNightModeUseCase: SetNightModeUseCase
-) : ViewModel() {
-
-    var darkModeEnabled: Boolean = AppSettings.darkModeEnabled
-        get() = AppSettings.darkModeEnabled
-        set(value) {
-            toggleDarkMode(value)
-            field = value
-        }
+class SettingsViewModel : ViewModel() {
 
     fun changeMeasurementSystemPreference(systemPreference: MeasurementPreference) {
         Timber.d("changeMeasurementSystemPreference: $systemPreference")
@@ -36,8 +28,9 @@ class SettingsViewModel(
         }
     }
 
-    private fun toggleDarkMode(darkModeEnabled: Boolean) {
-        AppSettings.darkModeEnabled = darkModeEnabled
-        setNightModeUseCase.setNightMode(darkModeEnabled)
+    fun toggleDarkMode(darkModeEnabled: Boolean) {
+        viewModelScope.launch {
+            AppSettings.setDarkModeEnabled(darkModeEnabled)
+        }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.conversions.MeasurementPreference
 import com.yanivsos.mixological.databinding.FragmentSettingsBinding
+import com.yanivsos.mixological.ui.models.AppSettings
 import com.yanivsos.mixological.ui.view_model.SettingsViewModel
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.launchIn
@@ -20,14 +21,7 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding
-            .settingsDarkMode.run {
-                isChecked = settingsViewModel.darkModeEnabled
-                checkedChangedChannel
-                    .onEach { onDarkModeEnabled(it) }
-                    .launchIn(viewLifecycleOwner.lifecycleScope)
-            }
+        observeDarkMode()
 
         binding.settingsMeasurementSelector
             .measurementSystemFlow
@@ -35,9 +29,22 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun observeDarkMode() {
+        AppSettings
+            .darkModeEnabledFlow
+            .onEach { darkModeEnabled -> binding.settingsDarkMode.isChecked = darkModeEnabled }
+            .launchIn(viewLifecycleScope())
+
+        binding
+            .settingsDarkMode
+            .checkedChangedChannel
+            .onEach { darkModeEnabled -> onDarkModeEnabled(darkModeEnabled) }
+            .launchIn(viewLifecycleScope())
+    }
+
     private fun onDarkModeEnabled(darkModeEnabled: Boolean) {
         Timber.d("onDarkModeEnabled: $darkModeEnabled")
-        settingsViewModel.darkModeEnabled = (darkModeEnabled)
+        settingsViewModel.toggleDarkMode(darkModeEnabled)
     }
 
     private fun onMeasurementPreferenceChanged(measurementPreference: MeasurementPreference) {

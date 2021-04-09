@@ -1,26 +1,42 @@
 package com.yanivsos.mixological.ui
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.droidnet.DroidNet
 import com.yanivsos.mixological.ui.models.AppSettings
-import com.yanivsos.mixological.ui.utils.SetNightModeUseCase
 import com.yanivsos.mixological.v2.startup.FetchPreviewsWorker
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @Suppress("unused")
 class CocktailApplication : Application() {
 
+    private val lifecycleScope = CoroutineScope(
+        SupervisorJob() + Dispatchers.Main + CoroutineName("CocktailApplication"))
+
     override fun onCreate() {
         super.onCreate()
-        setNightMode()
+        observeDarkMode()
         fetchPreviews()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         DroidNet.getInstance().removeAllInternetConnectivityChangeListeners()
+    }
+
+    private fun observeDarkMode() {
+        AppSettings
+            .darkModeEnabledFlow
+            .onEach { isDarkMode -> setNightMode(isDarkMode) }
+            .launchIn(lifecycleScope)
     }
 
     private fun fetchPreviews() {
@@ -36,8 +52,11 @@ class CocktailApplication : Application() {
                     )
             }
     }
+}
 
-    private fun setNightMode() {
-        SetNightModeUseCase().setNightMode(AppSettings.darkModeEnabled)
-    }
+
+fun setNightMode(isNightMode: Boolean) {
+    val mode =
+        if (isNightMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+    AppCompatDelegate.setDefaultNightMode(mode)
 }
