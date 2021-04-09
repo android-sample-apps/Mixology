@@ -19,6 +19,7 @@ import com.yanivsos.mixological.ui.GridSpacerItemDecoration
 import com.yanivsos.mixological.ui.views.FilterHeaderView
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.mappers.toLongId
+import com.yanivsos.mixological.v2.search.mapper.toFilterChoice
 import com.yanivsos.mixological.v2.search.useCases.FilterCollection
 import com.yanivsos.mixological.v2.search.useCases.FilterModel
 import com.yanivsos.mixological.v2.search.useCases.SelectedFilters
@@ -113,6 +114,15 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
         searchViewModel
             .selectedFilters
             .onEach { onSelectedFiltersState(it) }
+            .launchIn(viewLifecycleScope())
+
+        searchViewModel
+            .filterOperators
+            .onEach { filterOperators ->
+                binding
+                ?.ingredientsFilterChoiceGroup
+                ?.setSelected(filterOperators.ingredientOperator.toFilterChoice())
+            }
             .launchIn(viewLifecycleScope())
     }
 

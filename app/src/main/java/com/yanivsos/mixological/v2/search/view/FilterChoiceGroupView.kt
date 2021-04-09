@@ -7,6 +7,7 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.ViewFilterChoiceGroupBinding
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import timber.log.Timber
 
 class FilterChoiceGroupView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -22,17 +23,31 @@ class FilterChoiceGroupView @JvmOverloads constructor(
         initViews()
     }
 
-    private fun initViews() {
-        binding.andChoice.setOnClickListener {
-            setSelected(SelectedFilterChoice.And)
-        }
-
-        binding.orChoice.setOnClickListener {
-            setSelected(SelectedFilterChoice.Or)
+    fun setSelected(filterChoice: SelectedFilterChoice) {
+        Timber.d("setSelected: $filterChoice")
+        when(filterChoice) {
+            SelectedFilterChoice.And -> binding.run {
+                andChoice.isSelected = true
+                orChoice.isSelected = false
+            }
+            SelectedFilterChoice.Or -> binding.run {
+                andChoice.isSelected = false
+                orChoice.isSelected = true
+            }
         }
     }
 
-    private fun setSelected(filterChoice: SelectedFilterChoice) {
+    private fun initViews() {
+        binding.andChoice.setOnClickListener {
+            notifySelected(SelectedFilterChoice.And)
+        }
+
+        binding.orChoice.setOnClickListener {
+            notifySelected(SelectedFilterChoice.Or)
+        }
+    }
+
+    private fun notifySelected(filterChoice: SelectedFilterChoice) {
         selectedFilterMutableFlow.value = filterChoice
     }
 

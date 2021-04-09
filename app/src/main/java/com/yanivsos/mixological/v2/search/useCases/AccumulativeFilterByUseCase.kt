@@ -24,6 +24,9 @@ abstract class AccumulativeFilterByUseCase<T : DrinkFilter>(
     private val resultFlow =
         MutableStateFlow<PreOperatorFilterResults>(PreOperatorFilterResults.All)
 
+    override val operator: Flow<AccumulativeOperator> =
+        operatorFlow
+
     override val results: Flow<AccumulativeFilterState> =
         resultFlow.combine(operatorFlow) { results, operator ->
             accumulateWithOperator(results, operator)

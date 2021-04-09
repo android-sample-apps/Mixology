@@ -5,6 +5,8 @@ import com.yanivsos.mixological.database.CategoryModel
 import com.yanivsos.mixological.database.GlassModel
 import com.yanivsos.mixological.database.IngredientModel
 import com.yanivsos.mixological.network.response.*
+import com.yanivsos.mixological.v2.search.useCases.AccumulativeOperator
+import com.yanivsos.mixological.v2.search.view.FilterChoiceGroupView
 
 fun DrinksWrapperResponse<IngredientResponse>.toIngredientsModel(): List<IngredientModel> {
     return data.map {
@@ -38,4 +40,11 @@ fun DrinksWrapperResponse<AlcoholicFilterResponse>.toAlcoholicsModel(): List<Alc
                 name = it
             )
         }
+}
+
+fun AccumulativeOperator.toFilterChoice(): FilterChoiceGroupView.SelectedFilterChoice {
+    return when (this) {
+        AccumulativeOperator.Intersection -> FilterChoiceGroupView.SelectedFilterChoice.And
+        AccumulativeOperator.Union -> FilterChoiceGroupView.SelectedFilterChoice.Or
+    }
 }

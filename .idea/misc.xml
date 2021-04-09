@@ -29,9 +29,11 @@
         <entry key="app/src/main/res/layout/tile_item_drink_preview.xml" value="0.12462006079027356" />
         <entry key="app/src/main/res/layout/tile_item_drink_preview_grid.xml" value="0.21105072463768115" />
         <entry key="app/src/main/res/layout/tile_loading_item_drink_preview_grid.xml" value="0.3145833333333333" />
+        <entry key="app/src/main/res/layout/view_choice_filter.xml" value="0.335" />
         <entry key="app/src/main/res/layout/view_connectivity_warning.xml" value="0.3859375" />
         <entry key="app/src/main/res/layout/view_favorite_card.xml" value="0.13095238095238096" />
         <entry key="app/src/main/res/layout/view_filter_choice.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/view_filter_choice_group.xml" value="0.375" />
         <entry key="app/src/main/res/layout/view_filter_header.xml" value="0.1" />
         <entry key="app/src/main/res/layout/view_no_results.xml" value="0.22686567164179106" />
         <entry key="app/src/main/res/layout/view_search_results.xml" value="0.1" />

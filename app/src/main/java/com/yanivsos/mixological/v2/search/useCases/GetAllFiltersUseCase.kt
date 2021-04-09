@@ -80,3 +80,11 @@ data class FilterCollection(
     val filters: List<FilterModel> = emptyList(),
     val selectedCount: Int = 0
 )
+
+data class FilterOperators(
+    val ingredientOperator: AccumulativeOperator = AccumulativeOperator.Union,
+    val alcoholicOperator: AccumulativeOperator = AccumulativeOperator.Union,
+    val glassesOperator: AccumulativeOperator = AccumulativeOperator.Union,
+    val categoriesOperator: AccumulativeOperator = AccumulativeOperator.Union,
+)
+

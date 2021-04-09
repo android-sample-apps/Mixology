@@ -21,6 +21,16 @@ class FilterChoiceView @JvmOverloads constructor(
             field = value
         }
 
+    override fun setSelected(selected: Boolean) {
+        super.setSelected(selected)
+        // TODO: 09/04/2021 add better animation
+        alpha = if (selected) {
+            1f
+        } else {
+            0.5f
+        }
+    }
+
     init {
         initAttributes(attrs)
     }

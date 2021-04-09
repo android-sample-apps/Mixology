@@ -57,6 +57,8 @@ class SearchViewModel(
                 mergeWithSimilarIngredients(selectedFilters, similarIngredientsState)
             }.onEach { mutableSearchKeyword = it.ingredientKeyword }
 
+    val filterOperators: Flow<FilterOperators> = searchDrinksUseCase.filterOperators
+
     private var mutableSearchKeyword: String? = null
     val searchKeyword: String?
         get() {

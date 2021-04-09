@@ -45,6 +45,19 @@ class SearchDrinksUseCase(
             mapToFilterModel(filterResults, allFilters)
         }
 
+    val filterOperators: Flow<FilterOperators> =
+        alcoholicFilterByUseCase.operator
+            .combine(ingredientsFilterUseCase.operator) { alcoholOperator, ingredientOperator ->
+                FilterOperators(
+                    ingredientOperator = ingredientOperator,
+                    alcoholicOperator = alcoholOperator
+                )
+            }.combine(glassFilterByUseCase.operator) { operators, glassesOperator ->
+                operators.copy(glassesOperator = glassesOperator)
+            }.combine(categoriesFilterByUseCase.operator) { operators, categoriesOperator ->
+                operators.copy(categoriesOperator = categoriesOperator)
+            }
+
     suspend fun toggleFilter(drinkFilter: DrinkFilter) {
         withContext(defaultDispatcher) {
             when (drinkFilter) {
