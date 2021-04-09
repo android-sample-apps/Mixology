@@ -61,4 +61,6 @@
     <string name="metric">Metric</string>
     <string name="imperial">Imperial</string>
     <string name="filter_toggle_failure">Oh snap! something went sideways…</string>
+    <string name="choice_and">and</string>
+    <string name="choice_or">or</string>
 </resources>

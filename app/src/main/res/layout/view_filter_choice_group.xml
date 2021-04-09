@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.yanivsos.mixological.v2.search.view.FilterChoiceView
+        android:id="@+id/and_choice"
+        style="@style/FilterChoiceItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fcv_title="@string/choice_and"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yanivsos.mixological.v2.search.view.FilterChoiceView
+        android:id="@+id/or_choice"
+        style="@style/FilterChoiceItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        app:fcv_title="@string/choice_or"
+        app:layout_constraintStart_toEndOf="@id/and_choice"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</merge>

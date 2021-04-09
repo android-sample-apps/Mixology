@@ -38,6 +38,11 @@
                     app:fontFamily="@font/fty_delirium_ncv"
                     app:layoutDescription="@xml/filer_badge_scene" />
 
+                <com.yanivsos.mixological.v2.search.view.FilterChoiceGroupView
+                    android:id="@+id/ingredients_filter_choice_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/search_container_til"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

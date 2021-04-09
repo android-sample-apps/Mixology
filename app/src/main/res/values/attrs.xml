@@ -14,4 +14,8 @@
         <attr name="ss_description" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="FilterChoiceView">
+        <attr name="fcv_title" format="reference"/>
+    </declare-styleable>
+
 </resources>

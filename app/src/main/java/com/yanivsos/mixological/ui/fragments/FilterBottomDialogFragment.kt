@@ -22,6 +22,7 @@ import com.yanivsos.mixological.v2.mappers.toLongId
 import com.yanivsos.mixological.v2.search.useCases.FilterCollection
 import com.yanivsos.mixological.v2.search.useCases.FilterModel
 import com.yanivsos.mixological.v2.search.useCases.SelectedFilters
+import com.yanivsos.mixological.v2.search.view.FilterChoiceGroupView
 import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -79,15 +80,14 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             onFilterClearedClickedListener = {
                 searchViewModel.clearIngredientsFilter()
             }
-            /*var operator: AccumulativeOperator = AccumulativeOperator.Union
-            onOperatorChanged = {
-                operator = when (operator) {
-                    AccumulativeOperator.Intersection -> AccumulativeOperator.Union
-                    AccumulativeOperator.Union -> AccumulativeOperator.Intersection
-                }
-                searchViewModel.setIngredientsOperator(operator)
-            }*/
         }
+
+        binding?.ingredientsFilterChoiceGroup?.run {
+            selectedFilterFlow
+                .onEach { notifyIngredientFilterChoice(it) }
+                .launchIn(viewLifecycleScope())
+        }
+
         binding?.alcoholicHeaderFhv?.onFilterClearedClickedListener = {
             searchViewModel.clearAlcoholicFilter()
         }
@@ -208,6 +208,10 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             )
             adapter = filterAdapter
         }
+    }
+
+    private fun notifyIngredientFilterChoice(selectedFilterChoice: FilterChoiceGroupView.SelectedFilterChoice) {
+        searchViewModel.setIngredientsFilterChoice(selectedFilterChoice)
     }
 
     fun show(fragmentManager: FragmentManager) {

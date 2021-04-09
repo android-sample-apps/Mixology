@@ -10,6 +10,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.search.useCases.*
+import com.yanivsos.mixological.v2.search.view.FilterChoiceGroupView
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -74,8 +75,14 @@ class SearchViewModel(
         }
     }
 
-    fun setIngredientsOperator(operator: AccumulativeOperator) {
-        searchDrinksUseCase.setIngredientsOperator(operator)
+    fun setIngredientsFilterChoice(filterChoice: FilterChoiceGroupView.SelectedFilterChoice) {
+        viewModelScope.launch {
+            val operator = when (filterChoice) {
+                FilterChoiceGroupView.SelectedFilterChoice.And -> AccumulativeOperator.Intersection
+                FilterChoiceGroupView.SelectedFilterChoice.Or -> AccumulativeOperator.Union
+            }
+            searchDrinksUseCase.setIngredientsOperator(operator)
+        }
     }
 
     fun clearAlcoholicFilter() {
