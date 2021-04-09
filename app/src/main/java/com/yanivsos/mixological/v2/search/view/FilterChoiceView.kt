@@ -2,6 +2,7 @@ package com.yanivsos.mixological.v2.search.view
 
 import android.content.Context
 import android.util.AttributeSet
+import androidx.constraintlayout.motion.widget.MotionLayout
 import com.google.android.material.card.MaterialCardView
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.ViewChoiceFilterBinding
@@ -9,7 +10,7 @@ import com.yanivsos.mixological.extensions.getStringFromResourceId
 
 class FilterChoiceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
-) : MaterialCardView(context, attrs) {
+) : MotionLayout(context, attrs) {
 
     private val binding: ViewChoiceFilterBinding = ViewChoiceFilterBinding.bind(
         inflate(context, R.layout.view_choice_filter, this)
@@ -23,11 +24,13 @@ class FilterChoiceView @JvmOverloads constructor(
 
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
-        // TODO: 09/04/2021 add better animation
-        alpha = if (selected) {
-            1f
+        if (selected) {
+            transitionToState(R.id.selected_true)
+            binding.textMotionLayout.transitionToState(R.id.selected_true)
+
         } else {
-            0.5f
+            transitionToState(R.id.selected_false)
+            binding.textMotionLayout.transitionToState(R.id.selected_false)
         }
     }
 

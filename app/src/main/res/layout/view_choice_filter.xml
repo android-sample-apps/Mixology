@@ -2,40 +2,47 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/screen_radius"
-    app:cardElevation="1dp"
-    app:strokeColor="@color/secondary_text_color"
-    app:strokeWidth="1dp"
-    tools:alpha="0.9"
-    tools:parentTag="com.google.android.material.card.MaterialCardView">
+    app:layoutDescription="@xml/view_choice_filter_scene"
+    tools:parentTag="androidx.constraintlayout.motion.widget.MotionLayout">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_container"
+        style="@style/FilterChoiceItem"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/screen_padding"
-        android:paddingTop="8dp"
-        android:paddingEnd="@dimen/screen_padding"
-        android:paddingBottom="8dp">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/filter_tv"
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/text_motion_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/jesa_script_regular"
-            android:gravity="center"
-            android:lines="1"
-            android:textColor="@color/secondary_text_color"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="filter name" />
+            android:paddingStart="@dimen/screen_padding"
+            android:paddingTop="8dp"
+            android:paddingEnd="@dimen/screen_padding"
+            android:paddingBottom="8dp"
+            app:layoutDescription="@xml/view_text_choice_filter_scene">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/filter_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/jesa_script_regular"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/header_text_color"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="filter name" />
+
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 
 </merge>
