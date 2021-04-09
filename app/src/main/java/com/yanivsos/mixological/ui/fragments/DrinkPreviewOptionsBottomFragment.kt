@@ -75,6 +75,7 @@ class DrinkPreviewOptionsBottomFragment(
     private fun observeFavoriteState() {
         optionsViewModel
             .favorite
+            .withLifecycle()
             .onEach { onDrinkStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

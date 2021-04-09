@@ -118,6 +118,7 @@ class DrinkFragment : BaseFragment(R.layout.fragment_drink) {
     private fun observeDrinkState() {
         drinkViewModel
             .drink
+            .withLifecycle()
             .onEach { onDrinkStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

@@ -82,6 +82,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
 
         binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener().apply {
             isExpanded
+                .withLifecycle()
                 .onEach { isExpanded ->
                     Timber.d("isExpanded: $isExpanded")
                     onBackPressedCallback.isEnabled = isExpanded
@@ -111,6 +112,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
     private fun observeCategoriesState() {
         categoriesViewModel
             .categoriesState
+            .withLifecycle()
             .onEach { onStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

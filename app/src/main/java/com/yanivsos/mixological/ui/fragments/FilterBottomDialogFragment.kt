@@ -85,6 +85,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
         binding?.ingredientsFilterChoiceGroup?.run {
             selectedFilterFlow
+                .withLifecycle()
                 .onEach { notifyIngredientFilterChoice(it) }
                 .launchIn(viewLifecycleScope())
         }
@@ -113,11 +114,13 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
     private fun observerFilters() {
         searchViewModel
             .selectedFilters
+            .withLifecycle()
             .onEach { onSelectedFiltersState(it) }
             .launchIn(viewLifecycleScope())
 
         searchViewModel
             .filterOperators
+            .withLifecycle()
             .onEach { filterOperators ->
                 binding
                 ?.ingredientsFilterChoiceGroup

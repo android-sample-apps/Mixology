@@ -39,6 +39,7 @@ class DrinkErrorFragment : BaseFragment(R.layout.fragment_connectivity_error) {
     private fun observeDrink() {
         drinkViewModel
             .drink
+            .withLifecycle()
             .onEach { onDrinkStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

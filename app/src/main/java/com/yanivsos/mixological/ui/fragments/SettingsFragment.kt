@@ -23,21 +23,24 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
         super.onViewCreated(view, savedInstanceState)
         observeDarkMode()
 
-        binding.settingsMeasurementSelector
+       /* binding.settingsMeasurementSelector
             .measurementSystemFlow
+            .withLifecycle()
             .onEach { onMeasurementPreferenceChanged(it) }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
+            .launchIn(viewLifecycleOwner.lifecycleScope)*/
     }
 
     private fun observeDarkMode() {
         AppSettings
             .darkModeEnabledFlow
+            .withLifecycle()
             .onEach { darkModeEnabled -> binding.settingsDarkMode.isChecked = darkModeEnabled }
             .launchIn(viewLifecycleScope())
 
         binding
             .settingsDarkMode
             .checkedChangedChannel
+            .withLifecycle()
             .onEach { darkModeEnabled -> onDarkModeEnabled(darkModeEnabled) }
             .launchIn(viewLifecycleScope())
     }

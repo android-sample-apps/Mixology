@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.lifecycle.flowWithLifecycle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
+import kotlinx.coroutines.flow.Flow
 
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
@@ -38,4 +40,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View
+
+    protected fun <T> Flow<T>.withLifecycle() = flowWithLifecycle(viewLifecycleOwner.lifecycle)
 }

@@ -65,6 +65,7 @@ class MethodFragment : BaseFragment(R.layout.fragment_method) {
     private fun observeMethod() {
         drinkViewModel
             .method
+            .withLifecycle()
             .onEach { onMethodStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

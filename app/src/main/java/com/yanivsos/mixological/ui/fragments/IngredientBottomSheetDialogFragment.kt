@@ -68,6 +68,7 @@ class IngredientBottomSheetDialogFragment(
         Timber.d("observing details with $ingredient")
         detailsViewModel
             .ingredientDetails
+            .withLifecycle()
             .onEach { onStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

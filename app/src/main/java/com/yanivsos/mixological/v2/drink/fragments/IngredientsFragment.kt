@@ -76,6 +76,7 @@ class IngredientsFragment : BaseFragment(R.layout.fragment_ingredients) {
     private fun observeIngredients() {
         viewModel
             .ingredients
+            .withLifecycle()
             .onEach { onIngredientsStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

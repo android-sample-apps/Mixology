@@ -57,6 +57,7 @@ class FavoritesFragment : BaseFragment(R.layout.fragment_watchlist) {
     private fun observeFavorites() {
         favoritesViewModel
             .favoritesState
+            .withLifecycle()
             .onEach { onStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

@@ -2,6 +2,7 @@ package com.yanivsos.mixological.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
@@ -26,6 +27,7 @@ class DrinksActivity : AppCompatActivity(R.layout.activity_cocktail) {
         Timber.d("observeInAppReview: ")
         inAppReviewViewModel
             .launchReviewFlow
+            .flowWithLifecycle(lifecycle)
             .onEach { requestReviewFlow() }
             .launchIn(lifecycleScope)
     }

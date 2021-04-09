@@ -68,6 +68,7 @@ class LandingPageFragment : BaseFragment(R.layout.fragment_landing_page) {
     private fun observeLandingPage() {
         landingPageViewModel
             .landingPageState
+            .withLifecycle()
             .onEach { onStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }

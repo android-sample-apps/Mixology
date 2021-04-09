@@ -162,6 +162,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun observeResults() {
         searchViewModel
             .previewsState
+            .withLifecycle()
             .onEach { onPreviewsStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }
@@ -169,6 +170,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun observeAutoCompleteSuggestions() {
         searchViewModel
             .suggestions
+            .withLifecycle()
             .onEach { onSuggestionsStateReceived(it) }
             .launchIn(viewLifecycleScope())
     }
@@ -196,7 +198,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun observeFiltersBadge() {
         searchViewModel
             .filterBadge
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .withLifecycle()
             .onEach { onFilterBadgeState(it) }
             .launchIn(viewLifecycleScope())
     }
