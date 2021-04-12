@@ -25,13 +25,4 @@
         app:ss_description="@string/dark_mode_description"
         app:ss_title="@string/dark_mode_title" />
 
-    <com.yanivsos.mixological.ui.views.MeasurementSystemSelector
-        android:id="@+id/settings_measurement_selector"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/screen_padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_dark_mode" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

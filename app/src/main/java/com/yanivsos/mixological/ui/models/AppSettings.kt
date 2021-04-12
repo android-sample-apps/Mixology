@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.chibatching.kotpref.KotprefModel
-import com.yanivsos.mixological.conversions.MEASUREMENT_SYSTEM_ORIGINAL
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,13 +18,10 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ap
 
 private val keyDarkModeEnabled = booleanPreferencesKey("darkModeEnabled")
 private val keyInAppReviewCounter = intPreferencesKey("inAppReviewCounter")
-//private const val KEY_MEASUREMENT_SYSTEM = "measurementSystem"
 
 object AppSettings : KotprefModel() {
 
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-
-    var measurementSystem by intPref(default = MEASUREMENT_SYSTEM_ORIGINAL)
 
     // Dark Mode
     val darkModeEnabledFlow: Flow<Boolean> = context

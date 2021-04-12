@@ -2,9 +2,7 @@ package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.yanivsos.mixological.R
-import com.yanivsos.mixological.conversions.MeasurementPreference
 import com.yanivsos.mixological.databinding.FragmentSettingsBinding
 import com.yanivsos.mixological.ui.models.AppSettings
 import com.yanivsos.mixological.ui.view_model.SettingsViewModel
@@ -22,12 +20,6 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeDarkMode()
-
-       /* binding.settingsMeasurementSelector
-            .measurementSystemFlow
-            .withLifecycle()
-            .onEach { onMeasurementPreferenceChanged(it) }
-            .launchIn(viewLifecycleOwner.lifecycleScope)*/
     }
 
     private fun observeDarkMode() {
@@ -48,10 +40,5 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
     private fun onDarkModeEnabled(darkModeEnabled: Boolean) {
         Timber.d("onDarkModeEnabled: $darkModeEnabled")
         settingsViewModel.toggleDarkMode(darkModeEnabled)
-    }
-
-    private fun onMeasurementPreferenceChanged(measurementPreference: MeasurementPreference) {
-        Timber.d("measurementPreference: $measurementPreference")
-        settingsViewModel.changeMeasurementSystemPreference(measurementPreference)
     }
 }
