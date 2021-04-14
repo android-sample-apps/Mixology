@@ -5,9 +5,9 @@ import android.graphics.Bitmap
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
+import com.yanivsos.mixological.glide.GlideApp
 
 @ColorInt
 fun Context.compatColor(@ColorRes id: Int): Int {
@@ -17,7 +17,7 @@ fun Context.compatColor(@ColorRes id: Int): Int {
 fun Context.toGlideBuilder(
     link: String?
 ): RequestBuilder<Bitmap> {
-    return Glide
+    return GlideApp
         .with(this)
         .asBitmap()
         .load(link)

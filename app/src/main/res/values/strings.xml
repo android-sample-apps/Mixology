@@ -30,7 +30,7 @@
     <string name="remove_from_favorite">Remove from favorites</string>
     <string name="search">Search</string>
     <string name="advanced_search_hint">Search for a cocktail</string>
-    <string name="no_results">Sorry, no results.\nBetter luck next time…</string>
+    <string name="no_results">Sorry, no results</string>
     <string name="oh_snap">Oh snap!</string>
     <string name="alcohol_volume_abv">%1$s\%% ABV.</string>
     <string name="filter_alcoholic">Alcoholic</string>
