@@ -11,6 +11,7 @@ import com.xwray.groupie.GroupieAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.viewbinding.BindableItem
 import com.yanivsos.mixological.R
+import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.databinding.BottomDialogSearchFiltersBinding
 import com.yanivsos.mixological.databinding.ListItemSelectableFilterBinding
 import com.yanivsos.mixological.extensions.compatColor
@@ -49,6 +50,7 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
 
     private fun onFilterClicked(drinkFilter: DrinkFilter) {
         Timber.d("onFilterClicked: $drinkFilter")
+        AnalyticsDispatcher.onSearchFilter(drinkFilter)
         searchViewModel.toggleFilter(drinkFilter)
     }
 
@@ -123,8 +125,8 @@ class FilterBottomDialogFragment : BaseBottomSheetDialogFragment() {
             .withLifecycle()
             .onEach { filterOperators ->
                 binding
-                ?.ingredientsFilterChoiceGroup
-                ?.setSelected(filterOperators.ingredientOperator.toFilterChoice())
+                    ?.ingredientsFilterChoiceGroup
+                    ?.setSelected(filterOperators.ingredientOperator.toFilterChoice())
             }
             .launchIn(viewLifecycleScope())
     }

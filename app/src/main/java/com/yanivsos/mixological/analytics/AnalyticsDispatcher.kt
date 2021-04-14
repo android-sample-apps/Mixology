@@ -58,14 +58,14 @@ object AnalyticsDispatcher {
         }
     }
 
-    fun addToFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
+    private fun addToFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
         firebaseAnalytics.asyncLogEvent(Events.EVENT_ADD_TO_FAVORITE) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
         }
     }
 
-    fun removeFromFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
+    private fun removeFromFavorites(drinkPreviewUiModel: DrinkPreviewUiModel, origin: String) {
         firebaseAnalytics.asyncLogEvent(Events.EVENT_REMOVE_FROM_FAVORITE) {
             idAndName(drinkPreviewUiModel)
             param(FBParam.ORIGIN, origin)
@@ -91,12 +91,10 @@ object AnalyticsDispatcher {
         }
     }
 
-    // TODO: 05/04/2021 complete this
     fun onSearchFilter(drinkFilter: DrinkFilter) {
         firebaseAnalytics.asyncLogEvent(Events.SEARCH_DRINK) {
-//            param(FBParam.SEARCH_TERM, drinkFilter.name)
-//            param(FBParam.CONTENT_TYPE, drinkFilter.type.name)
-//            param(PARAM_IS_ACTIVE, drinkFilter.active.toString())
+            param(FBParam.SEARCH_TERM, drinkFilter.name)
+            param(FBParam.CONTENT_TYPE, drinkFilter.toContentType())
         }
     }
 
@@ -121,6 +119,15 @@ object AnalyticsDispatcher {
     }
 }
 
+private fun DrinkFilter.toContentType(): String {
+    return when (this) {
+        is DrinkFilter.Alcoholic -> "Alcoholic"
+        is DrinkFilter.Category -> "Category"
+        is DrinkFilter.Glass -> "Glass"
+        is DrinkFilter.Ingredients -> "Ingredients"
+    }
+}
+
 class ScreenNames {
     companion object {
         const val LANDING_PAGE = "Landing Page"
@@ -129,9 +136,6 @@ class ScreenNames {
         const val DRINK = "Drink"
         const val FAVORITES = "Favorites"
         const val SEARCH = "Search"
-
-        //        const val ERROR = "Error"
-        const val DRINK_OPTIONS = "Drink Options"
     }
 }
 
@@ -148,6 +152,5 @@ class Events {
     }
 }
 
-
 private const val PARAM_IS_FAVORITE = "is_favorite"
-private const val PARAM_IS_ACTIVE = "is_active"
+
