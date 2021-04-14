@@ -75,15 +75,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
-    <View
-        android:id="@+id/top_fading_edge"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/fading_edge_height"
-        android:background="@drawable/white_fading_edge"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/search_results" />
-
     <com.yanivsos.mixological.v2.search.view.SearchResultView
         android:id="@+id/search_results"
         android:layout_width="0dp"
@@ -94,6 +85,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_container_til" />
-
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
