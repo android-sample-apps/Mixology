@@ -10,7 +10,9 @@ import com.yanivsos.mixological.v2.mappers.toUiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -20,7 +22,15 @@ class CategoriesViewModel(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : ViewModel() {
 
-    var previewsExpanded = false
+    var isExpanded: Boolean = false
+        set(value) {
+            onExpanded(value)
+            field = value
+        }
+
+    private val isExpandedMutableFlow = MutableStateFlow(isExpanded)
+    val isExpandedFlow: Flow<Boolean> = isExpandedMutableFlow
+        .onEach { Timber.d("expand changed: isExpanded[$it] ") }
 
     val categoriesState: Flow<CategoriesUiState> =
         getCategoriesStateUseCase
@@ -29,6 +39,11 @@ class CategoriesViewModel(
 
     init {
         Timber.d("init: hashcode: ${hashCode()}")
+    }
+
+    private fun onExpanded(isExpanded: Boolean) {
+        Timber.d("onExpanded: $isExpanded")
+        isExpandedMutableFlow.value = isExpanded
     }
 
     override fun onCleared() {

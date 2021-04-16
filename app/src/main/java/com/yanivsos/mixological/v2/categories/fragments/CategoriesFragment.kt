@@ -25,7 +25,7 @@ import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.CategoryUiModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.SelectedCategoryUiModel
-import com.yanivsos.mixological.ui.utils.MyTransitionListener
+import com.yanivsos.mixological.ui.utils.TimberTransitionListener
 import com.yanivsos.mixological.v2.categories.viewModel.CategoriesUiState
 import com.yanivsos.mixological.v2.categories.viewModel.CategoriesViewModel
 import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
@@ -68,7 +68,12 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
 
     private fun initCategoriesMenu() {
         setSwipeTransitionEnabled(false)
-        onBackPressedCallback.isEnabled = false
+        categoriesViewModel
+            .isExpandedFlow
+            .withLifecycle()
+            .onEach { isExpanded -> onExpandStateChanged(isExpanded) }
+            .launchIn(viewLifecycleScope())
+
         binding.categoryMenuRv.run {
             adapter = categoryAdapter
             DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL).apply {
@@ -76,24 +81,11 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
             }.let { addItemDecoration(it) }
         }
 
-        // TODO: 22/03/2021 sometimes the expand state is incorrect
-        val previewsExpanded = categoriesViewModel.previewsExpanded
-        Timber.d("initCategoriesMenu: previewsExpanded: $previewsExpanded")
-
-        binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener().apply {
-            isExpanded
-                .withLifecycle()
-                .onEach { isExpanded ->
-                    Timber.d("isExpanded: $isExpanded")
-                    onBackPressedCallback.isEnabled = isExpanded
-                    categoriesViewModel.previewsExpanded = isExpanded
-                }
-                .launchIn(viewLifecycleScope())
+        binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener { isExpanded ->
+            categoriesViewModel.isExpanded = isExpanded
         })
+        // TODO: 22/03/2021 sometimes the expand state is incorrect
 
-        if (previewsExpanded) {
-            setExpanded()
-        }
     }
 
     private fun initDrinkPreviews() {
@@ -115,6 +107,16 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
             .withLifecycle()
             .onEach { onStateReceived(it) }
             .launchIn(viewLifecycleScope())
+    }
+
+    private fun onExpandStateChanged(isExpanded: Boolean) {
+        Timber.d("onExpandStateChanged: isExpanded[$isExpanded]")
+        onBackPressedCallback.isEnabled = isExpanded
+        if (isExpanded) {
+            animateExpanded()
+        } else {
+            animateCollapsed()
+        }
     }
 
     private suspend fun onStateReceived(state: CategoriesUiState) {
@@ -176,15 +178,14 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
         }
     }
 
-    private fun setExpanded() {
+    private fun animateExpanded() {
         Timber.d("setExpanded")
-        binding.categoryMenuMl.transitionToEnd()
+        binding.categoryMenuMl.transitionToState(R.id.results)
     }
 
-    @Suppress("unused")
-    private fun setCollapsed() {
+    private fun animateCollapsed() {
         Timber.d("setCollapsed")
-        binding.categoryMenuMl.transitionToStart()
+        binding.categoryMenuMl.transitionToState(R.id.only_categories)
     }
 
     private fun setSwipeTransitionEnabled(isEnabled: Boolean) {
@@ -208,13 +209,13 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
     }
 
     private fun onCategoryClicked(categoryUiModel: CategoryUiModel) {
-        setExpanded()
-        updateSelectedCategory(categoryUiModel)
+        updateSelectedCategory (categoryUiModel)
     }
 
     private fun updateSelectedCategory(categoryUiModel: CategoryUiModel) {
         binding.selectedTitle.text = categoryUiModel.name
         categoriesViewModel.updateSelected(categoryUiModel)
+        categoriesViewModel.isExpanded = true
     }
 }
 
@@ -248,7 +249,9 @@ private class CategoryItem(
     }
 }
 
-private class CategoryTransitionListener : MyTransitionListener() {
+private class CategoryTransitionListener(
+    private val onExpand: (Boolean) -> Unit
+) : TimberTransitionListener() {
 
     private val isExpandedFlow = MutableStateFlow(false)
     val isExpanded: Flow<Boolean> = isExpandedFlow
@@ -265,5 +268,10 @@ private class CategoryTransitionListener : MyTransitionListener() {
     ) {
         super.onTransitionChange(motionLayout, startId, endId, progress)
         (progress >= 0.5).also { isExpandedFlow.value = it }
+    }
+
+    override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
+        super.onTransitionCompleted(motionLayout, currentId)
+        onExpand(currentId != R.id.only_categories)
     }
 }
