@@ -68,6 +68,10 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
 
     private fun initCategoriesMenu() {
         setSwipeTransitionEnabled(false)
+        if (categoriesViewModel.isExpanded) {
+            setExpanded()
+        }
+
         categoriesViewModel
             .isExpandedFlow
             .withLifecycle()
@@ -183,6 +187,10 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
         binding.categoryMenuMl.transitionToState(R.id.results)
     }
 
+    private fun setExpanded() {
+        binding.categoryMenuMl.progress = 1.0f
+    }
+
     private fun animateCollapsed() {
         Timber.d("setCollapsed")
         binding.categoryMenuMl.transitionToState(R.id.only_categories)
@@ -253,21 +261,8 @@ private class CategoryTransitionListener(
     private val onExpand: (Boolean) -> Unit
 ) : TimberTransitionListener() {
 
-    private val isExpandedFlow = MutableStateFlow(false)
-    val isExpanded: Flow<Boolean> = isExpandedFlow
-
     init {
         Timber.d("init: hashcode: ${hashCode()}")
-    }
-
-    override fun onTransitionChange(
-        motionLayout: MotionLayout,
-        startId: Int,
-        endId: Int,
-        progress: Float
-    ) {
-        super.onTransitionChange(motionLayout, startId, endId, progress)
-        (progress >= 0.5).also { isExpandedFlow.value = it }
     }
 
     override fun onTransitionCompleted(motionLayout: MotionLayout, currentId: Int) {
