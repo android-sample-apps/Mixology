@@ -88,8 +88,6 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
         binding.categoryMenuMl.addTransitionListener(CategoryTransitionListener { isExpanded ->
             categoriesViewModel.isExpanded = isExpanded
         })
-        // TODO: 22/03/2021 sometimes the expand state is incorrect
-
     }
 
     private fun initDrinkPreviews() {
