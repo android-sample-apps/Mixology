@@ -4,20 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
     android:clipChildren="false"
+    android:clipToPadding="false"
     android:padding="@dimen/screen_padding">
 
     <include
-        android:visibility="gone"
         android:id="@+id/favorite_instructions_container"
-        layout="@layout/view_instruction_favorite" />
+        layout="@layout/view_instruction_favorite"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/watchlist_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/screen_padding"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
