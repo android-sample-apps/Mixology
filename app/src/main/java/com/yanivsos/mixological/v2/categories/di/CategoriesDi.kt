@@ -35,7 +35,8 @@ val categoriesDi = module {
 
     viewModel {
         CategoriesViewModel(
-            getCategoriesStateUseCase = get()
+            getCategoriesStateUseCase = get(),
+            fetchAndStoreCategoriesUseCase = get()
         )
     }
 }
