@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface LandingPageDao {
 
     //Latest arrivals
-    @Query("SELECT * FROM drink_previews INNER JOIN latest_arrivals ON drinkId = id")
+    @Query("SELECT * FROM drink_previews INNER JOIN latest_arrivals ON drinkId = id ORDER BY name")
     fun getLatestArrivals(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -34,7 +34,7 @@ interface LandingPageDao {
     suspend fun insertRecentlyViewed(recentlyViewed: RecentlyViewedModel)
 
     //Most populars
-    @Query("SELECT * FROM drink_previews INNER JOIN most_popular ON drinkId = id")
+    @Query("SELECT * FROM drink_previews INNER JOIN most_popular ON drinkId = id ORDER BY name")
     fun getMostPopulars(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
