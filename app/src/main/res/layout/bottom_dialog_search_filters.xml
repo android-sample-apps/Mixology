@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="450dp"
+            app:layout_constraintHeight_max="550dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filters_header">
 
@@ -171,8 +171,6 @@
                     android:layout_marginTop="@dimen/screen_padding"
                     android:layout_marginBottom="@dimen/screen_padding"
                     android:background="@drawable/divider" />
-
-
 
             </LinearLayout>
 
