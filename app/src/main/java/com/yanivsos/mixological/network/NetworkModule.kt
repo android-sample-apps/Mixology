@@ -1,17 +1,17 @@
 package com.yanivsos.mixological.network
 
-import com.google.gson.GsonBuilder
-import com.google.gson.reflect.TypeToken
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.yanivsos.mixological.BuildConfig
-import com.yanivsos.mixological.network.response.DrinkPreviewResponse
-import com.yanivsos.mixological.network.response.DrinksWrapperResponse
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Converter
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
+@ExperimentalSerializationApi
 @Suppress("RemoveExplicitTypeArguments")
 val networkModule = module {
 
@@ -20,7 +20,9 @@ val networkModule = module {
     }
 
     factory<OkHttpClient> {
-        OkHttpClient.Builder()
+        OkHttpClient
+            .Builder()
+            .addInterceptor(TrafficStateInterceptor())
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = get<HttpLoggingInterceptor.Level>()
             })
@@ -28,15 +30,11 @@ val networkModule = module {
     }
 
     single<Converter.Factory> {
-        GsonConverterFactory
-            .create(
-                GsonBuilder()
-                    .registerTypeAdapter(
-                        object : TypeToken<DrinksWrapperResponse<DrinkPreviewResponse>>() {}.type,
-                        FilterResponseDeserializer()
-                    )
-                    .create()
-            )
+        Json {
+            encodeDefaults = true
+            ignoreUnknownKeys = true
+            isLenient = true
+        }.asConverterFactory("application/json".toMediaType())
     }
 
     single<DrinkService> {

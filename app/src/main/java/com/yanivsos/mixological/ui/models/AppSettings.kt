@@ -1,60 +1,38 @@
 package com.yanivsos.mixological.ui.models
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import com.chibatching.kotpref.KotprefModel
+import com.yanivsos.mixological.v2.settings.AppDataStore
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "appSettings")
 
-private val keyDarkModeEnabled = booleanPreferencesKey("darkModeEnabled")
-private val keyInAppReviewCounter = intPreferencesKey("inAppReviewCounter")
+object AppSettings : KoinComponent {
 
-object AppSettings : KotprefModel() {
-
+    private val appDataStore: AppDataStore by inject()
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 
     // Dark Mode
-    val darkModeEnabledFlow: Flow<Boolean> = context
-        .dataStore.data.map { preferences ->
-            preferences[keyDarkModeEnabled] ?: false
-        }
+    val darkModeEnabledFlow: Flow<Boolean> = appDataStore.darkModeEnabledFlow
 
     suspend fun setDarkModeEnabled(isEnabled: Boolean) =
         withContext(ioDispatcher) {
-            context.dataStore.edit { preferences ->
-                preferences[keyDarkModeEnabled] = isEnabled
-            }
+            appDataStore.setDarkModeEnabled(isEnabled)
         }
 
     //In app reviews
-    val inAppReviewCounterFlow: Flow<Int> = context
-        .dataStore.data.map { preferences ->
-            preferences[keyInAppReviewCounter] ?: 0
-        }
+    val inAppReviewCounterFlow: Flow<Int> = appDataStore.inAppReviewCounterFlow
 
 
     suspend fun resetInAppReviewCounter() =
         withContext(ioDispatcher) {
-            context.dataStore.edit { preferences ->
-                preferences[keyInAppReviewCounter] = 0
-            }
+            appDataStore.resetInAppReviewCounter()
         }
 
     suspend fun incrementInAppReviewCounter() =
         withContext(ioDispatcher) {
-            context.dataStore.edit { preferences ->
-                val currentValue: Int = preferences[keyInAppReviewCounter] ?: 0
-                preferences[keyInAppReviewCounter] = currentValue + 1
-            }
+            appDataStore.incrementInAppReviewCounter()
         }
 }

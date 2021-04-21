@@ -12,6 +12,7 @@ import com.yanivsos.mixological.v2.inAppReview.inAppReviewModule
 import com.yanivsos.mixological.v2.ingredients.di.ingredientsDi
 import com.yanivsos.mixological.v2.landingPage.di.landingPageDi
 import com.yanivsos.mixological.v2.search.di.searchDi
+import com.yanivsos.mixological.v2.settings.settingsDi
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -37,7 +38,8 @@ class KoinStarter {
             categoriesDi,
             ingredientsDi,
             drinkOptionsDi,
-            searchDi
+            searchDi,
+            settingsDi
         )
     }
 }

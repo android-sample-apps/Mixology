@@ -37,9 +37,6 @@
                 android:name="com.yanivsos.mixological.app_initializers.TimberInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="com.yanivsos.mixological.app_initializers.KotprefInitializer"
-                android:value="androidx.startup" />
-            <meta-data
                 android:name="com.yanivsos.mixological.app_initializers.DroidNetInitializer"
                 android:value="androidx.startup" />
         </provider>

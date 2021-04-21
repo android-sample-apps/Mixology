@@ -1,3 +1,4 @@
+/*
 package com.yanivsos.mixological.network
 
 import com.google.gson.*
@@ -8,6 +9,8 @@ import com.yanivsos.mixological.network.response.SERIALIZED_NAME_DRINKS
 import com.yanivsos.mixological.network.response.SERIALIZED_NAME_NONE_FOUND
 import java.lang.reflect.Type
 
+
+TODO("replace this whole thing")
 class FilterResponseDeserializer : JsonDeserializer<DrinksWrapperResponse<DrinkPreviewResponse>> {
     private val gson = Gson()
     private val type = object : TypeToken<DrinksWrapperResponse<DrinkPreviewResponse>>() {}.type
@@ -40,3 +43,4 @@ class FilterResponseDeserializer : JsonDeserializer<DrinksWrapperResponse<DrinkP
         }
     }
 }
+*/

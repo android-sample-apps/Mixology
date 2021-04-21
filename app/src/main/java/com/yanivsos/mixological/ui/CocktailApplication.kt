@@ -1,11 +1,13 @@
 package com.yanivsos.mixological.ui
 
 import android.app.Application
+import android.os.StrictMode
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.droidnet.DroidNet
+import com.yanivsos.mixological.BuildConfig
 import com.yanivsos.mixological.ui.models.AppSettings
 import com.yanivsos.mixological.v2.startup.FetchPreviewsWorker
 import kotlinx.coroutines.CoroutineName
@@ -22,6 +24,9 @@ class CocktailApplication : Application() {
         SupervisorJob() + Dispatchers.Main + CoroutineName("CocktailApplication"))
 
     override fun onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.enableDefaults()
+        }
         super.onCreate()
         observeDarkMode()
         fetchPreviews()

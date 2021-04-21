@@ -1,19 +1,22 @@
 package com.yanivsos.mixological.database
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class MapStringToStringOptionalConverter {
 
     @TypeConverter
     fun fromMap(map: Map<String, String?>): String {
-        return Gson().toJson(map)
+        // TODO: 21/04/2021 test this
+        return Json.encodeToString(map)
     }
 
     @TypeConverter
     fun toMap(map: String): Map<String, String?> {
-        val mapType = object : TypeToken<Map<String, String?>>() {}.type
-        return Gson().fromJson(map, mapType)
+        // TODO: 21/04/2021 test this
+        return Json.decodeFromString(map)
     }
 }
+
