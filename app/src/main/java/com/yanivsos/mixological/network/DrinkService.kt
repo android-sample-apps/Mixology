@@ -79,16 +79,16 @@ interface DrinkService {
     suspend fun getGlassList(): DrinksWrapperResponse<GlassResponse>
 
     @GET("filter.php")
-    suspend fun filterByCategory(@Query("c") category: String): DrinksWrapperResponse<DrinkPreviewResponse>
+    suspend fun filterByCategory(@Query("c") category: String): FilterDrinkPreviewResponse
 
     @GET("filter.php")
-    suspend fun filterByIngredient(@Query("i") ingredient: String): DrinksWrapperResponse<DrinkPreviewResponse>
+    suspend fun filterByIngredient(@Query("i") ingredient: String): FilterDrinkPreviewResponse
 
     @GET("filter.php")
-    suspend fun filterByAlcoholic(@Query("a") alcoholic: String): DrinksWrapperResponse<DrinkPreviewResponse>
+    suspend fun filterByAlcoholic(@Query("a") alcoholic: String): FilterDrinkPreviewResponse
 
     @GET("filter.php")
-    suspend fun filterByGlass(@Query("g") glass: String): DrinksWrapperResponse<DrinkPreviewResponse>
+    suspend fun filterByGlass(@Query("g") glass: String): FilterDrinkPreviewResponse
 
     @GET("lookup.php")
     suspend fun getDrinkById(@Query("i") id: String): DrinksWrapperResponse<DrinkResponse>

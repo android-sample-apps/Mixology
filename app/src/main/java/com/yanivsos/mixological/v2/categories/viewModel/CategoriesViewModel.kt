@@ -8,14 +8,11 @@ import com.yanivsos.mixological.v2.categories.useCases.CategoriesState
 import com.yanivsos.mixological.v2.categories.useCases.GetCategoriesStateUseCase
 import com.yanivsos.mixological.v2.mappers.toUiState
 import com.yanivsos.mixological.v2.search.useCases.FetchAndStoreCategoriesUseCase
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class CategoriesViewModel(

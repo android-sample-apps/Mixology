@@ -97,6 +97,23 @@ data class DrinksWrapperResponse<T>(
     @SerialName(SERIALIZED_NAME_DRINKS) val data: List<T>
 )
 
+@Serializable(with = FilteredDrinkPreviewsSerializer::class)
+sealed class FilterDrinkPreviewResponse {
+
+    @Serializable
+    data class Results(
+        @SerialName(SERIALIZED_NAME_DRINKS)
+        val drinks: List<DrinkPreviewResponse>
+    ) : FilterDrinkPreviewResponse()
+
+    @Serializable
+    data class NoResults(
+        @SerialName(SERIALIZED_NAME_DRINKS)
+        val message: String
+    ) : FilterDrinkPreviewResponse()
+}
+
+
 @Serializable
 data class NullableDrinksWrapperResponse<T>(
     @SerialName(SERIALIZED_NAME_DRINKS) val data: List<T>?
@@ -108,4 +125,3 @@ data class IngredientsWrapperResponse<T>(
 )
 
 const val SERIALIZED_NAME_DRINKS = "drinks"
-const val SERIALIZED_NAME_NONE_FOUND = "None Found"
