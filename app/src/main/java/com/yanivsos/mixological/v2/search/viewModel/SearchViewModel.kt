@@ -28,6 +28,7 @@ class SearchViewModel(
 ) : ViewModel() {
 
     init {
+        Timber.d("init hashcode ${hashCode()}")
         viewModelScope.launch {
             fetchAndStoreFiltersUseCase.fetchAndStore()
         }

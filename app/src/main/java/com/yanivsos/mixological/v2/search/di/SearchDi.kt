@@ -37,7 +37,7 @@ val searchDi = module {
         )
     }
 
-    single {
+    factory {
         FetchDrinkByNameUseCase(
             drinkRepository = get()
         )
