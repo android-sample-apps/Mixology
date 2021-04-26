@@ -1,10 +1,7 @@
 package com.yanivsos.mixological.v2.search.viewModel
 
-import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.yanivsos.mixological.R
 import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.v2.drink.mappers.toUiModel
@@ -19,7 +16,6 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SearchViewModel(
-    private val application: Application,
     getAutoCompleteSuggestionsUseCase: GetAutoCompleteSuggestionsUseCase,
     private val findSimilarIngredientsByNameUseCase: FindSimilarIngredientsByNameUseCase,
     private val fetchAndStoreFiltersUseCase: FetchAndStoreFiltersUseCase,
@@ -58,6 +54,10 @@ class SearchViewModel(
                 mergeWithSimilarIngredients(selectedFilters, similarIngredientsState)
             }.onEach { mutableSearchKeyword = it.ingredientKeyword }
 
+
+    private val filterErrorsMutableFlow = MutableSharedFlow<FilterError>()
+    val filterErrors: Flow<FilterError> = filterErrorsMutableFlow
+
     val filterOperators: Flow<FilterOperators> = searchDrinksUseCase.filterOperators
 
     private var mutableSearchKeyword: String? = null
@@ -70,11 +70,15 @@ class SearchViewModel(
         viewModelScope.launch {
             runCatching {
                 searchDrinksUseCase.toggleFilter(drinkFilter)
-            }.onFailure {
-                Timber.e(it, "failed toggling filter $drinkFilter")
-                showErrorToast()
+            }.onFailure { throwable ->
+                Timber.e(throwable, "failed toggling filter $drinkFilter")
+                showErrorToast(
+                    FilterError.ToggleFilterError(
+                        filter = drinkFilter,
+                        throwable = throwable
+                    )
+                )
             }
-
         }
     }
 
@@ -122,9 +126,14 @@ class SearchViewModel(
         viewModelScope.launch {
             runCatching {
                 searchDrinksUseCase.fetchByName(name)
-            }.onFailure {
-                Timber.e(it, "Failed fetching by name: $name")
-                showErrorToast()
+            }.onFailure { throwable ->
+                Timber.e(throwable, "Failed fetching by name: $name")
+                showErrorToast(
+                    FilterError.FetchByNameError(
+                        name = name,
+                        throwable = throwable
+                    )
+                )
             }
         }
     }
@@ -135,12 +144,8 @@ class SearchViewModel(
         }
     }
 
-    private fun showErrorToast() {
-        Toast.makeText(
-            application.applicationContext,
-            R.string.filter_toggle_failure,
-            Toast.LENGTH_SHORT
-        ).show()
+    private suspend fun showErrorToast(error: FilterError) {
+        filterErrorsMutableFlow.emit(error)
     }
 
     private suspend fun mergeWithSimilarIngredients(
@@ -220,4 +225,9 @@ sealed class AutoCompleteSuggestionsState {
 sealed class FilterBadgeState {
     object None : FilterBadgeState()
     data class Active(val count: Int) : FilterBadgeState()
+}
+
+sealed class FilterError {
+    data class FetchByNameError(val name: String, val throwable: Throwable) : FilterError()
+    data class ToggleFilterError(val filter: DrinkFilter, val throwable: Throwable) : FilterError()
 }

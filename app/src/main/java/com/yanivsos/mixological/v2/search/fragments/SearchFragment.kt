@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.fragment.findNavController
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -19,10 +18,7 @@ import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
 import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
-import com.yanivsos.mixological.v2.search.viewModel.AutoCompleteSuggestionsState
-import com.yanivsos.mixological.v2.search.viewModel.FilterBadgeState
-import com.yanivsos.mixological.v2.search.viewModel.PreviewState
-import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
+import com.yanivsos.mixological.v2.search.viewModel.*
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -83,6 +79,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         observeAutoCompleteSuggestions()
         observeResults()
         observeFiltersBadge()
+        observeFilterErrors()
         observeConnectivity()
     }
 
@@ -173,6 +170,33 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             .withLifecycle()
             .onEach { onSuggestionsStateReceived(it) }
             .launchIn(viewLifecycleScope())
+    }
+
+    private fun observeFilterErrors() {
+        searchViewModel
+            .filterErrors
+            .withLifecycle()
+            .onEach { filterError -> onFilterError(filterError) }
+            .launchIn(viewLifecycleScope())
+    }
+
+    private fun onFilterError(filterError: FilterError) {
+        when (filterError) {
+            is FilterError.FetchByNameError -> Timber.d(
+                filterError.throwable,
+                "onFilterError: failed fetching ${filterError.name} "
+            )
+            is FilterError.ToggleFilterError -> Timber.d(
+                filterError.throwable,
+                "onFilterError: failed toggling filter ${filterError.filter}"
+            )
+        }.also {
+            Toast.makeText(
+                requireContext(),
+                R.string.filter_toggle_failure,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun onSuggestionsStateReceived(state: AutoCompleteSuggestionsState) {

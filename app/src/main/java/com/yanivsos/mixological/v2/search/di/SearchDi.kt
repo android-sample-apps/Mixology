@@ -3,7 +3,6 @@ package com.yanivsos.mixological.v2.search.di
 import com.yanivsos.mixological.v2.search.repo.SearchRepository
 import com.yanivsos.mixological.v2.search.useCases.*
 import com.yanivsos.mixological.v2.search.viewModel.SearchViewModel
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -115,11 +114,10 @@ val searchDi = module {
 
     viewModel {
         SearchViewModel(
-            androidApplication(),
             getAutoCompleteSuggestionsUseCase = get(),
-            searchDrinksUseCase = get(),
             findSimilarIngredientsByNameUseCase = get(),
-            fetchAndStoreFiltersUseCase = get()
+            fetchAndStoreFiltersUseCase = get(),
+            searchDrinksUseCase = get()
         )
     }
 }
