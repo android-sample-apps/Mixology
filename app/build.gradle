@@ -109,7 +109,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.3.2'
 
-    implementation 'androidx.datastore:datastore-preferences:1.0.0-alpha08'
+    implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-alpha01'
@@ -125,7 +125,7 @@ dependencies {
     // AndroidX
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'androidx.work:work-runtime-ktx:2.6.0-alpha01'
+    implementation 'androidx.work:work-runtime-ktx:2.6.0-alpha02'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1'
 
@@ -143,10 +143,10 @@ dependencies {
     implementation 'org.koin:koin-android-viewmodel:2.2.2'
 
     // Room Database
-    implementation 'androidx.room:room-runtime:2.2.6'
-    kapt 'androidx.room:room-compiler:2.2.6'
-    implementation 'androidx.room:room-ktx:2.2.6'
-    testImplementation 'androidx.room:room-testing:2.2.6'
+    implementation 'androidx.room:room-runtime:2.3.0'
+    kapt 'androidx.room:room-compiler:2.3.0'
+    implementation 'androidx.room:room-ktx:2.3.0'
+    testImplementation 'androidx.room:room-testing:2.3.0'
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
@@ -160,6 +160,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
+    //noinspection GradleDependency
     implementation 'com.github.nikartm:image-support:1.0.5'
 
     implementation 'com.google.android.play:core:1.10.0'
