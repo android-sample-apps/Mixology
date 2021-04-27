@@ -17,7 +17,7 @@ data class IngredientResponse(
 data class IngredientDetailsResponse(
     @SerialName("idIngredient") val id: String,
     @SerialName("strIngredient") val name: String,
-    @SerialName("strDescription") val description: String,
+    @SerialName("strDescription") val description: String?,
     @SerialName("strAlcohol") val isAlcoholic: String?,
     @SerialName("strABV") val alcoholVolume: String?
 )
