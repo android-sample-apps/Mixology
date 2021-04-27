@@ -23,8 +23,8 @@ android {
         applicationId "com.yanivsos.mixological"
         minSdkVersion 25
         targetSdkVersion 30
-        versionCode 12
-        versionName "2.0.0"
+        versionCode 13
+        versionName "2.0.1"
         setProperty("archivesBaseName", "Mixological_v" + versionCode + "(" + versionName + ")_" + buildTime())
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
