@@ -7,11 +7,11 @@ import com.yanivsos.mixological.database.RecentlyViewedModel
 import com.yanivsos.mixological.network.DrinkService
 import com.yanivsos.mixological.v2.drink.mappers.toModel
 import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
+import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import com.yanivsos.mixological.v2.landingPage.dao.LandingPageDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.withContext
 
 class LandingPageRepository(
@@ -26,19 +26,19 @@ class LandingPageRepository(
     fun getLatestArrivals(): Flow<List<DrinkPreviewModel>> =
         landingPageDao
             .getLatestArrivals()
-            .mergeWithFavorites(favoritesDao, defaultDispatcher)
+            .mergeWithFavorites(favoritesDao.getAll(), defaultDispatcher)
 
     //Most populars
     fun getMostPopulars(): Flow<List<DrinkPreviewModel>> =
         landingPageDao
             .getMostPopulars()
-            .mergeWithFavorites(favoritesDao, defaultDispatcher)
+            .mergeWithFavorites(favoritesDao.getAll(), defaultDispatcher)
 
     //recently viewed
     fun getRecentlyViewed(): Flow<List<DrinkPreviewModel>> =
         landingPageDao
             .getRecentlyViewed()
-            .mergeWithFavorites(favoritesDao, defaultDispatcher)
+            .mergeWithFavorites(favoritesDao.getAll(), defaultDispatcher)
 
     suspend fun replaceMostPopulars(mostPopulars: List<MostPopularModel>) {
         return withContext(ioDispatcher) {
@@ -73,18 +73,6 @@ class LandingPageRepository(
     suspend fun addToRecentlyViewed(recentlyViewedModel: RecentlyViewedModel) {
         withContext(ioDispatcher) {
             landingPageDao.insertRecentlyViewed(recentlyViewedModel)
-        }
-    }
-}
-
-fun Flow<List<DrinkPreviewModel>>.mergeWithFavorites(
-    favoritesDao: FavoriteDrinksDao,
-    defaultDispatcher: CoroutineDispatcher
-): Flow<List<DrinkPreviewModel>> {
-    return combine(favoritesDao.getAll()) { previews, favorites ->
-        withContext(defaultDispatcher) {
-            val favoritesSet = favorites.map { it.id }.toSet()
-            previews.map { it.copy(isFavorite = it.id in favoritesSet) }
         }
     }
 }

@@ -157,12 +157,12 @@ class DrinkPreviewOptionsBottomFragment(
     }
 
     private fun addToWatchlist() {
-        Timber.d("addToFavorites: drinkId[${drinkPreviewUiModel.name}]")
+        Timber.d("addToFavorites: drinkId[${drinkPreviewUiModel.id}]")
         optionsViewModel.addToFavorites()
     }
 
     private fun removeFromWatchlist() {
-        Timber.d("removeFromFavorites: drinkId[${drinkPreviewUiModel.name}]")
+        Timber.d("removeFromFavorites: drinkId[${drinkPreviewUiModel.id}]")
         optionsViewModel.removeFromFavorites()
     }
 }

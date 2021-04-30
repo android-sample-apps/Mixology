@@ -3,15 +3,17 @@ package com.yanivsos.mixological.v2.search.useCases
 import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
+import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SearchDrinksUseCase(
-    drinkRepository: DrinkRepository,
+    private val drinkRepository: DrinkRepository,
     getAllFiltersUseCase: GetAllFiltersUseCase,
     private val alcoholicFilterByUseCase: AlcoholicFilterUseCase,
     private val glassFilterByUseCase: GlassFilterUseCase,
@@ -39,6 +41,8 @@ class SearchDrinksUseCase(
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
             }
+            .onEach { previews -> storePreviews(previews) }
+            .mergeWithFavorites(drinkRepository.getFavorites(), defaultDispatcher)
 
     val filters: Flow<SelectedFilters> =
         filterResults.combine(getAllFiltersUseCase.allFilters) { filterResults, allFilters ->
@@ -206,6 +210,16 @@ class SearchDrinksUseCase(
             }.also {
                 Timber.d("mergeFilterStates: result[$it]")
             }
+        }
+    }
+
+    private suspend fun storePreviews(previews: List<DrinkPreviewModel>) {
+        runCatching {
+            drinkRepository.storePreviews(previews)
+        }.onSuccess {
+            Timber.d("storePreviews: stored ${previews.size} previews")
+        }.onFailure { throwable ->
+            Timber.e(throwable, "storePreviews: failed storing ${previews.size} previews")
         }
     }
 }

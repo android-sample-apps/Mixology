@@ -10,7 +10,7 @@ import com.yanivsos.mixological.v2.drink.mappers.toFirstOrNullModel
 import com.yanivsos.mixological.v2.drink.mappers.toModel
 import com.yanivsos.mixological.v2.drink.mappers.toPreviewModel
 import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
-import com.yanivsos.mixological.v2.landingPage.repo.mergeWithFavorites
+import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -89,7 +89,7 @@ class DrinkRepository(
     fun getAllPreviews(): Flow<List<DrinkPreviewModel>> {
         return drinkDao
             .getPreviews()
-            .mergeWithFavorites(favoriteDrinksDao, defaultDispatcher)
+            .mergeWithFavorites(favoriteDrinksDao.getAll(), defaultDispatcher)
     }
 
     suspend fun fetchPreviewsByLetter(char: Char): List<DrinkPreviewModel> =
