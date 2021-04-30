@@ -7,11 +7,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class SearchDrinksUseCase(
-    drinkRepository: DrinkRepository,
+    private val drinkRepository: DrinkRepository,
     getAllFiltersUseCase: GetAllFiltersUseCase,
     private val alcoholicFilterByUseCase: AlcoholicFilterUseCase,
     private val glassFilterByUseCase: GlassFilterUseCase,
@@ -38,7 +39,7 @@ class SearchDrinksUseCase(
                 mapToPreviews(filterResults, allPreviews)
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
-            }
+            }.onEach { previews -> storePreviews(previews) }
 
     val filters: Flow<SelectedFilters> =
         filterResults.combine(getAllFiltersUseCase.allFilters) { filterResults, allFilters ->
@@ -206,6 +207,16 @@ class SearchDrinksUseCase(
             }.also {
                 Timber.d("mergeFilterStates: result[$it]")
             }
+        }
+    }
+
+    private suspend fun storePreviews(previews: List<DrinkPreviewModel>) {
+        runCatching {
+            drinkRepository.storePreviews(previews)
+        }.onSuccess {
+            Timber.d("storePreviews: stored ${previews.size} previews")
+        }.onFailure { throwable ->
+            Timber.e(throwable, "storePreviews: failed storing ${previews.size} previews")
         }
     }
 }
