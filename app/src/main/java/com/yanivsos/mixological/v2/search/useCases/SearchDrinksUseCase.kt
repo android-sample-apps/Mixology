@@ -3,6 +3,7 @@ package com.yanivsos.mixological.v2.search.useCases
 import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.v2.drink.repo.DrinkFilter
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
+import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -39,7 +40,9 @@ class SearchDrinksUseCase(
                 mapToPreviews(filterResults, allPreviews)
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
-            }.onEach { previews -> storePreviews(previews) }
+            }
+            .onEach { previews -> storePreviews(previews) }
+            .mergeWithFavorites(drinkRepository.getFavorites(), defaultDispatcher)
 
     val filters: Flow<SelectedFilters> =
         filterResults.combine(getAllFiltersUseCase.allFilters) { filterResults, allFilters ->

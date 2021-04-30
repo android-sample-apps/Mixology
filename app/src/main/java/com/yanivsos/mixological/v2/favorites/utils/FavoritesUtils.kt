@@ -8,6 +8,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
+@JvmName("mergeWithFavoritesDrinkPreviewModel")
+fun Flow<List<DrinkPreviewModel>>.mergeWithFavorites(
+    favoritesFlow: Flow<List<DrinkPreviewModel>>,
+    defaultDispatcher: CoroutineDispatcher
+): Flow<List<DrinkPreviewModel>> {
+    val favoriteIds =
+        favoritesFlow.map { favoritesList -> favoritesList.map { favorite -> FavoriteId(favorite.id) } }
+    return mergeWithFavoritesIds(favoriteIds, defaultDispatcher)
+}
+
 fun Flow<List<DrinkPreviewModel>>.mergeWithFavorites(
     favoritesFlow: Flow<List<WatchlistItemModel>>,
     defaultDispatcher: CoroutineDispatcher
@@ -28,7 +38,8 @@ private fun Flow<List<DrinkPreviewModel>>.mergeWithFavoritesIds(
     }
 }
 
-fun List<DrinkPreviewModel>.mergeWithFavoritesPreviews(
+@JvmName("mergeWithFavoritesDrinkPreviewModel")
+fun List<DrinkPreviewModel>.mergeWithFavorites(
     favorites: List<DrinkPreviewModel>
 ): List<DrinkPreviewModel> {
     return mergeWithFavorites(favorites.map { FavoriteId(it.id) })

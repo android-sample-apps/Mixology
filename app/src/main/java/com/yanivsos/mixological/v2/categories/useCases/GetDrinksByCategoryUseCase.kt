@@ -3,7 +3,7 @@ package com.yanivsos.mixological.v2.categories.useCases
 import com.yanivsos.mixological.database.DrinkPreviewModel
 import com.yanivsos.mixological.v2.categories.repo.CategoriesRepository
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
-import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavoritesPreviews
+import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +32,7 @@ class GetDrinksByCategoryUseCase(
         return withContext(defaultDispatcher) {
             Timber.d("merging with favorites: ${favorites.map { it.id }}")
             categoryModel?.let {
-                it.copy(drinks = it.drinks.mergeWithFavoritesPreviews(favorites))
+                it.copy(drinks = it.drinks.mergeWithFavorites(favorites))
             }
         }
     }
