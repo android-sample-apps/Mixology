@@ -20,6 +20,7 @@ import com.yanivsos.mixological.ui.fragments.DrinkPreviewOptionsBottomFragment
 import com.yanivsos.mixological.ui.fragments.HomeFragmentDirections
 import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
+import com.yanivsos.mixological.ui.utils.setOnSingleClickListener
 import com.yanivsos.mixological.v2.favorites.viewModel.FavoritesState
 import com.yanivsos.mixological.v2.favorites.viewModel.FavoritesViewModel
 import com.yanivsos.mixological.v2.mappers.toLongId
@@ -135,7 +136,7 @@ class GridDrinkPreviewItem(
             drinkImageIv.fromLink(drinkPreviewUiModel.thumbnail/*, R.drawable.bar*/)
             drinkNameTv.text = drinkPreviewUiModel.name
             cherryBadgeContainer.root.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
-            imageContainer.setOnClickListener {
+            imageContainer.setOnSingleClickListener {
                 onPreviewClicked(drinkPreviewUiModel)
             }
             imageContainer.setOnLongClickListener {

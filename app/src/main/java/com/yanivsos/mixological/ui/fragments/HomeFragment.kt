@@ -9,6 +9,7 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.FragmentHomeBinding
 import com.yanivsos.mixological.ui.adapters.HomePagerAdapter
 import com.yanivsos.mixological.ui.utils.SimpleOnTabSelectedListener
+import com.yanivsos.mixological.ui.utils.setOnSingleClickListener
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -19,12 +20,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initHomePagerAdapter()
-        binding.searchAction.setOnClickListener {
+        binding.searchAction.setOnSingleClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToAdvancedSearchFragment()
             )
         }
-        binding.settingsAction.setOnClickListener {
+        binding.settingsAction.setOnSingleClickListener {
             findNavController().navigate(
                 HomeFragmentDirections.actionHomeFragmentToSettingsFragment()
             )

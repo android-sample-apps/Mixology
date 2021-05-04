@@ -22,6 +22,7 @@ import com.yanivsos.mixological.ui.fragments.HomeFragmentDirections
 import com.yanivsos.mixological.ui.fragments.viewLifecycleScope
 import com.yanivsos.mixological.ui.models.DrinkPreviewUiModel
 import com.yanivsos.mixological.ui.models.LandingPageUiModel
+import com.yanivsos.mixological.ui.utils.setOnSingleClickListener
 import com.yanivsos.mixological.v2.landingPage.viewModel.LandingPageState
 import com.yanivsos.mixological.v2.landingPage.viewModel.LandingPageViewModel
 import com.yanivsos.mixological.v2.mappers.toLongId
@@ -134,7 +135,7 @@ private class DrinkPreviewItem(
             cherryBadgeContainer
             cherryBadgeContainer.root.visibility = drinkPreviewUiModel.isFavorite.toVisibility()
             imageContainer.run {
-                setOnClickListener {
+                setOnSingleClickListener {
                     onDrinkClicked(drinkPreviewUiModel)
                 }
                 setOnLongClickListener {
