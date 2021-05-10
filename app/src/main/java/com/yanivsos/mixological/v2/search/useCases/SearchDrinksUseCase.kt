@@ -41,7 +41,9 @@ class SearchDrinksUseCase(
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
             }
-            .onEach { previews -> storePreviews(previews) }
+            .onEach {
+                // TODO: 10/05/2021 think about removing this
+                    previews -> storePreviews(previews) }
             .mergeWithFavorites(drinkRepository.getFavorites(), defaultDispatcher)
 
     val filters: Flow<SelectedFilters> =
