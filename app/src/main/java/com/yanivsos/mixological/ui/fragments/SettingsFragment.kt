@@ -2,6 +2,7 @@ package com.yanivsos.mixological.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import com.yanivsos.mixological.BuildConfig
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.FragmentSettingsBinding
 import com.yanivsos.mixological.ui.models.AppSettings
@@ -19,7 +20,12 @@ class SettingsFragment : BaseFragment(R.layout.fragment_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setVersion()
         observeDarkMode()
+    }
+
+    private fun setVersion() {
+        binding.settingsVersionTv.text = getString(R.string.settings_version, BuildConfig.VERSION_NAME)
     }
 
     private fun observeDarkMode() {

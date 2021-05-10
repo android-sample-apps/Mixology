@@ -25,4 +25,15 @@
         app:ss_description="@string/dark_mode_description"
         app:ss_title="@string/dark_mode_title" />
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/settings_version_tv"
+        style="@style/SettingsItemSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_version"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
