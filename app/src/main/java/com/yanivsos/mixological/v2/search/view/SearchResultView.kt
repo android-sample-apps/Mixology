@@ -9,7 +9,7 @@ import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.ViewSearchResultsBinding
 import com.yanivsos.mixological.extensions.dpToPx
 import com.yanivsos.mixological.ui.GridSpacerItemDecoration
-import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
+import timber.log.Timber
 
 class SearchResultView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -20,15 +20,13 @@ class SearchResultView @JvmOverloads constructor(
         this
     )
 
-    private val previewAdapter = GroupieAdapter()
-
     init {
-        initResultsRecyclerView()
+        Timber.d("init: hashCode: ${hashCode()}")
     }
 
-    private fun initResultsRecyclerView() {
+    fun attachAdapter(adapter: GroupieAdapter) {
         binding.searchResultsRv.run {
-            adapter = previewAdapter
+            this.adapter = adapter
             addItemDecoration(
                 GridSpacerItemDecoration(
                     right = 4.dpToPx().toInt(),
@@ -39,13 +37,11 @@ class SearchResultView @JvmOverloads constructor(
         }
     }
 
-    fun updateNoResults() {
-        previewAdapter.updateAsync(emptyList())
+    fun transitionToNoResults() {
         transitionToState(R.id.no_result)
     }
 
-    fun updateResults(results: List<GridDrinkPreviewItem>) {
-        previewAdapter.updateAsync(results)
+    fun transitionToResults() {
         transitionToState(R.id.has_results)
     }
 }

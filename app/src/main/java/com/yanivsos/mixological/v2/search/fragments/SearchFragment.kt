@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
+import com.xwray.groupie.GroupieAdapter
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
 import com.yanivsos.mixological.analytics.ScreenNames
@@ -34,7 +35,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private val searchViewModel: SearchViewModel by viewModel()
 
     private val query: String get() = binding.searchQueryActv.text?.toString() ?: ""
-
+    private val previewAdapter = GroupieAdapter()
     private val suggestionsAdapter: ArrayAdapter<String> by lazy {
         ArrayAdapter<String>(
             requireContext(),
@@ -137,6 +138,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
                 if (hasFocus) dismissDropDown()
             }
         }
+
+        binding.searchResults.attachAdapter(previewAdapter)
     }
 
     private fun clearQuery() {
@@ -259,13 +262,15 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onPreviewNoResults() {
         Timber.d("onPreviewNoResults:")
-        binding.searchResults.updateNoResults()
+        previewAdapter.updateAsync(emptyList())
+        binding.searchResults.transitionToNoResults()
     }
 
     private suspend fun onPreviewResults(drinks: List<DrinkPreviewUiModel>) {
         Timber.d("results: received ${drinks.size} drinks")
         createPreviewItems(drinks).also {
-            binding.searchResults.updateResults(it)
+            previewAdapter.updateAsync(it)
+            binding.searchResults.transitionToResults()
         }
     }
 
