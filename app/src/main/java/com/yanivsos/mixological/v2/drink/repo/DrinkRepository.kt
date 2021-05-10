@@ -13,9 +13,7 @@ import com.yanivsos.mixological.v2.favorites.dao.FavoriteDrinksDao
 import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -102,7 +100,10 @@ class DrinkRepository(
 
     suspend fun storePreviews(previews: List<DrinkPreviewModel>) =
         withContext(ioDispatcher) {
-            drinkDao.storePreviews(previews)
+            drinkDao.storePreviews(
+                previews
+                    .mergeWithFavorites(favoriteDrinksDao.getAll().first())
+            )
         }
 
     //filtering

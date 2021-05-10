@@ -38,6 +38,14 @@ private fun Flow<List<DrinkPreviewModel>>.mergeWithFavoritesIds(
     }
 }
 
+@JvmName("mergeWithFavoritesListDrinkPreviewModel")
+fun List<DrinkPreviewModel>.mergeWithFavorites(
+    favorites: List<WatchlistItemModel>,
+): List<DrinkPreviewModel> {
+    val favoriteIds = favorites.map { favorite -> FavoriteId(favorite.id) }
+    return mergeWithFavorites(favoriteIds)
+}
+
 @JvmName("mergeWithFavoritesDrinkPreviewModel")
 fun List<DrinkPreviewModel>.mergeWithFavorites(
     favorites: List<DrinkPreviewModel>
