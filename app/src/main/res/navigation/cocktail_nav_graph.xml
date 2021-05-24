@@ -10,18 +10,22 @@
         android:name="com.yanivsos.mixological.ui.fragments.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_homeFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
-            app:enterAnim="@anim/fragment_close_enter" />
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <!--        todo - check enter anim-->
+
         <action
             android:id="@+id/action_homeFragment_to_advancedSearchFragment"
             app:destination="@id/advancedSearchFragment"
-            app:enterAnim="@anim/fragment_close_enter" />
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/fragment_close_enter" />
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
 
     <fragment
@@ -29,20 +33,22 @@
         android:name="com.yanivsos.mixological.v2.search.fragments.SearchFragment"
         android:label="AdvancedSearchFragment"
         tools:layout="@layout/fragment_search">
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_advancedSearchFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
-            app:enterAnim="@anim/fragment_close_enter" />
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.yanivsos.mixological.ui.fragments.SplashFragment"
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/fragment_close_enter"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:launchSingleTop="true"
             app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
@@ -57,10 +63,11 @@
         <argument
             android:name="drinkPreviewUiModel"
             app:argType="com.yanivsos.mixological.ui.models.DrinkPreviewUiModel" />
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_drinkFragment_to_drinkErrorFragment"
             app:destination="@id/drinkErrorFragment"
-            app:enterAnim="@anim/fragment_close_enter"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkFragment"
             app:popUpToInclusive="true" />
@@ -75,10 +82,11 @@
             android:name="errorUiModel"
             app:argType="com.yanivsos.mixological.ui.models.DrinkErrorUiModel"
             app:nullable="false" />
+        <!--        todo - check enter anim-->
         <action
             android:id="@+id/action_drinkErrorFragment_to_drinkFragment"
             app:destination="@id/drinkFragment"
-            app:enterAnim="@anim/fragment_close_enter"
+            app:enterAnim="@anim/nav_default_enter_anim"
             app:launchSingleTop="true"
             app:popUpTo="@id/drinkErrorFragment"
             app:popUpToInclusive="true" />
