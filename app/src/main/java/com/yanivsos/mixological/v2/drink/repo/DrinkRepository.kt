@@ -27,6 +27,7 @@ class DrinkRepository(
 
     //Drinks
     suspend fun fetchById(id: String): DrinkModel? {
+        // TODO: 09/06/2021 merge with favorite
         return withContext(ioDispatcher) {
             Timber.d("fetchById: id[$id]")
             drinkService
@@ -36,6 +37,7 @@ class DrinkRepository(
     }
 
     suspend fun fetchByName(name: String): List<DrinkModel> {
+        // TODO: 09/06/2021 merge with favorite
         return withContext(ioDispatcher) {
             drinkService
                 .searchByName(name)
@@ -51,6 +53,7 @@ class DrinkRepository(
     }
 
     fun getById(id: String): Flow<DrinkModel?> {
+        // TODO: 09/06/2021 refactor merging with favorite
         return drinkDao
             .getById(id)
             .combine(favoriteDrinksDao.getById(id)) { drink, watchlist ->
@@ -74,23 +77,27 @@ class DrinkRepository(
     }
 
     fun getFavorites(): Flow<List<DrinkPreviewModel>> {
-        return favoriteDrinksDao.getFavoritePreviews()
+        return favoriteDrinksDao
+            .getFavoritePreviews()
+            .map { previews -> previews.map { preview -> preview.copy(isFavorite = true) }  }
     }
 
     fun getFavoriteById(watchlistItemModel: WatchlistItemModel): Flow<WatchlistItemModel?> {
+        // TODO: 09/06/2021 remove distinctUntilChanged
         return favoriteDrinksDao
             .getById(watchlistItemModel.id)
-            .distinctUntilChanged()
+//            .distinctUntilChanged()
     }
 
     //Previews
-    fun getAllPreviews(): Flow<List<DrinkPreviewModel>> {
+    fun getPreviews(): Flow<List<DrinkPreviewModel>> {
         return drinkDao
             .getPreviews()
             .mergeWithFavorites(favoriteDrinksDao.getAll(), defaultDispatcher)
     }
 
     suspend fun fetchPreviewsByLetter(char: Char): List<DrinkPreviewModel> =
+        // TODO: 09/06/2021 merge with favorites
         withContext(ioDispatcher) {
             drinkService
                 .searchByFirstLetter(char.toString())
@@ -102,12 +109,14 @@ class DrinkRepository(
         withContext(ioDispatcher) {
             drinkDao.storePreviews(
                 previews
-                    .mergeWithFavorites(favoriteDrinksDao.getAll().first())
+                    // TODO: 09/06/2021 test if this is ok
+//                    .mergeWithFavorites(favoriteDrinksDao.getAll().first())
             )
         }
 
     //filtering
     suspend fun filterBy(filter: DrinkFilterRequest): List<DrinkPreviewModel> =
+        // TODO: 09/06/2021 merge with favorites
         withContext(ioDispatcher) {
             when (filter) {
                 is DrinkFilterRequest.Alcoholic -> drinkService.filterByAlcoholic(filter.alcoholic)

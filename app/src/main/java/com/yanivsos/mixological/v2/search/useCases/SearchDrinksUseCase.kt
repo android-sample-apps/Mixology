@@ -36,7 +36,7 @@ class SearchDrinksUseCase(
 
     val previews: Flow<List<DrinkPreviewModel>> =
         filterResults
-            .combine(drinkRepository.getAllPreviews()) { filterResults, allPreviews ->
+            .combine(drinkRepository.getPreviews()) { filterResults, allPreviews ->
                 mapToPreviews(filterResults, allPreviews)
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
