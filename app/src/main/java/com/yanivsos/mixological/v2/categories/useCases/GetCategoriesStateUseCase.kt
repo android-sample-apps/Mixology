@@ -13,14 +13,15 @@ class GetCategoriesStateUseCase(
 ) {
     val categories: Flow<CategoriesState> = categoriesRepository
         .getCategories()
-        .combine(getDrinksByCategoryUseCase.drinksByCategory) { categories, drinksByCategory ->
-            drinksByCategory?.let { CategoriesState.CategorySelected(
-                categories = categories,
-                selectedCategory = drinksByCategory
-            ) } ?:
-            CategoriesState.CategoryNotSelected(
-                categories = categories
-            )
+        .combine(getDrinksByCategoryUseCase.drinksByCategory) { categories, drinksByCategoryState ->
+            when (drinksByCategoryState) {
+                SelectedCategoryState.None -> CategoriesState
+                    .CategoryNotSelected(categories = categories)
+                is SelectedCategoryState.Selected -> CategoriesState.CategorySelected(
+                    categories = categories,
+                    selectedCategory = drinksByCategoryState.model
+                )
+            }
         }
 
     suspend fun updateSelected(categoryUiModel: CategoryUiModel) {

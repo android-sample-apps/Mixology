@@ -82,6 +82,10 @@ class DrinkRepository(
             .map { previews -> previews.map { preview -> preview.copy(isFavorite = true) }  }
     }
 
+    fun getFavoritesWatchlist() : Flow<List<WatchlistItemModel>> {
+        return favoriteDrinksDao.getAll()
+    }
+
     fun getFavoriteById(watchlistItemModel: WatchlistItemModel): Flow<WatchlistItemModel?> {
         // TODO: 09/06/2021 remove distinctUntilChanged
         return favoriteDrinksDao

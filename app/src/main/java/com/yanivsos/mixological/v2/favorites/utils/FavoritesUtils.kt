@@ -52,7 +52,6 @@ private fun Flow<List<WatchlistItemModel>>.asFavoriteIdsFlow():
 private fun List<WatchlistItemModel>.toFavoriteIds(): List<FavoriteId> =
     map { favorite -> FavoriteId(favorite.id) }
 
-@Deprecated("remove this before version release")
 @JvmName("mergeWithFavoritesListDrinkPreviewModel")
 fun List<DrinkPreviewModel>.mergeWithFavorites(
     favorites: List<WatchlistItemModel>,
