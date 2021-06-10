@@ -3,7 +3,6 @@ package com.yanivsos.mixological.v2.search.view
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.motion.widget.MotionLayout
-import com.google.android.material.card.MaterialCardView
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.databinding.ViewChoiceFilterBinding
 import com.yanivsos.mixological.extensions.getStringFromResourceId
