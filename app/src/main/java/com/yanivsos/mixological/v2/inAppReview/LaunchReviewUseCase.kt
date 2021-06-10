@@ -17,7 +17,7 @@ class LaunchReviewUseCase(
             .inAppReviewCounterFlow
             .onEach { Timber.d("inAppReview counter: $it") }
             .filter { counter -> counter >= FAVORITE_THRESHOLD }
-            .map { Unit }
+            .map {  }
 
     suspend fun resetReviewCondition() {
         inAppReviewRepository.resetLaunchReviewCondition()

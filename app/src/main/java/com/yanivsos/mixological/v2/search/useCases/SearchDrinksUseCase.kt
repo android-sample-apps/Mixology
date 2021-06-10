@@ -36,13 +36,14 @@ class SearchDrinksUseCase(
 
     val previews: Flow<List<DrinkPreviewModel>> =
         filterResults
-            .combine(drinkRepository.getAllPreviews()) { filterResults, allPreviews ->
+            .combine(drinkRepository.getPreviews()) { filterResults, allPreviews ->
                 mapToPreviews(filterResults, allPreviews)
             }.combine(fetchDrinkByNameUseCase.fetchDrinkState) { filteredResults, resultsByName ->
                 intersectDrinks(filteredResults, resultsByName)
             }
-            .onEach { previews -> storePreviews(previews) }
-            .mergeWithFavorites(drinkRepository.getFavorites(), defaultDispatcher)
+            .onEach {
+                    previews -> storePreviews(previews) }
+            .mergeWithFavorites(drinkRepository.getFavoritesWatchlist(), defaultDispatcher)
 
     val filters: Flow<SelectedFilters> =
         filterResults.combine(getAllFiltersUseCase.allFilters) { filterResults, allFilters ->

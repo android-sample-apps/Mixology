@@ -17,7 +17,7 @@ interface FavoriteDrinksDao {
     @Query("SELECT * FROM watchlist WHERE watchlist.id = :id")
     fun getById(id: String): Flow<WatchlistItemModel?>
 
-    @Query("SELECT * FROM watchlist INNER JOIN drink_previews ON watchlist.id = drink_previews.id")
+    @Query("SELECT * FROM watchlist INNER JOIN drink_previews ON watchlist.id = drink_previews.id ORDER BY name")
     fun getFavoritePreviews(): Flow<List<DrinkPreviewModel>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

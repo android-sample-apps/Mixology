@@ -38,7 +38,7 @@ class FractionNumberParser<T : MeasureUnit>(
         }
             .replace("\\s+".toRegex(), " ")
             .split(" ")
-            .sumByDouble {
+            .sumOf {
                 it.toDouble()
             }
     }

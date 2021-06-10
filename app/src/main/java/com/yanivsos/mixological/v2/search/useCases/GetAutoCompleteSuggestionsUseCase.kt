@@ -15,7 +15,7 @@ class GetAutoCompleteSuggestionsUseCase(
 
     val suggestions: Flow<List<AutoCompleteSuggestionModel>> =
         drinkRepository
-            .getAllPreviews()
+            .getPreviews()
             .map { mapToSuggestions(it) }
 
 

@@ -50,6 +50,7 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_category_menu) {
         }
     }
 
+    // TODO: 24/05/2021 research this warning
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(

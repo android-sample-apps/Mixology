@@ -1,6 +1,7 @@
 package com.yanivsos.mixological.v2.categories.useCases
 
 import com.yanivsos.mixological.database.DrinkPreviewModel
+import com.yanivsos.mixological.database.WatchlistItemModel
 import com.yanivsos.mixological.v2.categories.repo.CategoriesRepository
 import com.yanivsos.mixological.v2.drink.repo.DrinkRepository
 import com.yanivsos.mixological.v2.favorites.utils.mergeWithFavorites
@@ -17,22 +18,29 @@ class GetDrinksByCategoryUseCase(
     private val drinkRepository: DrinkRepository,
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    private val drinksByCategoryStateFlow = MutableStateFlow<SelectedCategoryModel?>(null)
+    private val drinksByCategoryStateFlow =
+        MutableStateFlow<SelectedCategoryState>(SelectedCategoryState.None)
 
-    val drinksByCategory: Flow<SelectedCategoryModel?> =
+    val drinksByCategory: Flow<SelectedCategoryState> =
         drinksByCategoryStateFlow
-            .combine(drinkRepository.getFavorites()) { categoryModel, favorites ->
+            .combine(drinkRepository.getFavoritesWatchlist()) { categoryModel, favorites ->
                 mergeWithFavorites(categoryModel, favorites)
             }
 
     private suspend fun mergeWithFavorites(
-        categoryModel: SelectedCategoryModel?,
-        favorites: List<DrinkPreviewModel>
-    ): SelectedCategoryModel? {
+        categoryModel: SelectedCategoryState,
+        favorites: List<WatchlistItemModel>
+    ): SelectedCategoryState {
         return withContext(defaultDispatcher) {
             Timber.d("merging with favorites: ${favorites.map { it.id }}")
-            categoryModel?.let {
-                it.copy(drinks = it.drinks.mergeWithFavorites(favorites))
+            when (categoryModel) {
+                SelectedCategoryState.None -> SelectedCategoryState.None
+                is SelectedCategoryState.Selected -> SelectedCategoryState.Selected(
+                    SelectedCategoryModel(
+                        name = categoryModel.model.name,
+                        drinks = categoryModel.model.drinks.mergeWithFavorites(favorites)
+                    )
+                )
             }
         }
     }
@@ -42,17 +50,26 @@ class GetDrinksByCategoryUseCase(
             categoriesRepository.fetchByCategory(categoryName)
         }.onSuccess { drinks ->
             drinkRepository.storePreviews(drinks)
-            drinksByCategoryStateFlow.value = SelectedCategoryModel(
-                name = categoryName,
-                drinks = drinks
+            drinksByCategoryStateFlow.value = SelectedCategoryState.Selected(
+                SelectedCategoryModel(
+                    name = categoryName,
+                    drinks = drinks
+                )
             )
         }.onFailure {
             Timber.e(it, "failed to update category $categoryName")
-            drinksByCategoryStateFlow.value = SelectedCategoryModel(
-                name = categoryName
+            drinksByCategoryStateFlow.value = SelectedCategoryState.Selected(
+                SelectedCategoryModel(
+                    name = categoryName
+                )
             )
         }
     }
+}
+
+sealed class SelectedCategoryState {
+    object None : SelectedCategoryState()
+    data class Selected(val model: SelectedCategoryModel) : SelectedCategoryState()
 }
 
 data class SelectedCategoryModel(

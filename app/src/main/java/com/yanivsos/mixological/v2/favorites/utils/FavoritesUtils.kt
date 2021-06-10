@@ -8,23 +8,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-@JvmName("mergeWithFavoritesDrinkPreviewModel")
-fun Flow<List<DrinkPreviewModel>>.mergeWithFavorites(
-    favoritesFlow: Flow<List<DrinkPreviewModel>>,
-    defaultDispatcher: CoroutineDispatcher
-): Flow<List<DrinkPreviewModel>> {
-    val favoriteIds =
-        favoritesFlow.map { favoritesList -> favoritesList.map { favorite -> FavoriteId(favorite.id) } }
-    return mergeWithFavoritesIds(favoriteIds, defaultDispatcher)
-}
-
 fun Flow<List<DrinkPreviewModel>>.mergeWithFavorites(
     favoritesFlow: Flow<List<WatchlistItemModel>>,
     defaultDispatcher: CoroutineDispatcher
 ): Flow<List<DrinkPreviewModel>> {
-    val favoriteIds =
-        favoritesFlow.map { favoritesList -> favoritesList.map { favorite -> FavoriteId(favorite.id) } }
-    return mergeWithFavoritesIds(favoriteIds, defaultDispatcher)
+    return mergeWithFavoritesIds(
+        favoritesFlow.asFavoriteIdsFlow(),
+        defaultDispatcher
+    )
 }
 
 private fun Flow<List<DrinkPreviewModel>>.mergeWithFavoritesIds(
@@ -38,18 +29,26 @@ private fun Flow<List<DrinkPreviewModel>>.mergeWithFavoritesIds(
     }
 }
 
-@JvmName("mergeWithFavoritesDrinkPreviewModel")
+private fun Flow<List<WatchlistItemModel>>.asFavoriteIdsFlow():
+        Flow<List<FavoriteId>> =
+    map { favoritesList -> favoritesList.toFavoriteIds() }
+
+private fun List<WatchlistItemModel>.toFavoriteIds(): List<FavoriteId> =
+    map { favorite -> FavoriteId(favorite.id) }
+
+@JvmName("mergeWithFavoritesListDrinkPreviewModel")
 fun List<DrinkPreviewModel>.mergeWithFavorites(
-    favorites: List<DrinkPreviewModel>
+    favorites: List<WatchlistItemModel>,
 ): List<DrinkPreviewModel> {
-    return mergeWithFavorites(favorites.map { FavoriteId(it.id) })
+    val favoriteIds = favorites.map { favorite -> FavoriteId(favorite.id) }
+    return mergeWithFavorites(favoriteIds)
 }
 
 private fun List<DrinkPreviewModel>.mergeWithFavorites(
     favorites: List<FavoriteId>
 ): List<DrinkPreviewModel> {
     val favoritesSet = favorites.map { it.id }.toSet()
-    return map { it.copy(isFavorite = it.id in favoritesSet) }
+    return map { preview -> preview.copy(isFavorite = preview.id in favoritesSet) }
 }
 
 private data class FavoriteId(val id: String)

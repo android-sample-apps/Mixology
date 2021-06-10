@@ -63,4 +63,5 @@
     <string name="filter_toggle_failure">Oh snap! something went sideways…</string>
     <string name="choice_and">and</string>
     <string name="choice_or">or</string>
+    <string name="settings_version">version %1$s</string>
 </resources>
