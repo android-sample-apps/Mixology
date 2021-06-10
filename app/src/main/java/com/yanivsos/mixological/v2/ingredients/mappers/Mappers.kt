@@ -15,7 +15,7 @@ fun IngredientsWrapperResponse<IngredientDetailsResponse>.toModel(): IngredientD
             description = it.description,
             image = encodeImageUrl(it.name),
             alcoholVolume = it.alcoholVolume?.toIntOrNull(),
-            isAlcoholic = it.isAlcoholic?.toLowerCase(Locale.ROOT)?.equals("yes") == true
+            isAlcoholic = it.isAlcoholic?.lowercase(Locale.ROOT)?.equals("yes") == true
         )
     }
 }
