@@ -8,7 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 import com.xwray.groupie.GroupieAdapter
 import com.yanivsos.mixological.R
 import com.yanivsos.mixological.analytics.AnalyticsDispatcher
@@ -126,8 +128,13 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun initSearchQuery() {
         Timber.d("initSearchQuery")
-        binding.searchContainerTil.setEndIconOnClickListener {
-            clearQuery()
+        binding.searchContainerTil.setVoiceRecognitionMode()
+        binding.searchQueryActv.doOnTextChanged { _, _, _, count ->
+            if (count == 0) {
+                binding.searchContainerTil.setVoiceRecognitionMode()
+            } else {
+                binding.searchContainerTil.setClearTextMode()
+            }
         }
         binding.searchQueryActv.run {
             setOnEditorActionListener { _, actionId, _ ->
@@ -148,6 +155,18 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
 
         binding.searchResults.attachAdapter(previewAdapter)
+    }
+
+    private fun TextInputLayout.setClearTextMode() {
+        Timber.d("setting clear text mode")
+        setEndIconDrawable(R.drawable.ic_cancel_black)
+        setEndIconOnClickListener { clearQuery() }
+    }
+
+    private fun TextInputLayout.setVoiceRecognitionMode() {
+        Timber.d("setting voice recognition mode")
+        setEndIconDrawable(R.drawable.ic_mic)
+        setEndIconOnClickListener { startVoiceSearch() }
     }
 
     private fun clearQuery() {
@@ -214,7 +233,10 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun onSpokenTextSearchReceived(spokenTextSearch: String) {
         Timber.d("onSpokenTextSearchReceived: $spokenTextSearch")
-        binding.searchQueryActv.setText(spokenTextSearch)
+        binding.searchQueryActv.apply {
+            setText(spokenTextSearch)
+            dismissDropDown()
+        }
         search()
     }
 

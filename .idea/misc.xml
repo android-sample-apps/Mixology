@@ -5,6 +5,11 @@
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_cancel.xml" value="0.26927083333333335" />
+        <entry key="app/src/main/res/drawable/ic_cherries.xml" value="0.34" />
+        <entry key="app/src/main/res/drawable/ic_clear.xml" value="0.34" />
+        <entry key="app/src/main/res/drawable/ic_filter_list.xml" value="0.34" />
+        <entry key="app/src/main/res/drawable/ic_mic_black.xml" value="0.34" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.34" />
         <entry key="app/src/main/res/layout/active_filter_badge.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_cocktail.xml" value="0.1" />
         <entry key="app/src/main/res/layout/bottom_dialog_search_filters.xml" value="0.38259833134684146" />
