@@ -26,6 +26,7 @@ import com.yanivsos.mixological.v2.search.viewModel.*
 import com.yanivsos.mixological.v2.search.voice.SpeechRecognizer
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
@@ -126,14 +127,29 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         }
     }
 
+    private sealed class EndIconMode {
+        object VoiceRecognition: EndIconMode()
+        object ClearText: EndIconMode()
+    }
+
     private fun initSearchQuery() {
         Timber.d("initSearchQuery")
-        binding.searchContainerTil.setVoiceRecognitionMode()
-        binding.searchQueryActv.doOnTextChanged { _, _, _, count ->
-            if (count == 0) {
-                binding.searchContainerTil.setVoiceRecognitionMode()
+        val endIconMutableStateFlow = MutableStateFlow<EndIconMode>(EndIconMode.VoiceRecognition)
+        endIconMutableStateFlow
+            .withLifecycle()
+            .onEach { endIconMode ->
+                when (endIconMode) {
+                    EndIconMode.ClearText -> binding.searchContainerTil.setClearTextMode()
+                    EndIconMode.VoiceRecognition -> binding.searchContainerTil.setVoiceRecognitionMode()
+                }
+            }
+            .launchIn(viewLifecycleScope())
+
+        binding.searchQueryActv.doOnTextChanged { text, _, _, _ ->
+            if (text.isNullOrBlank()) {
+                endIconMutableStateFlow.value = EndIconMode.VoiceRecognition
             } else {
-                binding.searchContainerTil.setClearTextMode()
+                endIconMutableStateFlow.value = EndIconMode.ClearText
             }
         }
         binding.searchQueryActv.run {
@@ -161,12 +177,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         Timber.d("setting clear text mode")
         setEndIconDrawable(R.drawable.ic_cancel_black)
         setEndIconOnClickListener { clearQuery() }
+        //todo - fix google's fucking endIconTint not working
     }
 
     private fun TextInputLayout.setVoiceRecognitionMode() {
         Timber.d("setting voice recognition mode")
         setEndIconDrawable(R.drawable.ic_mic)
         setEndIconOnClickListener { startVoiceSearch() }
+        //todo - fix google's fucking endIconTint not working
     }
 
     private fun clearQuery() {

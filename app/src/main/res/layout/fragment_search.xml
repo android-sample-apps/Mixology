@@ -34,7 +34,6 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:endIconTint="@color/orange"
         android:layout_marginTop="@dimen/screen_padding"
         app:boxCornerRadiusBottomEnd="@dimen/screen_radius"
         app:boxCornerRadiusBottomStart="@dimen/screen_radius"
