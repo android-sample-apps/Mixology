@@ -55,6 +55,7 @@
     <string name="dark_mode_title">Dark mode</string>
     <string name="dark_mode_description">Enable or disable dark mode</string>
     <string name="no_search_activity_found">Looks like you don\'t have a web browser installed. What\'s up with that?</string>
+    <string name="no_voice_recognition_activity_found">Looks like your device doesn\'t support voice recognition. What\'s up with that?</string>
     <string name="conversion_mode_title">Unit conversions</string>
     <string name="conversion_mode_description">Convert measurements to metric/imperial system, or keep the original recipe system</string>
     <string name="original">Original</string>

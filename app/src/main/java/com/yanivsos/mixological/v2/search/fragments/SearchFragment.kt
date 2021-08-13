@@ -1,5 +1,6 @@
 package com.yanivsos.mixological.v2.search.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -20,6 +21,7 @@ import com.yanivsos.mixological.ui.utils.MyTransitionListener
 import com.yanivsos.mixological.ui.view_model.ConnectivityViewModel
 import com.yanivsos.mixological.v2.favorites.fragments.GridDrinkPreviewItem
 import com.yanivsos.mixological.v2.search.viewModel.*
+import com.yanivsos.mixological.v2.search.voice.SpeechRecognizer
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
@@ -33,7 +35,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private val binding by viewBinding(FragmentSearchBinding::bind)
     private val connectivityViewModel: ConnectivityViewModel by viewModel()
     private val searchViewModel: SearchViewModel by viewModel()
-
+    private val speechRecognizer = SpeechRecognizer()
     private val query: String get() = binding.searchQueryActv.text?.toString() ?: ""
     private val previewAdapter = GroupieAdapter()
     private val suggestionsAdapter: ArrayAdapter<String> by lazy {
@@ -82,6 +84,12 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         observeFiltersBadge()
         observeFilterErrors()
         observeConnectivity()
+        observeSpokenTextSearch()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        speechRecognizer.onAttach(this)
     }
 
     private fun initMotionLayout() {
@@ -159,6 +167,19 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         searchViewModel.fetchByName(query)
     }
 
+    private fun startVoiceSearch() {
+        runCatching {
+            speechRecognizer.launch()
+        }.onFailure {
+            Timber.e(it, "Unable to get speech recognition")
+            Toast.makeText(
+                requireContext(),
+                R.string.no_voice_recognition_activity_found,
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
     private fun observeResults() {
         searchViewModel
             .previewsState
@@ -181,6 +202,20 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
             .withLifecycle()
             .onEach { filterError -> onFilterError(filterError) }
             .launchIn(viewLifecycleScope())
+    }
+
+    private fun observeSpokenTextSearch() {
+        speechRecognizer
+            .spokenTextSharedFlow
+            .withLifecycle()
+            .onEach { spokenTextSearch -> onSpokenTextSearchReceived(spokenTextSearch) }
+            .launchIn(viewLifecycleScope())
+    }
+
+    private fun onSpokenTextSearchReceived(spokenTextSearch: String) {
+        Timber.d("onSpokenTextSearchReceived: $spokenTextSearch")
+        binding.searchQueryActv.setText(spokenTextSearch)
+        search()
     }
 
     private fun onFilterError(filterError: FilterError) {
