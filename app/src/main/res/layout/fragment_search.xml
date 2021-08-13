@@ -37,6 +37,7 @@
         android:layout_marginTop="@dimen/screen_padding"
         app:boxCornerRadiusBottomEnd="@dimen/screen_radius"
         app:boxCornerRadiusBottomStart="@dimen/screen_radius"
+        app:endIconTint="@null"
         app:boxCornerRadiusTopEnd="@dimen/screen_radius"
         app:boxCornerRadiusTopStart="@dimen/screen_radius"
         app:boxStrokeColor="?attr/colorAccent"

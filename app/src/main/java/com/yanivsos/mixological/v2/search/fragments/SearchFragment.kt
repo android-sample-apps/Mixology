@@ -175,16 +175,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
 
     private fun TextInputLayout.setClearTextMode() {
         Timber.d("setting clear text mode")
-        setEndIconDrawable(R.drawable.ic_cancel_black)
+        setEndIconDrawable(R.drawable.ic_search_cancel)
         setEndIconOnClickListener { clearQuery() }
-        //todo - fix google's fucking endIconTint not working
     }
 
     private fun TextInputLayout.setVoiceRecognitionMode() {
         Timber.d("setting voice recognition mode")
-        setEndIconDrawable(R.drawable.ic_mic)
+        setEndIconDrawable(R.drawable.ic_search_mic)
         setEndIconOnClickListener { startVoiceSearch() }
-        //todo - fix google's fucking endIconTint not working
     }
 
     private fun clearQuery() {
