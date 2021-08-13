@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "627239753056",
+    "firebase_url": "https://mixological-38450.firebaseio.com",
+    "project_id": "mixological-38450",
+    "storage_bucket": "mixological-38450.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627239753056:android:d2763d259fd19f97f43a05",
+        "android_client_info": {
+          "package_name": "com.yanivsos.mixological.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627239753056-gieulo5n0ck5vi97t3jhjp8nibdqgh90.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsuCYUisAteWVOpT81SG7CMPJkVGtH4yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627239753056-gieulo5n0ck5vi97t3jhjp8nibdqgh90.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

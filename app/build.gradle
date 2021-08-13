@@ -63,6 +63,7 @@ android {
                                     analyticsCollectionEnabled  : "false"]
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             versionNameSuffix '.debug'
+            applicationIdSuffix '.debug'
         }
     }
 
