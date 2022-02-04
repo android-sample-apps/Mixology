@@ -1,6 +1,5 @@
-- name: Android Emulator Runner
-  uses: ReactiveCircus/android-emulator-runner@v2.22.0
-  on: [push]
+name: Android Emulator Runner
+on: [push]
 
 jobs:
   test:
@@ -47,4 +46,3 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./gradlew connectedCheck
-          
